@@ -170,6 +170,69 @@ backend:
       - working: true
         agent: "testing"
         comment: "Error handling working correctly. Proper HTTP status codes returned for invalid credentials (401), unauthorized access (403), non-existent resources (404), and duplicate registrations (400)."
+      - working: true
+        agent: "testing"
+        comment: "Comprehensive error handling verified: Invalid login (401), unauthorized access (403), non-existent formation (404) all return correct status codes."
+
+  - task: "KYC Document Submission"
+    implemented: true
+    working: true
+    file: "/app/backend/routes/kyc.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "KYC document submission working correctly. POST /kyc/submit accepts files and form data, updates user status to pending_review, and returns success response. GET /kyc/documents retrieves user documents properly."
+
+  - task: "Admin Functions"
+    implemented: true
+    working: true
+    file: "/app/backend/routes/admin.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Admin functions working correctly. GET /admin/kyc-requests and GET /admin/stats properly return 403 Forbidden for non-admin users, indicating correct authorization checks are in place."
+
+  - task: "Email Service Integration"
+    implemented: true
+    working: false
+    file: "/app/backend/email_service.py"
+    stuck_count: 1
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL: Email service failing with Gmail authentication error: '5.7.8 Username and Password not accepted'. Backend logs show email sending attempts fail during user registration and KYC submission. Email templates and logic are implemented but SMTP authentication is broken."
+
+  - task: "Payment Integration - Stripe"
+    implemented: true
+    working: false
+    file: "/app/backend/payment_service.py"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL: Stripe integration failing with 'Invalid API Key provided: sk_test_****************_ici'. The API key appears to be a placeholder/test key rather than valid production credentials."
+
+  - task: "Payment Integration - PayPal"
+    implemented: true
+    working: false
+    file: "/app/backend/payment_service.py"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL: PayPal integration failing with 401 Unauthorized and 'invalid_client' error. PayPal client authentication is failing, likely due to invalid client credentials in production environment."
 
 frontend:
   - task: "Frontend Testing"
