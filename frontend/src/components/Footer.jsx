@@ -1,0 +1,40 @@
+import React from 'react';
+import { Send, Facebook } from 'lucide-react';
+
+const Footer = () => {
+  return (
+    <footer className="bg-gradient-to-b from-[#1E1540] to-black py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-center items-center space-x-8 mb-8">
+          {/* Telegram */}
+          <a
+            href="https://t.me/TRADALIFE"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+          >
+            <Send className="w-7 h-7 text-white" />
+          </a>
+
+          {/* Facebook */}
+          <a
+            href="https://www.facebook.com/profile.php?id=61568614032065"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+          >
+            <Facebook className="w-7 h-7 text-white" />
+          </a>
+        </div>
+
+        <div className="text-center">
+          <p className="text-pink-500 font-semibold text-lg">
+            @Copyright, 2025
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
