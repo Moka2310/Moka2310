@@ -116,6 +116,20 @@ const Navbar = () => {
               <span className="text-sm font-medium">{language === 'fr' ? '🇨🇦 EN' : '🇫🇷 FR'}</span>
             </button>
 
+            {/* Install App Button */}
+            {showInstallButton && (
+              <button
+                onClick={handleInstallClick}
+                className="flex items-center space-x-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-4 py-2 rounded-full transition-all transform hover:scale-105"
+                title={language === 'fr' ? 'Installer l\'application' : 'Install app'}
+              >
+                <Download className="w-4 h-4" />
+                <span className="text-sm font-medium hidden lg:inline">
+                  {language === 'fr' ? 'Installer' : 'Install'}
+                </span>
+              </button>
+            )}
+
             {/* Cart Icon */}
             <button
               onClick={() => navigate(user ? '/dashboard' : '/login')}
