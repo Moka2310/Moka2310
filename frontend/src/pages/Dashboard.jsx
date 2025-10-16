@@ -361,17 +361,17 @@ const Dashboard = () => {
 
                   {/* Document Uploads */}
                   <div className="space-y-4 pt-6 border-t border-purple-500/30">
-                    <h3 className="text-xl font-bold text-white mb-4">Documents requis</h3>
+                    <h3 className="text-xl font-bold text-white mb-4">{t(language, 'dashboard.kyc.documents')}</h3>
 
                     {/* Passport */}
                     <div className="bg-purple-500/10 rounded-xl p-4">
-                      <label className="block text-white/80 mb-2 font-semibold">Passeport*</label>
+                      <label className="block text-white/80 mb-2 font-semibold">{t(language, 'dashboard.kyc.passport')}*</label>
                       <div className="flex items-center space-x-4">
                         <label className="flex-1 cursor-pointer">
                           <div className="border-2 border-dashed border-purple-500/50 rounded-xl p-6 text-center hover:border-pink-500/50 transition-colors">
                             <Upload className="w-8 h-8 text-pink-400 mx-auto mb-2" />
                             <p className="text-white/70 text-sm">
-                              {documents.passport ? documents.passport.name : 'Cliquez pour télécharger'}
+                              {documents.passport ? documents.passport.name : (language === 'fr' ? 'Cliquez pour télécharger' : 'Click to upload')}
                             </p>
                           </div>
                           <input
@@ -386,13 +386,13 @@ const Dashboard = () => {
 
                     {/* ID Card */}
                     <div className="bg-purple-500/10 rounded-xl p-4">
-                      <label className="block text-white/80 mb-2 font-semibold">Carte d'identité / Permis de conduire (recto-verso)*</label>
+                      <label className="block text-white/80 mb-2 font-semibold">{t(language, 'dashboard.kyc.idCard')}*</label>
                       <div className="flex items-center space-x-4">
                         <label className="flex-1 cursor-pointer">
                           <div className="border-2 border-dashed border-purple-500/50 rounded-xl p-6 text-center hover:border-pink-500/50 transition-colors">
                             <Upload className="w-8 h-8 text-pink-400 mx-auto mb-2" />
                             <p className="text-white/70 text-sm">
-                              {documents.idCard ? documents.idCard.name : 'Cliquez pour télécharger'}
+                              {documents.idCard ? documents.idCard.name : (language === 'fr' ? 'Cliquez pour télécharger' : 'Click to upload')}
                             </p>
                           </div>
                           <input
