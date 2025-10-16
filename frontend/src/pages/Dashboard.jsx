@@ -162,10 +162,6 @@ const Dashboard = () => {
     }
   };
 
-  const purchasedFormations = (user?.purchases || []).map(purchase => {
-    return formations.find(f => f.id === purchase.formationId);
-  }).filter(Boolean);
-
   return (
     <div className="min-h-screen bg-[#1E1540] pt-28 pb-20 px-4">
       <div className="max-w-7xl mx-auto">
