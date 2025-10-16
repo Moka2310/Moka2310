@@ -1,6 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends
 from models import Purchase, PurchaseCreate, User
 from dependencies import get_db, get_current_user
+from payment_service import StripePayment, PayPalPayment
+from email_service import email_service
 import uuid
 from datetime import datetime
 from typing import List
@@ -40,14 +42,61 @@ async def create_purchase(purchase_data: PurchaseCreate, current_user: User = De
     
     await db.purchases.insert_one(purchase.dict())
     
-    # For now, simulate payment and mark as completed
-    # In production, integrate with Stripe/PayPal webhooks
-    return {
-        "purchaseId": purchase.id,
-        "amount": purchase.price,
-        "status": "pending",
-        "message": "Purchase created. Proceed with payment."
-    }
+    # Create payment intent based on method
+    if purchase_data.paymentMethod == "stripe":
+        payment_result = await StripePayment.create_payment_intent(
+            amount=formation["price"],
+            currency="eur",
+            metadata={
+                "purchase_id": purchase.id,
+                "formation_id": formation["id"],
+                "user_id": current_user.id
+            }
+        )
+        
+        if payment_result["success"]:
+            # Update purchase with payment intent ID
+            await db.purchases.update_one(
+                {"id": purchase.id},
+                {"$set": {"paymentIntentId": payment_result["payment_intent_id"]}}
+            )
+            
+            return {
+                "purchaseId": purchase.id,
+                "amount": purchase.price,
+                "status": "pending",
+                "clientSecret": payment_result["client_secret"],
+                "paymentMethod": "stripe"
+            }
+        else:
+            raise HTTPException(status_code=400, detail=payment_result["error"])
+    
+    elif purchase_data.paymentMethod == "paypal":
+        payment_result = await PayPalPayment.create_payment(
+            amount=formation["price"],
+            currency="EUR",
+            description=formation["title"]
+        )
+        
+        if payment_result["success"]:
+            # Update purchase with PayPal payment ID
+            await db.purchases.update_one(
+                {"id": purchase.id},
+                {"$set": {"paymentIntentId": payment_result["payment_id"]}}
+            )
+            
+            return {
+                "purchaseId": purchase.id,
+                "amount": purchase.price,
+                "status": "pending",
+                "approvalUrl": payment_result["approval_url"],
+                "paymentMethod": "paypal"
+            }
+        else:
+            raise HTTPException(status_code=400, detail=payment_result["error"])
+    
+    else:
+        raise HTTPException(status_code=400, detail="Invalid payment method")
 
 @router.post("/confirm/{purchase_id}")
 async def confirm_purchase(purchase_id: str, current_user: User = Depends(get_current_user)):
@@ -64,7 +113,15 @@ async def confirm_purchase(purchase_id: str, current_user: User = Depends(get_cu
         {"$set": {"status": "completed"}}
     )
     
-    # TODO: Send confirmation email
+    # Get formation details
+    formation = await db.formations.find_one({"id": purchase["formationId"]})
+    
+    # Send confirmation email
+    await email_service.send_purchase_confirmation(
+        current_user.email,
+        formation["title"],
+        purchase["price"]
+    )
     
     return {
         "success": True,
