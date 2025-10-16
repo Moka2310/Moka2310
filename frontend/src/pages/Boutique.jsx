@@ -1,13 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { formations } from '../mockData';
+import { formationsAPI } from '../api/client';
 import { ShoppingCart, Clock, BarChart3 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { useAuth } from '../contexts/AuthContext';
+import { toast } from '../hooks/use-toast';
 
 const Boutique = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [formations, setFormations] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadFormations = async () => {
+      try {
+        const response = await formationsAPI.getAll();
+        setFormations(response.data);
+      } catch (error) {
+        console.error('Failed to load formations:', error);
+        toast({
+          title: 'Erreur',
+          description: 'Impossible de charger les formations',
+          variant: 'destructive'
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadFormations();
+  }, []);
 
   const handlePurchase = (formation) => {
     if (!user) {
@@ -16,6 +39,14 @@ const Boutique = () => {
       navigate('/checkout', { state: { formation } });
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#1E1540] pt-28 pb-20 px-4 flex items-center justify-center">
+        <div className="text-white text-xl">Chargement...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#1E1540] pt-28 pb-20 px-4">
