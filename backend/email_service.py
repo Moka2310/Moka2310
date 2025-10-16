@@ -125,7 +125,6 @@ class EmailService:
                         <h3>Détails de l'achat</h3>
                         <p><strong>Formation :</strong> {formation_title}</p>
                         <p><strong>Montant :</strong> {amount}€</p>
-                        <p><strong>Date :</strong> {import datetime; datetime.datetime.now().strftime('%d/%m/%Y')}</p>
                     </div>
                     
                     <h3>📋 Prochaine étape : Vérification KYC</h3>
