@@ -173,10 +173,10 @@ const Dashboard = () => {
           <div>
             <h1 className="text-4xl font-bold mb-2">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
-                Mon Panel
+                {t(language, 'dashboard.title')}
               </span>
             </h1>
-            <p className="text-white/70">Bienvenue, {user?.email}</p>
+            <p className="text-white/70">{t(language, 'dashboard.welcome')}, {user?.email}</p>
           </div>
           <div className="flex items-center space-x-4">
             {getKycStatusBadge()}
