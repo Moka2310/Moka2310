@@ -25,8 +25,16 @@ const Navbar = () => {
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
     // Check if already installed
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      setShowInstallButton(false);
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    const isIOSStandalone = window.navigator.standalone === true;
+    
+    if (!isStandalone && !isIOSStandalone) {
+      // Show button after 2 seconds if not already shown
+      setTimeout(() => {
+        if (!deferredPrompt) {
+          setShowInstallButton(true); // Always show on mobile devices
+        }
+      }, 2000);
     }
 
     return () => {
@@ -35,18 +43,30 @@ const Navbar = () => {
   }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) {
-      return;
+    if (deferredPrompt) {
+      // Chrome Android with beforeinstallprompt event
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      
+      if (outcome === 'accepted') {
+        setShowInstallButton(false);
+      }
+      
+      setDeferredPrompt(null);
+    } else {
+      // iOS or browsers without beforeinstallprompt
+      // Show instructions
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      const instructions = isIOS 
+        ? (language === 'fr' 
+            ? "Sur iPhone/iPad : Appuyez sur le bouton Partager puis 'Sur l'écran d'accueil'"
+            : "On iPhone/iPad: Tap the Share button then 'Add to Home Screen'")
+        : (language === 'fr'
+            ? "Pour installer : Menu Chrome (3 points) → 'Installer l'application'"
+            : "To install: Chrome Menu (3 dots) → 'Install app'");
+      
+      alert(instructions);
     }
-
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    
-    if (outcome === 'accepted') {
-      setShowInstallButton(false);
-    }
-    
-    setDeferredPrompt(null);
   };
 
   const menuItems = [
