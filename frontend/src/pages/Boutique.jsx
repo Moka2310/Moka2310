@@ -4,11 +4,14 @@ import { formationsAPI } from '../api/client';
 import { ShoppingCart, Clock, BarChart3 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t, translations } from '../translations';
 import { toast } from '../hooks/use-toast';
 
 const Boutique = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { language } = useLanguage();
   const [formations, setFormations] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -20,7 +23,7 @@ const Boutique = () => {
       } catch (error) {
         console.error('Failed to load formations:', error);
         toast({
-          title: 'Erreur',
+          title: t(language, 'common.error'),
           description: 'Impossible de charger les formations',
           variant: 'destructive'
         });
@@ -30,7 +33,7 @@ const Boutique = () => {
     };
 
     loadFormations();
-  }, []);
+  }, [language]);
 
   const handlePurchase = (formation) => {
     if (!user) {
@@ -39,11 +42,21 @@ const Boutique = () => {
       navigate('/checkout', { state: { formation } });
     }
   };
+  
+  // Get translated formation info
+  const getFormationTitle = (formation) => {
+    const translationKey = `formations.${formation.title}.title`;
+    return translations[language]?.formations?.[formation.title]?.title || formation.title;
+  };
+  
+  const getFormationDescription = (formation) => {
+    return translations[language]?.formations?.[formation.title]?.description || formation.description;
+  };
 
   if (loading) {
     return (
       <div className="min-h-screen bg-[#1E1540] pt-28 pb-20 px-4 flex items-center justify-center">
-        <div className="text-white text-xl">Chargement...</div>
+        <div className="text-white text-xl">{t(language, 'common.loading')}</div>
       </div>
     );
   }
@@ -55,11 +68,11 @@ const Boutique = () => {
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-4">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
-              Boutique de Formations
+              {t(language, 'shop.title')}
             </span>
           </h1>
           <p className="text-white/70 text-lg max-w-2xl mx-auto">
-            Découvrez nos formations exclusives en trading. Chaque achat vous donne accès à des vidéos de qualité professionnelle et à nos canaux VIP Telegram.
+            {t(language, 'shop.subtitle')}
           </p>
         </div>
 
@@ -74,7 +87,7 @@ const Boutique = () => {
               <div className="relative h-56 overflow-hidden">
                 <img
                   src={formation.image}
-                  alt={formation.title}
+                  alt={getFormationTitle(formation)}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1E1540] via-transparent to-transparent"></div>
@@ -85,8 +98,8 @@ const Boutique = () => {
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-white mb-3">{formation.title}</h3>
-                <p className="text-white/70 mb-4 line-clamp-3">{formation.description}</p>
+                <h3 className="text-2xl font-bold text-white mb-3">{getFormationTitle(formation)}</h3>
+                <p className="text-white/70 mb-4 line-clamp-3">{getFormationDescription(formation)}</p>
 
                 {/* Info Tags */}
                 <div className="flex flex-wrap gap-2 mb-6">
@@ -99,7 +112,7 @@ const Boutique = () => {
                     <span className="text-white/80 text-sm">{formation.level}</span>
                   </div>
                   <div className="bg-purple-500/20 px-3 py-1 rounded-full">
-                    <span className="text-white/80 text-sm">{formation.videoCount} vidéos</span>
+                    <span className="text-white/80 text-sm">{formation.videoCount} {language === 'fr' ? 'vidéos' : 'videos'}</span>
                   </div>
                 </div>
 
@@ -109,7 +122,7 @@ const Boutique = () => {
                   className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white py-6 rounded-full font-semibold text-lg group"
                 >
                   <ShoppingCart className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                  Acheter maintenant
+                  {t(language, 'shop.buy')}
                 </Button>
               </div>
             </div>
@@ -119,7 +132,7 @@ const Boutique = () => {
         {/* Benefits Section */}
         <div className="mt-20 bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-3xl p-8 md:p-12 border border-purple-500/30">
           <h2 className="text-3xl font-bold text-center text-white mb-8">
-            Ce que vous obtenez avec chaque formation
+            {t(language, 'shop.includes')}
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
@@ -128,8 +141,8 @@ const Boutique = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Vidéos HD</h3>
-              <p className="text-white/70">Accès à toutes les vidéos en haute définition, disponibles 24/7</p>
+              <h3 className="text-xl font-bold text-white mb-2">{language === 'fr' ? 'Vidéos HD' : 'HD Videos'}</h3>
+              <p className="text-white/70">{t(language, 'shop.benefits.videos')}</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -137,8 +150,8 @@ const Boutique = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Canaux Telegram VIP</h3>
-              <p className="text-white/70">Rejoignez nos canaux privés pour des signaux exclusifs</p>
+              <h3 className="text-xl font-bold text-white mb-2">{language === 'fr' ? 'Canaux Telegram VIP' : 'VIP Telegram Channels'}</h3>
+              <p className="text-white/70">{t(language, 'shop.benefits.telegram')}</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -146,8 +159,8 @@ const Boutique = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Support 24/7</h3>
-              <p className="text-white/70">Équipe disponible pour répondre à toutes vos questions</p>
+              <h3 className="text-xl font-bold text-white mb-2">{t(language, 'shop.benefits.support')}</h3>
+              <p className="text-white/70">{language === 'fr' ? 'Équipe disponible pour répondre à toutes vos questions' : 'Team available to answer all your questions'}</p>
             </div>
           </div>
         </div>
