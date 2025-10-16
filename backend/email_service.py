@@ -83,7 +83,7 @@ class EmailService:
                     
                     <p>Pour commencer, explorez nos formations et rejoignez-nous !</p>
                     
-                    <a href="https://edushop-portal.preview.emergentagent.com/boutique" class="button">Découvrir les formations</a>
+                    <a href="{self.frontend_url}/boutique" class="button">Découvrir les formations</a>
                     
                     <p>À très bientôt,<br>L'équipe Tradalife</p>
                 </div>
