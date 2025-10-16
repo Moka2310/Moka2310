@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from models import User, KYCStatus
 from dependencies import get_db, get_current_admin
+from email_service import email_service
 from datetime import datetime
 from typing import List
 
@@ -54,7 +55,8 @@ async def approve_kyc(user_id: str, current_admin: User = Depends(get_current_ad
         }}
     )
     
-    # TODO: Send approval email to user
+    # Send approval email
+    await email_service.send_kyc_approved(user["email"])
     
     return {
         "success": True,
@@ -80,7 +82,8 @@ async def reject_kyc(user_id: str, reason: str, current_admin: User = Depends(ge
         }}
     )
     
-    # TODO: Send rejection email to user with reason
+    # Send rejection email
+    await email_service.send_kyc_rejected(user["email"], reason)
     
     return {
         "success": True,
