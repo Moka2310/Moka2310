@@ -425,25 +425,187 @@ class TradalifeTester:
             self.log_test("Get KYC Status", False, f"Error: {str(e)}")
             return False
     
+    def test_admin_register(self):
+        """Test admin user registration (for admin functions testing)"""
+        try:
+            admin_data = {
+                "email": self.test_admin_email,
+                "password": "AdminPass123!"
+            }
+            
+            response = self.session.post(f"{API_URL}/auth/register", json=admin_data)
+            
+            if response.status_code == 200 or response.status_code == 400:
+                # Try to login as admin
+                return self.test_admin_login()
+            else:
+                self.log_test("Admin Registration", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Registration", False, f"Error: {str(e)}")
+            return False
+    
+    def test_admin_login(self):
+        """Test admin login"""
+        try:
+            credentials = {
+                "email": self.test_admin_email,
+                "password": "AdminPass123!"
+            }
+            
+            response = self.session.post(f"{API_URL}/auth/login", json=credentials)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "user" in data and "token" in data:
+                    self.admin_token = data["token"]
+                    self.log_test("Admin Login", True, f"Admin login successful: {data['user']['email']}")
+                    return True
+                else:
+                    self.log_test("Admin Login", False, "Missing user or token in response", data)
+                    return False
+            else:
+                self.log_test("Admin Login", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Login", False, f"Error: {str(e)}")
+            return False
+    
+    def test_admin_kyc_requests(self):
+        """Test admin get KYC requests"""
+        if not self.admin_token:
+            self.log_test("Admin KYC Requests", False, "No admin token available")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            response = self.session.get(f"{API_URL}/admin/kyc-requests", headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    self.log_test("Admin KYC Requests", True, f"Retrieved {len(data)} KYC requests")
+                    return True
+                else:
+                    self.log_test("Admin KYC Requests", False, "Invalid KYC requests data structure", data)
+                    return False
+            elif response.status_code == 403:
+                self.log_test("Admin KYC Requests", True, "Access denied (user not admin) - expected behavior")
+                return True
+            else:
+                self.log_test("Admin KYC Requests", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin KYC Requests", False, f"Error: {str(e)}")
+            return False
+    
+    def test_admin_stats(self):
+        """Test admin statistics"""
+        if not self.admin_token:
+            self.log_test("Admin Stats", False, "No admin token available")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            response = self.session.get(f"{API_URL}/admin/stats", headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                expected_fields = ["totalUsers", "pendingKyc", "approvedKyc", "totalPurchases", "totalRevenue"]
+                if all(field in data for field in expected_fields):
+                    self.log_test("Admin Stats", True, f"Stats retrieved: {data['totalUsers']} users, {data['totalPurchases']} purchases")
+                    return True
+                else:
+                    self.log_test("Admin Stats", False, "Missing expected fields in stats", data)
+                    return False
+            elif response.status_code == 403:
+                self.log_test("Admin Stats", True, "Access denied (user not admin) - expected behavior")
+                return True
+            else:
+                self.log_test("Admin Stats", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Stats", False, f"Error: {str(e)}")
+            return False
+    
+    def test_error_handling(self):
+        """Test various error scenarios"""
+        try:
+            # Test invalid login
+            response = self.session.post(f"{API_URL}/auth/login", json={
+                "email": "invalid@email.com",
+                "password": "wrongpassword"
+            })
+            
+            if response.status_code == 401:
+                self.log_test("Error Handling - Invalid Login", True, "Correctly returned 401 for invalid credentials")
+            else:
+                self.log_test("Error Handling - Invalid Login", False, f"Expected 401, got {response.status_code}")
+                return False
+            
+            # Test unauthorized access
+            response = self.session.get(f"{API_URL}/auth/me")
+            
+            if response.status_code == 403 or response.status_code == 401:
+                self.log_test("Error Handling - Unauthorized Access", True, f"Correctly returned {response.status_code} for unauthorized access")
+            else:
+                self.log_test("Error Handling - Unauthorized Access", False, f"Expected 401/403, got {response.status_code}")
+                return False
+            
+            # Test non-existent formation
+            response = self.session.get(f"{API_URL}/formations/999")
+            
+            if response.status_code == 404:
+                self.log_test("Error Handling - Non-existent Formation", True, "Correctly returned 404 for non-existent formation")
+            else:
+                self.log_test("Error Handling - Non-existent Formation", False, f"Expected 404, got {response.status_code}")
+                return False
+            
+            return True
+            
+        except Exception as e:
+            self.log_test("Error Handling", False, f"Error: {str(e)}")
+            return False
+    
     def run_all_tests(self):
         """Run all tests in sequence"""
-        print(f"🚀 Starting Tradalife Backend API Tests")
+        print(f"🚀 Starting Comprehensive Tradalife Backend API Tests")
         print(f"📍 Backend URL: {BASE_URL}")
         print(f"📍 API URL: {API_URL}")
-        print("=" * 60)
+        print("=" * 80)
         
-        # Test sequence
+        # Test sequence - organized by functionality
         tests = [
+            # Health Check
             self.test_health_check,
+            
+            # Authentication & User Management
             self.test_register,
             self.test_login,
             self.test_get_me,
+            
+            # Formations Management
             self.test_get_formations,
             self.test_get_formation_by_id,
-            self.test_create_purchase,
+            
+            # Purchase Flow
+            self.test_create_purchase_stripe,
+            self.test_create_purchase_paypal,
             self.test_confirm_purchase,
             self.test_get_my_purchases,
-            self.test_kyc_status
+            
+            # KYC System
+            self.test_kyc_status,
+            self.test_kyc_submit,
+            self.test_kyc_documents,
+            
+            # Admin Functions
+            self.test_admin_register,
+            self.test_admin_kyc_requests,
+            self.test_admin_stats,
+            
+            # Error Handling
+            self.test_error_handling
         ]
         
         passed = 0
@@ -453,7 +615,7 @@ class TradalifeTester:
             if test():
                 passed += 1
         
-        print("=" * 60)
+        print("=" * 80)
         print(f"📊 Test Results: {passed}/{total} tests passed")
         
         if passed == total:
