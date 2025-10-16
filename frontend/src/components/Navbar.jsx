@@ -14,10 +14,10 @@ const Navbar = () => {
 
   const menuItems = [
     { label: t(language, 'nav.home'), path: '/' },
-    { label: 'Nos canaux', path: '#canaux' },
-    { label: 'Nos applications', path: '#applications' },
-    { label: 'Vidéos', path: '#videos' },
-    { label: 'Contact', path: '#contact' },
+    { label: t(language, 'nav.channels'), path: '#canaux' },
+    { label: t(language, 'nav.applications'), path: '#applications' },
+    { label: t(language, 'nav.videos'), path: '#videos' },
+    { label: t(language, 'nav.contact'), path: '#contact' },
     { label: t(language, 'nav.shop'), path: '/boutique' }
   ];
 
