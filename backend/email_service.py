@@ -97,8 +97,36 @@ class EmailService:
         return await self.send_email(to_email, subject, html_content)
     
     async def send_purchase_confirmation(self, to_email: str, formation_title: str, amount: float):
-        """Send purchase confirmation email"""
-        subject = f"Confirmation d'achat - {formation_title}"
+        """Send purchase confirmation email with training videos and Telegram links"""
+        subject = f"Confirmation d'achat - {formation_title} 🎉"
+        
+        # Training videos (same for all formations)
+        video_formation = "https://drive.google.com/file/d/1qfyBxsWWjWRVeosU68xeZcHMbpYw9gjV/view?usp=sharing"
+        video_mt4 = "https://drive.google.com/file/d/147kwnZWmHgAVDzQr09x4ZgcmoxWF4jH1/view?usp=sharing"
+        
+        # Telegram channels
+        telegram_channels = [
+            {"name": "GOLD", "link": "https://t.me/+BWpLllZBIpxjMWE5"},
+            {"name": "FOREX", "link": "https://t.me/+naLR-gXJl8MzZGJh"},
+            {"name": "ACTION", "link": "https://t.me/+GBRYqMdHZ4c0YzYx"},
+            {"name": "INDICES", "link": "https://t.me/+Z0h36lgNatQxMjFh"},
+            {"name": "CRYPTO", "link": "https://t.me/+7NNOp2XGXcpiMDdh"},
+            {"name": "COMMODITÉS", "link": "https://t.me/+MXfEUYj4D2oxZGJh"}
+        ]
+        
+        # Exception: TRADALIFE PREMIUM doesn't have access to ACTION channel
+        if "PREMIUM" in formation_title.upper():
+            telegram_channels = [ch for ch in telegram_channels if ch["name"] != "ACTION"]
+        
+        # Build Telegram channels HTML
+        telegram_html = ""
+        for channel in telegram_channels:
+            telegram_html += f"""
+            <li style="margin: 10px 0;">
+                <strong>{channel["name"]}:</strong> 
+                <a href="{channel["link"]}" style="color: #E91E8C; text-decoration: none;">{channel["link"]}</a>
+            </li>
+            """
         
         html_content = f"""
         <!DOCTYPE html>
@@ -110,6 +138,7 @@ class EmailService:
                 .header {{ background: linear-gradient(135deg, #E91E8C 0%, #7B3FF2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }}
                 .content {{ background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }}
                 .purchase-details {{ background: white; padding: 20px; border-radius: 10px; margin: 20px 0; }}
+                .access-section {{ background: white; padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #E91E8C; }}
                 .button {{ display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #E91E8C 0%, #7B3FF2 100%); color: white; text-decoration: none; border-radius: 25px; margin: 20px 0; }}
             </style>
         </head>
@@ -119,16 +148,39 @@ class EmailService:
                     <h1>✅ Paiement confirmé !</h1>
                 </div>
                 <div class="content">
-                    <p>Votre achat a été effectué avec succès.</p>
+                    <p>Félicitations ! Votre achat a été effectué avec succès.</p>
                     
                     <div class="purchase-details">
-                        <h3>Détails de l'achat</h3>
+                        <h3>📋 Détails de l'achat</h3>
                         <p><strong>Formation :</strong> {formation_title}</p>
                         <p><strong>Montant :</strong> {amount}€</p>
                     </div>
                     
+                    <div class="access-section">
+                        <h3>🎥 Vos Vidéos de Formation</h3>
+                        <p>Accédez immédiatement à vos vidéos de formation :</p>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 10px 0;">
+                                <strong>📹 Vidéo de Formation :</strong><br>
+                                <a href="{video_formation}" style="color: #E91E8C; text-decoration: none;">{video_formation}</a>
+                            </li>
+                            <li style="margin: 10px 0;">
+                                <strong>📹 Utilisation de MT4 :</strong><br>
+                                <a href="{video_mt4}" style="color: #E91E8C; text-decoration: none;">{video_mt4}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="access-section">
+                        <h3>💬 Vos Canaux Telegram VIP</h3>
+                        <p>Rejoignez nos canaux de signaux exclusifs :</p>
+                        <ul style="list-style: none; padding: 0;">
+                            {telegram_html}
+                        </ul>
+                    </div>
+                    
                     <h3>📋 Prochaine étape : Vérification KYC</h3>
-                    <p>Pour accéder à votre formation et aux canaux Telegram VIP, veuillez compléter votre vérification d'identité (KYC).</p>
+                    <p>Pour finaliser votre accès complet, veuillez compléter votre vérification d'identité (KYC).</p>
                     
                     <p><strong>Documents requis :</strong></p>
                     <ul>
@@ -139,9 +191,9 @@ class EmailService:
                     
                     <a href="https://edushop-portal.preview.emergentagent.com/dashboard" class="button">Compléter mon KYC</a>
                     
-                    <p>Une fois votre KYC validé, vous recevrez un email de confirmation et pourrez accéder à tout le contenu.</p>
+                    <p>Merci pour votre confiance et bienvenue dans la communauté Tradalife ! 🚀</p>
                     
-                    <p>Merci pour votre confiance !<br>L'équipe Tradalife</p>
+                    <p>L'équipe Tradalife</p>
                 </div>
             </div>
         </body>
