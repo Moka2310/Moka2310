@@ -1,13 +1,21 @@
 #!/usr/bin/env python3
 """
-Tradalife Backend API Test Suite
-Tests all backend endpoints with realistic data
+Tradalife Backend API Test Suite - Comprehensive Testing
+Tests all backend endpoints with realistic data including:
+- Authentication & User Management
+- Formations (Courses) Management  
+- Purchase Flow
+- KYC (Know Your Customer)
+- Admin Functions
+- Email Service Integration
+- Payment Integration
 """
 
 import requests
 import json
 import sys
 import os
+import io
 from datetime import datetime
 
 # Get backend URL from frontend .env file
@@ -28,9 +36,12 @@ class TradalifeTester:
     def __init__(self):
         self.session = requests.Session()
         self.token = None
+        self.admin_token = None
         self.user_data = None
         self.purchase_id = None
         self.test_results = []
+        self.test_user_email = "trader@tradalife.com"
+        self.test_admin_email = "admin@tradalife.com"
         
     def log_test(self, test_name, success, details="", response_data=None):
         """Log test results"""
