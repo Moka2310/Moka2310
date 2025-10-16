@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { authAPI } from '../api/client';
 
 const AuthContext = createContext(null);
 
@@ -15,59 +16,64 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check localStorage for existing session
-    const storedUser = localStorage.getItem('tradalife_user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+    // Check if user is logged in
+    const loadUser = async () => {
+      const token = localStorage.getItem('tradalife_token');
+      if (token) {
+        try {
+          const response = await authAPI.getMe();
+          setUser(response.data);
+        } catch (error) {
+          console.error('Failed to load user:', error);
+          localStorage.removeItem('tradalife_token');
+        }
+      }
+      setLoading(false);
+    };
+    
+    loadUser();
   }, []);
 
-  const login = (email, password) => {
-    // Mock login - will be replaced with real API
-    const mockUser = {
-      id: Date.now().toString(),
-      email,
-      firstName: '',
-      lastName: '',
-      country: '',
-      phone: '',
-      kycStatus: 'pending',
-      purchases: []
-    };
-    
-    setUser(mockUser);
-    localStorage.setItem('tradalife_user', JSON.stringify(mockUser));
-    return mockUser;
+  const login = async (email, password) => {
+    try {
+      const response = await authAPI.login(email, password);
+      const { user: userData, token } = response.data;
+      
+      setUser(userData);
+      localStorage.setItem('tradalife_token', token);
+      
+      return userData;
+    } catch (error) {
+      throw new Error(error.response?.data?.detail || 'Login failed');
+    }
   };
 
-  const register = (email, password) => {
-    // Mock register - will be replaced with real API
-    const mockUser = {
-      id: Date.now().toString(),
-      email,
-      firstName: '',
-      lastName: '',
-      country: '',
-      phone: '',
-      kycStatus: 'pending',
-      purchases: []
-    };
-    
-    setUser(mockUser);
-    localStorage.setItem('tradalife_user', JSON.stringify(mockUser));
-    return mockUser;
+  const register = async (email, password) => {
+    try {
+      const response = await authAPI.register(email, password);
+      const { user: userData, token } = response.data;
+      
+      setUser(userData);
+      localStorage.setItem('tradalife_token', token);
+      
+      return userData;
+    } catch (error) {
+      throw new Error(error.response?.data?.detail || 'Registration failed');
+    }
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('tradalife_user');
+    localStorage.removeItem('tradalife_token');
   };
 
-  const updateUser = (userData) => {
-    const updatedUser = { ...user, ...userData };
-    setUser(updatedUser);
-    localStorage.setItem('tradalife_user', JSON.stringify(updatedUser));
+  const updateUser = async () => {
+    try {
+      const response = await authAPI.getMe();
+      setUser(response.data);
+    } catch (error) {
+      console.error('Failed to update user:', error);
+    }
   };
 
   const value = {
