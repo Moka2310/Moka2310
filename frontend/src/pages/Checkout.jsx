@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t, translations } from '../translations';
 import { purchasesAPI } from '../api/client';
 import { toast } from '../hooks/use-toast';
 import { CreditCard, Loader2 } from 'lucide-react';
@@ -10,6 +12,7 @@ const Checkout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, updateUser } = useAuth();
+  const { language } = useLanguage();
   const [paymentMethod, setPaymentMethod] = useState('stripe');
   const [processing, setProcessing] = useState(false);
 
@@ -19,6 +22,15 @@ const Checkout = () => {
     navigate('/boutique');
     return null;
   }
+  
+  // Get translated formation info
+  const getFormationTitle = () => {
+    return translations[language]?.formations?.[formation.title]?.title || formation.title;
+  };
+  
+  const getFormationDescription = () => {
+    return translations[language]?.formations?.[formation.title]?.description || formation.description;
+  };
 
   const handlePayment = async () => {
     setProcessing(true);
@@ -35,8 +47,8 @@ const Checkout = () => {
       await purchasesAPI.confirm(purchaseId);
       
       toast({
-        title: 'Paiement réussi !',
-        description: 'Vous recevrez un email de confirmation. Veuillez compléter votre KYC pour accéder aux formations.'
+        title: t(language, 'checkout.success'),
+        description: t(language, 'checkout.successMessage')
       });
       
       setProcessing(false);
@@ -44,8 +56,8 @@ const Checkout = () => {
     } catch (error) {
       setProcessing(false);
       toast({
-        title: 'Erreur de paiement',
-        description: error.response?.data?.detail || 'Une erreur est survenue',
+        title: t(language, 'checkout.error'),
+        description: error.response?.data?.detail || t(language, 'checkout.errorMessage'),
         variant: 'destructive'
       });
     }
