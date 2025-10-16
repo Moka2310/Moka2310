@@ -73,8 +73,8 @@ const Dashboard = () => {
     logout();
     navigate('/');
     toast({
-      title: 'Déconnexion réussie',
-      description: 'À bientôt !'
+      title: language === 'fr' ? 'Déconnexion réussie' : 'Logout successful',
+      description: language === 'fr' ? 'À bientôt !' : 'See you soon!'
     });
   };
 
@@ -84,8 +84,8 @@ const Dashboard = () => {
     // Check if all documents are uploaded
     if (!documents.passport || !documents.idCard || !documents.proofOfResidence) {
       toast({
-        title: 'Documents manquants',
-        description: 'Veuillez télécharger tous les documents requis',
+        title: language === 'fr' ? 'Documents manquants' : 'Missing documents',
+        description: language === 'fr' ? 'Veuillez télécharger tous les documents requis' : 'Please upload all required documents',
         variant: 'destructive'
       });
       return;
