@@ -1,7 +1,11 @@
 import React from 'react';
 import { Send, Facebook } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 
 const Footer = () => {
+  const { language } = useLanguage();
+  
   return (
     <footer className="bg-gradient-to-b from-[#1E1540] to-black py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,7 +33,7 @@ const Footer = () => {
 
         <div className="text-center">
           <p className="text-pink-500 font-semibold text-lg">
-            @Copyright, 2025
+            {t(language, 'footer.rights')} © 2025
           </p>
         </div>
       </div>
