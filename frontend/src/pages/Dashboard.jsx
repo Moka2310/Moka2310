@@ -321,43 +321,43 @@ const Dashboard = () => {
                   {/* Personal Info */}
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-white/80 mb-2 text-sm">Prénom*</label>
+                      <label className="block text-white/80 mb-2 text-sm">{language === 'fr' ? 'Prénom' : 'First Name'}*</label>
                       <Input
                         type="text"
                         required
                         value={kycData.firstName}
                         onChange={(e) => setKycData({ ...kycData, firstName: e.target.value })}
                         className="bg-white/10 border-purple-500/30 text-white placeholder:text-white/50 focus:border-pink-500"
-                        placeholder="Votre prénom"
+                        placeholder={language === 'fr' ? 'Votre prénom' : 'Your first name'}
                       />
                     </div>
                     <div>
-                      <label className="block text-white/80 mb-2 text-sm">Nom*</label>
+                      <label className="block text-white/80 mb-2 text-sm">{language === 'fr' ? 'Nom' : 'Last Name'}*</label>
                       <Input
                         type="text"
                         required
                         value={kycData.lastName}
                         onChange={(e) => setKycData({ ...kycData, lastName: e.target.value })}
                         className="bg-white/10 border-purple-500/30 text-white placeholder:text-white/50 focus:border-pink-500"
-                        placeholder="Votre nom"
+                        placeholder={language === 'fr' ? 'Votre nom' : 'Your last name'}
                       />
                     </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-white/80 mb-2 text-sm">Pays*</label>
+                      <label className="block text-white/80 mb-2 text-sm">{language === 'fr' ? 'Pays' : 'Country'}*</label>
                       <Input
                         type="text"
                         required
                         value={kycData.country}
                         onChange={(e) => setKycData({ ...kycData, country: e.target.value })}
                         className="bg-white/10 border-purple-500/30 text-white placeholder:text-white/50 focus:border-pink-500"
-                        placeholder="Votre pays"
+                        placeholder={language === 'fr' ? 'Votre pays' : 'Your country'}
                       />
                     </div>
                     <div>
-                      <label className="block text-white/80 mb-2 text-sm">Téléphone*</label>
+                      <label className="block text-white/80 mb-2 text-sm">{language === 'fr' ? 'Téléphone' : 'Phone'}*</label>
                       <Input
                         type="tel"
                         required
