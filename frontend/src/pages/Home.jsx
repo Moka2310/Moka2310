@@ -452,13 +452,15 @@ const Home = () => {
           <h2 className="text-4xl font-bold text-center mb-4">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">Contact</span>
           </h2>
-          <p className="text-white/70 text-center mb-12">Nous sommes là pour vous</p>
+          <p className="text-white/70 text-center mb-12">
+            {language === 'fr' ? 'Nous sommes là pour vous' : 'We are here for you'}
+          </p>
           <form onSubmit={handleContactSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <Input
                   type="text"
-                  placeholder="Prénom*"
+                  placeholder={language === 'fr' ? 'Prénom*' : 'First Name*'}
                   required
                   value={contactForm.firstName}
                   onChange={(e) => setContactForm({ ...contactForm, firstName: e.target.value })}
@@ -468,7 +470,7 @@ const Home = () => {
               <div>
                 <Input
                   type="text"
-                  placeholder="Nom*"
+                  placeholder={language === 'fr' ? 'Nom*' : 'Last Name*'}
                   required
                   value={contactForm.lastName}
                   onChange={(e) => setContactForm({ ...contactForm, lastName: e.target.value })}
@@ -479,7 +481,7 @@ const Home = () => {
             <div>
               <Input
                 type="email"
-                placeholder="Votre email*"
+                placeholder={language === 'fr' ? 'Votre email*' : 'Your email*'}
                 required
                 value={contactForm.email}
                 onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
@@ -498,6 +500,11 @@ const Home = () => {
             </div>
             <div className="text-center">
               <Button
+                type="submit"
+                className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-12 py-6 text-lg rounded-full"
+              >
+                {language === 'fr' ? 'Envoyer' : 'Send'}
+              </Button>
                 type="submit"
                 className="bg-white text-[#1E1540] hover:bg-white/90 px-12 py-6 text-lg rounded-full font-semibold"
               >
