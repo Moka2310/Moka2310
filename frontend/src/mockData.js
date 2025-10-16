@@ -75,7 +75,7 @@ export const canaux = [
   { name: 'Crypto', icon: 'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,fit=crop/A3Ql90nqlVUN4Xox/logo-crypto-m6L27y8BnrC1Vbbz.png' },
   { name: 'Forex', icon: 'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,fit=crop/A3Ql90nqlVUN4Xox/forex-dOqZvkMGWNCjDPxo.jpg' },
   { name: 'Indices', icon: 'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,fit=crop/A3Ql90nqlVUN4Xox/indices-dJoPLkl9XGSBxOy2.jpg' },
-  { name: 'Commodités', icon: 'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,fit=crop/A3Ql90nqlVUN4Xox/commodites-YZ9EZkMRkWS W5xoX.jpg' },
+  { name: 'Commodités', icon: 'https://i.imgur.com/63KI3jn.jpeg' },
   { name: 'Gold', icon: 'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,fit=crop/A3Ql90nqlVUN4Xox/gold-YD0EekrWkoTklRaY.jpg' },
   { name: 'Actions', icon: 'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,fit=crop/A3Ql90nqlVUN4Xox/actions-ALp25k8430sQMDZX.jpg' }
 ];
