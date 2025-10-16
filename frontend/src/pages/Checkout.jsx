@@ -137,20 +137,31 @@ const Checkout = () => {
               </p>
             </div>
 
-            <Button
-              onClick={handlePayment}
-              disabled={processing}
-              className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white py-6 rounded-full font-semibold text-lg"
-            >
-              {processing ? (
-                <>
-                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  {t(language, 'checkout.processing')}
-                </>
-              ) : (
-                `${t(language, 'checkout.pay')} ${formation.price}€`
-              )}
-            </Button>
+            <div className="space-y-3">
+              <Button
+                onClick={handlePayment}
+                disabled={processing}
+                className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white py-6 rounded-full font-semibold text-lg"
+              >
+                {processing ? (
+                  <>
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    {t(language, 'checkout.processing')}
+                  </>
+                ) : (
+                  `${t(language, 'checkout.pay')} ${formation.price}€`
+                )}
+              </Button>
+
+              <Button
+                onClick={() => navigate('/boutique')}
+                disabled={processing}
+                variant="outline"
+                className="w-full border-2 border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white py-6 rounded-full font-semibold text-lg"
+              >
+                {language === 'fr' ? 'Annuler' : 'Cancel'}
+              </Button>
+            </div>
 
             <p className="text-white/50 text-xs text-center mt-4">
               {t(language, 'checkout.secure')}
