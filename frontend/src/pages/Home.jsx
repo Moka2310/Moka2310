@@ -275,14 +275,26 @@ const Home = () => {
           
           <div className="grid md:grid-cols-3 gap-8">
             {/* Video 1 */}
-            <div className="bg-[#2B1F5C]/50 rounded-3xl overflow-hidden border border-purple-500/30 hover:border-pink-500/50 transition-all">
-              <div className="aspect-video">
+            <div className="bg-[#2B1F5C]/50 rounded-3xl overflow-hidden border border-purple-500/30 hover:border-pink-500/50 transition-all group cursor-pointer">
+              <div 
+                className="aspect-video relative"
+                onClick={() => openVideoModal({
+                  url: 'https://drive.google.com/file/d/1gRDkNANoag2efegjIaQx1gPt-MI-VLve/preview',
+                  title: 'Comment ouvrir votre compte GlobalPrime',
+                  description: 'Guide complet pour créer et configurer votre compte de trading'
+                })}
+              >
                 <iframe
                   src="https://drive.google.com/file/d/1gRDkNANoag2efegjIaQx1gPt-MI-VLve/preview"
-                  className="w-full h-full"
+                  className="w-full h-full pointer-events-none"
                   allow="autoplay"
                   title="Comment ouvrir votre compte GlobalPrime"
                 ></iframe>
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+                  <div className="bg-pink-500 rounded-full p-4 opacity-0 group-hover:opacity-100 transform scale-50 group-hover:scale-100 transition-all">
+                    <Maximize2 className="w-8 h-8 text-white" />
+                  </div>
+                </div>
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-white mb-2">Comment ouvrir votre compte GlobalPrime</h3>
@@ -291,14 +303,26 @@ const Home = () => {
             </div>
 
             {/* Video 2 */}
-            <div className="bg-[#2B1F5C]/50 rounded-3xl overflow-hidden border border-purple-500/30 hover:border-pink-500/50 transition-all">
-              <div className="aspect-video">
+            <div className="bg-[#2B1F5C]/50 rounded-3xl overflow-hidden border border-purple-500/30 hover:border-pink-500/50 transition-all group cursor-pointer">
+              <div 
+                className="aspect-video relative"
+                onClick={() => openVideoModal({
+                  url: 'https://drive.google.com/file/d/1q5e7vg7SeuLebmShKeZ2jGC9S7FnDpwT/preview',
+                  title: 'Comment connecter son compte à MetaTrader 4',
+                  description: 'Tutoriel pas à pas pour connecter votre compte à la plateforme MT4'
+                })}
+              >
                 <iframe
                   src="https://drive.google.com/file/d/1q5e7vg7SeuLebmShKeZ2jGC9S7FnDpwT/preview"
-                  className="w-full h-full"
+                  className="w-full h-full pointer-events-none"
                   allow="autoplay"
                   title="Comment connecter son compte à MetaTrader 4"
                 ></iframe>
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+                  <div className="bg-pink-500 rounded-full p-4 opacity-0 group-hover:opacity-100 transform scale-50 group-hover:scale-100 transition-all">
+                    <Maximize2 className="w-8 h-8 text-white" />
+                  </div>
+                </div>
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-white mb-2">Comment connecter son compte à MetaTrader 4</h3>
@@ -307,14 +331,26 @@ const Home = () => {
             </div>
 
             {/* Video 3 */}
-            <div className="bg-[#2B1F5C]/50 rounded-3xl overflow-hidden border border-purple-500/30 hover:border-pink-500/50 transition-all">
-              <div className="aspect-video">
+            <div className="bg-[#2B1F5C]/50 rounded-3xl overflow-hidden border border-purple-500/30 hover:border-pink-500/50 transition-all group cursor-pointer">
+              <div 
+                className="aspect-video relative"
+                onClick={() => openVideoModal({
+                  url: 'https://drive.google.com/file/d/13Rqhtq1fXkfGoGHIX65ToCeFjbhRnNUO/preview',
+                  title: 'Aperçu du contenu de notre groupe Telegram',
+                  description: 'Découvrez ce que vous recevrez dans nos canaux VIP'
+                })}
+              >
                 <iframe
                   src="https://drive.google.com/file/d/13Rqhtq1fXkfGoGHIX65ToCeFjbhRnNUO/preview"
-                  className="w-full h-full"
+                  className="w-full h-full pointer-events-none"
                   allow="autoplay"
                   title="Aperçu du contenu de notre groupe Telegram"
                 ></iframe>
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+                  <div className="bg-pink-500 rounded-full p-4 opacity-0 group-hover:opacity-100 transform scale-50 group-hover:scale-100 transition-all">
+                    <Maximize2 className="w-8 h-8 text-white" />
+                  </div>
+                </div>
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-white mb-2">Aperçu du contenu de notre groupe Telegram</h3>
@@ -332,6 +368,30 @@ const Home = () => {
             </Button>
           </div>
         </div>
+
+        {/* Video Modal */}
+        <Dialog open={isVideoModalOpen} onOpenChange={setIsVideoModalOpen}>
+          <DialogContent className="max-w-5xl w-full bg-[#1E1540] border-purple-500/30">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold text-white">
+                {selectedVideo?.title}
+              </DialogTitle>
+            </DialogHeader>
+            <div className="aspect-video w-full">
+              {selectedVideo && (
+                <iframe
+                  src={selectedVideo.url}
+                  className="w-full h-full rounded-lg"
+                  allow="autoplay; fullscreen"
+                  title={selectedVideo.title}
+                ></iframe>
+              )}
+            </div>
+            {selectedVideo?.description && (
+              <p className="text-white/70 mt-4">{selectedVideo.description}</p>
+            )}
+          </DialogContent>
+        </Dialog>
       </section>
 
       {/* Contact Section */}
