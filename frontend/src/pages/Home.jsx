@@ -6,6 +6,8 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 import { toast } from '../hooks/use-toast';
 import axios from 'axios';
 
@@ -14,6 +16,7 @@ const API = `${BACKEND_URL}/api`;
 
 const Home = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
