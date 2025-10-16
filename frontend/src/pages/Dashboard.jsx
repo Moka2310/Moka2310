@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { toast } from '../hooks/use-toast';
@@ -20,6 +22,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 
 const Dashboard = () => {
   const { user, logout, updateUser } = useAuth();
+  const { language } = useLanguage();
   const navigate = useNavigate();
   const [kycData, setKycData] = useState({
     firstName: user?.firstName || '',
