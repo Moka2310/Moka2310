@@ -320,7 +320,7 @@ class EmailService:
                         </ul>
                     </div>
                     
-                    <a href="https://edushop-portal.preview.emergentagent.com/dashboard" class="button">Accéder à mon Dashboard</a>
+                    <a href="{self.frontend_url}/dashboard" class="button">Accéder à mon Dashboard</a>
                     
                     <p>Bienvenue dans la communauté Tradalife ! 🚀</p>
                     
