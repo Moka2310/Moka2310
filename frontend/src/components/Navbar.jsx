@@ -73,10 +73,10 @@ const Navbar = () => {
             <button
               onClick={toggleLanguage}
               className="flex items-center space-x-2 text-white/90 hover:text-pink-400 transition-colors px-3 py-1.5 rounded-lg hover:bg-white/5"
-              title={language === 'fr' ? 'Switch to English' : 'Passer en Français'}
+              title={language === 'fr' ? 'Switch to English (Canada)' : 'Passer en Français'}
             >
               <Globe className="w-4 h-4" />
-              <span className="text-sm font-medium">{language === 'fr' ? '🇫🇷 FR' : '🇬🇧 EN'}</span>
+              <span className="text-sm font-medium">{language === 'fr' ? '🇫🇷 FR' : '🇨🇦 EN'}</span>
             </button>
 
             {/* Cart Icon */}
