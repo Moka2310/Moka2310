@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head><title>Create Icons</title></head>
+<body>
+<canvas id="canvas192" width="192" height="192"></canvas>
+<canvas id="canvas512" width="512" height="512"></canvas>
+<script>
+function createIcon(canvasId, size) {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext('2d');
+  
+  // Background
+  ctx.fillStyle = '#1E1540';
+  ctx.fillRect(0, 0, size, size);
+  
+  // Gradient circle
+  const gradient = ctx.createLinearGradient(0, 0, size, size);
+  gradient.addColorStop(0, '#E91E8C');
+  gradient.addColorStop(1, '#7B3FF2');
+  
+  ctx.fillStyle = gradient;
+  ctx.beginPath();
+  ctx.arc(size/2, size/2, size*0.35, 0, Math.PI * 2);
+  ctx.fill();
+  
+  // Letter T
+  ctx.fillStyle = 'white';
+  ctx.font = `bold ${size*0.4}px Arial`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('T', size/2, size/2);
+  
+  return canvas.toDataURL('image/png');
+}
+
+const data192 = createIcon('canvas192', 192);
+const data512 = createIcon('canvas512', 512);
+
+console.log('Icons created');
+console.log('192:', data192.substring(0, 50));
+console.log('512:', data512.substring(0, 50));
+</script>
+</body>
+</html>
