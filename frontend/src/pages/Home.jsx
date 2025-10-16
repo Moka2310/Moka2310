@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { canaux, stats } from '../mockData';
-import { Check, Download } from 'lucide-react';
+import { Check, Download, Maximize2 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { toast } from '../hooks/use-toast';
 import axios from 'axios';
 
@@ -14,6 +15,8 @@ const API = `${BACKEND_URL}/api`;
 const Home = () => {
   const navigate = useNavigate();
   const [videos, setVideos] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [contactForm, setContactForm] = useState({
     firstName: '',
     lastName: '',
@@ -33,6 +36,16 @@ const Home = () => {
     };
     loadVideos();
   }, []);
+
+  const openVideoModal = (video) => {
+    setSelectedVideo(video);
+    setIsVideoModalOpen(true);
+  };
+
+  const closeVideoModal = () => {
+    setIsVideoModalOpen(false);
+    setSelectedVideo(null);
+  };
 
   const handleContactSubmit = (e) => {
     e.preventDefault();
