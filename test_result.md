@@ -255,12 +255,14 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Authentication System"
-    - "Formations API"
-    - "Purchases System"
-    - "KYC Status API"
-  stuck_tasks: []
-  test_all: false
+    - "Payment Integration - Stripe"
+    - "Payment Integration - PayPal"
+    - "Email Service Integration"
+  stuck_tasks:
+    - "Payment Integration - Stripe"
+    - "Payment Integration - PayPal"
+    - "Email Service Integration"
+  test_all: true
   test_priority: "high_first"
 
 agent_communication:
