@@ -143,7 +143,7 @@ const Navbar = () => {
               className="flex items-center space-x-2 text-white/90 hover:text-pink-400 transition-colors py-2 w-full"
             >
               <Globe className="w-4 h-4" />
-              <span className="text-sm font-medium">{language === 'fr' ? '🇫🇷 Français' : '🇨🇦 English'}</span>
+              <span className="text-sm font-medium">{language === 'fr' ? '🇨🇦 English' : '🇫🇷 Français'}</span>
             </button>
             
             {user ? (
