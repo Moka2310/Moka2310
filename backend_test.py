@@ -330,6 +330,71 @@ class TradalifeTester:
             self.log_test("Get My Purchases", False, f"Error: {str(e)}")
             return False
     
+    def test_kyc_submit(self):
+        """Test KYC document submission"""
+        if not self.token:
+            self.log_test("KYC Submit", False, "No auth token available")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.token}"}
+            
+            # Create mock files for testing
+            files = {
+                'passport': ('passport.jpg', io.BytesIO(b'fake passport data'), 'image/jpeg'),
+                'idCard': ('id_card.jpg', io.BytesIO(b'fake id card data'), 'image/jpeg'),
+                'proofOfResidence': ('proof.pdf', io.BytesIO(b'fake proof data'), 'application/pdf')
+            }
+            
+            data = {
+                'firstName': 'Jean',
+                'lastName': 'Trader',
+                'country': 'France',
+                'phone': '+33123456789'
+            }
+            
+            response = self.session.post(f"{API_URL}/kyc/submit", files=files, data=data, headers=headers)
+            
+            if response.status_code == 200:
+                result = response.json()
+                if result.get("success") and result.get("kycStatus") == "pending_review":
+                    self.log_test("KYC Submit", True, f"KYC submitted successfully: {result.get('message')}")
+                    return True
+                else:
+                    self.log_test("KYC Submit", False, "Invalid KYC submission response", result)
+                    return False
+            else:
+                self.log_test("KYC Submit", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("KYC Submit", False, f"Error: {str(e)}")
+            return False
+    
+    def test_kyc_documents(self):
+        """Test get KYC documents"""
+        if not self.token:
+            self.log_test("Get KYC Documents", False, "No auth token available")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.token}"}
+            response = self.session.get(f"{API_URL}/kyc/documents", headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    self.log_test("Get KYC Documents", True, f"Retrieved {len(data)} documents")
+                    return True
+                else:
+                    self.log_test("Get KYC Documents", False, "Invalid documents data structure", data)
+                    return False
+            else:
+                self.log_test("Get KYC Documents", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Get KYC Documents", False, f"Error: {str(e)}")
+            return False
+    
     def test_kyc_status(self):
         """Test get KYC status"""
         if not self.token:
