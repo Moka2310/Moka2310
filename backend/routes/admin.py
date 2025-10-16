@@ -45,6 +45,16 @@ async def approve_kyc(user_id: str, current_admin: User = Depends(get_current_ad
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
+    # Get user's purchases to determine formations
+    purchases = await db.purchases.find({"userId": user_id, "status": "confirmed"}).to_list(length=None)
+    formation_ids = [p["formationId"] for p in purchases]
+    
+    # Get formation titles
+    formation_titles = []
+    if formation_ids:
+        formations = await db.formations.find({"id": {"$in": formation_ids}}).to_list(length=None)
+        formation_titles = [f["title"] for f in formations]
+    
     # Update KYC status
     await db.users.update_one(
         {"id": user_id},
@@ -55,8 +65,8 @@ async def approve_kyc(user_id: str, current_admin: User = Depends(get_current_ad
         }}
     )
     
-    # Send approval email
-    await email_service.send_kyc_approved(user["email"])
+    # Send approval email with formations info
+    await email_service.send_kyc_approved(user["email"], formation_titles)
     
     return {
         "success": True,
