@@ -223,7 +223,7 @@ const Navbar = () => {
                 onClick={handleInstallClick}
                 className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white flex items-center justify-center space-x-2"
               >
-                <Download className="w-4 h-4" />
+                <span className="font-bold">App</span>
                 <span>{language === 'fr' ? 'Installer l\'application' : 'Install app'}</span>
               </Button>
             )}
