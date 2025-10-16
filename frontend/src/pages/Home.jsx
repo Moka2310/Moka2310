@@ -116,20 +116,34 @@ const Home = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6">
                 <span className="text-pink-500">●</span>{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">Notre Mission</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
+                  {language === 'fr' ? 'Notre Mission' : 'Our Mission'}
+                </span>
               </h2>
               <div className="space-y-4 text-white/80 leading-relaxed">
                 <p>
-                  Chez <strong className="text-white">TRADALIFE</strong>, notre mission est de rendre le trading accessible, transparent et performant pour tous.
+                  {language === 'fr' 
+                    ? <><strong className="text-white">TRADALIFE</strong>, notre mission est de rendre le trading accessible, transparent et performant pour tous.</>
+                    : <>At <strong className="text-white">TRADALIFE</strong>, our mission is to make trading accessible, transparent and efficient for everyone.</>
+                  }
                 </p>
                 <p>
-                  Nous croyons que chaque trader, qu'il soit débutant ou expérimenté, mérite d'avoir les bons outils, un accompagnement personnalisé et une véritable stratégie pour réussir sur les marchés financiers.
+                  {language === 'fr'
+                    ? 'Nous croyons que chaque trader, qu\'il soit débutant ou expérimenté, mérite d\'avoir les bons outils, un accompagnement personnalisé et une véritable stratégie pour réussir sur les marchés financiers.'
+                    : 'We believe that every trader, whether beginner or experienced, deserves to have the right tools, personalized support and a real strategy to succeed in financial markets.'
+                  }
                 </p>
                 <p>
-                  Notre objectif est d'aider nos membres à développer leur autonomie, à maîtriser les bases du trading et à atteindre une rentabilité durable grâce à une approche structurée, éducative et réaliste.
+                  {language === 'fr'
+                    ? 'Notre objectif est d\'aider nos membres à développer leur autonomie, à maîtriser les bases du trading et à atteindre une rentabilité durable grâce à une approche structurée, éducative et réaliste.'
+                    : 'Our goal is to help our members develop their autonomy, master the basics of trading and achieve sustainable profitability through a structured, educational and realistic approach.'
+                  }
                 </p>
                 <p>
-                  Au-delà du trading, TRADALIFE est une <strong className="text-white">communauté internationale</strong> unie par une même passion : apprendre, partager et grandir ensemble.
+                  {language === 'fr'
+                    ? <>Au-delà du trading, TRADALIFE est une <strong className="text-white">communauté internationale</strong> unie par une même passion : apprendre, partager et grandir ensemble.</>
+                    : <>Beyond trading, TRADALIFE is an <strong className="text-white">international community</strong> united by the same passion: learning, sharing and growing together.</>
+                  }
                 </p>
               </div>
             </div>
@@ -138,36 +152,56 @@ const Home = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6">
                 <span className="text-pink-500">●</span>{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">Pourquoi Nous Choisir</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
+                  {language === 'fr' ? 'Pourquoi Nous Choisir' : 'Why Choose Us'}
+                </span>
               </h2>
               <p className="text-white/80 mb-6">
-                Nous mettons à votre disposition des outils performants, une équipe expérimentée et un accompagnement constant, afin que vous puissiez trader avec confiance, même dans les marchés les plus volatils.
+                {language === 'fr'
+                  ? 'Nous mettons à votre disposition des outils performants, une équipe expérimentée et un accompagnement constant, afin que vous puissiez trader avec confiance, même dans les marchés les plus volatils.'
+                  : 'We provide you with powerful tools, an experienced team and constant support, so you can trade with confidence, even in the most volatile markets.'
+                }
               </p>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <Check className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h3 className="text-white font-semibold mb-1">Accompagnement personnalisé</h3>
+                    <h3 className="text-white font-semibold mb-1">
+                      {language === 'fr' ? 'Accompagnement personnalisé' : 'Personalized Support'}
+                    </h3>
                     <p className="text-white/70 text-sm">
-                      Nos membres bénéficient d'un suivi privé via WhatsApp, ainsi que d'un accès à plusieurs canaux spécialisés (Gold, Forex, Crypto, Indices, Commodités, Actions).
+                      {language === 'fr'
+                        ? 'Nos membres bénéficient d\'un suivi privé via WhatsApp, ainsi que d\'un accès à plusieurs canaux spécialisés (Gold, Forex, Crypto, Indices, Commodités, Actions).'
+                        : 'Our members benefit from private monitoring via WhatsApp, as well as access to several specialized channels (Gold, Forex, Crypto, Indices, Commodities, Stocks).'
+                      }
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <Check className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h3 className="text-white font-semibold mb-1">Communauté active et bienveillante</h3>
+                    <h3 className="text-white font-semibold mb-1">
+                      {language === 'fr' ? 'Communauté active et bienveillante' : 'Active and Caring Community'}
+                    </h3>
                     <p className="text-white/70 text-sm">
-                      Avec plus de 4 000 membres à travers le monde, TRADALIFE est une famille de traders passionnés qui s'entraident, partagent leurs analyses et évoluent ensemble.
+                      {language === 'fr'
+                        ? 'Avec plus de 4 000 membres à travers le monde, TRADALIFE est une famille de traders passionnés qui s\'entraident, partagent leurs analyses et évoluent ensemble.'
+                        : 'With over 4,000 members worldwide, TRADALIFE is a family of passionate traders who help each other, share their analysis and grow together.'
+                      }
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <Check className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
-                    <h3 className="text-white font-semibold mb-1">Opportunités exclusives</h3>
+                    <h3 className="text-white font-semibold mb-1">
+                      {language === 'fr' ? 'Opportunités exclusives' : 'Exclusive Opportunities'}
+                    </h3>
                     <p className="text-white/70 text-sm">
-                      Grâce à nos partenariats avec des brokers reconnus, nos membres profitent de conditions de trading avantageuses et d'un accès privilégié à des formations premium.
+                      {language === 'fr'
+                        ? 'Grâce à nos partenariats avec des brokers reconnus, nos membres profitent de conditions de trading avantageuses et d\'un accès privilégié à des formations premium.'
+                        : 'Thanks to our partnerships with recognized brokers, our members enjoy advantageous trading conditions and privileged access to premium training.'
+                      }
                     </p>
                   </div>
                 </div>
