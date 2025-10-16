@@ -239,28 +239,37 @@ const Dashboard = () => {
                 )}
 
                 <div className="grid md:grid-cols-2 gap-6">
-                  {purchasedFormations.map((formation) => (
+                  {purchasedFormations.map((formation) => {
+                    // Get translated formation title
+                    const translatedTitle = translations[language]?.formations?.[formation.title]?.title || formation.title;
+                    
+                    return (
                     <div
                       key={formation.id}
                       className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl overflow-hidden border border-purple-500/30"
                     >
                       <img
                         src={formation.image}
-                        alt={formation.title}
+                        alt={translatedTitle}
                         className="w-full h-48 object-cover"
                       />
                       <div className="p-6">
-                        <h3 className="text-2xl font-bold text-white mb-2">{formation.title}</h3>
-                        <p className="text-white/70 mb-4">{formation.videoCount} vidéos disponibles</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">{translatedTitle}</h3>
+                        <p className="text-white/70 mb-4">
+                          {formation.videoCount} {language === 'fr' ? 'vidéos disponibles' : 'videos available'}
+                        </p>
 
                         {user?.kycStatus === 'approved' ? (
                           <div className="space-y-3">
                             <Button
                               className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white"
-                              onClick={() => toast({ title: 'Vidéos disponibles', description: 'Fonctionnalité en cours de développement' })}
+                              onClick={() => toast({ 
+                                title: language === 'fr' ? 'Vidéos disponibles' : 'Videos available', 
+                                description: language === 'fr' ? 'Fonctionnalité en cours de développement' : 'Feature under development' 
+                              })}
                             >
                               <Download className="w-4 h-4 mr-2" />
-                              Accéder aux vidéos
+                              {language === 'fr' ? 'Accéder aux vidéos' : 'Access videos'}
                             </Button>
                             {formation.telegramLinks.map((link, idx) => (
                               <Button
