@@ -50,7 +50,7 @@ const Navbar = () => {
             <img 
               src="https://i.imgur.com/FrA3lov.gif" 
               alt="Tradalife Logo" 
-              className="h-16 w-auto"
+              className="h-24 w-auto"
             />
           </Link>
 
