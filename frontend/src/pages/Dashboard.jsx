@@ -221,16 +221,19 @@ const Dashboard = () => {
                   onClick={() => navigate('/boutique')}
                   className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-4 rounded-full"
                 >
-                  Découvrir les formations
+                  {t(language, 'dashboard.shopButton')}
                 </Button>
               </div>
             ) : (
               <div className="space-y-6">
                 {user?.kycStatus !== 'approved' && (
                   <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6">
-                    <h3 className="text-yellow-400 font-bold mb-2">Action requise</h3>
+                    <h3 className="text-yellow-400 font-bold mb-2">{language === 'fr' ? 'Action requise' : 'Action required'}</h3>
                     <p className="text-white/80">
-                      Veuillez compléter votre vérification KYC pour accéder aux vidéos et aux canaux Telegram VIP.
+                      {language === 'fr' 
+                        ? 'Veuillez compléter votre vérification KYC pour accéder aux vidéos et aux canaux Telegram VIP.'
+                        : 'Please complete your KYC verification to access videos and VIP Telegram channels.'
+                      }
                     </p>
                   </div>
                 )}
