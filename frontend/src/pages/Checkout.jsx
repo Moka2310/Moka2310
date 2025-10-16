@@ -22,18 +22,16 @@ const Checkout = () => {
   const handlePayment = async () => {
     setProcessing(true);
     
-    // Simulate payment processing
-    setTimeout(() => {
-      // Add to user purchases
-      const updatedPurchases = [...(user.purchases || []), {
-        formationId: formation.id,
-        formationTitle: formation.title,
-        purchaseDate: new Date().toISOString(),
-        price: formation.price,
-        status: 'completed'
-      }];
+    try {
+      // Create purchase
+      const purchaseResponse = await purchasesAPI.create(formation.id, paymentMethod);
+      const { purchaseId } = purchaseResponse.data;
       
-      updateUser({ purchases: updatedPurchases });
+      // Simulate payment processing (in production, integrate with Stripe/PayPal)
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Confirm purchase
+      await purchasesAPI.confirm(purchaseId);
       
       toast({
         title: 'Paiement réussi !',
@@ -42,7 +40,14 @@ const Checkout = () => {
       
       setProcessing(false);
       navigate('/dashboard');
-    }, 2000);
+    } catch (error) {
+      setProcessing(false);
+      toast({
+        title: 'Erreur de paiement',
+        description: error.response?.data?.detail || 'Une erreur est survenue',
+        variant: 'destructive'
+      });
+    }
   };
 
   return (
