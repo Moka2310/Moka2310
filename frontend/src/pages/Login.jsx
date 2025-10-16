@@ -3,12 +3,15 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 import { toast } from '../hooks/use-toast';
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { login, register } = useAuth();
+  const { language } = useLanguage();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     email: '',
@@ -21,8 +24,8 @@ const Login = () => {
     
     if (!isLogin && formData.password !== formData.confirmPassword) {
       toast({
-        title: 'Erreur',
-        description: 'Les mots de passe ne correspondent pas',
+        title: t(language, 'common.error'),
+        description: t(language, 'auth.register.passwordMismatch'),
         variant: 'destructive'
       });
       return;
@@ -32,14 +35,14 @@ const Login = () => {
       if (isLogin) {
         await login(formData.email, formData.password);
         toast({
-          title: 'Connexion réussie !',
-          description: 'Bienvenue sur Tradalife'
+          title: t(language, 'auth.login.success'),
+          description: language === 'fr' ? 'Bienvenue sur Tradalife' : 'Welcome to Tradalife'
         });
       } else {
         await register(formData.email, formData.password);
         toast({
-          title: 'Inscription réussie !',
-          description: 'Votre compte a été créé avec succès'
+          title: t(language, 'auth.register.success'),
+          description: t(language, 'auth.register.success')
         });
       }
 
@@ -48,7 +51,7 @@ const Login = () => {
       navigate(returnTo, { state: location.state });
     } catch (error) {
       toast({
-        title: 'Erreur',
+        title: t(language, 'common.error'),
         description: error.message,
         variant: 'destructive'
       });
