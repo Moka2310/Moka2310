@@ -68,26 +68,26 @@ const Checkout = () => {
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold mb-12 text-center">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
-            Finaliser l'achat
+            {t(language, 'checkout.title')}
           </span>
         </h1>
 
         <div className="grid md:grid-cols-2 gap-8">
           {/* Formation Summary */}
           <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30">
-            <h2 className="text-2xl font-bold text-white mb-6">Résumé de la commande</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">{t(language, 'checkout.summary')}</h2>
             <div className="space-y-4">
               <div className="aspect-video rounded-xl overflow-hidden">
                 <img
                   src={formation.image}
-                  alt={formation.title}
+                  alt={getFormationTitle()}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className="text-xl font-bold text-white">{formation.title}</h3>
-              <p className="text-white/70">{formation.description}</p>
+              <h3 className="text-xl font-bold text-white">{getFormationTitle()}</h3>
+              <p className="text-white/70">{getFormationDescription()}</p>
               <div className="flex items-center justify-between pt-4 border-t border-purple-500/30">
-                <span className="text-white/70">Prix</span>
+                <span className="text-white/70">{t(language, 'checkout.price')}</span>
                 <span className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
                   {formation.price}€
                 </span>
