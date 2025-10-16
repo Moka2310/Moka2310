@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Menu, X } from 'lucide-react';
+import { ShoppingCart, Menu, X, Globe } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 import { Button } from './ui/button';
 
 const Navbar = () => {
   const { user } = useAuth();
+  const { language, toggleLanguage } = useLanguage();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const menuItems = [
-    { label: 'Accueil', path: '/' },
+    { label: t(language, 'nav.home'), path: '/' },
     { label: 'Nos canaux', path: '#canaux' },
     { label: 'Nos applications', path: '#applications' },
     { label: 'Vidéos', path: '#videos' },
     { label: 'Contact', path: '#contact' },
-    { label: 'Boutique', path: '/boutique' }
+    { label: t(language, 'nav.shop'), path: '/boutique' }
   ];
 
   const scrollToSection = (hash) => {
