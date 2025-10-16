@@ -286,13 +286,14 @@ const Dashboard = () => {
                         ) : (
                           <div className="bg-purple-500/20 rounded-xl p-4 text-center">
                             <p className="text-white/70 text-sm">
-                              Complétez votre KYC pour débloquer l'accès
+                              {language === 'fr' ? 'Complétez votre KYC pour débloquer l\'accès' : 'Complete your KYC to unlock access'}
                             </p>
                           </div>
                         )}
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             )}
