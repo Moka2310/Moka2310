@@ -53,8 +53,8 @@ const Home = () => {
   const handleContactSubmit = (e) => {
     e.preventDefault();
     toast({
-      title: 'Message envoyé !',
-      description: 'Nous vous répondrons dans les plus brefs délais.'
+      title: language === 'fr' ? 'Message envoyé !' : 'Message sent!',
+      description: language === 'fr' ? 'Nous vous répondrons dans les plus brefs délais.' : 'We will respond to you shortly.'
     });
     setContactForm({ firstName: '', lastName: '', email: '', message: '' });
   };
@@ -68,23 +68,26 @@ const Home = () => {
             {/* Left Side - Text */}
             <div>
               <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                Bienvenue chez <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">TRADALIFE</span>
+                {language === 'fr' ? 'Bienvenue chez' : 'Welcome to'} <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">TRADALIFE</span>
               </h1>
               <p className="text-white/80 text-lg mb-8">
-                Rejoignez notre communauté de plus de 4000 traders et accédez à des signaux exclusifs sur Crypto, Forex, Gold, Indices et plus encore.
+                {language === 'fr' 
+                  ? 'Rejoignez notre communauté de plus de 4000 traders et accédez à des signaux exclusifs sur Crypto, Forex, Gold, Indices et plus encore.'
+                  : 'Join our community of over 4000 traders and access exclusive signals on Crypto, Forex, Gold, Indices and more.'
+                }
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   onClick={() => navigate('/boutique')}
                   className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-6 text-lg rounded-full"
                 >
-                  Découvrir nos formations
+                  {language === 'fr' ? 'Découvrir nos formations' : 'Explore Our Courses'}
                 </Button>
                 <Button
                   onClick={() => window.open('https://t.me/TRADALIFE', '_blank')}
                   className="bg-transparent border-2 border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white px-8 py-6 text-lg rounded-full transition-all"
                 >
-                  Rejoindre Telegram
+                  {language === 'fr' ? 'Rejoindre Telegram' : 'Join Telegram'}
                 </Button>
               </div>
             </div>
