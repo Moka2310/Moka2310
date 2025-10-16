@@ -232,9 +232,13 @@ const Home = () => {
       <section id="canaux" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-4">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">Nos Canaux</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
+              {language === 'fr' ? 'Nos Canaux' : 'Our Channels'}
+            </span>
           </h2>
-          <p className="text-white/70 text-center mb-12">Découvrez nos 6 canaux d'actifs</p>
+          <p className="text-white/70 text-center mb-12">
+            {language === 'fr' ? 'Découvrez nos 6 canaux d\'actifs' : 'Discover our 6 asset channels'}
+          </p>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {canaux.map((canal, index) => (
               <div
