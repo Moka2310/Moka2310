@@ -332,15 +332,15 @@ const Home = () => {
                 className="aspect-video relative"
                 onClick={() => openVideoModal({
                   url: 'https://drive.google.com/file/d/1gRDkNANoag2efegjIaQx1gPt-MI-VLve/preview',
-                  title: 'Comment ouvrir votre compte GlobalPrime',
-                  description: 'Guide complet pour créer et configurer votre compte de trading'
+                  title: language === 'fr' ? 'Comment ouvrir votre compte GlobalPrime' : 'How to open your GlobalPrime account',
+                  description: language === 'fr' ? 'Guide complet pour créer et configurer votre compte de trading' : 'Complete guide to create and configure your trading account'
                 })}
               >
                 <iframe
                   src="https://drive.google.com/file/d/1gRDkNANoag2efegjIaQx1gPt-MI-VLve/preview"
                   className="w-full h-full pointer-events-none"
                   allow="autoplay"
-                  title="Comment ouvrir votre compte GlobalPrime"
+                  title={language === 'fr' ? 'Comment ouvrir votre compte GlobalPrime' : 'How to open your GlobalPrime account'}
                 ></iframe>
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
                   <div className="bg-pink-500 rounded-full p-4 opacity-0 group-hover:opacity-100 transform scale-50 group-hover:scale-100 transition-all">
@@ -349,8 +349,12 @@ const Home = () => {
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-2">Comment ouvrir votre compte GlobalPrime</h3>
-                <p className="text-white/70 text-sm">Guide complet pour créer et configurer votre compte de trading</p>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  {language === 'fr' ? 'Comment ouvrir votre compte GlobalPrime' : 'How to open your GlobalPrime account'}
+                </h3>
+                <p className="text-white/70 text-sm">
+                  {language === 'fr' ? 'Guide complet pour créer et configurer votre compte de trading' : 'Complete guide to create and configure your trading account'}
+                </p>
               </div>
             </div>
 
@@ -360,15 +364,15 @@ const Home = () => {
                 className="aspect-video relative"
                 onClick={() => openVideoModal({
                   url: 'https://drive.google.com/file/d/1q5e7vg7SeuLebmShKeZ2jGC9S7FnDpwT/preview',
-                  title: 'Comment connecter son compte à MetaTrader 4',
-                  description: 'Tutoriel pas à pas pour connecter votre compte à la plateforme MT4'
+                  title: language === 'fr' ? 'Comment connecter son compte à MetaTrader 4' : 'How to connect your account to MetaTrader 4',
+                  description: language === 'fr' ? 'Tutoriel pas à pas pour connecter votre compte à la plateforme MT4' : 'Step-by-step tutorial to connect your account to MT4 platform'
                 })}
               >
                 <iframe
                   src="https://drive.google.com/file/d/1q5e7vg7SeuLebmShKeZ2jGC9S7FnDpwT/preview"
                   className="w-full h-full pointer-events-none"
                   allow="autoplay"
-                  title="Comment connecter son compte à MetaTrader 4"
+                  title={language === 'fr' ? 'Comment connecter son compte à MetaTrader 4' : 'How to connect your account to MetaTrader 4'}
                 ></iframe>
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
                   <div className="bg-pink-500 rounded-full p-4 opacity-0 group-hover:opacity-100 transform scale-50 group-hover:scale-100 transition-all">
@@ -377,8 +381,12 @@ const Home = () => {
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-2">Comment connecter son compte à MetaTrader 4</h3>
-                <p className="text-white/70 text-sm">Tutoriel pas à pas pour connecter votre compte à la plateforme MT4</p>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  {language === 'fr' ? 'Comment connecter son compte à MetaTrader 4' : 'How to connect your account to MetaTrader 4'}
+                </h3>
+                <p className="text-white/70 text-sm">
+                  {language === 'fr' ? 'Tutoriel pas à pas pour connecter votre compte à la plateforme MT4' : 'Step-by-step tutorial to connect your account to MT4 platform'}
+                </p>
               </div>
             </div>
 
@@ -388,15 +396,15 @@ const Home = () => {
                 className="aspect-video relative"
                 onClick={() => openVideoModal({
                   url: 'https://drive.google.com/file/d/13Rqhtq1fXkfGoGHIX65ToCeFjbhRnNUO/preview',
-                  title: 'Aperçu du contenu de notre groupe Telegram',
-                  description: 'Découvrez ce que vous recevrez dans nos canaux VIP'
+                  title: language === 'fr' ? 'Aperçu du contenu de notre groupe Telegram' : 'Preview of our Telegram group content',
+                  description: language === 'fr' ? 'Découvrez ce que vous recevrez dans nos canaux VIP' : 'Discover what you will receive in our VIP channels'
                 })}
               >
                 <iframe
                   src="https://drive.google.com/file/d/13Rqhtq1fXkfGoGHIX65ToCeFjbhRnNUO/preview"
                   className="w-full h-full pointer-events-none"
                   allow="autoplay"
-                  title="Aperçu du contenu de notre groupe Telegram"
+                  title={language === 'fr' ? 'Aperçu du contenu de notre groupe Telegram' : 'Preview of our Telegram group content'}
                 ></iframe>
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
                   <div className="bg-pink-500 rounded-full p-4 opacity-0 group-hover:opacity-100 transform scale-50 group-hover:scale-100 transition-all">
@@ -405,8 +413,12 @@ const Home = () => {
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-2">Aperçu du contenu de notre groupe Telegram</h3>
-                <p className="text-white/70 text-sm">Découvrez ce que vous recevrez dans nos canaux VIP</p>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  {language === 'fr' ? 'Aperçu du contenu de notre groupe Telegram' : 'Preview of our Telegram group content'}
+                </h3>
+                <p className="text-white/70 text-sm">
+                  {language === 'fr' ? 'Découvrez ce que vous recevrez dans nos canaux VIP' : 'Discover what you will receive in our VIP channels'}
+                </p>
               </div>
             </div>
           </div>
@@ -416,7 +428,7 @@ const Home = () => {
               onClick={() => window.open('https://globalprime.com/?refcode=83247', '_blank')}
               className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-4 text-lg rounded-full"
             >
-              Ouvrir un compte GlobalPrime
+              {language === 'fr' ? 'Ouvrir un compte GlobalPrime' : 'Open a GlobalPrime account'}
             </Button>
           </div>
         </div>
