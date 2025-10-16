@@ -325,7 +325,12 @@ const Dashboard = () => {
                   <h3 className="text-2xl font-bold text-white mb-2">
                     {language === 'fr' ? 'Vérification en cours' : 'Verification in progress'}
                   </h3>
-                  <p className="text-white/70">Votre demande est en cours de vérification. Vous recevrez un email une fois le processus terminé.</p>
+                  <p className="text-white/70">
+                    {language === 'fr' 
+                      ? 'Votre demande est en cours de vérification. Vous recevrez un email une fois le processus terminé.'
+                      : 'Your request is being reviewed. You will receive an email once the process is complete.'
+                    }
+                  </p>
                 </div>
               ) : (
                 <form onSubmit={handleKycSubmit} className="space-y-6">
