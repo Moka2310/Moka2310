@@ -46,7 +46,7 @@ async def create_purchase(purchase_data: PurchaseCreate, current_user: User = De
     if purchase_data.paymentMethod == "stripe":
         payment_result = await StripePayment.create_payment_intent(
             amount=formation["price"],
-            currency="eur",
+            currency="cad",
             metadata={
                 "purchase_id": purchase.id,
                 "formation_id": formation["id"],
@@ -69,12 +69,14 @@ async def create_purchase(purchase_data: PurchaseCreate, current_user: User = De
                 "paymentMethod": "stripe"
             }
         else:
-            raise HTTPException(status_code=400, detail=payment_result["error"])
+            # Delete the purchase if payment failed
+            await db.purchases.delete_one({"id": purchase.id})
+            raise HTTPException(status_code=400, detail=f"Payment failed: {payment_result['error']}")
     
     elif purchase_data.paymentMethod == "paypal":
         payment_result = await PayPalPayment.create_payment(
             amount=formation["price"],
-            currency="EUR",
+            currency="CAD",
             description=formation["title"]
         )
         
