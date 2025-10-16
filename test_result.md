@@ -131,15 +131,18 @@ backend:
 
   - task: "Purchases System"
     implemented: true
-    working: true
+    working: false
     file: "/app/backend/routes/purchases.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "testing"
         comment: "Purchase flow working correctly. Create purchase, confirm purchase, and get user purchases all functioning properly with proper authentication."
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL: Payment integrations failing. Stripe returns 'Invalid API Key provided: sk_test_****************_ici' and PayPal returns 401 Unauthorized with invalid_client error. Purchase creation endpoints fail due to payment service integration issues. Core purchase logic works but payment processing is broken."
 
   - task: "KYC Status API"
     implemented: true
