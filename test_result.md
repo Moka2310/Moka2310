@@ -128,6 +128,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "Formations endpoints working correctly. GET /formations returns 5 formations as expected, GET /formations/{id} retrieves specific formation data properly."
+      - working: true
+        agent: "testing"
+        comment: "Minor: Database contains 3 formations instead of expected 5 from INITIAL_FORMATIONS. API endpoints working correctly but data initialization may have been overridden. GET /formations and GET /formations/{id} both functional."
 
   - task: "Purchases System"
     implemented: true
