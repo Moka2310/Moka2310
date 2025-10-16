@@ -65,12 +65,15 @@ class PayPalPayment:
             # Configure PayPal before creating payment
             PayPalPayment._configure_paypal()
             
+            # Get frontend URL from environment
+            frontend_url = os.environ.get("FRONTEND_URL", "https://app.emergent.host")
+            
             payment = paypalrestsdk.Payment({
                 "intent": "sale",
                 "payer": {"payment_method": "paypal"},
                 "redirect_urls": {
-                    "return_url": return_url or "https://edushop-portal.preview.emergentagent.com/payment-success",
-                    "cancel_url": cancel_url or "https://edushop-portal.preview.emergentagent.com/payment-cancel"
+                    "return_url": return_url or f"{frontend_url}/payment-success",
+                    "cancel_url": cancel_url or f"{frontend_url}/payment-cancel"
                 },
                 "transactions": [{
                     "item_list": {
