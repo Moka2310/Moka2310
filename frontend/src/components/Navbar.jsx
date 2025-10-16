@@ -136,6 +136,16 @@ const Navbar = () => {
                 {item.label}
               </button>
             ))}
+            
+            {/* Language Selector Mobile */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center space-x-2 text-white/90 hover:text-pink-400 transition-colors py-2 w-full"
+            >
+              <Globe className="w-4 h-4" />
+              <span className="text-sm font-medium">{language === 'fr' ? '🇫🇷 Français' : '🇬🇧 English'}</span>
+            </button>
+            
             {user ? (
               <Button
                 onClick={() => {
@@ -144,7 +154,7 @@ const Navbar = () => {
                 }}
                 className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
               >
-                Mon Panel
+                {t(language, 'nav.dashboard')}
               </Button>
             ) : (
               <>
@@ -155,7 +165,7 @@ const Navbar = () => {
                   }}
                   className="w-full bg-transparent border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white"
                 >
-                  Connexion
+                  {t(language, 'nav.login')}
                 </Button>
                 <Button
                   onClick={() => window.open('https://t.me/TRADALIFE', '_blank')}
