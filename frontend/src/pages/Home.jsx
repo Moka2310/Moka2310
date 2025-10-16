@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { canaux, stats } from '../mockData';
 import { Check, Download } from 'lucide-react';
@@ -6,15 +6,33 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { toast } from '../hooks/use-toast';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 const Home = () => {
   const navigate = useNavigate();
+  const [videos, setVideos] = useState([]);
   const [contactForm, setContactForm] = useState({
     firstName: '',
     lastName: '',
     email: '',
     message: ''
   });
+
+  useEffect(() => {
+    // Load videos from backend
+    const loadVideos = async () => {
+      try {
+        // For now, load from MongoDB directly - we'll create an API endpoint later
+        // Using mock for now until we add the endpoint
+      } catch (error) {
+        console.error('Failed to load videos:', error);
+      }
+    };
+    loadVideos();
+  }, []);
 
   const handleContactSubmit = (e) => {
     e.preventDefault();
