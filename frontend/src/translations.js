@@ -4,6 +4,10 @@ export const translations = {
     nav: {
       home: 'Accueil',
       shop: 'Boutique',
+      channels: 'Nos canaux',
+      applications: 'Nos applications',
+      videos: 'Vidéos',
+      contact: 'Contact',
       login: 'Connexion',
       dashboard: 'Tableau de bord',
       admin: 'Admin',
