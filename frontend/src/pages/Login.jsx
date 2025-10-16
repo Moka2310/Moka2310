@@ -66,30 +66,30 @@ const Login = () => {
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold mb-2">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
-                {isLogin ? 'Connexion' : 'Inscription'}
+                {isLogin ? t(language, 'auth.login.title') : t(language, 'auth.register.title')}
               </span>
             </h1>
             <p className="text-white/70">
-              {isLogin ? 'Content de vous revoir !' : 'Rejoignez notre communauté'}
+              {isLogin ? t(language, 'auth.login.subtitle') : t(language, 'auth.register.subtitle')}
             </p>
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-white/80 mb-2 text-sm">Email</label>
+              <label className="block text-white/80 mb-2 text-sm">{t(language, 'auth.login.email')}</label>
               <Input
                 type="email"
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="bg-white/10 border-purple-500/30 text-white placeholder:text-white/50 focus:border-pink-500"
-                placeholder="votre@email.com"
+                placeholder={language === 'fr' ? 'votre@email.com' : 'your@email.com'}
               />
             </div>
 
             <div>
-              <label className="block text-white/80 mb-2 text-sm">Mot de passe</label>
+              <label className="block text-white/80 mb-2 text-sm">{t(language, 'auth.login.password')}</label>
               <Input
                 type="password"
                 required
@@ -102,7 +102,7 @@ const Login = () => {
 
             {!isLogin && (
               <div>
-                <label className="block text-white/80 mb-2 text-sm">Confirmer le mot de passe</label>
+                <label className="block text-white/80 mb-2 text-sm">{t(language, 'auth.register.confirmPassword')}</label>
                 <Input
                   type="password"
                   required
@@ -118,7 +118,7 @@ const Login = () => {
               type="submit"
               className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white py-6 rounded-full font-semibold text-lg"
             >
-              {isLogin ? 'Se connecter' : "S'inscrire"}
+              {isLogin ? t(language, 'auth.login.button') : t(language, 'auth.register.button')}
             </Button>
           </form>
 
@@ -128,7 +128,10 @@ const Login = () => {
               onClick={() => setIsLogin(!isLogin)}
               className="text-pink-400 hover:text-pink-300 transition-colors"
             >
-              {isLogin ? "Pas encore de compte ? S'inscrire" : 'Déjà un compte ? Se connecter'}
+              {isLogin 
+                ? `${t(language, 'auth.login.noAccount')} ${t(language, 'auth.login.register')}`
+                : `${t(language, 'auth.register.hasAccount')} ${t(language, 'auth.register.login')}`
+              }
             </button>
           </div>
         </div>
