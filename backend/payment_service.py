@@ -47,18 +47,24 @@ class StripePayment:
                 "error": str(e)
             }
 
-# PayPal configuration
-paypalrestsdk.configure({
-    "mode": os.getenv("PAYPAL_MODE", "sandbox"),  # sandbox or live
-    "client_id": os.getenv("PAYPAL_CLIENT_ID", "votre_client_id_paypal"),
-    "client_secret": os.getenv("PAYPAL_CLIENT_SECRET", "votre_secret_paypal")
-})
 
 class PayPalPayment:
     @staticmethod
-    async def create_payment(amount: float, currency: str = "EUR", description: str = "", return_url: str = "", cancel_url: str = ""):
+    def _configure_paypal():
+        """Configure PayPal with environment variables"""
+        paypalrestsdk.configure({
+            "mode": os.environ.get("PAYPAL_MODE", "sandbox"),
+            "client_id": os.environ.get("PAYPAL_CLIENT_ID", "votre_client_id_paypal"),
+            "client_secret": os.environ.get("PAYPAL_CLIENT_SECRET", "votre_secret_paypal")
+        })
+    
+    @staticmethod
+    async def create_payment(amount: float, currency: str = "CAD", description: str = "", return_url: str = "", cancel_url: str = ""):
         """Create a PayPal payment"""
         try:
+            # Configure PayPal before creating payment
+            PayPalPayment._configure_paypal()
+            
             payment = paypalrestsdk.Payment({
                 "intent": "sale",
                 "payer": {"payment_method": "paypal"},
@@ -108,6 +114,9 @@ class PayPalPayment:
     async def execute_payment(payment_id: str, payer_id: str):
         """Execute/confirm a PayPal payment"""
         try:
+            # Configure PayPal before executing payment
+            PayPalPayment._configure_paypal()
+            
             payment = paypalrestsdk.Payment.find(payment_id)
             
             if payment.execute({"payer_id": payer_id}):
