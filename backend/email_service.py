@@ -238,20 +238,53 @@ class EmailService:
         
         return await self.send_email(to_email, subject, html_content)
     
-    async def send_kyc_approved(self, to_email: str):
-        """Send KYC approval email"""
+    async def send_kyc_approved(self, to_email: str, user_formations: list = None):
+        """Send KYC approval email with access to videos and Telegram"""
         subject = "🎉 Votre KYC est approuvé !"
         
-        html_content = """
+        # Training videos (same for all formations)
+        video_formation = "https://drive.google.com/file/d/1qfyBxsWWjWRVeosU68xeZcHMbpYw9gjV/view?usp=sharing"
+        video_mt4 = "https://drive.google.com/file/d/147kwnZWmHgAVDzQr09x4ZgcmoxWF4jH1/view?usp=sharing"
+        
+        # Telegram channels
+        telegram_channels = [
+            {"name": "GOLD", "link": "https://t.me/+BWpLllZBIpxjMWE5"},
+            {"name": "FOREX", "link": "https://t.me/+naLR-gXJl8MzZGJh"},
+            {"name": "ACTION", "link": "https://t.me/+GBRYqMdHZ4c0YzYx"},
+            {"name": "INDICES", "link": "https://t.me/+Z0h36lgNatQxMjFh"},
+            {"name": "CRYPTO", "link": "https://t.me/+7NNOp2XGXcpiMDdh"},
+            {"name": "COMMODITÉS", "link": "https://t.me/+MXfEUYj4D2oxZGJh"}
+        ]
+        
+        # Check if user has PREMIUM formation (exclude ACTION channel)
+        has_premium = False
+        if user_formations:
+            has_premium = any("PREMIUM" in formation.upper() for formation in user_formations)
+        
+        if has_premium:
+            telegram_channels = [ch for ch in telegram_channels if ch["name"] != "ACTION"]
+        
+        # Build Telegram channels HTML
+        telegram_html = ""
+        for channel in telegram_channels:
+            telegram_html += f"""
+            <li style="margin: 10px 0;">
+                <strong>{channel["name"]}:</strong> 
+                <a href="{channel["link"]}" style="color: #E91E8C; text-decoration: none;">{channel["link"]}</a>
+            </li>
+            """
+        
+        html_content = f"""
         <!DOCTYPE html>
         <html>
         <head>
             <style>
-                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                .header { background: linear-gradient(135deg, #E91E8C 0%, #7B3FF2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-                .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
-                .button { display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #E91E8C 0%, #7B3FF2 100%); color: white; text-decoration: none; border-radius: 25px; margin: 20px 0; }
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background: linear-gradient(135deg, #E91E8C 0%, #7B3FF2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }}
+                .content {{ background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }}
+                .access-section {{ background: white; padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #E91E8C; }}
+                .button {{ display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #E91E8C 0%, #7B3FF2 100%); color: white; text-decoration: none; border-radius: 25px; margin: 20px 0; }}
             </style>
         </head>
         <body>
@@ -262,14 +295,33 @@ class EmailService:
                 <div class="content">
                     <p>Votre compte a été vérifié avec succès !</p>
                     
-                    <p>Vous avez maintenant accès à :</p>
-                    <ul>
-                        <li>✅ Toutes vos formations vidéo</li>
-                        <li>✅ Les canaux Telegram VIP</li>
-                        <li>✅ Le support premium</li>
-                    </ul>
+                    <p>Vous avez maintenant un accès complet à tout votre contenu :</p>
                     
-                    <a href="https://edushop-portal.preview.emergentagent.com/dashboard" class="button">Accéder à mes formations</a>
+                    <div class="access-section">
+                        <h3>🎥 Vos Vidéos de Formation</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 10px 0;">
+                                <strong>📹 Vidéo de Formation :</strong><br>
+                                <a href="{video_formation}" style="color: #E91E8C; text-decoration: none;">{video_formation}</a>
+                            </li>
+                            <li style="margin: 10px 0;">
+                                <strong>📹 Utilisation de MT4 :</strong><br>
+                                <a href="{video_mt4}" style="color: #E91E8C; text-decoration: none;">{video_mt4}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="access-section">
+                        <h3>💬 Vos Canaux Telegram VIP</h3>
+                        <p>Rejoignez nos canaux de signaux exclusifs :</p>
+                        <ul style="list-style: none; padding: 0;">
+                            {telegram_html}
+                        </ul>
+                    </div>
+                    
+                    <a href="https://edushop-portal.preview.emergentagent.com/dashboard" class="button">Accéder à mon Dashboard</a>
+                    
+                    <p>Bienvenue dans la communauté Tradalife ! 🚀</p>
                     
                     <p>Bon trading !<br>L'équipe Tradalife</p>
                 </div>
