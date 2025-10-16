@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from models import UserCreate, UserLogin, UserResponse, User
 from auth_utils import verify_password, get_password_hash, create_access_token
 from dependencies import get_db, get_current_user
+from email_service import email_service
 import uuid
 from datetime import datetime
 
@@ -25,6 +26,9 @@ async def register(user_data: UserCreate):
     )
     
     await db.users.insert_one(user.dict())
+    
+    # Send welcome email
+    await email_service.send_welcome_email(user.email)
     
     # Create access token
     access_token = create_access_token(data={"sub": user.id})
