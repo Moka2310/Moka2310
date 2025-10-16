@@ -263,9 +263,13 @@ const Home = () => {
       <section id="applications" className="py-20 px-4 bg-gradient-to-b from-transparent to-[#2B1F5C]/30">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-4">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">Nos Applications</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
+              {language === 'fr' ? 'Nos Applications' : 'Our Applications'}
+            </span>
           </h2>
-          <p className="text-white/70 text-center mb-12">Découvrez nos applications de trading</p>
+          <p className="text-white/70 text-center mb-12">
+            {language === 'fr' ? 'Découvrez nos applications de trading' : 'Discover our trading applications'}
+          </p>
           <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
             <div className="bg-[#2B1F5C]/50 rounded-3xl overflow-hidden border border-purple-500/30 hover:border-pink-500/50 transition-all">
               <img
@@ -282,7 +286,7 @@ const Home = () => {
                   className="inline-flex items-center space-x-2 text-pink-400 hover:text-pink-300 transition-colors"
                 >
                   <Download className="w-5 h-5" />
-                  <span>Lien de téléchargement</span>
+                  <span>{language === 'fr' ? 'Lien de téléchargement' : 'Download link'}</span>
                 </a>
               </div>
             </div>
@@ -301,7 +305,7 @@ const Home = () => {
                   className="inline-flex items-center space-x-2 text-pink-400 hover:text-pink-300 transition-colors"
                 >
                   <Download className="w-5 h-5" />
-                  <span>Lien de téléchargement</span>
+                  <span>{language === 'fr' ? 'Lien de téléchargement' : 'Download link'}</span>
                 </a>
               </div>
             </div>
@@ -313,9 +317,13 @@ const Home = () => {
       <section id="videos" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-4">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">Vidéos</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
+              {language === 'fr' ? 'Vidéos' : 'Videos'}
+            </span>
           </h2>
-          <p className="text-white/70 text-center mb-12">Découvrez nos tutoriels vidéo</p>
+          <p className="text-white/70 text-center mb-12">
+            {language === 'fr' ? 'Découvrez nos tutoriels vidéo' : 'Discover our video tutorials'}
+          </p>
           
           <div className="grid md:grid-cols-3 gap-8">
             {/* Video 1 */}
