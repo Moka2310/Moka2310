@@ -27,7 +27,7 @@ def get_backend_url():
                     return line.split('=', 1)[1].strip()
     except FileNotFoundError:
         pass
-    return "https://edushop-portal.preview.emergentagent.com"
+    return "https://course-market-11.preview.emergentagent.com"
 
 BASE_URL = get_backend_url()
 API_URL = f"{BASE_URL}/api"

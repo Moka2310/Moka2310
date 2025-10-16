@@ -1,7 +1,7 @@
 # 🧪 Guide de Test - Tradalife
 
 ## URL de l'application
-**https://edushop-portal.preview.emergentagent.com**
+**https://course-market-11.preview.emergentagent.com**
 
 ---
 
@@ -171,7 +171,7 @@ sudo supervisorctl restart all
 
 ### Erreur "Network Error" lors de l'achat
 - Vérifier que le backend est démarré
-- Tester l'API : `curl https://edushop-portal.preview.emergentagent.com/api/formations`
+- Tester l'API : `curl https://course-market-11.preview.emergentagent.com/api/formations`
 
 ### Email non reçu
 - Vérifier que Gmail est configuré dans `/app/backend/.env`
@@ -242,7 +242,7 @@ db.users.find({ email: "votre-email@test.com" })
 
 ### iPhone/Android
 1. Ouvrir Safari ou Chrome
-2. Aller sur https://edushop-portal.preview.emergentagent.com
+2. Aller sur https://course-market-11.preview.emergentagent.com
 3. Tester toutes les fonctionnalités
 
 ### Tablette
