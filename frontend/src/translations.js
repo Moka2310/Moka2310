@@ -224,6 +224,10 @@ export const translations = {
     nav: {
       home: 'Home',
       shop: 'Shop',
+      channels: 'Our Channels',
+      applications: 'Our Apps',
+      videos: 'Videos',
+      contact: 'Contact',
       login: 'Login',
       dashboard: 'Dashboard',
       admin: 'Admin',
