@@ -8,7 +8,7 @@ stripe.api_key = os.getenv("STRIPE_SECRET_KEY", "sk_test_votre_cle_stripe_ici")
 
 class StripePayment:
     @staticmethod
-    async def create_payment_intent(amount: float, currency: str = "eur", metadata: dict = None):
+    async def create_payment_intent(amount: float, currency: str = "cad", metadata: dict = None):
         """Create a Stripe payment intent"""
         try:
             intent = stripe.PaymentIntent.create(
@@ -22,7 +22,7 @@ class StripePayment:
                 "client_secret": intent.client_secret,
                 "payment_intent_id": intent.id
             }
-        except stripe.error.StripeError as e:
+        except Exception as e:
             return {
                 "success": False,
                 "error": str(e)
@@ -38,7 +38,7 @@ class StripePayment:
                 "status": intent.status,
                 "amount": intent.amount / 100
             }
-        except stripe.error.StripeError as e:
+        except Exception as e:
             return {
                 "success": False,
                 "error": str(e)
