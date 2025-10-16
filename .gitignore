@@ -101,3 +101,15 @@ android-sdk/ -e
 # Environment files
 *.env
 *.env.*
+# === Sensitive files (do NOT push to GitHub) ===
+.env
+app/backend/.env
+app/frontend/.env
+
+# === Node modules & build files ===
+node_modules/
+dist/
+build/-e 
+# Environment files
+*.env
+*.env.*

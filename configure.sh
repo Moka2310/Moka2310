@@ -36,7 +36,7 @@ case $choice in
         echo ""
         echo "Allez sur: https://dashboard.stripe.com/apikeys"
         echo ""
-        read -p "Entrez votre STRIPE_SECRET_KEY (sk_live_... ou sk_test_...): " stripe_key
+        read -p "Entrez votre STRIPE_SECRET_KEY ($STRIPE_SECRET_KEY): " stripe_key
         
         if [ ! -z "$stripe_key" ]; then
             sed -i "s/^STRIPE_SECRET_KEY=.*/STRIPE_SECRET_KEY=$stripe_key/" /app/backend/.env
