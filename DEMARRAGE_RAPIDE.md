@@ -164,7 +164,7 @@ db.users.find()       # Voir utilisateurs
 
 Votre application est maintenant configurée !
 
-**Testez sur** : https://videocourse.preview.emergentagent.com
+**Testez sur** : https://edushop-portal.preview.emergentagent.com
 
 **Documentation complète** :
 - `/app/GUIDE_DEPLOIEMENT.md` - Guide complet

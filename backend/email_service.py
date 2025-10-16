@@ -82,7 +82,7 @@ class EmailService:
                     
                     <p>Pour commencer, explorez nos formations et rejoignez-nous !</p>
                     
-                    <a href="https://videocourse.preview.emergentagent.com/boutique" class="button">Découvrir les formations</a>
+                    <a href="https://edushop-portal.preview.emergentagent.com/boutique" class="button">Découvrir les formations</a>
                     
                     <p>À très bientôt,<br>L'équipe Tradalife</p>
                 </div>
@@ -137,7 +137,7 @@ class EmailService:
                         <li>Preuve de résidence</li>
                     </ul>
                     
-                    <a href="https://videocourse.preview.emergentagent.com/dashboard" class="button">Compléter mon KYC</a>
+                    <a href="https://edushop-portal.preview.emergentagent.com/dashboard" class="button">Compléter mon KYC</a>
                     
                     <p>Une fois votre KYC validé, vous recevrez un email de confirmation et pourrez accéder à tout le contenu.</p>
                     
@@ -217,7 +217,7 @@ class EmailService:
                         <li>✅ Le support premium</li>
                     </ul>
                     
-                    <a href="https://videocourse.preview.emergentagent.com/dashboard" class="button">Accéder à mes formations</a>
+                    <a href="https://edushop-portal.preview.emergentagent.com/dashboard" class="button">Accéder à mes formations</a>
                     
                     <p>Bon trading !<br>L'équipe Tradalife</p>
                 </div>
@@ -260,7 +260,7 @@ class EmailService:
                     
                     <p>Veuillez soumettre à nouveau vos documents corrigés.</p>
                     
-                    <a href="https://videocourse.preview.emergentagent.com/dashboard" class="button">Soumettre à nouveau</a>
+                    <a href="https://edushop-portal.preview.emergentagent.com/dashboard" class="button">Soumettre à nouveau</a>
                     
                     <p>Notre équipe est disponible pour vous aider si besoin.</p>
                     
