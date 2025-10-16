@@ -11,6 +11,7 @@ class EmailService:
         self.sender_email = os.getenv("GMAIL_EMAIL", "votre-email@gmail.com")
         self.sender_password = os.getenv("GMAIL_APP_PASSWORD", "votre_mot_de_passe_app")
         self.sender_name = "Tradalife"
+        self.frontend_url = os.environ.get("FRONTEND_URL", "https://app.emergent.host")
     
     async def send_email(
         self, 
