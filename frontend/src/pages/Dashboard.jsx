@@ -109,13 +109,13 @@ const Dashboard = () => {
       await updateUser();
 
       toast({
-        title: 'KYC soumis avec succès !',
-        description: 'Votre demande est en cours de vérification. Vous recevrez un email une fois validée.'
+        title: t(language, 'dashboard.kyc.success'),
+        description: language === 'fr' ? 'Votre demande est en cours de vérification. Vous recevrez un email une fois validée.' : 'Your request is being reviewed. You will receive an email once validated.'
       });
     } catch (error) {
       toast({
-        title: 'Erreur',
-        description: error.response?.data?.detail || 'Une erreur est survenue',
+        title: t(language, 'common.error'),
+        description: error.response?.data?.detail || t(language, 'dashboard.kyc.error'),
         variant: 'destructive'
       });
     }
@@ -126,8 +126,8 @@ const Dashboard = () => {
     if (file) {
       setDocuments(prev => ({ ...prev, [docType]: file }));
       toast({
-        title: 'Document ajouté',
-        description: `${file.name} a été ajouté avec succès`
+        title: language === 'fr' ? 'Document ajouté' : 'Document added',
+        description: language === 'fr' ? `${file.name} a été ajouté avec succès` : `${file.name} has been added successfully`
       });
     }
   };
