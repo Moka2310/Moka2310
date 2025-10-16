@@ -432,7 +432,7 @@ const Dashboard = () => {
                       type="submit"
                       className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white py-6 rounded-full font-semibold text-lg"
                     >
-                      Soumettre ma demande KYC
+                      {language === 'fr' ? 'Soumettre ma demande KYC' : 'Submit my KYC request'}
                     </Button>
                   </div>
                 </form>
