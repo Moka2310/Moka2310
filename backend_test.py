@@ -115,8 +115,8 @@ class TradalifeTester:
         """Test user login"""
         try:
             credentials = {
-                "email": "test@tradalife.com",
-                "password": "Test123!"
+                "email": self.test_user_email,
+                "password": "TraderPass123!"
             }
             
             response = self.session.post(f"{API_URL}/auth/login", json=credentials)
