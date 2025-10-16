@@ -3,14 +3,14 @@ import stripe
 import paypalrestsdk
 from typing import Optional
 
-# Stripe configuration
-stripe.api_key = os.getenv("STRIPE_SECRET_KEY", "sk_test_votre_cle_stripe_ici")
-
 class StripePayment:
     @staticmethod
     async def create_payment_intent(amount: float, currency: str = "cad", metadata: dict = None):
         """Create a Stripe payment intent"""
         try:
+            # Configure Stripe with environment variable
+            stripe.api_key = os.environ.get("STRIPE_SECRET_KEY", "sk_test_votre_cle_stripe_ici")
+            
             intent = stripe.PaymentIntent.create(
                 amount=int(amount * 100),  # Convert to cents
                 currency=currency,
@@ -32,6 +32,9 @@ class StripePayment:
     async def confirm_payment(payment_intent_id: str):
         """Confirm a Stripe payment"""
         try:
+            # Configure Stripe with environment variable
+            stripe.api_key = os.environ.get("STRIPE_SECRET_KEY", "sk_test_votre_cle_stripe_ici")
+            
             intent = stripe.PaymentIntent.retrieve(payment_intent_id)
             return {
                 "success": True,
