@@ -302,18 +302,29 @@ const Dashboard = () => {
           {/* KYC Tab */}
           <TabsContent value="kyc">
             <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30">
-              <h2 className="text-3xl font-bold text-white mb-6">Vérification d'identité (KYC)</h2>
+              <h2 className="text-3xl font-bold text-white mb-6">
+                {language === 'fr' ? 'Vérification d\'identité (KYC)' : 'Identity Verification (KYC)'}
+              </h2>
               
               {user?.kycStatus === 'approved' ? (
                 <div className="text-center py-12">
                   <CheckCircle className="w-20 h-20 text-green-400 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-white mb-2">Compte vérifié !</h3>
-                  <p className="text-white/70">Votre identité a été vérifiée avec succès. Vous avez accès à toutes vos formations.</p>
+                  <h3 className="text-2xl font-bold text-white mb-2">
+                    {language === 'fr' ? 'Compte vérifié !' : 'Account verified!'}
+                  </h3>
+                  <p className="text-white/70">
+                    {language === 'fr' 
+                      ? 'Votre identité a été vérifiée avec succès. Vous avez accès à toutes vos formations.'
+                      : 'Your identity has been successfully verified. You have access to all your courses.'
+                    }
+                  </p>
                 </div>
               ) : user?.kycStatus === 'pending_review' ? (
                 <div className="text-center py-12">
                   <Clock className="w-20 h-20 text-yellow-400 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-white mb-2">Vérification en cours</h3>
+                  <h3 className="text-2xl font-bold text-white mb-2">
+                    {language === 'fr' ? 'Vérification en cours' : 'Verification in progress'}
+                  </h3>
                   <p className="text-white/70">Votre demande est en cours de vérification. Vous recevrez un email une fois le processus terminé.</p>
                 </div>
               ) : (
