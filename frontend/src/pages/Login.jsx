@@ -16,7 +16,7 @@ const Login = () => {
     confirmPassword: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!isLogin && formData.password !== formData.confirmPassword) {
@@ -28,23 +28,31 @@ const Login = () => {
       return;
     }
 
-    if (isLogin) {
-      login(formData.email, formData.password);
+    try {
+      if (isLogin) {
+        await login(formData.email, formData.password);
+        toast({
+          title: 'Connexion réussie !',
+          description: 'Bienvenue sur Tradalife'
+        });
+      } else {
+        await register(formData.email, formData.password);
+        toast({
+          title: 'Inscription réussie !',
+          description: 'Votre compte a été créé avec succès'
+        });
+      }
+
+      // Redirect to return URL or dashboard
+      const returnTo = location.state?.returnTo || '/dashboard';
+      navigate(returnTo, { state: location.state });
+    } catch (error) {
       toast({
-        title: 'Connexion réussie !',
-        description: 'Bienvenue sur Tradalife'
-      });
-    } else {
-      register(formData.email, formData.password);
-      toast({
-        title: 'Inscription réussie !',
-        description: 'Votre compte a été créé avec succès'
+        title: 'Erreur',
+        description: error.message,
+        variant: 'destructive'
       });
     }
-
-    // Redirect to return URL or dashboard
-    const returnTo = location.state?.returnTo || '/dashboard';
-    navigate(returnTo, { state: location.state });
   };
 
   return (
