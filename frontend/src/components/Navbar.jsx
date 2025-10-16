@@ -76,7 +76,7 @@ const Navbar = () => {
               title={language === 'fr' ? 'Switch to English (Canada)' : 'Passer en Français'}
             >
               <Globe className="w-4 h-4" />
-              <span className="text-sm font-medium">{language === 'fr' ? '🇫🇷 FR' : '🇨🇦 EN'}</span>
+              <span className="text-sm font-medium">{language === 'fr' ? '🇨🇦 EN' : '🇫🇷 FR'}</span>
             </button>
 
             {/* Cart Icon */}
