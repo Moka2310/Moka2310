@@ -365,7 +365,7 @@ class EmailService:
                     
                     <p>Veuillez soumettre à nouveau vos documents corrigés.</p>
                     
-                    <a href="https://edushop-portal.preview.emergentagent.com/dashboard" class="button">Soumettre à nouveau</a>
+                    <a href="{self.frontend_url}/dashboard" class="button">Soumettre à nouveau</a>
                     
                     <p>Notre équipe est disponible pour vous aider si besoin.</p>
                     
