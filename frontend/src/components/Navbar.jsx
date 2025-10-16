@@ -47,9 +47,11 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <div className="text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 bg-clip-text text-transparent">
-              T
-            </div>
+            <img 
+              src="https://i.imgur.com/FrA3lov.gif" 
+              alt="Tradalife Logo" 
+              className="h-16 w-auto"
+            />
           </Link>
 
           {/* Desktop Menu */}
