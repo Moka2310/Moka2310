@@ -70,9 +70,14 @@ const Navbar = () => {
             ))}
 
             {/* Language Selector */}
-            <div className="flex items-center space-x-2">
-              <img src="https://flagcdn.com/w40/fr.png" alt="FR" className="w-6 h-4" />
-            </div>
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center space-x-2 text-white/90 hover:text-pink-400 transition-colors px-3 py-1.5 rounded-lg hover:bg-white/5"
+              title={language === 'fr' ? 'Switch to English' : 'Passer en Français'}
+            >
+              <Globe className="w-4 h-4" />
+              <span className="text-sm font-medium">{language === 'fr' ? '🇫🇷 FR' : '🇬🇧 EN'}</span>
+            </button>
 
             {/* Cart Icon */}
             <button
