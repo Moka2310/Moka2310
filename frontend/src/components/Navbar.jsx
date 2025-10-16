@@ -93,7 +93,7 @@ const Navbar = () => {
                 onClick={() => navigate('/dashboard')}
                 className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-2 rounded-full"
               >
-                Mon Panel
+                {t(language, 'nav.dashboard')}
               </Button>
             ) : (
               <>
@@ -101,7 +101,7 @@ const Navbar = () => {
                   onClick={() => navigate('/login')}
                   className="bg-transparent border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white px-6 py-2 rounded-full transition-all"
                 >
-                  Connexion
+                  {t(language, 'nav.login')}
                 </Button>
                 <Button
                   onClick={() => window.open('https://t.me/TRADALIFE', '_blank')}
