@@ -186,7 +186,7 @@ const Dashboard = () => {
               className="border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white"
             >
               <LogOut className="w-4 h-4 mr-2" />
-              Déconnexion
+              {t(language, 'nav.logout')}
             </Button>
           </div>
         </div>
@@ -199,14 +199,14 @@ const Dashboard = () => {
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
             >
               <Video className="w-4 h-4 mr-2" />
-              Mes Formations
+              {t(language, 'dashboard.myFormations')}
             </TabsTrigger>
             <TabsTrigger 
               value="kyc"
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
             >
               <User className="w-4 h-4 mr-2" />
-              Vérification KYC
+              {t(language, 'dashboard.kyc.title')}
             </TabsTrigger>
           </TabsList>
 
@@ -215,8 +215,8 @@ const Dashboard = () => {
             {purchasedFormations.length === 0 ? (
               <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-12 border border-purple-500/30 text-center">
                 <Video className="w-16 h-16 text-pink-400 mx-auto mb-4" />
-                <h3 className="text-2xl font-bold text-white mb-2">Aucune formation achetée</h3>
-                <p className="text-white/70 mb-6">Parcourez notre boutique pour commencer votre parcours de trading</p>
+                <h3 className="text-2xl font-bold text-white mb-2">{t(language, 'dashboard.noFormations')}</h3>
+                <p className="text-white/70 mb-6">{language === 'fr' ? 'Parcourez notre boutique pour commencer votre parcours de trading' : 'Browse our shop to start your trading journey'}</p>
                 <Button
                   onClick={() => navigate('/boutique')}
                   className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-4 rounded-full"
