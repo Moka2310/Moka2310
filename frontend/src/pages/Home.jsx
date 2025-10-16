@@ -258,12 +258,59 @@ const Home = () => {
           <h2 className="text-4xl font-bold text-center mb-4">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">Vidéos</span>
           </h2>
-          <p className="text-white/70 text-center mb-12">Visionnez comment ouvrir votre compte ''GlobalPrime''</p>
-          <div className="bg-[#2B1F5C]/50 rounded-3xl p-8 border border-purple-500/30 text-center">
-            <p className="text-white/80 mb-6">
-              Aperçu du contenu de notre groupe Telegram<br />
-              Comment connecter son compte à Metatrader 4
-            </p>
+          <p className="text-white/70 text-center mb-12">Découvrez nos tutoriels vidéo</p>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Video 1 */}
+            <div className="bg-[#2B1F5C]/50 rounded-3xl overflow-hidden border border-purple-500/30 hover:border-pink-500/50 transition-all">
+              <div className="aspect-video">
+                <iframe
+                  src="https://drive.google.com/file/d/1gRDkNANoag2efegjIaQx1gPt-MI-VLve/preview"
+                  className="w-full h-full"
+                  allow="autoplay"
+                  title="Comment ouvrir votre compte GlobalPrime"
+                ></iframe>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-white mb-2">Comment ouvrir votre compte GlobalPrime</h3>
+                <p className="text-white/70 text-sm">Guide complet pour créer et configurer votre compte de trading</p>
+              </div>
+            </div>
+
+            {/* Video 2 */}
+            <div className="bg-[#2B1F5C]/50 rounded-3xl overflow-hidden border border-purple-500/30 hover:border-pink-500/50 transition-all">
+              <div className="aspect-video">
+                <iframe
+                  src="https://drive.google.com/file/d/1q5e7vg7SeuLebmShKeZ2jGC9S7FnDpwT/preview"
+                  className="w-full h-full"
+                  allow="autoplay"
+                  title="Comment connecter son compte à MetaTrader 4"
+                ></iframe>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-white mb-2">Comment connecter son compte à MetaTrader 4</h3>
+                <p className="text-white/70 text-sm">Tutoriel pas à pas pour connecter votre compte à la plateforme MT4</p>
+              </div>
+            </div>
+
+            {/* Video 3 */}
+            <div className="bg-[#2B1F5C]/50 rounded-3xl overflow-hidden border border-purple-500/30 hover:border-pink-500/50 transition-all">
+              <div className="aspect-video">
+                <iframe
+                  src="https://drive.google.com/file/d/13Rqhtq1fXkfGoGHIX65ToCeFjbhRnNUO/preview"
+                  className="w-full h-full"
+                  allow="autoplay"
+                  title="Aperçu du contenu de notre groupe Telegram"
+                ></iframe>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-white mb-2">Aperçu du contenu de notre groupe Telegram</h3>
+                <p className="text-white/70 text-sm">Découvrez ce que vous recevrez dans nos canaux VIP</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
             <Button
               onClick={() => window.open('https://globalprime.com/?refcode=83247', '_blank')}
               className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-4 text-lg rounded-full"
