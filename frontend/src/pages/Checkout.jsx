@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { useAuth } from '../contexts/AuthContext';
+import { purchasesAPI } from '../api/client';
 import { toast } from '../hooks/use-toast';
 import { CreditCard, Loader2 } from 'lucide-react';
 
