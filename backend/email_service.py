@@ -190,7 +190,7 @@ class EmailService:
                         <li>Preuve de résidence</li>
                     </ul>
                     
-                    <a href="https://edushop-portal.preview.emergentagent.com/dashboard" class="button">Compléter mon KYC</a>
+                    <a href="{self.frontend_url}/dashboard" class="button">Compléter mon KYC</a>
                     
                     <p>Merci pour votre confiance et bienvenue dans la communauté Tradalife ! 🚀</p>
                     
