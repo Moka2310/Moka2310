@@ -505,11 +505,6 @@ const Home = () => {
               >
                 {language === 'fr' ? 'Envoyer' : 'Send'}
               </Button>
-                type="submit"
-                className="bg-white text-[#1E1540] hover:bg-white/90 px-12 py-6 text-lg rounded-full font-semibold"
-              >
-                Envoyer
-              </Button>
             </div>
           </form>
         </div>
