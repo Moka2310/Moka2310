@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { toast } from '../hooks/use-toast';
-import { formations } from '../mockData';
+import { purchasesAPI, formationsAPI, kycAPI } from '../api/client';
 import { 
   User, 
   LogOut, 
@@ -32,6 +32,39 @@ const Dashboard = () => {
     idCard: null,
     proofOfResidence: null
   });
+  const [purchases, setPurchases] = useState([]);
+  const [purchasedFormations, setPurchasedFormations] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        // Load user purchases
+        const purchasesResponse = await purchasesAPI.getMyPurchases();
+        const userPurchases = purchasesResponse.data;
+        setPurchases(userPurchases);
+
+        // Load formations for purchased items
+        const formationsResponse = await formationsAPI.getAll();
+        const allFormations = formationsResponse.data;
+        
+        const purchased = userPurchases
+          .filter(p => p.status === 'completed')
+          .map(p => allFormations.find(f => f.id === p.formationId))
+          .filter(Boolean);
+        
+        setPurchasedFormations(purchased);
+      } catch (error) {
+        console.error('Failed to load data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user) {
+      loadData();
+    }
+  }, [user]);
 
   const handleLogout = () => {
     logout();
@@ -42,7 +75,7 @@ const Dashboard = () => {
     });
   };
 
-  const handleKycSubmit = (e) => {
+  const handleKycSubmit = async (e) => {
     e.preventDefault();
     
     // Check if all documents are uploaded
@@ -55,16 +88,34 @@ const Dashboard = () => {
       return;
     }
 
-    updateUser({
-      ...kycData,
-      kycStatus: 'pending_review',
-      kycSubmittedAt: new Date().toISOString()
-    });
+    try {
+      // Create FormData
+      const formData = new FormData();
+      formData.append('firstName', kycData.firstName);
+      formData.append('lastName', kycData.lastName);
+      formData.append('country', kycData.country);
+      formData.append('phone', kycData.phone);
+      formData.append('passport', documents.passport);
+      formData.append('idCard', documents.idCard);
+      formData.append('proofOfResidence', documents.proofOfResidence);
 
-    toast({
-      title: 'KYC soumis avec succès !',
-      description: 'Votre demande est en cours de vérification. Vous recevrez un email une fois validée.'
-    });
+      // Submit KYC
+      await kycAPI.submit(formData);
+
+      // Update user data
+      await updateUser();
+
+      toast({
+        title: 'KYC soumis avec succès !',
+        description: 'Votre demande est en cours de vérification. Vous recevrez un email une fois validée.'
+      });
+    } catch (error) {
+      toast({
+        title: 'Erreur',
+        description: error.response?.data?.detail || 'Une erreur est survenue',
+        variant: 'destructive'
+      });
+    }
   };
 
   const handleFileChange = (e, docType) => {
