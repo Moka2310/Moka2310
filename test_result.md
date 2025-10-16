@@ -270,3 +270,5 @@ agent_communication:
     message: "Comprehensive backend API testing completed successfully. All 10 core API endpoints tested and working correctly. Error handling verified with 4 additional test scenarios. Backend is fully functional and ready for production use."
   - agent: "testing"
     message: "COMPREHENSIVE TESTING COMPLETED - 17 endpoints tested. CRITICAL ISSUES FOUND: 1) Payment integrations (Stripe/PayPal) failing due to invalid API keys in production environment. 2) Email service authentication failing. 3) Formations database has 3 instead of expected 5 formations. Core functionality (auth, formations, purchases, KYC, admin) working correctly. 13/17 tests passed."
+  - agent: "main"
+    message: "PWA Logo Updated: Downloaded user's logo from Imgur, created 192x192 and 512x512 PNG versions, updated manifest.json and index.html. Favicon also created. Admin Access Fixed: Created admin account (admin@tradalife.com / Admin123!) - no admin users existed in database, which was causing automatic redirect from /admin page. User can now login and access admin panel."
