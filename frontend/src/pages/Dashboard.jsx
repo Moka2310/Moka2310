@@ -407,13 +407,13 @@ const Dashboard = () => {
 
                     {/* Proof of Residence */}
                     <div className="bg-purple-500/10 rounded-xl p-4">
-                      <label className="block text-white/80 mb-2 font-semibold">Preuve de résidence (facture, etc.)*</label>
+                      <label className="block text-white/80 mb-2 font-semibold">{t(language, 'dashboard.kyc.residence')}*</label>
                       <div className="flex items-center space-x-4">
                         <label className="flex-1 cursor-pointer">
                           <div className="border-2 border-dashed border-purple-500/50 rounded-xl p-6 text-center hover:border-pink-500/50 transition-colors">
                             <Upload className="w-8 h-8 text-pink-400 mx-auto mb-2" />
                             <p className="text-white/70 text-sm">
-                              {documents.proofOfResidence ? documents.proofOfResidence.name : 'Cliquez pour télécharger'}
+                              {documents.proofOfResidence ? documents.proofOfResidence.name : (language === 'fr' ? 'Cliquez pour télécharger' : 'Click to upload')}
                             </p>
                           </div>
                           <input
