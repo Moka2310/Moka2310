@@ -91,3 +91,53 @@ async def get_me(current_user: User = Depends(get_current_user)):
         kycStatus=current_user.kycStatus.value,
         role=current_user.role.value
     )
+
+@router.delete("/delete-account")
+async def delete_account(current_user: User = Depends(get_current_user)):
+    """
+    Delete user account and all associated data (GDPR compliance)
+    """
+    from email_service import email_service
+    from datetime import datetime, timezone
+    
+    db = get_db()
+    user_id = current_user.id
+    user_email = current_user.email
+    user_name = f"{current_user.firstName} {current_user.lastName}".strip()
+    
+    try:
+        # 1. Delete KYC documents
+        await db.kyc_documents.delete_many({"userId": user_id})
+        
+        # 2. Delete purchases
+        await db.purchases.delete_many({"userId": user_id})
+        
+        # 3. Delete testimonials
+        await db.testimonials.delete_many({"userId": user_id})
+        
+        # 4. Log deletion for compliance
+        deletion_log = {
+            "userId": user_id,
+            "email": user_email,
+            "name": user_name,
+            "deletedAt": datetime.now(timezone.utc).isoformat(),
+            "reason": "user_request"
+        }
+        await db.deletion_logs.insert_one(deletion_log)
+        
+        # 5. Delete user account
+        await db.users.delete_one({"id": user_id})
+        
+        # 6. Send confirmation email
+        await email_service.send_account_deletion_confirmation(user_email, user_name)
+        
+        return {
+            "success": True,
+            "message": "Account and all associated data have been permanently deleted"
+        }
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to delete account: {str(e)}"
+        )
