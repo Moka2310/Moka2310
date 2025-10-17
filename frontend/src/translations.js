@@ -366,15 +366,83 @@ export const translations = {
     formations: {
       'Formation Complète de Trading': {
         title: 'Complete Trading Course',
-        description: 'Would you like to learn trading in a simple, gradual, and effective way? This online course — made up of 10 video modules — is designed to guide you step by step, whether you are a complete beginner or already have some experience. You will start by understanding the basics of copy trading, then move on to daily trading, independent position taking, and finally scalping, a fast and precise trading method. ✅ What You Will Learn: Understand how financial markets work, identify risks and learn how to manage them, discover the main indicators and strategies used by traders, move from theory to practice with concrete examples, master scalping and learn to profit from trends. 📚 Course Content: Module 1-10 covering Trading Basics, Risks, Profits, Pips, Indicators, Methods, Scalping, Trend Analysis, Assets, and Platforms.'
+        description: `💎 Complete course: 8h - 10 videos - Advanced
+
+✨ What You Will Learn:
+
+✓ Understand how financial markets work
+✓ Identify risks and learn to manage them
+✓ Discover main indicators and strategies
+✓ Move from theory to practice with examples
+✓ Master scalping and profit from trends
+
+📚 Complete Content:
+
+• Modules 1-10: Trading Basics
+• Risk and Profit Management
+• Pips Analysis and Indicators
+• Advanced Trading Methods
+• Scalping and Trend Analysis
+• Assets and Platforms Selection`
       },
       'Tradalife Ultra Adhésion': {
         title: 'Tradalife ULTRA Membership',
-        description: '🔥 ULTRA TRADALIFE Membership - Access to 6 VIP Channels: Gold signals and strategies, Commodities (oil, gas, raw materials), Forex (major and exotic pairs), Indices (S&P 500, Nasdaq, DAX), Crypto opportunities on Bitcoin, and Stocks signals. Trading accounts included: 2 Live Accounts at 2 different brokers to diversify your strategies, 1 Demo Account to practice without risk. Basic training in Copytrading to understand the logic, manage risks, and copy positions effectively. Private support via WhatsApp with direct personalized assistance, quick answers, and practical advice for progress.'
+        description: `💎 Course: 1h40 min - 2 videos - Beginner
+
+🔥 Access to 6 VIP Channels:
+
+✓ Gold signals and strategies
+✓ Commodities (oil, gas)
+✓ Forex (major and exotic pairs)
+✓ Indices (S&P 500, Nasdaq, DAX)
+✓ Crypto opportunities on Bitcoin
+✓ Stocks signals
+
+💼 Trading Accounts Included:
+
+• 2 Live Accounts at 2 different brokers
+• 1 Demo Account to practice risk-free
+
+📖 Copytrading Training:
+
+• Understand copytrading logic
+• Manage risks effectively
+• Copy positions like a pro
+
+📱 Private WhatsApp Support:
+
+• Direct personalized assistance
+• Quick answers to your questions
+• Practical advice for progress`
       },
       'Tradalife Premium Membership': {
         title: 'Tradalife Premium Membership',
-        description: 'TRADALIFE Premium Membership - Access to 5 VIP Channels: Gold signals and strategies, Commodities (oil, gas, raw materials), Forex (major and exotic pairs), Indices (S&P 500, Nasdaq, DAX), and Crypto opportunities on Bitcoin and major cryptocurrencies. Included Trading Accounts: 1 Live Account to trade in real market conditions, 1 Demo Account to practice safely without financial risk. Basic Copy Trading Training to understand how copy trading works, learn risk management, and master efficient trade copying. Private Support via WhatsApp with direct personalized assistance, quick responses, and practical advice to help you progress.'
+        description: `💎 Course: 1h40 - 2 videos - Beginner
+
+⭐ Access to 5 VIP Channels:
+
+✓ Gold signals and strategies
+✓ Commodities (oil, gas)
+✓ Forex (major and exotic pairs)
+✓ Indices (S&P 500, Nasdaq, DAX)
+✓ Crypto Bitcoin opportunities
+
+💼 Trading Accounts Included:
+
+• 1 Live Account to trade for real
+• 1 Demo Account to practice risk-free
+
+📖 Copy Trading Training:
+
+• Understand how it works
+• Learn risk management
+• Master trade copying
+
+📱 Private WhatsApp Support:
+
+• Direct personalized assistance
+• Quick responses
+• Practical advice`
       }
     },
 
