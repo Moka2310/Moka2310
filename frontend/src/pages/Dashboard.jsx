@@ -81,6 +81,16 @@ const Dashboard = () => {
 
   const handleKycSubmit = async (e) => {
     e.preventDefault();
+
+    // Check consent
+    if (!consentChecked) {
+      toast({
+        title: language === 'fr' ? 'Consentement requis' : 'Consent required',
+        description: language === 'fr' ? 'Veuillez accepter les conditions d\'utilisation des documents' : 'Please accept the document usage terms',
+        variant: 'destructive'
+      });
+      return;
+    }
     
     // Check if all documents are uploaded
     if (!documents.passport || !documents.idCard || !documents.proofOfResidence) {
