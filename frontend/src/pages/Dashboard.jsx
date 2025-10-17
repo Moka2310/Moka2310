@@ -533,17 +533,31 @@ const Dashboard = () => {
                   </p>
                 </div>
               ) : user?.kycStatus === 'pending' ? (
-                <div className="text-center py-12 bg-yellow-500/10 border-2 border-yellow-500/50 rounded-2xl">
-                  <Clock className="w-20 h-20 text-yellow-400 mx-auto mb-4 animate-pulse" />
-                  <h3 className="text-3xl font-bold text-yellow-400 mb-2">
-                    ⏳ {language === 'fr' ? 'En Attente de Vérification' : 'Pending Verification'}
-                  </h3>
-                  <p className="text-white/80 text-lg">
-                    {language === 'fr' 
-                      ? 'Vos documents sont en cours de révision. Nous vous enverrons un email une fois la vérification terminée.'
-                      : 'Your documents are under review. We will send you an email once the verification is complete.'
-                    }
-                  </p>
+                <div className="space-y-6">
+                  <div className="text-center py-8 bg-yellow-500/10 border-2 border-yellow-500/50 rounded-2xl">
+                    <Clock className="w-16 h-16 text-yellow-400 mx-auto mb-4 animate-pulse" />
+                    <h3 className="text-2xl font-bold text-yellow-400 mb-2">
+                      ⏳ {language === 'fr' ? 'Documents en cours de vérification' : 'Documents under review'}
+                    </h3>
+                    <p className="text-white/80">
+                      {language === 'fr' 
+                        ? 'Vous pouvez déjà acheter des formations. Si vos documents sont rejetés, vous devrez en soumettre de nouveaux.'
+                        : 'You can already purchase courses. If your documents are rejected, you will need to submit new ones.'
+                      }
+                    </p>
+                  </div>
+                  
+                  {/* Show uploaded documents summary */}
+                  <div className="bg-purple-500/10 rounded-xl p-6">
+                    <h4 className="text-white font-semibold mb-3">
+                      {language === 'fr' ? '📄 Documents soumis' : '📄 Submitted documents'}
+                    </h4>
+                    <ul className="text-white/70 space-y-2">
+                      <li>✓ {language === 'fr' ? 'Passeport' : 'Passport'}</li>
+                      <li>✓ {language === 'fr' ? 'Carte d\'identité' : 'ID Card'}</li>
+                      <li>✓ {language === 'fr' ? 'Justificatif de domicile' : 'Proof of residence'}</li>
+                    </ul>
+                  </div>
                 </div>
               ) : user?.kycStatus === 'rejected' ? (
                 <div className="text-center py-12 bg-red-500/10 border-2 border-red-500/50 rounded-2xl mb-6">
