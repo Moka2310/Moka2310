@@ -69,7 +69,7 @@ const ChatWidget = () => {
   };
 
   return (
-    <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 9999 }}>
+    <div style={{ position: 'fixed', bottom: '80px', right: '24px', zIndex: 9999 }}>
       {/* Bouton flottant */}
       {!isOpen && (
         <button
