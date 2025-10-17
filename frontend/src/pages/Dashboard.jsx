@@ -43,6 +43,11 @@ const Dashboard = () => {
     idCard: null,
     proofOfResidence: null
   });
+  const [documentPreviews, setDocumentPreviews] = useState({
+    passport: null,
+    idCard: null,
+    proofOfResidence: null
+  });
   const [consentChecked, setConsentChecked] = useState(false);
   const [purchases, setPurchases] = useState([]);
   const [purchasedFormations, setPurchasedFormations] = useState([]);
