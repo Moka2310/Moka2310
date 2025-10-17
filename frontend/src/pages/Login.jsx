@@ -10,9 +10,9 @@ import { toast } from '../hooks/use-toast';
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, register } = useAuth();
+  const { login } = useAuth();
   const { language } = useLanguage();
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin] = useState(true); // Removed registration functionality
   const [formData, setFormData] = useState({
     email: '',
     password: '',
