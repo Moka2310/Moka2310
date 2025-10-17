@@ -567,7 +567,122 @@ const Dashboard = () => {
               )}
             </div>
           </TabsContent>
+
+          {/* Settings Tab */}
+          <TabsContent value="settings">
+            <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30">
+              <h2 className="text-2xl font-bold text-white mb-6">
+                {language === 'fr' ? 'Paramètres du compte' : 'Account Settings'}
+              </h2>
+
+              {/* Account Info */}
+              <div className="mb-8 p-6 bg-purple-500/10 rounded-xl">
+                <h3 className="text-lg font-semibold text-white mb-4">
+                  {language === 'fr' ? 'Informations du compte' : 'Account Information'}
+                </h3>
+                <div className="space-y-2 text-white/80">
+                  <p><strong>{language === 'fr' ? 'Email :' : 'Email:'}</strong> {user?.email}</p>
+                  <p><strong>{language === 'fr' ? 'Nom :' : 'Name:'}</strong> {user?.firstName} {user?.lastName}</p>
+                  <p><strong>{language === 'fr' ? 'Statut KYC :' : 'KYC Status:'}</strong> {user?.kycStatus}</p>
+                </div>
+              </div>
+
+              {/* Delete Account Section */}
+              <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-6">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Trash2 className="w-6 h-6 text-red-400" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-white mb-2">
+                      {language === 'fr' ? 'Zone de danger' : 'Danger Zone'}
+                    </h3>
+                    <p className="text-white/70 mb-4">
+                      {language === 'fr' 
+                        ? 'La suppression de votre compte est permanente et irréversible. Toutes vos données seront définitivement supprimées, y compris :'
+                        : 'Account deletion is permanent and irreversible. All your data will be permanently deleted, including:'
+                      }
+                    </p>
+                    <ul className="list-disc list-inside text-white/70 mb-4 space-y-1">
+                      <li>{language === 'fr' ? 'Informations personnelles' : 'Personal information'}</li>
+                      <li>{language === 'fr' ? 'Documents KYC' : 'KYC documents'}</li>
+                      <li>{language === 'fr' ? 'Historique d\'achats' : 'Purchase history'}</li>
+                      <li>{language === 'fr' ? 'Accès aux formations' : 'Access to training courses'}</li>
+                      <li>{language === 'fr' ? 'Témoignages' : 'Testimonials'}</li>
+                    </ul>
+                    <Button
+                      onClick={() => setShowDeleteDialog(true)}
+                      className="bg-red-500 hover:bg-red-600 text-white"
+                    >
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      {language === 'fr' ? 'Supprimer mon compte' : 'Delete my account'}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
         </Tabs>
+
+        {/* Delete Account Confirmation Dialog */}
+        <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+          <DialogContent className="bg-[#1E1540] border-red-500/30">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold text-white flex items-center">
+                <Trash2 className="w-6 h-6 text-red-400 mr-2" />
+                {language === 'fr' ? 'Confirmer la suppression' : 'Confirm Deletion'}
+              </DialogTitle>
+              <DialogDescription className="text-white/70 space-y-4 pt-4">
+                <p className="font-semibold text-yellow-400">
+                  {language === 'fr' 
+                    ? '⚠️ ATTENTION : Cette action est irréversible !'
+                    : '⚠️ WARNING: This action is irreversible!'
+                  }
+                </p>
+                <p>
+                  {language === 'fr'
+                    ? 'Vous êtes sur le point de supprimer définitivement votre compte et toutes vos données. Cette action ne peut pas être annulée.'
+                    : 'You are about to permanently delete your account and all your data. This action cannot be undone.'
+                  }
+                </p>
+                <p>
+                  {language === 'fr'
+                    ? `Pour confirmer, veuillez taper "SUPPRIMER" ci-dessous :`
+                    : `To confirm, please type "DELETE" below:`
+                  }
+                </p>
+                <Input
+                  value={deleteConfirmation}
+                  onChange={(e) => setDeleteConfirmation(e.target.value)}
+                  placeholder={language === 'fr' ? 'Tapez SUPPRIMER' : 'Type DELETE'}
+                  className="bg-white/10 border-red-500/30 text-white placeholder:text-white/50"
+                />
+                <div className="flex space-x-3 pt-4">
+                  <Button
+                    onClick={() => {
+                      setShowDeleteDialog(false);
+                      setDeleteConfirmation('');
+                    }}
+                    variant="outline"
+                    className="flex-1 border-purple-500/30 text-white hover:bg-purple-500/20"
+                  >
+                    {language === 'fr' ? 'Annuler' : 'Cancel'}
+                  </Button>
+                  <Button
+                    onClick={handleDeleteAccount}
+                    disabled={isDeleting}
+                    className="flex-1 bg-red-500 hover:bg-red-600 text-white"
+                  >
+                    {isDeleting 
+                      ? (language === 'fr' ? 'Suppression...' : 'Deleting...')
+                      : (language === 'fr' ? 'Supprimer définitivement' : 'Delete permanently')
+                    }
+                  </Button>
+                </div>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
