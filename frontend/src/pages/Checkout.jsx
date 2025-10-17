@@ -148,6 +148,25 @@ const Checkout = () => {
               </p>
             </div>
 
+            {/* No Refund Policy Checkbox */}
+            <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 mb-6">
+              <div className="flex items-start space-x-3">
+                <input
+                  type="checkbox"
+                  id="noRefund"
+                  checked={noRefundAccepted}
+                  onChange={(e) => setNoRefundAccepted(e.target.checked)}
+                  className="mt-1 w-4 h-4 text-pink-500 bg-transparent border-2 border-yellow-500/50 rounded focus:ring-pink-500 focus:ring-2"
+                />
+                <label htmlFor="noRefund" className="text-white/90 text-sm leading-relaxed font-medium">
+                  ⚠️ {language === 'fr' 
+                    ? 'Je comprends et j\'accepte qu\'aucun remboursement ne sera possible après l\'achat de cette formation. La vente est définitive et je m\'engage à respecter cette politique.'
+                    : 'I understand and accept that no refund will be possible after purchasing this course. The sale is final and I commit to respecting this policy.'
+                  }
+                </label>
+              </div>
+            </div>
+
             <div className="space-y-3">
               <Button
                 onClick={handlePayment}
