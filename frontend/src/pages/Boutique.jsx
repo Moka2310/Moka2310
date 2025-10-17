@@ -64,6 +64,16 @@ const Boutique = () => {
   return (
     <div className="min-h-screen bg-[#1E1540] pt-28 pb-20 px-4">
       <div className="max-w-7xl mx-auto">
+        {/* Back Button */}
+        <Button
+          onClick={() => navigate('/')}
+          variant="ghost"
+          className="mb-6 text-pink-400 hover:text-pink-300 hover:bg-pink-500/10"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          {language === 'fr' ? 'Retour à l\'accueil' : 'Back to home'}
+        </Button>
+
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-4">
