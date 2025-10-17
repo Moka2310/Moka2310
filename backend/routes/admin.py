@@ -120,3 +120,57 @@ async def get_admin_stats(current_admin: User = Depends(get_current_admin)):
         "totalPurchases": total_purchases,
         "totalRevenue": total_revenue
     }
+
+# Testimonials Management
+@router.get("/testimonials/pending")
+async def get_pending_testimonials(current_admin: User = Depends(get_current_admin)):
+    """Get all pending testimonials for review"""
+    db = get_db()
+    
+    testimonials = await db.testimonials.find({
+        "status": "pending"
+    }).sort("createdAt", -1).to_list(100)
+    
+    return testimonials
+
+@router.post("/testimonials/approve/{testimonial_id}")
+async def approve_testimonial(
+    testimonial_id: str,
+    current_admin: User = Depends(get_current_admin)
+):
+    """Approve a testimonial"""
+    db = get_db()
+    
+    result = await db.testimonials.update_one(
+        {"id": testimonial_id},
+        {"$set": {
+            "status": "approved",
+            "reviewedAt": datetime.now()
+        }}
+    )
+    
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Testimonial not found")
+    
+    return {"success": True, "message": "Testimonial approved"}
+
+@router.post("/testimonials/reject/{testimonial_id}")
+async def reject_testimonial(
+    testimonial_id: str,
+    current_admin: User = Depends(get_current_admin)
+):
+    """Reject a testimonial"""
+    db = get_db()
+    
+    result = await db.testimonials.update_one(
+        {"id": testimonial_id},
+        {"$set": {
+            "status": "rejected",
+            "reviewedAt": datetime.now()
+        }}
+    )
+    
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Testimonial not found")
+    
+    return {"success": True, "message": "Testimonial rejected"}
