@@ -464,6 +464,25 @@ const Dashboard = () => {
                     </div>
                   </div>
 
+                  {/* Consent Checkbox */}
+                  <div className="pt-6 border-t border-purple-500/30">
+                    <div className="flex items-start space-x-3">
+                      <input
+                        type="checkbox"
+                        id="consent"
+                        checked={consentChecked}
+                        onChange={(e) => setConsentChecked(e.target.checked)}
+                        className="mt-1 w-4 h-4 text-pink-500 bg-transparent border-2 border-purple-500/50 rounded focus:ring-pink-500 focus:ring-2"
+                      />
+                      <label htmlFor="consent" className="text-white/80 text-sm leading-relaxed">
+                        {language === 'fr' 
+                          ? 'J\'accepte que mes documents d\'identité soient utilisés uniquement à des fins de vérification KYC et qu\'ils soient traités conformément à la réglementation en vigueur sur la protection des données.'
+                          : 'I agree that my identity documents will be used solely for KYC verification purposes and processed in accordance with applicable data protection regulations.'
+                        }
+                      </label>
+                    </div>
+                  </div>
+
                   <div className="pt-6">
                     <Button
                       type="submit"
