@@ -5,7 +5,7 @@ import { Check, Download } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
+ 
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
 import { toast } from '../hooks/use-toast';
