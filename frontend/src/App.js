@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Checkout from "./pages/Checkout";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
+import ProtectionCharter from "./pages/ProtectionCharter";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/protection-charter" element={<ProtectionCharter />} />
             </Routes>
             <Footer />
             <Toaster />
