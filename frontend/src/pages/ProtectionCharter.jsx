@@ -112,6 +112,16 @@ const ProtectionCharter = () => {
   return (
     <div className="min-h-screen bg-[#1E1540] pt-28 pb-20 px-4">
       <div className="max-w-4xl mx-auto">
+        {/* Back Button */}
+        <Button
+          onClick={() => navigate(-1)}
+          variant="ghost"
+          className="mb-6 text-pink-400 hover:text-pink-300 hover:bg-pink-500/10"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          {language === 'fr' ? 'Retour' : 'Back'}
+        </Button>
+
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full mb-6">
