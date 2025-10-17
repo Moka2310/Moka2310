@@ -284,6 +284,13 @@ const Dashboard = () => {
               <User className="w-4 h-4 mr-2" />
               {t(language, 'dashboard.kyc.title')}
             </TabsTrigger>
+            <TabsTrigger 
+              value="settings"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
+            >
+              <Settings className="w-4 h-4 mr-2" />
+              {language === 'fr' ? 'Paramètres' : 'Settings'}
+            </TabsTrigger>
           </TabsList>
 
           {/* Formations Tab */}
