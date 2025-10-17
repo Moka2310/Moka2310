@@ -42,6 +42,9 @@ const Dashboard = () => {
   const [purchases, setPurchases] = useState([]);
   const [purchasedFormations, setPurchasedFormations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
