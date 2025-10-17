@@ -95,7 +95,12 @@ const Navbar = () => {
         scrollToSection(path);
       }
     } else {
-      navigate(path);
+      // If clicking "Accueil" and already on home, scroll to top
+      if (path === '/' && window.location.pathname === '/') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        navigate(path);
+      }
     }
     setMobileMenuOpen(false);
   };
