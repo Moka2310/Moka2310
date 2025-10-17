@@ -122,7 +122,7 @@ const Boutique = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1E1540] via-transparent to-transparent"></div>
                 <div className="absolute top-4 right-4 bg-pink-500 text-white px-4 py-2 rounded-full font-bold">
-                  {formation.price}€
+                  {formation.price} CAD
                 </div>
               </div>
 
