@@ -26,9 +26,18 @@ const Home = () => {
     message: ''
   });
 
- 
-
- 
+  // Load testimonials
+  useEffect(() => {
+    const loadTestimonials = async () => {
+      try {
+        const response = await axios.get(`${API}/testimonials/approved`);
+        setTestimonials(response.data);
+      } catch (error) {
+        console.error('Failed to load testimonials:', error);
+      }
+    };
+    loadTestimonials();
+  }, []);
 
   const handleContactSubmit = (e) => {
     e.preventDefault();
