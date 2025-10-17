@@ -99,23 +99,24 @@ const Home = () => {
 
       {/* Video Banner - Groupe TRADALIFE */}
       <section className="w-full overflow-hidden bg-black">
-        <div className="relative w-full" style={{ height: '400px' }}>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <iframe
-              src="https://drive.google.com/file/d/13Rqhtq1fXkfGoGHIX65ToCeFjbhRnNUO/preview?autoplay=1&loop=1&controls=0&mute=1&modestbranding=1&showinfo=0"
-              className="absolute top-1/2 left-1/2 pointer-events-none"
-              style={{
-                width: '120%',
-                height: '120%',
-                transform: 'translate(-50%, -50%) scale(1.3)',
-                border: 'none'
-              }}
-              allow="autoplay; encrypted-media"
-              title="Groupe TRADALIFE"
-            ></iframe>
-          </div>
+        <div className="relative w-full" style={{ height: '500px' }}>
+          <iframe
+            src="https://www.youtube.com/embed/kIpu18ACAXc?autoplay=1&mute=1&loop=1&playlist=kIpu18ACAXc&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1"
+            className="absolute top-1/2 left-1/2 w-full h-full"
+            style={{
+              transform: 'translate(-50%, -50%) scale(1.5)',
+              minWidth: '100%',
+              minHeight: '100%',
+              border: 'none',
+              pointerEvents: 'none'
+            }}
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            title="Groupe TRADALIFE"
+          ></iframe>
           {/* Gradient overlay to blend edges */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40 pointer-events-none"></div>
         </div>
       </section>
 
