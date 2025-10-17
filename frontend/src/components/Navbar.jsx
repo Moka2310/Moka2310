@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { ShoppingCart, Menu, X, Globe } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -10,9 +10,13 @@ const Navbar = () => {
   const { user } = useAuth();
   const { language, toggleLanguage } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallButton, setShowInstallButton] = useState(false);
+
+  // Check if user is on checkout page
+  const isOnCheckout = location.pathname === '/checkout';
 
   // Detect if PWA can be installed
   useEffect(() => {
