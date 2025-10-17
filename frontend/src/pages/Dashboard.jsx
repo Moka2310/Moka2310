@@ -588,10 +588,30 @@ const Dashboard = () => {
                   {/* Document Uploads */}
                   <div className="space-y-4 pt-6 border-t border-purple-500/30">
                     <h3 className="text-xl font-bold text-white mb-4">{t(language, 'dashboard.kyc.documents')}</h3>
+                    
+                    {/* Quality Instructions */}
+                    <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 mb-6">
+                      <h4 className="text-yellow-400 font-bold mb-2 flex items-center">
+                        ⚠️ {language === 'fr' ? 'Critères de Qualité Obligatoires' : 'Mandatory Quality Criteria'}
+                      </h4>
+                      <ul className="text-white/80 text-sm space-y-1">
+                        <li>✓ {language === 'fr' ? 'Photos bien cadrées (document entier visible)' : 'Well-framed photos (entire document visible)'}</li>
+                        <li>✓ {language === 'fr' ? 'Texte parfaitement lisible et net' : 'Text perfectly readable and sharp'}</li>
+                        <li>✓ {language === 'fr' ? 'Sans reflets ou effets de lumière' : 'No glare or light effects'}</li>
+                        <li>✓ {language === 'fr' ? 'Format JPG, PNG ou PDF (max 10 MB)' : 'JPG, PNG or PDF format (max 10 MB)'}</li>
+                        <li className="text-red-400 font-semibold">✗ {language === 'fr' ? 'Photos floues = REJET AUTOMATIQUE' : 'Blurry photos = AUTOMATIC REJECTION'}</li>
+                      </ul>
+                    </div>
 
                     {/* Passport */}
-                    <div className="bg-purple-500/10 rounded-xl p-4">
+                    <div className="bg-purple-500/10 rounded-xl p-4 mb-4">
                       <label className="block text-white/80 mb-2 font-semibold">{t(language, 'dashboard.kyc.passport')}*</label>
+                      <p className="text-yellow-300 text-xs mb-3">
+                        📸 {language === 'fr' 
+                          ? 'Photo de la page identité de votre passeport - Cadrage complet, luminosité uniforme'
+                          : 'Photo of your passport identity page - Full frame, uniform lighting'
+                        }
+                      </p>
                       <div className="flex items-center space-x-4">
                         <label className="flex-1 cursor-pointer">
                           <div className="border-2 border-dashed border-purple-500/50 rounded-xl p-6 text-center hover:border-pink-500/50 transition-colors">
@@ -602,7 +622,7 @@ const Dashboard = () => {
                           </div>
                           <input
                             type="file"
-                            accept="image/*,application/pdf"
+                            accept="image/jpeg,image/png,image/jpg,application/pdf"
                             className="hidden"
                             onChange={(e) => handleFileChange(e, 'passport')}
                           />
@@ -611,8 +631,14 @@ const Dashboard = () => {
                     </div>
 
                     {/* ID Card */}
-                    <div className="bg-purple-500/10 rounded-xl p-4">
+                    <div className="bg-purple-500/10 rounded-xl p-4 mb-4">
                       <label className="block text-white/80 mb-2 font-semibold">{t(language, 'dashboard.kyc.idCard')}*</label>
+                      <p className="text-yellow-300 text-xs mb-3">
+                        📸 {language === 'fr' 
+                          ? 'Recto et verso de votre carte d\'identité - Coins visibles, texte net'
+                          : 'Front and back of your ID card - Corners visible, sharp text'
+                        }
+                      </p>
                       <div className="flex items-center space-x-4">
                         <label className="flex-1 cursor-pointer">
                           <div className="border-2 border-dashed border-purple-500/50 rounded-xl p-6 text-center hover:border-pink-500/50 transition-colors">
@@ -623,7 +649,7 @@ const Dashboard = () => {
                           </div>
                           <input
                             type="file"
-                            accept="image/*,application/pdf"
+                            accept="image/jpeg,image/png,image/jpg,application/pdf"
                             className="hidden"
                             onChange={(e) => handleFileChange(e, 'idCard')}
                           />
@@ -632,8 +658,14 @@ const Dashboard = () => {
                     </div>
 
                     {/* Proof of Residence */}
-                    <div className="bg-purple-500/10 rounded-xl p-4">
+                    <div className="bg-purple-500/10 rounded-xl p-4 mb-4">
                       <label className="block text-white/80 mb-2 font-semibold">{t(language, 'dashboard.kyc.residence')}*</label>
+                      <p className="text-yellow-300 text-xs mb-3">
+                        📸 {language === 'fr' 
+                          ? 'Facture récente (< 3 mois) : électricité, eau, téléphone - Document complet visible'
+                          : 'Recent bill (< 3 months): electricity, water, phone - Full document visible'
+                        }
+                      </p>
                       <div className="flex items-center space-x-4">
                         <label className="flex-1 cursor-pointer">
                           <div className="border-2 border-dashed border-purple-500/50 rounded-xl p-6 text-center hover:border-pink-500/50 transition-colors">
@@ -644,7 +676,7 @@ const Dashboard = () => {
                           </div>
                           <input
                             type="file"
-                            accept="image/*,application/pdf"
+                            accept="image/jpeg,image/png,image/jpg,application/pdf"
                             className="hidden"
                             onChange={(e) => handleFileChange(e, 'proofOfResidence')}
                           />
