@@ -86,6 +86,54 @@ const Dashboard = () => {
     });
   };
 
+  const handleDeleteAccount = async () => {
+    // Check confirmation text
+    const expectedText = language === 'fr' ? 'SUPPRIMER' : 'DELETE';
+    if (deleteConfirmation !== expectedText) {
+      toast({
+        title: language === 'fr' ? 'Confirmation incorrecte' : 'Incorrect confirmation',
+        description: language === 'fr' ? `Veuillez taper "${expectedText}" pour confirmer` : `Please type "${expectedText}" to confirm`,
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    setIsDeleting(true);
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/delete-account`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete account');
+      }
+
+      toast({
+        title: language === 'fr' ? '✓ Compte supprimé' : '✓ Account deleted',
+        description: language === 'fr' ? 'Toutes vos données ont été supprimées. Vous allez recevoir un email de confirmation.' : 'All your data has been deleted. You will receive a confirmation email.'
+      });
+
+      // Logout and redirect
+      setTimeout(() => {
+        logout();
+        navigate('/');
+      }, 2000);
+
+    } catch (error) {
+      toast({
+        title: language === 'fr' ? 'Erreur' : 'Error',
+        description: language === 'fr' ? 'Impossible de supprimer le compte' : 'Failed to delete account',
+        variant: 'destructive'
+      });
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   const handleKycSubmit = async (e) => {
     e.preventDefault();
 
