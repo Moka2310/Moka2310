@@ -5,6 +5,7 @@ import { Check, Download, Star } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
+import ChatWidget from '../components/ChatWidget';
  
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
