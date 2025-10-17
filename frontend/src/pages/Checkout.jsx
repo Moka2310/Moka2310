@@ -23,6 +23,19 @@ const Checkout = () => {
     navigate('/boutique');
     return null;
   }
+
+  // Check KYC status - redirect if not approved
+  if (!user || user.kycStatus !== 'approved') {
+    toast({
+      title: language === 'fr' ? '⚠️ KYC requis' : '⚠️ KYC required',
+      description: language === 'fr'
+        ? 'Vous devez avoir un KYC approuvé pour effectuer un achat.'
+        : 'You must have an approved KYC to make a purchase.',
+      variant: 'destructive'
+    });
+    navigate('/dashboard?tab=kyc');
+    return null;
+  }
   
   // Get translated formation info
   const getFormationTitle = () => {
