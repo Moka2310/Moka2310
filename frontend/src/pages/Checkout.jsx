@@ -15,6 +15,7 @@ const Checkout = () => {
   const { language } = useLanguage();
   const [paymentMethod, setPaymentMethod] = useState('stripe');
   const [processing, setProcessing] = useState(false);
+  const [noRefundAccepted, setNoRefundAccepted] = useState(false);
 
   const formation = location.state?.formation;
 
