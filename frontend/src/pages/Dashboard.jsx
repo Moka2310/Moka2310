@@ -142,6 +142,70 @@ const Dashboard = () => {
     }
   };
 
+  const loadMyTestimonial = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/testimonials/my-testimonial`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      const data = await response.json();
+      if (data.exists) {
+        setMyTestimonial(data.testimonial);
+      }
+    } catch (error) {
+      console.error('Failed to load testimonial:', error);
+    }
+  };
+
+  const handleTestimonialSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!testimonialData.comment.trim()) {
+      toast({
+        title: language === 'fr' ? 'Commentaire requis' : 'Comment required',
+        description: language === 'fr' ? 'Veuillez écrire un commentaire' : 'Please write a comment',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    setTestimonialLoading(true);
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/testimonials/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(testimonialData)
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.detail);
+      }
+
+      toast({
+        title: language === 'fr' ? '✓ Témoignage soumis' : '✓ Testimonial submitted',
+        description: language === 'fr' ? 'Merci ! Votre témoignage sera examiné par notre équipe.' : 'Thank you! Your testimonial will be reviewed by our team.'
+      });
+
+      loadMyTestimonial();
+      setTestimonialData({ rating: 5, comment: '', country: user?.country || '' });
+
+    } catch (error) {
+      toast({
+        title: language === 'fr' ? 'Erreur' : 'Error',
+        description: error.message,
+        variant: 'destructive'
+      });
+    } finally {
+      setTestimonialLoading(false);
+    }
+  };
+
   const handleKycSubmit = async (e) => {
     e.preventDefault();
 
