@@ -38,9 +38,39 @@ const Boutique = () => {
   const handlePurchase = (formation) => {
     if (!user) {
       navigate('/login', { state: { returnTo: '/boutique', formationId: formation.id } });
-    } else {
-      navigate('/checkout', { state: { formation } });
+      return;
     }
+
+    // Check KYC status
+    if (!user.kycStatus || user.kycStatus === 'pending' || user.kycStatus === 'rejected') {
+      toast({
+        title: language === 'fr' ? '⚠️ Vérification KYC requise' : '⚠️ KYC verification required',
+        description: language === 'fr' 
+          ? 'Vous devez compléter et faire approuver votre vérification KYC avant de pouvoir acheter une formation.'
+          : 'You must complete and get approved your KYC verification before purchasing a course.',
+        variant: 'destructive',
+        duration: 5000
+      });
+      
+      // Redirect to dashboard KYC tab
+      setTimeout(() => {
+        navigate('/dashboard?tab=kyc');
+      }, 1500);
+      return;
+    }
+
+    if (user.kycStatus !== 'approved') {
+      toast({
+        title: language === 'fr' ? '⚠️ KYC en attente d\'approbation' : '⚠️ KYC pending approval',
+        description: language === 'fr'
+          ? 'Votre KYC est en cours de révision. Vous pourrez acheter dès son approbation.'
+          : 'Your KYC is under review. You will be able to purchase once approved.',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    navigate('/checkout', { state: { formation } });
   };
   
   // Get translated formation info
