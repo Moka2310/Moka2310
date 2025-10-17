@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from chat_service import ChatService
 import uuid
 
-router = APIRouter(prefix="/api/chat", tags=["chat"])
+router = APIRouter(prefix="/chat", tags=["chat"])
 
 # Initialiser le service de chat
 chat_service = ChatService()
