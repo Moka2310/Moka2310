@@ -532,7 +532,7 @@ const Dashboard = () => {
                     }
                   </p>
                 </div>
-              ) : user?.kycStatus === 'pending' ? (
+              ) : user?.kycStatus === 'pending' && user?.kycSubmittedAt ? (
                 <div className="space-y-6">
                   <div className="text-center py-8 bg-yellow-500/10 border-2 border-yellow-500/50 rounded-2xl">
                     <Clock className="w-16 h-16 text-yellow-400 mx-auto mb-4 animate-pulse" />
