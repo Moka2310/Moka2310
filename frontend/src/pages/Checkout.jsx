@@ -24,13 +24,13 @@ const Checkout = () => {
     return null;
   }
 
-  // Check KYC status - redirect if not approved
-  if (!user || user.kycStatus !== 'approved') {
+  // Check KYC status - must have submitted documents (pending or approved)
+  if (!user || (user.kycStatus !== 'approved' && user.kycStatus !== 'pending')) {
     toast({
-      title: language === 'fr' ? '⚠️ KYC requis' : '⚠️ KYC required',
+      title: language === 'fr' ? '⚠️ Documents KYC requis' : '⚠️ KYC documents required',
       description: language === 'fr'
-        ? 'Vous devez avoir un KYC approuvé pour effectuer un achat.'
-        : 'You must have an approved KYC to make a purchase.',
+        ? 'Vous devez soumettre vos documents KYC pour effectuer un achat.'
+        : 'You must submit your KYC documents to make a purchase.',
       variant: 'destructive'
     });
     navigate('/dashboard?tab=kyc');
