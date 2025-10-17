@@ -191,7 +191,7 @@ const ChatWidget = () => {
                     borderRadius: '8px',
                     padding: '12px',
                     background: message.type === 'user' 
-                      ? 'linear-gradient(to right, #c89a3f, #d4af37)'
+                      ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
                       : 'white',
                     color: message.type === 'user' ? 'white' : '#1f2937',
                     border: message.type === 'bot' ? '1px solid #e5e7eb' : 'none'
