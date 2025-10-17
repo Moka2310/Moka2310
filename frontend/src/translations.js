@@ -78,9 +78,7 @@ export const translations = {
     formations: {
       'Formation Complète de Trading': {
         title: 'Formation Complète de Trading',
-        description: `💎 Formation complète : 8h - 10 vidéos - Avancé
-
-✨ Ce Que Vous Allez Apprendre :
+        description: `✨ Ce Que Vous Allez Apprendre :
 
 ✓ Comprendre le fonctionnement des marchés financiers
 ✓ Identifier les risques et apprendre à les gérer
@@ -99,9 +97,7 @@ export const translations = {
       },
       'Tradalife Ultra Adhésion': {
         title: 'Adhésion ULTRA Tradalife',
-        description: `💎 Formation : 1h40 min - 2 vidéos - Débutant
-
-🔥 Accès à 6 Canaux VIP :
+        description: `🔥 Accès à 6 Canaux VIP :
 
 ✓ Signaux et stratégies Gold
 ✓ Matières premières (pétrole, gaz)
@@ -129,9 +125,7 @@ export const translations = {
       },
       'Tradalife Premium Membership': {
         title: 'Adhésion Premium Tradalife',
-        description: `💎 Formation : 1h40 - 2 vidéos - Débutant
-
-⭐ Accès à 5 Canaux VIP :
+        description: `⭐ Accès à 5 Canaux VIP :
 
 ✓ Signaux et stratégies Gold
 ✓ Matières premières (pétrole, gaz)
