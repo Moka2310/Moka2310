@@ -113,6 +113,17 @@ const Checkout = () => {
                   {formation.price}€
                 </span>
               </div>
+
+              {/* Cancel Order Button */}
+              <div className="pt-4">
+                <Button
+                  onClick={() => navigate('/boutique')}
+                  variant="outline"
+                  className="w-full border-red-500/50 text-red-400 hover:bg-red-500/20 hover:border-red-500"
+                >
+                  {language === 'fr' ? '✕ Annuler cette commande' : '✕ Cancel this order'}
+                </Button>
+              </div>
             </div>
           </div>
 
