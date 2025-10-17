@@ -41,13 +41,13 @@ const Boutique = () => {
       return;
     }
 
-    // Check KYC status
-    if (!user.kycStatus || user.kycStatus === 'pending' || user.kycStatus === 'rejected') {
+    // Check KYC status - must have submitted documents (pending or approved)
+    if (!user.kycStatus || user.kycStatus === 'rejected') {
       toast({
-        title: language === 'fr' ? '⚠️ Vérification KYC requise' : '⚠️ KYC verification required',
+        title: language === 'fr' ? '⚠️ Documents KYC requis' : '⚠️ KYC documents required',
         description: language === 'fr' 
-          ? 'Vous devez compléter et faire approuver votre vérification KYC avant de pouvoir acheter une formation.'
-          : 'You must complete and get approved your KYC verification before purchasing a course.',
+          ? 'Vous devez soumettre vos documents KYC avant de pouvoir acheter. Rendez-vous dans votre Dashboard.'
+          : 'You must submit your KYC documents before purchasing. Go to your Dashboard.',
         variant: 'destructive',
         duration: 5000
       });
@@ -59,17 +59,7 @@ const Boutique = () => {
       return;
     }
 
-    if (user.kycStatus !== 'approved') {
-      toast({
-        title: language === 'fr' ? '⚠️ KYC en attente d\'approbation' : '⚠️ KYC pending approval',
-        description: language === 'fr'
-          ? 'Votre KYC est en cours de révision. Vous pourrez acheter dès son approbation.'
-          : 'Your KYC is under review. You will be able to purchase once approved.',
-        variant: 'destructive'
-      });
-      return;
-    }
-
+    // Can purchase if pending or approved
     navigate('/checkout', { state: { formation } });
   };
   
