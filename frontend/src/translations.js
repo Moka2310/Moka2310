@@ -78,15 +78,83 @@ export const translations = {
     formations: {
       'Formation Complète de Trading': {
         title: 'Formation Complète de Trading',
-        description: 'Vous souhaitez apprendre le trading de manière simple, progressive et efficace ? Ce cours en ligne — composé de 10 modules vidéo — est conçu pour vous guider pas à pas, que vous soyez totalement débutant ou que vous ayez déjà quelques bases. Vous commencerez par comprendre les fondamentaux du copy trading, puis passerez au trading quotidien, à la prise de position indépendante, et enfin au scalping, une méthode de trading rapide et précise. ✅ Ce Que Vous Allez Apprendre : Comprendre le fonctionnement des marchés financiers, identifier les risques et apprendre à les gérer, découvrir les principaux indicateurs et stratégies utilisés par les traders, passer de la théorie à la pratique avec des exemples concrets, maîtriser le scalping et apprendre à profiter des tendances. 📚 Contenu du Cours : Modules 1-10 couvrant les Bases du Trading, Risques, Profits, Pips, Indicateurs, Méthodes, Scalping, Analyse des Tendances, Actifs et Plateformes.'
+        description: `💎 Formation complète : 8h - 10 vidéos - Avancé
+
+✨ Ce Que Vous Allez Apprendre :
+
+✓ Comprendre le fonctionnement des marchés financiers
+✓ Identifier les risques et apprendre à les gérer
+✓ Découvrir les principaux indicateurs et stratégies
+✓ Passer de la théorie à la pratique avec des exemples concrets
+✓ Maîtriser le scalping et profiter des tendances
+
+📚 Contenu Complet :
+
+• Modules 1-10 : Bases du Trading
+• Gestion des Risques et Profits
+• Analyse des Pips et Indicateurs
+• Méthodes de Trading Avancées
+• Scalping et Analyse des Tendances
+• Choix des Actifs et Plateformes`
       },
       'Tradalife Ultra Adhésion': {
         title: 'Adhésion ULTRA Tradalife',
-        description: '🔥 Adhésion ULTRA TRADALIFE - Accès à 6 Canaux VIP : Signaux et stratégies Gold, Matières premières (pétrole, gaz, matières premières), Forex (paires majeures et exotiques), Indices (S&P 500, Nasdaq, DAX), Opportunités Crypto sur Bitcoin, et signaux Actions. Comptes de trading inclus : 2 Comptes Live chez 2 courtiers différents pour diversifier vos stratégies, 1 Compte Demo pour pratiquer sans risque. Formation de base en Copytrading pour comprendre la logique, gérer les risques et copier les positions efficacement. Support privé via WhatsApp avec assistance personnalisée directe, réponses rapides et conseils pratiques pour progresser.'
+        description: `💎 Formation : 1h40 min - 2 vidéos - Débutant
+
+🔥 Accès à 6 Canaux VIP :
+
+✓ Signaux et stratégies Gold
+✓ Matières premières (pétrole, gaz)
+✓ Forex (paires majeures et exotiques)
+✓ Indices (S&P 500, Nasdaq, DAX)
+✓ Opportunités Crypto sur Bitcoin
+✓ Signaux Actions
+
+💼 Comptes de Trading Inclus :
+
+• 2 Comptes Live chez 2 courtiers différents
+• 1 Compte Demo pour pratiquer sans risque
+
+📖 Formation Copytrading :
+
+• Comprendre la logique du copytrading
+• Gérer les risques efficacement
+• Copier les positions comme un pro
+
+📱 Support Privé WhatsApp :
+
+• Assistance personnalisée directe
+• Réponses rapides à vos questions
+• Conseils pratiques pour progresser`
       },
       'Tradalife Premium Membership': {
         title: 'Adhésion Premium Tradalife',
-        description: 'Adhésion Premium TRADALIFE - Accès à 5 Canaux VIP : Signaux et stratégies Gold, Matières premières (pétrole, gaz, matières premières), Forex (paires majeures et exotiques), Indices (S&P 500, Nasdaq, DAX), et opportunités Crypto sur Bitcoin et principales cryptomonnaies. Comptes de Trading Inclus : 1 Compte Live pour trader en conditions réelles de marché, 1 Compte Demo pour pratiquer en toute sécurité sans risque financier. Formation de Base au Copy Trading pour comprendre le fonctionnement du copy trading, apprendre la gestion des risques et maîtriser la copie efficace des transactions. Support Privé via WhatsApp avec assistance personnalisée directe, réponses rapides et conseils pratiques pour vous aider à progresser.'
+        description: `💎 Formation : 1h40 - 2 vidéos - Débutant
+
+⭐ Accès à 5 Canaux VIP :
+
+✓ Signaux et stratégies Gold
+✓ Matières premières (pétrole, gaz)
+✓ Forex (paires majeures et exotiques)
+✓ Indices (S&P 500, Nasdaq, DAX)
+✓ Opportunités Crypto Bitcoin
+
+💼 Comptes de Trading Inclus :
+
+• 1 Compte Live pour trader en réel
+• 1 Compte Demo pour pratiquer sans risque
+
+📖 Formation Copy Trading :
+
+• Comprendre le fonctionnement
+• Apprendre la gestion des risques
+• Maîtriser la copie des transactions
+
+📱 Support Privé WhatsApp :
+
+• Assistance personnalisée directe
+• Réponses rapides
+• Conseils pratiques`
       }
     },
 
