@@ -47,6 +47,13 @@ const Dashboard = () => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [testimonialData, setTestimonialData] = useState({
+    rating: 5,
+    comment: '',
+    country: user?.country || ''
+  });
+  const [myTestimonial, setMyTestimonial] = useState(null);
+  const [testimonialLoading, setTestimonialLoading] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
