@@ -105,11 +105,21 @@ const Checkout = () => {
           </Button>
         </div>
 
-        <h1 className="text-4xl font-bold mb-12 text-center">
+        <h1 className="text-4xl font-bold mb-4 text-center">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
             {t(language, 'checkout.title')}
           </span>
         </h1>
+
+        {/* Info message */}
+        <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 mb-8 text-center">
+          <p className="text-blue-300 text-sm">
+            💡 {language === 'fr' 
+              ? 'Vous avez sélectionné une formation par erreur ? Utilisez les boutons "Annuler" ci-dessus ou "Annuler cette commande" dans le résumé.'
+              : 'Selected a course by mistake? Use the "Cancel" buttons above or "Cancel this order" in the summary.'
+            }
+          </p>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-8">
           {/* Formation Summary */}
