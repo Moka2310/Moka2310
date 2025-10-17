@@ -378,5 +378,62 @@ class EmailService:
         
         return await self.send_email(to_email, subject, html_content)
 
+    async def send_account_deletion_confirmation(self, to_email: str, user_name: str):
+        """Send account deletion confirmation email (GDPR compliance)"""
+        subject = "Confirmation de suppression de votre compte Tradalife"
+        
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background: linear-gradient(135deg, #E91E8C 0%, #7B3FF2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }}
+                .content {{ background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }}
+                .info-box {{ background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; }}
+                .footer {{ text-align: center; margin-top: 30px; color: #666; font-size: 12px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>✓ Suppression de compte confirmée</h1>
+                </div>
+                <div class="content">
+                    <p>Bonjour {user_name},</p>
+                    
+                    <p>Nous confirmons que votre compte Tradalife et toutes vos données associées ont été <strong>définitivement supprimés</strong> de nos systèmes.</p>
+                    
+                    <div class="info-box">
+                        <strong>📋 Données supprimées :</strong>
+                        <ul>
+                            <li>Informations de compte</li>
+                            <li>Documents KYC</li>
+                            <li>Historique d'achats</li>
+                            <li>Témoignages soumis</li>
+                            <li>Toutes données personnelles</li>
+                        </ul>
+                    </div>
+                    
+                    <p><strong>Important :</strong> Cette action est irréversible. Si vous souhaitez utiliser nos services à l'avenir, vous devrez créer un nouveau compte.</p>
+                    
+                    <p>Nous sommes désolés de vous voir partir et espérons vous revoir bientôt.</p>
+                    
+                    <p>Si cette suppression n'a pas été initiée par vous, veuillez nous contacter immédiatement.</p>
+                    
+                    <p>Cordialement,<br>L'équipe Tradalife</p>
+                </div>
+                <div class="footer">
+                    <p>Conformément au RGPD (Règlement Général sur la Protection des Données)</p>
+                    <p>© 2025 Tradalife - Tous droits réservés</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        return await self.send_email(to_email, subject, html_content)
+
 # Create singleton instance
 email_service = EmailService()
