@@ -763,6 +763,13 @@ class TradalifeTester:
             # Health Check
             self.test_health_check,
             
+            # Chat API Tests (High Priority - Current Focus)
+            self.test_chat_health_check,
+            self.test_chat_french_message,
+            self.test_chat_english_message,
+            self.test_chat_session_persistence,
+            self.test_chat_edge_cases,
+            
             # Authentication & User Management
             self.test_register,
             self.test_login,
