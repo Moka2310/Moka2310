@@ -5,6 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { t, translations } from '../translations';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
+import { Textarea } from '../components/ui/textarea';
 import { toast } from '../hooks/use-toast';
 import { purchasesAPI, formationsAPI, kycAPI } from '../api/client';
 import { 
