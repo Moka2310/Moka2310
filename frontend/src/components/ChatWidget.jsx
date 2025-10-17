@@ -75,30 +75,28 @@ const ChatWidget = () => {
         <button
           onClick={handleToggleChat}
           style={{
-            background: 'linear-gradient(to right, #c89a3f, #d4af37)',
-            color: 'white',
+            background: 'white',
             borderRadius: '50%',
-            padding: '16px',
-            border: 'none',
-            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+            padding: '0',
+            border: '3px solid #d4af37',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
             cursor: 'pointer',
-            transition: 'all 0.3s'
+            transition: 'all 0.3s',
+            width: '70px',
+            height: '70px',
+            overflow: 'hidden'
           }}
           aria-label={language === 'fr' ? 'Ouvrir le chat' : 'Open chat'}
         >
-          <svg
-            style={{ width: '24px', height: '24px' }}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-            />
-          </svg>
+          <img 
+            src="/chat-assistant-avatar.png" 
+            alt="Assistant Tradalife"
+            style={{ 
+              width: '100%', 
+              height: '100%', 
+              objectFit: 'cover'
+            }}
+          />
         </button>
       )}
 
