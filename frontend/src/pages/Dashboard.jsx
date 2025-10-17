@@ -19,7 +19,8 @@ import {
   Video,
   ArrowLeft,
   Settings,
-  Trash2
+  Trash2,
+  Star
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
