@@ -102,9 +102,76 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the Tradalife backend API with authentication, formations, purchases, and KYC endpoints"
+user_problem_statement: "Intégrer un chatbot AI sur la page d'accueil de Tradalife utilisant OpenAI GPT-4o-mini via Emergent LLM Key"
 
 backend:
+  - task: "Chat API - Health Check"
+    implemented: true
+    working: "NA"
+    file: "/app/backend/routes/chat.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Implemented chat health check endpoint at /api/chat/health. Ready for testing."
+  
+  - task: "Chat API - Message Handling"
+    implemented: true
+    working: "NA"
+    file: "/app/backend/routes/chat.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Implemented POST /api/chat endpoint with OpenAI gpt-4o-mini integration via Emergent LLM Key. Manual curl test showed successful responses in both FR and EN. Needs automated testing."
+  
+  - task: "Chat Service - OpenAI Integration"
+    implemented: true
+    working: true
+    file: "/app/backend/chat_service.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Successfully integrated emergentintegrations library with OpenAI gpt-4o-mini. Manual tests confirmed bilingual support (FR/EN) and proper API responses."
+
+frontend:
+  - task: "ChatWidget Component"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/components/ChatWidget.jsx"
+    stuck_count: 2
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "ChatWidget button renders but onClick handler not triggering. React Strict Mode initially caused double mounting. Simplified component with inline styles. Button detected by Playwright but click event not captured. Issue persists after disabling Strict Mode and simplifying onClick handler."
+
+metadata:
+  created_by: "main_agent"
+  version: "2.0"
+  test_sequence: 1
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "Chat API - Health Check"
+    - "Chat API - Message Handling"
+  stuck_tasks:
+    - "ChatWidget Component"
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: "Chatbot backend API implemented and manually tested with curl. Both health check and message endpoints working correctly with bilingual support. Frontend ChatWidget has rendering issues - onClick handler not executing despite button being detected in DOM. Need to test backend API comprehensively before investigating frontend issue further."
   - task: "Authentication System"
     implemented: true
     working: true
