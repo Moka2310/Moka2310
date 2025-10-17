@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { canaux, stats } from '../mockData';
-import { Check, Download } from 'lucide-react';
+import { Check, Download, Star } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
@@ -17,6 +17,7 @@ const API = `${BACKEND_URL}/api`;
 const Home = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
+  const [testimonials, setTestimonials] = useState([]);
   
   const [contactForm, setContactForm] = useState({
     firstName: '',
