@@ -125,11 +125,29 @@ const ChatWidget = () => {
             justifyContent: 'space-between',
             alignItems: 'center'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{ width: '12px', height: '12px', backgroundColor: '#4ade80', borderRadius: '50%' }} />
-              <h3 style={{ fontWeight: 600, margin: 0 }}>
-                {language === 'fr' ? 'Assistant Tradalife' : 'Tradalife Assistant'}
-              </h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <img 
+                src="/chat-assistant-avatar.png" 
+                alt="Assistant Tradalife"
+                style={{ 
+                  width: '40px', 
+                  height: '40px', 
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  border: '2px solid white'
+                }}
+              />
+              <div>
+                <h3 style={{ fontWeight: 600, margin: 0, fontSize: '16px' }}>
+                  {language === 'fr' ? 'Assistant Tradalife' : 'Tradalife Assistant'}
+                </h3>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
+                  <div style={{ width: '8px', height: '8px', backgroundColor: '#4ade80', borderRadius: '50%' }} />
+                  <span style={{ fontSize: '12px', opacity: 0.9 }}>
+                    {language === 'fr' ? 'En ligne' : 'Online'}
+                  </span>
+                </div>
+              </div>
             </div>
             <button
               onClick={handleToggleChat}
