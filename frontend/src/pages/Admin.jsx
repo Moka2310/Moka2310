@@ -33,13 +33,17 @@ const Admin = () => {
 
   const loadData = async () => {
     try {
-      const [requestsRes, statsRes] = await Promise.all([
+      const [requestsRes, statsRes, testimonialsRes] = await Promise.all([
         adminAPI.getKycRequests(),
-        adminAPI.getStats()
+        adminAPI.getStats(),
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/admin/testimonials/pending`, {
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        }).then(res => res.json())
       ]);
       
       setKycRequests(requestsRes.data);
       setStats(statsRes.data);
+      setPendingTestimonials(testimonialsRes);
     } catch (error) {
       toast({
         title: 'Erreur',
@@ -48,6 +52,46 @@ const Admin = () => {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleApproveTestimonial = async (testimonialId) => {
+    try {
+      await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/admin/testimonials/approve/${testimonialId}`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+      });
+      toast({
+        title: '✓ Témoignage approuvé',
+        description: 'Le témoignage est maintenant visible publiquement'
+      });
+      loadData();
+    } catch (error) {
+      toast({
+        title: 'Erreur',
+        description: 'Impossible d\'approuver le témoignage',
+        variant: 'destructive'
+      });
+    }
+  };
+
+  const handleRejectTestimonial = async (testimonialId) => {
+    try {
+      await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/admin/testimonials/reject/${testimonialId}`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+      });
+      toast({
+        title: '✓ Témoignage rejeté',
+        description: 'Le témoignage a été rejeté'
+      });
+      loadData();
+    } catch (error) {
+      toast({
+        title: 'Erreur',
+        description: 'Impossible de rejeter le témoignage',
+        variant: 'destructive'
+      });
     }
   };
 
