@@ -6,7 +6,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { t, translations } from '../translations';
 import { purchasesAPI } from '../api/client';
 import { toast } from '../hooks/use-toast';
-import { CreditCard, Loader2 } from 'lucide-react';
+import { CreditCard, Loader2, ArrowLeft } from 'lucide-react';
 
 const Checkout = () => {
   const location = useLocation();
