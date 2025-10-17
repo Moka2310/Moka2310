@@ -84,16 +84,13 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Video Banner - Groupe TRADALIFE */}
+      {/* Video Banner - Groupe TRADALIFE HD */}
       <section className="w-full overflow-hidden bg-black">
-        <div className="relative w-full" style={{ height: '500px' }}>
+        <div className="relative w-full" style={{ height: '600px' }}>
           <iframe
-            src="https://www.youtube.com/embed/kIpu18ACAXc?autoplay=1&mute=1&loop=1&playlist=kIpu18ACAXc&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1"
-            className="absolute top-1/2 left-1/2 w-full h-full"
+            src="https://www.youtube.com/embed/kIpu18ACAXc?autoplay=1&mute=1&loop=1&playlist=kIpu18ACAXc&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&vq=hd1080"
+            className="absolute top-0 left-0 w-full h-full"
             style={{
-              transform: 'translate(-50%, -50%) scale(1.5)',
-              minWidth: '100%',
-              minHeight: '100%',
               border: 'none',
               pointerEvents: 'none'
             }}
@@ -101,9 +98,8 @@ const Home = () => {
             allowFullScreen
             title="Groupe TRADALIFE"
           ></iframe>
-          {/* Gradient overlay to blend edges */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40 pointer-events-none"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40 pointer-events-none"></div>
+          {/* Subtle gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1E1540]/30 via-transparent to-[#1E1540]/30 pointer-events-none"></div>
         </div>
       </section>
 
