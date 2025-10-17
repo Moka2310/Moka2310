@@ -87,6 +87,28 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Video Banner - Groupe TRADALIFE */}
+      <section className="w-full overflow-hidden bg-black">
+        <div className="relative w-full" style={{ height: '400px' }}>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <iframe
+              src="https://drive.google.com/file/d/13Rqhtq1fXkfGoGHIX65ToCeFjbhRnNUO/preview?autoplay=1&loop=1&controls=0&mute=1&modestbranding=1&showinfo=0"
+              className="absolute top-1/2 left-1/2 pointer-events-none"
+              style={{
+                width: '120%',
+                height: '120%',
+                transform: 'translate(-50%, -50%) scale(1.3)',
+                border: 'none'
+              }}
+              allow="autoplay; encrypted-media"
+              title="Groupe TRADALIFE"
+            ></iframe>
+          </div>
+          {/* Gradient overlay to blend edges */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 pointer-events-none"></div>
+        </div>
+      </section>
+
       {/* Mission & Why Choose Us Section */}
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
