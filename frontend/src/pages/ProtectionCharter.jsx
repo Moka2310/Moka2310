@@ -30,7 +30,8 @@ const ProtectionCharter = () => {
             "Vos informations personnelles sont cryptées et sécurisées.",
             "Nous ne partageons jamais vos données avec des tiers sans votre consentement.",
             "Vos documents KYC sont stockés de manière confidentielle.",
-            "Vous pouvez demander la suppression de vos données à tout moment."
+            "Vous avez le DROIT de demander la suppression de vos données à tout moment via votre Dashboard (conforme au RGPD).",
+            "La suppression est automatique et permanente dans les 48h maximum."
           ]
         },
         {
