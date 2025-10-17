@@ -299,6 +299,19 @@ const Dashboard = () => {
       }
 
       setDocuments(prev => ({ ...prev, [docType]: file }));
+      
+      // Créer une prévisualisation pour les images
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setDocumentPreviews(prev => ({ ...prev, [docType]: reader.result }));
+        };
+        reader.readAsDataURL(file);
+      } else {
+        // Pour les PDF, pas de prévisualisation
+        setDocumentPreviews(prev => ({ ...prev, [docType]: 'pdf' }));
+      }
+      
       toast({
         title: language === 'fr' ? '✓ Document ajouté' : '✓ Document added',
         description: language === 'fr' 
