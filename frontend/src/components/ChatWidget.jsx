@@ -239,7 +239,7 @@ const ChatWidget = () => {
                 onClick={handleSendMessage}
                 disabled={isLoading || !inputMessage.trim()}
                 style={{
-                  background: 'linear-gradient(to right, #c89a3f, #d4af37)',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   color: 'white',
                   borderRadius: '8px',
                   padding: '8px 16px',
