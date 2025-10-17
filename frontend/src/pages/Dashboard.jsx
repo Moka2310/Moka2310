@@ -633,14 +633,37 @@ const Dashboard = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-white/80 mb-2 text-sm">{language === 'fr' ? 'Pays' : 'Country'}*</label>
-                      <Input
-                        type="text"
+                      <select
                         required
                         value={kycData.country}
                         onChange={(e) => setKycData({ ...kycData, country: e.target.value })}
-                        className="bg-white/10 border-purple-500/30 text-white placeholder:text-white/50 focus:border-pink-500"
-                        placeholder={language === 'fr' ? 'Votre pays' : 'Your country'}
-                      />
+                        className="w-full bg-white/10 border border-purple-500/30 text-white rounded-lg px-4 py-3 focus:border-pink-500 focus:outline-none"
+                      >
+                        <option value="" className="bg-[#1E1540]">{language === 'fr' ? 'Sélectionnez un pays' : 'Select a country'}</option>
+                        <option value="Canada" className="bg-[#1E1540]">Canada</option>
+                        <option value="France" className="bg-[#1E1540]">France</option>
+                        <option value="Belgique" className="bg-[#1E1540]">Belgique / Belgium</option>
+                        <option value="Suisse" className="bg-[#1E1540]">Suisse / Switzerland</option>
+                        <option value="États-Unis" className="bg-[#1E1540]">États-Unis / USA</option>
+                        <option value="Maroc" className="bg-[#1E1540]">Maroc / Morocco</option>
+                        <option value="Algérie" className="bg-[#1E1540]">Algérie / Algeria</option>
+                        <option value="Tunisie" className="bg-[#1E1540]">Tunisie / Tunisia</option>
+                        <option value="Sénégal" className="bg-[#1E1540]">Sénégal / Senegal</option>
+                        <option value="Côte d'Ivoire" className="bg-[#1E1540]">Côte d'Ivoire / Ivory Coast</option>
+                        <option value="Cameroun" className="bg-[#1E1540]">Cameroun / Cameroon</option>
+                        <option value="Mali" className="bg-[#1E1540]">Mali</option>
+                        <option value="Burkina Faso" className="bg-[#1E1540]">Burkina Faso</option>
+                        <option value="Niger" className="bg-[#1E1540]">Niger</option>
+                        <option value="Bénin" className="bg-[#1E1540]">Bénin / Benin</option>
+                        <option value="Togo" className="bg-[#1E1540]">Togo</option>
+                        <option value="Guinée" className="bg-[#1E1540]">Guinée / Guinea</option>
+                        <option value="Congo" className="bg-[#1E1540]">Congo</option>
+                        <option value="RDC" className="bg-[#1E1540]">RDC / DR Congo</option>
+                        <option value="Gabon" className="bg-[#1E1540]">Gabon</option>
+                        <option value="Madagascar" className="bg-[#1E1540]">Madagascar</option>
+                        <option value="Haïti" className="bg-[#1E1540]">Haïti / Haiti</option>
+                        <option value="Autre" className="bg-[#1E1540]">{language === 'fr' ? 'Autre' : 'Other'}</option>
+                      </select>
                     </div>
                     <div>
                       <label className="block text-white/80 mb-2 text-sm">{language === 'fr' ? 'Téléphone' : 'Phone'}*</label>
