@@ -267,10 +267,38 @@ const Dashboard = () => {
   const handleFileChange = (e, docType) => {
     const file = e.target.files[0];
     if (file) {
+      // Validation de la taille (max 10 MB)
+      const maxSize = 10 * 1024 * 1024; // 10 MB
+      if (file.size > maxSize) {
+        toast({
+          title: language === 'fr' ? '❌ Fichier trop volumineux' : '❌ File too large',
+          description: language === 'fr' 
+            ? 'La taille maximale est de 10 MB. Veuillez compresser votre image.'
+            : 'Maximum size is 10 MB. Please compress your image.',
+          variant: 'destructive'
+        });
+        return;
+      }
+
+      // Validation du type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+      if (!allowedTypes.includes(file.type)) {
+        toast({
+          title: language === 'fr' ? '❌ Format invalide' : '❌ Invalid format',
+          description: language === 'fr' 
+            ? 'Formats acceptés : JPG, PNG, PDF uniquement'
+            : 'Accepted formats: JPG, PNG, PDF only',
+          variant: 'destructive'
+        });
+        return;
+      }
+
       setDocuments(prev => ({ ...prev, [docType]: file }));
       toast({
-        title: language === 'fr' ? 'Document ajouté' : 'Document added',
-        description: language === 'fr' ? `${file.name} a été ajouté avec succès` : `${file.name} has been added successfully`
+        title: language === 'fr' ? '✓ Document ajouté' : '✓ Document added',
+        description: language === 'fr' 
+          ? `${file.name} - Assurez-vous que la photo est nette et bien cadrée`
+          : `${file.name} - Make sure the photo is sharp and well-framed`
       });
     }
   };
