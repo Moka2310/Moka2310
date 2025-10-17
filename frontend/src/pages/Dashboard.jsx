@@ -56,6 +56,7 @@ const Dashboard = () => {
   });
   const [myTestimonial, setMyTestimonial] = useState(null);
   const [testimonialLoading, setTestimonialLoading] = useState(false);
+  const [hiddenFormations, setHiddenFormations] = useState([]);
 
   useEffect(() => {
     const loadData = async () => {
