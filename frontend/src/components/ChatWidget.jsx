@@ -7,26 +7,22 @@ const ChatWidget = () => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [sessionId, setSessionId] = useState(null);
+  const [sessionId] = useState(`session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`);
   const messagesEndRef = useRef(null);
 
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-  useEffect(() => {
-    console.log('ChatWidget mounted, language:', language);
-    // Générer un session ID unique au chargement du composant
-    const newSessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    setSessionId(newSessionId);
-    console.log('Session ID generated:', newSessionId);
-  }, []); // Array vide pour ne s'exécuter qu'au montage
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   useEffect(() => {
-    // Auto-scroll vers le bas quand de nouveaux messages arrivent
     scrollToBottom();
   }, [messages]);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const handleToggleChat = () => {
+    console.log('Chat toggle clicked, current isOpen:', isOpen);
+    setIsOpen(!isOpen);
   };
 
   const handleSendMessage = async () => {
@@ -34,17 +30,13 @@ const ChatWidget = () => {
 
     const userMessage = inputMessage.trim();
     setInputMessage('');
-
-    // Ajouter le message de l'utilisateur
     setMessages(prev => [...prev, { type: 'user', text: userMessage }]);
     setIsLoading(true);
 
     try {
       const response = await fetch(`${BACKEND_URL}/api/chat`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: userMessage,
           session_id: sessionId,
@@ -52,19 +44,10 @@ const ChatWidget = () => {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error('Erreur lors de l\'envoi du message');
-      }
+      if (!response.ok) throw new Error('Erreur lors de l\'envoi du message');
 
       const data = await response.json();
-      
-      // Ajouter la réponse du bot
       setMessages(prev => [...prev, { type: 'bot', text: data.response }]);
-      
-      // Mettre à jour le session_id si changé
-      if (data.session_id && data.session_id !== sessionId) {
-        setSessionId(data.session_id);
-      }
     } catch (error) {
       console.error('Erreur chat:', error);
       setMessages(prev => [...prev, { 
@@ -86,23 +69,28 @@ const ChatWidget = () => {
   };
 
   return (
-    <>
+    <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 9999 }}>
       {/* Bouton flottant */}
       {!isOpen && (
         <button
-          onClick={() => {
-            console.log('Chat button clicked, opening chat...');
-            setIsOpen(true);
+          onClick={handleToggleChat}
+          style={{
+            background: 'linear-gradient(to right, #c89a3f, #d4af37)',
+            color: 'white',
+            borderRadius: '50%',
+            padding: '16px',
+            border: 'none',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+            cursor: 'pointer',
+            transition: 'all 0.3s'
           }}
-          className="fixed bottom-6 right-6 bg-gradient-to-r from-[#c89a3f] to-[#d4af37] text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 z-50 hover:scale-110"
           aria-label={language === 'fr' ? 'Ouvrir le chat' : 'Open chat'}
         >
           <svg
-            className="w-6 h-6"
+            style={{ width: '24px', height: '24px' }}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
           >
             <path
               strokeLinecap="round"
@@ -116,41 +104,55 @@ const ChatWidget = () => {
 
       {/* Fenêtre de chat */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-96 h-[600px] bg-white rounded-lg shadow-2xl flex flex-col z-50 border border-gray-200">
+        <div style={{
+          width: '384px',
+          height: '600px',
+          backgroundColor: 'white',
+          borderRadius: '8px',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+          display: 'flex',
+          flexDirection: 'column',
+          border: '1px solid #e5e7eb'
+        }}>
           {/* En-tête */}
-          <div className="bg-gradient-to-r from-[#c89a3f] to-[#d4af37] text-white p-4 rounded-t-lg flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-              <h3 className="font-semibold">
+          <div style={{
+            background: 'linear-gradient(to right, #c89a3f, #d4af37)',
+            color: 'white',
+            padding: '16px',
+            borderTopLeftRadius: '8px',
+            borderTopRightRadius: '8px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ width: '12px', height: '12px', backgroundColor: '#4ade80', borderRadius: '50%' }} />
+              <h3 style={{ fontWeight: 600, margin: 0 }}>
                 {language === 'fr' ? 'Assistant Tradalife' : 'Tradalife Assistant'}
               </h3>
             </div>
             <button
-              onClick={() => setIsOpen(false)}
-              className="hover:bg-white/20 rounded-full p-1 transition-colors"
-              aria-label={language === 'fr' ? 'Fermer le chat' : 'Close chat'}
+              onClick={handleToggleChat}
+              style={{
+                background: 'rgba(255,255,255,0.2)',
+                border: 'none',
+                borderRadius: '50%',
+                padding: '4px',
+                cursor: 'pointer',
+                color: 'white'
+              }}
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+              <svg style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
 
           {/* Zone de messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+          <div style={{ flex: 1, overflowY: 'auto', padding: '16px', backgroundColor: '#f9fafb' }}>
             {messages.length === 0 && (
-              <div className="text-center text-gray-500 py-8">
-                <p className="text-sm">
+              <div style={{ textAlign: 'center', color: '#6b7280', paddingTop: '32px', paddingBottom: '32px' }}>
+                <p style={{ fontSize: '14px' }}>
                   {language === 'fr' 
                     ? 'Bonjour! Comment puis-je vous aider aujourd\'hui?' 
                     : 'Hello! How can I help you today?'}
@@ -161,27 +163,36 @@ const ChatWidget = () => {
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                style={{
+                  display: 'flex',
+                  justifyContent: message.type === 'user' ? 'flex-end' : 'flex-start',
+                  marginBottom: '16px'
+                }}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
-                    message.type === 'user'
-                      ? 'bg-gradient-to-r from-[#c89a3f] to-[#d4af37] text-white'
-                      : 'bg-white border border-gray-200 text-gray-800'
-                  }`}
+                  style={{
+                    maxWidth: '80%',
+                    borderRadius: '8px',
+                    padding: '12px',
+                    background: message.type === 'user' 
+                      ? 'linear-gradient(to right, #c89a3f, #d4af37)'
+                      : 'white',
+                    color: message.type === 'user' ? 'white' : '#1f2937',
+                    border: message.type === 'bot' ? '1px solid #e5e7eb' : 'none'
+                  }}
                 >
-                  <p className="text-sm whitespace-pre-wrap">{message.text}</p>
+                  <p style={{ fontSize: '14px', margin: 0, whiteSpace: 'pre-wrap' }}>{message.text}</p>
                 </div>
               </div>
             ))}
             
             {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-white border border-gray-200 rounded-lg p-3">
-                  <div className="flex space-x-2">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <div style={{ background: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', padding: '12px' }}>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <div style={{ width: '8px', height: '8px', backgroundColor: '#9ca3af', borderRadius: '50%' }} />
+                    <div style={{ width: '8px', height: '8px', backgroundColor: '#9ca3af', borderRadius: '50%' }} />
+                    <div style={{ width: '8px', height: '8px', backgroundColor: '#9ca3af', borderRadius: '50%' }} />
                   </div>
                 </div>
               </div>
@@ -191,41 +202,45 @@ const ChatWidget = () => {
           </div>
 
           {/* Zone de saisie */}
-          <div className="p-4 border-t border-gray-200 bg-white rounded-b-lg">
-            <div className="flex space-x-2">
+          <div style={{ padding: '16px', borderTop: '1px solid #e5e7eb', backgroundColor: 'white', borderBottomLeftRadius: '8px', borderBottomRightRadius: '8px' }}>
+            <div style={{ display: 'flex', gap: '8px' }}>
               <input
                 type="text"
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder={language === 'fr' ? 'Tapez votre message...' : 'Type your message...'}
-                className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#c89a3f] focus:border-transparent"
                 disabled={isLoading}
+                style={{
+                  flex: 1,
+                  border: '1px solid #d1d5db',
+                  borderRadius: '8px',
+                  padding: '8px 16px',
+                  outline: 'none'
+                }}
               />
               <button
                 onClick={handleSendMessage}
                 disabled={isLoading || !inputMessage.trim()}
-                className="bg-gradient-to-r from-[#c89a3f] to-[#d4af37] text-white rounded-lg px-4 py-2 hover:shadow-md transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{
+                  background: 'linear-gradient(to right, #c89a3f, #d4af37)',
+                  color: 'white',
+                  borderRadius: '8px',
+                  padding: '8px 16px',
+                  border: 'none',
+                  cursor: isLoading || !inputMessage.trim() ? 'not-allowed' : 'pointer',
+                  opacity: isLoading || !inputMessage.trim() ? 0.5 : 1
+                }}
               >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                  />
+                <svg style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
               </button>
             </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
