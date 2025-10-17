@@ -251,10 +251,15 @@ const Dashboard = () => {
       formData.append('proofOfResidence', documents.proofOfResidence);
 
       // Submit KYC
-      await kycAPI.submit(formData);
+      const response = await kycAPI.submit(formData);
 
-      // Update user data
+      // Force refresh user data from server
       await updateUser();
+      
+      // Reload page to refresh all data
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
 
       toast({
         title: t(language, 'dashboard.kyc.success'),
