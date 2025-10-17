@@ -39,6 +39,7 @@ class TradalifeTester:
         self.admin_token = None
         self.user_data = None
         self.purchase_id = None
+        self.chat_session_id = None
         self.test_results = []
         self.test_user_email = "trader@tradalife.com"
         self.test_admin_email = "admin@tradalife.com"
