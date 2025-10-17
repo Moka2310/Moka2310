@@ -77,15 +77,33 @@ const Checkout = () => {
   return (
     <div className="min-h-screen bg-[#1E1540] pt-28 pb-20 px-4">
       <div className="max-w-4xl mx-auto">
-        {/* Back Button */}
-        <Button
-          onClick={() => navigate(-1)}
-          variant="ghost"
-          className="mb-6 text-pink-400 hover:text-pink-300 hover:bg-pink-500/10"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          {language === 'fr' ? 'Retour' : 'Back'}
-        </Button>
+        {/* Back/Cancel Buttons */}
+        <div className="flex items-center justify-between mb-6">
+          <Button
+            onClick={() => navigate('/boutique')}
+            variant="ghost"
+            className="text-pink-400 hover:text-pink-300 hover:bg-pink-500/10"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            {language === 'fr' ? 'Retour à la boutique' : 'Back to shop'}
+          </Button>
+          
+          <Button
+            onClick={() => {
+              if (window.confirm(language === 'fr' ? 'Voulez-vous vraiment annuler cette commande ?' : 'Do you really want to cancel this order?')) {
+                navigate('/boutique');
+                toast({
+                  title: language === 'fr' ? 'Commande annulée' : 'Order cancelled',
+                  description: language === 'fr' ? 'Vous pouvez sélectionner une autre formation' : 'You can select another course'
+                });
+              }
+            }}
+            variant="outline"
+            className="border-red-500/50 text-red-400 hover:bg-red-500/20"
+          >
+            {language === 'fr' ? '✕ Annuler la commande' : '✕ Cancel order'}
+          </Button>
+        </div>
 
         <h1 className="text-4xl font-bold mb-12 text-center">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
