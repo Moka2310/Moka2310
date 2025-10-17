@@ -14,16 +14,11 @@ const ChatWidget = () => {
 
   useEffect(() => {
     console.log('ChatWidget mounted, language:', language);
-  }, [language]);
-
-  useEffect(() => {
-    // Générer un session ID unique au chargement
-    if (!sessionId) {
-      const newSessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-      setSessionId(newSessionId);
-      console.log('Session ID generated:', newSessionId);
-    }
-  }, [sessionId]);
+    // Générer un session ID unique au chargement du composant
+    const newSessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    setSessionId(newSessionId);
+    console.log('Session ID generated:', newSessionId);
+  }, []); // Array vide pour ne s'exécuter qu'au montage
 
   useEffect(() => {
     // Auto-scroll vers le bas quand de nouveaux messages arrivent
