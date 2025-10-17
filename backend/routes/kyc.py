@@ -51,7 +51,7 @@ async def submit_kyc(
             "lastName": lastName,
             "country": country,
             "phone": phone,
-            "kycStatus": KYCStatus.PENDING_REVIEW.value,
+            "kycStatus": KYCStatus.PENDING.value,
             "kycSubmittedAt": datetime.utcnow()
         }}
     )
@@ -61,7 +61,7 @@ async def submit_kyc(
     
     return {
         "success": True,
-        "kycStatus": KYCStatus.PENDING_REVIEW.value,
+        "kycStatus": KYCStatus.PENDING.value,
         "message": "KYC submitted successfully. You will receive an email once reviewed."
     }
 
