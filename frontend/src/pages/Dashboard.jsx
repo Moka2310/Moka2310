@@ -492,32 +492,47 @@ const Dashboard = () => {
               </h2>
               
               {user?.kycStatus === 'approved' ? (
-                <div className="text-center py-12">
+                <div className="text-center py-12 bg-green-500/10 border-2 border-green-500/50 rounded-2xl">
                   <CheckCircle className="w-20 h-20 text-green-400 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-white mb-2">
-                    {language === 'fr' ? 'Compte vérifié !' : 'Account verified!'}
+                  <h3 className="text-3xl font-bold text-green-400 mb-2">
+                    ✓ {language === 'fr' ? 'Compte Approuvé' : 'Account Approved'}
                   </h3>
-                  <p className="text-white/70">
+                  <p className="text-white/80 text-lg">
                     {language === 'fr' 
-                      ? 'Votre identité a été vérifiée avec succès. Vous avez accès à toutes vos formations.'
-                      : 'Your identity has been successfully verified. You have access to all your courses.'
+                      ? 'Votre identité a été vérifiée avec succès. Vous pouvez maintenant acheter des formations !'
+                      : 'Your identity has been successfully verified. You can now purchase courses!'
                     }
                   </p>
                 </div>
-              ) : user?.kycStatus === 'pending_review' ? (
-                <div className="text-center py-12">
-                  <Clock className="w-20 h-20 text-yellow-400 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-white mb-2">
-                    {language === 'fr' ? 'Vérification en cours' : 'Verification in progress'}
+              ) : user?.kycStatus === 'pending' ? (
+                <div className="text-center py-12 bg-yellow-500/10 border-2 border-yellow-500/50 rounded-2xl">
+                  <Clock className="w-20 h-20 text-yellow-400 mx-auto mb-4 animate-pulse" />
+                  <h3 className="text-3xl font-bold text-yellow-400 mb-2">
+                    ⏳ {language === 'fr' ? 'En Attente de Vérification' : 'Pending Verification'}
                   </h3>
-                  <p className="text-white/70">
+                  <p className="text-white/80 text-lg">
                     {language === 'fr' 
-                      ? 'Votre demande est en cours de vérification. Vous recevrez un email une fois le processus terminé.'
-                      : 'Your request is being reviewed. You will receive an email once the process is complete.'
+                      ? 'Vos documents sont en cours de révision. Nous vous enverrons un email une fois la vérification terminée.'
+                      : 'Your documents are under review. We will send you an email once the verification is complete.'
                     }
                   </p>
                 </div>
-              ) : (
+              ) : user?.kycStatus === 'rejected' ? (
+                <div className="text-center py-12 bg-red-500/10 border-2 border-red-500/50 rounded-2xl mb-6">
+                  <XCircle className="w-20 h-20 text-red-400 mx-auto mb-4" />
+                  <h3 className="text-3xl font-bold text-red-400 mb-2">
+                    ✗ {language === 'fr' ? 'Documents Rejetés' : 'Documents Rejected'}
+                  </h3>
+                  <p className="text-white/80 text-lg mb-4">
+                    {language === 'fr' 
+                      ? 'Vos documents ont été rejetés. Veuillez soumettre de nouveaux documents conformes aux critères.'
+                      : 'Your documents have been rejected. Please submit new documents that meet the criteria.'
+                    }
+                  </p>
+                </div>
+              ) : null}
+              
+              {(!user?.kycStatus || user?.kycStatus === 'rejected') && (
                 <form onSubmit={handleKycSubmit} className="space-y-6">
                   {/* Personal Info */}
                   <div className="grid md:grid-cols-2 gap-6">
