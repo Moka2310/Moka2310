@@ -90,7 +90,7 @@ const Home = () => {
         <div className="relative w-full" style={{ height: '600px' }}>
           <div className="absolute inset-0 overflow-hidden">
             <iframe
-              src="https://www.youtube.com/embed/kIpu18ACAXc?autoplay=1&mute=1&loop=1&playlist=kIpu18ACAXc&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&vq=hd1080"
+              src="https://www.youtube.com/embed/kIpu18ACAXc?autoplay=1&mute=1&loop=1&playlist=kIpu18ACAXc&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&vq=hd1080&playsinline=1"
               className="absolute top-1/2 left-1/2"
               style={{
                 width: '177.77vh',
@@ -103,6 +103,7 @@ const Home = () => {
               }}
               allow="autoplay; encrypted-media"
               allowFullScreen
+              playsInline
               title="Groupe TRADALIFE"
             ></iframe>
           </div>
