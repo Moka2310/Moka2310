@@ -648,6 +648,127 @@ const Dashboard = () => {
             </div>
           </TabsContent>
 
+          {/* Testimonial Tab */}
+          <TabsContent value="testimonial">
+            <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30">
+              <h2 className="text-2xl font-bold text-white mb-2">
+                {language === 'fr' ? 'Partagez votre expérience' : 'Share your experience'}
+              </h2>
+              <p className="text-white/70 mb-6">
+                {language === 'fr' 
+                  ? 'Votre avis compte ! Partagez votre expérience avec Tradalife.'
+                  : 'Your opinion matters! Share your experience with Tradalife.'
+                }
+              </p>
+
+              {myTestimonial ? (
+                <div className="bg-purple-500/10 border border-purple-500/30 rounded-xl p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-semibold text-white">
+                      {language === 'fr' ? 'Votre témoignage' : 'Your testimonial'}
+                    </h3>
+                    <div className={`px-4 py-2 rounded-full text-sm ${
+                      myTestimonial.status === 'approved' 
+                        ? 'bg-green-500/20 text-green-400'
+                        : myTestimonial.status === 'rejected'
+                        ? 'bg-red-500/20 text-red-400'
+                        : 'bg-yellow-500/20 text-yellow-400'
+                    }`}>
+                      {myTestimonial.status === 'approved' 
+                        ? (language === 'fr' ? '✓ Approuvé' : '✓ Approved')
+                        : myTestimonial.status === 'rejected'
+                        ? (language === 'fr' ? '✗ Rejeté' : '✗ Rejected')
+                        : (language === 'fr' ? '⏳ En attente' : '⏳ Pending')
+                      }
+                    </div>
+                  </div>
+
+                  <div className="flex space-x-1 mb-4">
+                    {[...Array(5)].map((_, index) => (
+                      <Star
+                        key={index}
+                        className={`w-5 h-5 ${
+                          index < myTestimonial.rating
+                            ? 'text-yellow-400 fill-yellow-400'
+                            : 'text-gray-600'
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  <p className="text-white/80 mb-4 italic">"{myTestimonial.comment}"</p>
+                  <p className="text-pink-400 text-sm">{myTestimonial.country}</p>
+                </div>
+              ) : (
+                <form onSubmit={handleTestimonialSubmit} className="space-y-6">
+                  {/* Rating */}
+                  <div>
+                    <label className="block text-white/80 mb-3 font-medium">
+                      {language === 'fr' ? 'Note (étoiles)' : 'Rating (stars)'}
+                    </label>
+                    <div className="flex space-x-2">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          key={star}
+                          type="button"
+                          onClick={() => setTestimonialData({ ...testimonialData, rating: star })}
+                          className="transition-transform hover:scale-110"
+                        >
+                          <Star
+                            className={`w-10 h-10 ${
+                              star <= testimonialData.rating
+                                ? 'text-yellow-400 fill-yellow-400'
+                                : 'text-gray-600'
+                            }`}
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Country */}
+                  <div>
+                    <label className="block text-white/80 mb-2 font-medium">
+                      {language === 'fr' ? 'Pays' : 'Country'}
+                    </label>
+                    <Input
+                      value={testimonialData.country}
+                      onChange={(e) => setTestimonialData({ ...testimonialData, country: e.target.value })}
+                      placeholder={language === 'fr' ? 'Votre pays' : 'Your country'}
+                      className="bg-white/10 border-purple-500/30 text-white placeholder:text-white/50"
+                      required
+                    />
+                  </div>
+
+                  {/* Comment */}
+                  <div>
+                    <label className="block text-white/80 mb-2 font-medium">
+                      {language === 'fr' ? 'Votre témoignage' : 'Your testimonial'}
+                    </label>
+                    <Textarea
+                      value={testimonialData.comment}
+                      onChange={(e) => setTestimonialData({ ...testimonialData, comment: e.target.value })}
+                      placeholder={language === 'fr' ? 'Partagez votre expérience avec Tradalife...' : 'Share your experience with Tradalife...'}
+                      className="bg-white/10 border-purple-500/30 text-white placeholder:text-white/50 min-h-[150px]"
+                      required
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={testimonialLoading}
+                    className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white py-6 rounded-full font-semibold text-lg"
+                  >
+                    {testimonialLoading 
+                      ? (language === 'fr' ? 'Envoi...' : 'Sending...')
+                      : (language === 'fr' ? 'Soumettre mon témoignage' : 'Submit my testimonial')
+                    }
+                  </Button>
+                </form>
+              )}
+            </div>
+          </TabsContent>
+
           {/* Settings Tab */}
           <TabsContent value="settings">
             <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30">
