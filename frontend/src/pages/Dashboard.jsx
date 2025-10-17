@@ -22,6 +22,7 @@ import {
   Trash2
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
 
 const Dashboard = () => {
   const { user, logout, updateUser } = useAuth();
