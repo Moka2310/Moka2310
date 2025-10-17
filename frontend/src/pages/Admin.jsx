@@ -5,7 +5,7 @@ import { adminAPI } from '../api/client';
 import { Button } from '../components/ui/button';
 import { Textarea } from '../components/ui/textarea';
 import { toast } from '../hooks/use-toast';
-import { CheckCircle, XCircle, Clock, Users, ShoppingCart, DollarSign } from 'lucide-react';
+import { CheckCircle, XCircle, Clock, Users, ShoppingCart, DollarSign, ArrowLeft } from 'lucide-react';
 
 const Admin = () => {
   const { user } = useAuth();
