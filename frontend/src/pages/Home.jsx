@@ -25,18 +25,7 @@ const Home = () => {
     message: ''
   });
 
-  useEffect(() => {
-    // Load videos from backend
-    const loadVideos = async () => {
-      try {
-        // For now, load from MongoDB directly - we'll create an API endpoint later
-        // Using mock for now until we add the endpoint
-      } catch (error) {
-        console.error('Failed to load videos:', error);
-      }
-    };
-    loadVideos();
-  }, []);
+ 
 
   const openVideoModal = (video) => {
     setSelectedVideo(video);
