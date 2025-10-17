@@ -360,9 +360,7 @@ export const translations = {
     formations: {
       'Formation Complète de Trading': {
         title: 'Complete Trading Course',
-        description: `💎 Complete course: 8h - 10 videos - Advanced
-
-✨ What You Will Learn:
+        description: `✨ What You Will Learn:
 
 ✓ Understand how financial markets work
 ✓ Identify risks and learn to manage them
@@ -381,9 +379,7 @@ export const translations = {
       },
       'Tradalife Ultra Adhésion': {
         title: 'Tradalife ULTRA Membership',
-        description: `💎 Course: 1h40 min - 2 videos - Beginner
-
-🔥 Access to 6 VIP Channels:
+        description: `🔥 Access to 6 VIP Channels:
 
 ✓ Gold signals and strategies
 ✓ Commodities (oil, gas)
@@ -411,9 +407,7 @@ export const translations = {
       },
       'Tradalife Premium Membership': {
         title: 'Tradalife Premium Membership',
-        description: `💎 Course: 1h40 - 2 videos - Beginner
-
-⭐ Access to 5 VIP Channels:
+        description: `⭐ Access to 5 VIP Channels:
 
 ✓ Gold signals and strategies
 ✓ Commodities (oil, gas)
