@@ -106,6 +106,16 @@ const Admin = () => {
   return (
     <div className="min-h-screen bg-[#1E1540] pt-28 pb-20 px-4">
       <div className="max-w-7xl mx-auto">
+        {/* Back Button */}
+        <Button
+          onClick={() => navigate('/')}
+          variant="ghost"
+          className="mb-6 text-pink-400 hover:text-pink-300 hover:bg-pink-500/10"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Retour à l'accueil
+        </Button>
+
         {/* Header */}
         <h1 className="text-4xl font-bold mb-8">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
