@@ -439,6 +439,16 @@ const Dashboard = () => {
               </div>
             ) : (
               <div className="space-y-6">
+                {/* Bouton pour acheter plus de formations */}
+                <div className="flex justify-end">
+                  <Button
+                    onClick={() => navigate('/boutique')}
+                    className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-6 py-3 rounded-full"
+                  >
+                    🛒 {language === 'fr' ? 'Acheter une Formation' : 'Buy a Course'}
+                  </Button>
+                </div>
+
                 {user?.kycStatus !== 'approved' && (
                   <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6">
                     <h3 className="text-yellow-400 font-bold mb-2">{language === 'fr' ? 'Action requise' : 'Action required'}</h3>
