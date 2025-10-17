@@ -131,9 +131,11 @@ const Boutique = () => {
               {/* Content */}
               <div className="p-6">
                 <h3 className="text-2xl font-bold text-white mb-3">{getFormationTitle(formation)}</h3>
-                <div className="text-white/90 mb-4 whitespace-pre-line leading-relaxed text-sm">
-                  {getFormationDescription(formation)}
-                </div>
+                <div 
+                  className="text-white/90 mb-4 whitespace-pre-line leading-relaxed text-sm"
+                  dangerouslySetInnerHTML={{ __html: getFormationDescription(formation) }}
+                />
+
 
                 {/* Info Tags */}
                 <div className="flex flex-wrap gap-2 mb-6">
