@@ -95,7 +95,10 @@ const ChatWidget = () => {
       {/* Bouton flottant */}
       {!isOpen && (
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            console.log('Chat button clicked, opening chat...');
+            setIsOpen(true);
+          }}
           className="fixed bottom-6 right-6 bg-gradient-to-r from-[#c89a3f] to-[#d4af37] text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 z-50 hover:scale-110"
           aria-label={language === 'fr' ? 'Ouvrir le chat' : 'Open chat'}
         >
