@@ -675,10 +675,26 @@ const Dashboard = () => {
                       <div className="flex items-center space-x-4">
                         <label className="flex-1 cursor-pointer">
                           <div className="border-2 border-dashed border-purple-500/50 rounded-xl p-6 text-center hover:border-pink-500/50 transition-colors">
-                            <Upload className="w-8 h-8 text-pink-400 mx-auto mb-2" />
-                            <p className="text-white/70 text-sm">
-                              {documents.passport ? documents.passport.name : (language === 'fr' ? 'Cliquez pour télécharger' : 'Click to upload')}
-                            </p>
+                            {documentPreviews.passport ? (
+                              documentPreviews.passport === 'pdf' ? (
+                                <div>
+                                  <CheckCircle className="w-8 h-8 text-green-400 mx-auto mb-2" />
+                                  <p className="text-green-400 text-sm font-semibold">{documents.passport.name}</p>
+                                  <p className="text-white/60 text-xs mt-1">{language === 'fr' ? 'PDF téléchargé' : 'PDF uploaded'}</p>
+                                </div>
+                              ) : (
+                                <div>
+                                  <img src={documentPreviews.passport} alt="Passport preview" className="w-full h-32 object-contain rounded-lg mb-2" />
+                                  <p className="text-green-400 text-sm font-semibold">{documents.passport.name}</p>
+                                  <p className="text-white/60 text-xs mt-1">{language === 'fr' ? 'Cliquez pour changer' : 'Click to change'}</p>
+                                </div>
+                              )
+                            ) : (
+                              <>
+                                <Upload className="w-8 h-8 text-pink-400 mx-auto mb-2" />
+                                <p className="text-white/70 text-sm">{language === 'fr' ? 'Cliquez pour télécharger' : 'Click to upload'}</p>
+                              </>
+                            )}
                           </div>
                           <input
                             type="file"
