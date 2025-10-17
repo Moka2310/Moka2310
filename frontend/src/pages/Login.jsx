@@ -66,11 +66,11 @@ const Login = () => {
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold mb-2">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
-                {t(language, 'auth.login.title')}
+                {isLogin ? t(language, 'auth.login.title') : t(language, 'auth.register.title')}
               </span>
             </h1>
             <p className="text-white/70">
-              {t(language, 'auth.login.subtitle')}
+              {isLogin ? t(language, 'auth.login.subtitle') : t(language, 'auth.register.subtitle')}
             </p>
           </div>
 
@@ -100,13 +100,40 @@ const Login = () => {
               />
             </div>
 
+            {!isLogin && (
+              <div>
+                <label className="block text-white/80 mb-2 text-sm">{t(language, 'auth.register.confirmPassword')}</label>
+                <Input
+                  type="password"
+                  required
+                  value={formData.confirmPassword}
+                  onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                  className="bg-white/10 border-purple-500/30 text-white placeholder:text-white/50 focus:border-pink-500"
+                  placeholder="••••••••"
+                />
+              </div>
+            )}
+
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white py-6 rounded-full font-semibold text-lg"
             >
-              {t(language, 'auth.login.button')}
+              {isLogin ? t(language, 'auth.login.button') : t(language, 'auth.register.button')}
             </Button>
           </form>
+
+          {/* Toggle */}
+          <div className="mt-6 text-center">
+            <button
+              onClick={() => setIsLogin(!isLogin)}
+              className="text-pink-400 hover:text-pink-300 transition-colors"
+            >
+              {isLogin 
+                ? `${t(language, 'auth.login.noAccount')} ${t(language, 'auth.login.register')}`
+                : `${t(language, 'auth.register.hasAccount')} ${t(language, 'auth.register.login')}`
+              }
+            </button>
+          </div>
         </div>
       </div>
     </div>
