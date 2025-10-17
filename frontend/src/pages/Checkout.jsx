@@ -34,6 +34,16 @@ const Checkout = () => {
   };
 
   const handlePayment = async () => {
+    // Check no-refund policy acceptance
+    if (!noRefundAccepted) {
+      toast({
+        title: language === 'fr' ? 'Confirmation requise' : 'Confirmation required',
+        description: language === 'fr' ? 'Veuillez accepter la politique de non-remboursement' : 'Please accept the no-refund policy',
+        variant: 'destructive'
+      });
+      return;
+    }
+
     setProcessing(true);
     
     try {
