@@ -80,19 +80,6 @@ const Home = () => {
                 </Button>
               </div>
             </div>
-
-            {/* Right Side - Image */}
-            <div className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-2xl shadow-pink-500/20">
-                <img
-                  src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=442,fit=crop,trim=70.87350835322195;0;70.87350835322195;0/A3Ql90nqlVUN4Xox/chatgpt-image-9-oct.-2025-21-h-47-min-36-s-AVLx81l6vNtvoNEx.png"
-                  alt="Tradalife Team"
-                  className="w-full h-auto"
-                />
-              </div>
-              <div className="absolute -top-6 -left-6 w-24 h-24 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full blur-2xl opacity-60"></div>
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full blur-2xl opacity-60"></div>
-            </div>
           </div>
         </div>
       </section>
