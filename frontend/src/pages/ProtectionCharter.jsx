@@ -79,7 +79,8 @@ const ProtectionCharter = () => {
             "Your personal information is encrypted and secured.",
             "We never share your data with third parties without your consent.",
             "Your KYC documents are stored confidentially.",
-            "You can request deletion of your data at any time."
+            "You have the RIGHT to request deletion of your data at any time via your Dashboard (GDPR compliant).",
+            "Deletion is automatic and permanent within 48 hours maximum."
           ]
         },
         {
