@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
-import { Shield, AlertTriangle, Info, CheckCircle2 } from 'lucide-react';
+import { Shield, AlertTriangle, Info, CheckCircle2, ArrowLeft } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const ProtectionCharter = () => {
