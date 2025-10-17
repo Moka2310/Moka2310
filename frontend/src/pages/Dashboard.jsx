@@ -285,6 +285,13 @@ const Dashboard = () => {
               {t(language, 'dashboard.kyc.title')}
             </TabsTrigger>
             <TabsTrigger 
+              value="testimonial"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
+            >
+              <Star className="w-4 h-4 mr-2" />
+              {language === 'fr' ? 'Témoignage' : 'Testimonial'}
+            </TabsTrigger>
+            <TabsTrigger 
               value="settings"
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
             >
