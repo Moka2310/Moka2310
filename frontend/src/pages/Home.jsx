@@ -27,15 +27,7 @@ const Home = () => {
 
  
 
-  const openVideoModal = (video) => {
-    setSelectedVideo(video);
-    setIsVideoModalOpen(true);
-  };
-
-  const closeVideoModal = () => {
-    setIsVideoModalOpen(false);
-    setSelectedVideo(null);
-  };
+ 
 
   const handleContactSubmit = (e) => {
     e.preventDefault();
