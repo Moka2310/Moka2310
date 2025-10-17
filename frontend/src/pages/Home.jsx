@@ -324,6 +324,58 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-4">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
+              {language === 'fr' ? 'Témoignages de nos clients' : 'Client Testimonials'}
+            </span>
+          </h2>
+          <p className="text-white/70 text-center mb-12">
+            {language === 'fr' ? 'Découvrez ce que nos clients disent de nous' : 'Discover what our clients say about us'}
+          </p>
+
+          {testimonials.length > 0 ? (
+            <div className="grid md:grid-cols-3 gap-6">
+              {testimonials.slice(0, 6).map((testimonial) => (
+                <div
+                  key={testimonial.id}
+                  className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-6 border border-purple-500/30 hover:border-pink-500/50 transition-all"
+                >
+                  {/* Stars Rating */}
+                  <div className="flex space-x-1 mb-4">
+                    {[...Array(5)].map((_, index) => (
+                      <Star
+                        key={index}
+                        className={`w-5 h-5 ${
+                          index < testimonial.rating
+                            ? 'text-yellow-400 fill-yellow-400'
+                            : 'text-gray-600'
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Comment */}
+                  <p className="text-white/80 mb-4 italic">"{testimonial.comment}"</p>
+
+                  {/* Author */}
+                  <div className="border-t border-purple-500/30 pt-4">
+                    <p className="text-white font-semibold">{testimonial.userName}</p>
+                    <p className="text-pink-400 text-sm">{testimonial.country}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center text-white/70 py-12">
+              <p>{language === 'fr' ? 'Aucun témoignage pour le moment' : 'No testimonials yet'}</p>
+            </div>
+          )}
+        </div>
+      </section>
+
  
 
       {/* Contact Section */}
