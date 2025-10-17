@@ -150,24 +150,24 @@ const Boutique = () => {
                 <Button
                   onClick={() => handlePurchase(formation)}
                   className={`w-full py-6 rounded-full font-semibold text-lg group ${
-                    user?.kycStatus === 'approved'
+                    user?.kycStatus === 'approved' || user?.kycStatus === 'pending'
                       ? 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white'
                       : 'bg-yellow-500/20 border-2 border-yellow-500 text-yellow-300 hover:bg-yellow-500/30'
                   }`}
                 >
                   <ShoppingCart className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                  {user?.kycStatus === 'approved' 
+                  {user?.kycStatus === 'approved' || user?.kycStatus === 'pending'
                     ? t(language, 'shop.buy')
-                    : (language === 'fr' ? 'KYC requis pour acheter' : 'KYC required to buy')
+                    : (language === 'fr' ? 'Documents KYC requis' : 'KYC documents required')
                   }
                 </Button>
                 
                 {/* KYC Warning */}
-                {user && user.kycStatus !== 'approved' && (
+                {user && user.kycStatus !== 'approved' && user.kycStatus !== 'pending' && (
                   <p className="text-yellow-400 text-xs mt-2 text-center">
                     {language === 'fr' 
-                      ? '⚠️ Complétez votre KYC dans le Dashboard'
-                      : '⚠️ Complete your KYC in Dashboard'
+                      ? '⚠️ Soumettez vos documents KYC dans le Dashboard'
+                      : '⚠️ Submit your KYC documents in Dashboard'
                     }
                   </p>
                 )}
