@@ -3,17 +3,25 @@
 Script pour créer un compte administrateur dans Tradalife
 """
 import asyncio
+import os
 from motor.motor_asyncio import AsyncIOMotorClient
 from passlib.context import CryptContext
 import uuid
 from datetime import datetime, timezone
+from dotenv import load_dotenv
+
+# Charger les variables d'environnement
+load_dotenv()
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 async def create_admin():
-    # Connect to MongoDB
-    client = AsyncIOMotorClient("mongodb://localhost:27017")
-    db = client["tradalife"]
+    # Connect to MongoDB using environment variables
+    mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
+    db_name = os.environ.get('DB_NAME', 'tradalife')
+    
+    client = AsyncIOMotorClient(mongo_url)
+    db = client[db_name]
     
     print("=" * 60)
     print("🔧 CRÉATION D'UN COMPTE ADMINISTRATEUR")
