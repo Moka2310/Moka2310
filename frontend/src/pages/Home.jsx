@@ -85,7 +85,7 @@ const Home = () => {
       </section>
 
       {/* Video Banner - Groupe TRADALIFE HD Full */}
-<parameter name="w-full overflow-hidden bg-black relative">
+      <section className="w-full overflow-hidden bg-black relative">
         <div className="relative w-full" style={{ height: '600px' }}>
           <div className="absolute inset-0 overflow-hidden">
             <iframe
