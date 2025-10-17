@@ -405,15 +405,33 @@ const Dashboard = () => {
                 )}
 
                 <div className="grid md:grid-cols-2 gap-6">
-                  {purchasedFormations.map((formation) => {
+                  {purchasedFormations
+                    .filter(formation => !hiddenFormations.includes(formation.id))
+                    .map((formation) => {
                     // Get translated formation title
                     const translatedTitle = translations[language]?.formations?.[formation.title]?.title || formation.title;
                     
                     return (
                     <div
                       key={formation.id}
-                      className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl overflow-hidden border border-purple-500/30"
+                      className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl overflow-hidden border border-purple-500/30 relative"
                     >
+                      {/* Hide button */}
+                      <button
+                        onClick={() => {
+                          if (window.confirm(language === 'fr' ? 'Masquer cette formation de votre liste ?' : 'Hide this course from your list?')) {
+                            setHiddenFormations([...hiddenFormations, formation.id]);
+                            toast({
+                              title: language === 'fr' ? 'Formation masquée' : 'Course hidden',
+                              description: language === 'fr' ? 'Rechargez la page pour la voir à nouveau' : 'Reload the page to see it again'
+                            });
+                          }
+                        }}
+                        className="absolute top-2 right-2 z-10 w-8 h-8 bg-red-500/80 hover:bg-red-600 rounded-full flex items-center justify-center text-white transition-all"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                      
                       <img
                         src={formation.image}
                         alt={translatedTitle}
