@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { translations } from '../translations';
 
 const ChatWidget = () => {
   const { language } = useLanguage();
-  const t = translations[language];
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -15,9 +13,15 @@ const ChatWidget = () => {
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
+    console.log('ChatWidget mounted, language:', language);
+  }, [language]);
+
+  useEffect(() => {
     // Générer un session ID unique au chargement
     if (!sessionId) {
-      setSessionId(`session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`);
+      const newSessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      setSessionId(newSessionId);
+      console.log('Session ID generated:', newSessionId);
     }
   }, [sessionId]);
 
