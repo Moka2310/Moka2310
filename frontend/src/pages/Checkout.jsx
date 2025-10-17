@@ -151,7 +151,7 @@ const Checkout = () => {
               <div className="flex items-center justify-between pt-4 border-t border-purple-500/30">
                 <span className="text-white/70">{t(language, 'checkout.price')}</span>
                 <span className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
-                  {formation.price}€
+                  {formation.price} CAD
                 </span>
               </div>
 
