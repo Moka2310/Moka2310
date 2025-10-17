@@ -70,7 +70,9 @@ const Boutique = () => {
   };
   
   const getFormationDescription = (formation) => {
-    return translations[language]?.formations?.[formation.title]?.description || formation.description;
+    const description = translations[language]?.formations?.[formation.title]?.description || formation.description;
+    // Add sparkle class to diamond symbols
+    return description.replace(/💎/g, '<span class="sparkle">💎</span>');
   };
 
   if (loading) {
