@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { formationsAPI } from '../api/client';
-import { ShoppingCart, Clock, BarChart3 } from 'lucide-react';
+import { ShoppingCart, Clock, BarChart3, ArrowLeft } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
