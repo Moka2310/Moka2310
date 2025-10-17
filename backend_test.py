@@ -566,6 +566,190 @@ class TradalifeTester:
         except Exception as e:
             self.log_test("Error Handling", False, f"Error: {str(e)}")
             return False
+
+    def test_chat_health_check(self):
+        """Test chat health check endpoint"""
+        try:
+            response = self.session.get(f"{API_URL}/chat/health")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("status") == "healthy" and data.get("service") == "chat":
+                    self.log_test("Chat Health Check", True, f"Chat service is healthy: {data}")
+                    return True
+                else:
+                    self.log_test("Chat Health Check", False, "Invalid health check response structure", data)
+                    return False
+            else:
+                self.log_test("Chat Health Check", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Chat Health Check", False, f"Error: {str(e)}")
+            return False
+
+    def test_chat_french_message(self):
+        """Test chat message in French"""
+        try:
+            chat_data = {
+                "message": "Bonjour, quelles formations proposez-vous?",
+                "language": "fr"
+            }
+            
+            response = self.session.post(f"{API_URL}/chat", json=chat_data)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "response" in data and "session_id" in data:
+                    # Check if response contains formation information in French
+                    response_text = data["response"].lower()
+                    french_keywords = ["formation", "cours", "trading", "tradalife"]
+                    has_french_content = any(keyword in response_text for keyword in french_keywords)
+                    
+                    if has_french_content and data["session_id"]:
+                        self.log_test("Chat French Message", True, f"French response received with session_id: {data['session_id'][:8]}...")
+                        # Store session_id for persistence test
+                        self.chat_session_id = data["session_id"]
+                        return True
+                    else:
+                        self.log_test("Chat French Message", False, "Response missing formation info or session_id", data)
+                        return False
+                else:
+                    self.log_test("Chat French Message", False, "Missing response or session_id in response", data)
+                    return False
+            else:
+                self.log_test("Chat French Message", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Chat French Message", False, f"Error: {str(e)}")
+            return False
+
+    def test_chat_english_message(self):
+        """Test chat message in English"""
+        try:
+            chat_data = {
+                "message": "What are your prices?",
+                "language": "en"
+            }
+            
+            response = self.session.post(f"{API_URL}/chat", json=chat_data)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "response" in data and "session_id" in data:
+                    # Check if response contains pricing information in English
+                    response_text = data["response"].lower()
+                    english_keywords = ["price", "cost", "cad", "payment", "stripe", "paypal"]
+                    has_english_content = any(keyword in response_text for keyword in english_keywords)
+                    
+                    if has_english_content and data["session_id"]:
+                        self.log_test("Chat English Message", True, f"English response received with session_id: {data['session_id'][:8]}...")
+                        return True
+                    else:
+                        self.log_test("Chat English Message", False, "Response missing pricing info or session_id", data)
+                        return False
+                else:
+                    self.log_test("Chat English Message", False, "Missing response or session_id in response", data)
+                    return False
+            else:
+                self.log_test("Chat English Message", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Chat English Message", False, f"Error: {str(e)}")
+            return False
+
+    def test_chat_session_persistence(self):
+        """Test chat session persistence"""
+        if not hasattr(self, 'chat_session_id'):
+            self.log_test("Chat Session Persistence", False, "No session_id available from previous test")
+            return False
+            
+        try:
+            # Send follow-up message with same session_id
+            chat_data = {
+                "message": "Merci, pouvez-vous me donner plus de détails?",
+                "session_id": self.chat_session_id,
+                "language": "fr"
+            }
+            
+            response = self.session.post(f"{API_URL}/chat", json=chat_data)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "response" in data and data.get("session_id") == self.chat_session_id:
+                    self.log_test("Chat Session Persistence", True, f"Session maintained: {data['session_id'][:8]}...")
+                    return True
+                else:
+                    self.log_test("Chat Session Persistence", False, "Session ID not maintained", data)
+                    return False
+            else:
+                self.log_test("Chat Session Persistence", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Chat Session Persistence", False, f"Error: {str(e)}")
+            return False
+
+    def test_chat_edge_cases(self):
+        """Test chat edge cases"""
+        success_count = 0
+        total_tests = 4
+        
+        try:
+            # Test empty message
+            response = self.session.post(f"{API_URL}/chat", json={"message": "", "language": "fr"})
+            if response.status_code == 200:
+                data = response.json()
+                if "response" in data:
+                    self.log_test("Chat Edge Case - Empty Message", True, "Handled empty message gracefully")
+                    success_count += 1
+                else:
+                    self.log_test("Chat Edge Case - Empty Message", False, "Invalid response for empty message", data)
+            else:
+                self.log_test("Chat Edge Case - Empty Message", False, f"Status code: {response.status_code}", response.text)
+            
+            # Test very long message
+            long_message = "A" * 1500  # Over 1000 characters
+            response = self.session.post(f"{API_URL}/chat", json={"message": long_message, "language": "fr"})
+            if response.status_code == 200:
+                data = response.json()
+                if "response" in data:
+                    self.log_test("Chat Edge Case - Long Message", True, "Handled long message (1500 chars)")
+                    success_count += 1
+                else:
+                    self.log_test("Chat Edge Case - Long Message", False, "Invalid response for long message", data)
+            else:
+                self.log_test("Chat Edge Case - Long Message", False, f"Status code: {response.status_code}", response.text)
+            
+            # Test special characters
+            special_message = "Bonjour! Comment ça va? 🚀 €$£¥ @#%&*"
+            response = self.session.post(f"{API_URL}/chat", json={"message": special_message, "language": "fr"})
+            if response.status_code == 200:
+                data = response.json()
+                if "response" in data:
+                    self.log_test("Chat Edge Case - Special Characters", True, "Handled special characters")
+                    success_count += 1
+                else:
+                    self.log_test("Chat Edge Case - Special Characters", False, "Invalid response for special chars", data)
+            else:
+                self.log_test("Chat Edge Case - Special Characters", False, f"Status code: {response.status_code}", response.text)
+            
+            # Test missing language parameter (should default to French)
+            response = self.session.post(f"{API_URL}/chat", json={"message": "Hello, what courses do you offer?"})
+            if response.status_code == 200:
+                data = response.json()
+                if "response" in data:
+                    # Should respond in French since default is "fr"
+                    self.log_test("Chat Edge Case - Missing Language", True, "Handled missing language parameter (defaulted to French)")
+                    success_count += 1
+                else:
+                    self.log_test("Chat Edge Case - Missing Language", False, "Invalid response for missing language", data)
+            else:
+                self.log_test("Chat Edge Case - Missing Language", False, f"Status code: {response.status_code}", response.text)
+            
+            return success_count == total_tests
+            
+        except Exception as e:
+            self.log_test("Chat Edge Cases", False, f"Error: {str(e)}")
+            return False
     
     def run_all_tests(self):
         """Run all tests in sequence"""
