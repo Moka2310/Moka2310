@@ -345,7 +345,7 @@ const Dashboard = () => {
         </div>
 
         {/* Tabs */}
-        <Tabs defaultValue="formations" className="w-full">
+        <Tabs defaultValue={new URLSearchParams(location.search).get('tab') || 'formations'} className="w-full">
           <TabsList className="bg-[#2B1F5C] border border-purple-500/30 p-1 mb-8">
             <TabsTrigger 
               value="formations"
