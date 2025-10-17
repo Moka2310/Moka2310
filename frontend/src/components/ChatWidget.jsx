@@ -114,7 +114,7 @@ const ChatWidget = () => {
         }}>
           {/* En-tête */}
           <div style={{
-            background: 'linear-gradient(to right, #c89a3f, #d4af37)',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             color: 'white',
             padding: '16px',
             borderTopLeftRadius: '8px',
