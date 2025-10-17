@@ -21,7 +21,8 @@ import {
   ArrowLeft,
   Settings,
   Trash2,
-  Star
+  Star,
+  X
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
