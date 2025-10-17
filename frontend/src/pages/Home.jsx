@@ -17,9 +17,7 @@ const API = `${BACKEND_URL}/api`;
 const Home = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
-  const [videos, setVideos] = useState([]);
-  const [selectedVideo, setSelectedVideo] = useState(null);
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  
   const [contactForm, setContactForm] = useState({
     firstName: '',
     lastName: '',
