@@ -11,6 +11,7 @@ const Admin = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [kycRequests, setKycRequests] = useState([]);
+  const [pendingTestimonials, setPendingTestimonials] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [rejectionReason, setRejectionReason] = useState('');
