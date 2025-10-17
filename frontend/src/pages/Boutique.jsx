@@ -129,7 +129,9 @@ const Boutique = () => {
               {/* Content */}
               <div className="p-6">
                 <h3 className="text-2xl font-bold text-white mb-3">{getFormationTitle(formation)}</h3>
-                <p className="text-white/70 mb-4 line-clamp-3">{getFormationDescription(formation)}</p>
+                <div className="text-white/90 mb-4 whitespace-pre-line leading-relaxed text-sm">
+                  {getFormationDescription(formation)}
+                </div>
 
                 {/* Info Tags */}
                 <div className="flex flex-wrap gap-2 mb-6">
