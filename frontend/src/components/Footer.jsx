@@ -1,10 +1,12 @@
 import React from 'react';
-import { Send, Facebook } from 'lucide-react';
+import { Send, Facebook, Shield } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
 
 const Footer = () => {
   const { language } = useLanguage();
+  const navigate = useNavigate();
   
   return (
     <footer className="bg-gradient-to-b from-[#1E1540] to-black py-12">
@@ -31,7 +33,16 @@ const Footer = () => {
           </a>
         </div>
 
-        <div className="text-center">
+        <div className="text-center space-y-4">
+          <div>
+            <button
+              onClick={() => navigate('/protection-charter')}
+              className="text-pink-400 hover:text-pink-300 transition-colors inline-flex items-center space-x-2"
+            >
+              <Shield className="w-4 h-4" />
+              <span>{language === 'fr' ? 'Charte de Protection' : 'Protection Charter'}</span>
+            </button>
+          </div>
           <p className="text-pink-500 font-semibold text-lg">
             {t(language, 'footer.rights')} © 2025
           </p>
