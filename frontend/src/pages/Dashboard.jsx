@@ -82,6 +82,7 @@ const Dashboard = () => {
 
     if (user) {
       loadData();
+      loadMyTestimonial();
     }
   }, [user]);
 
