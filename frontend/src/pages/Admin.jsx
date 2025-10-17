@@ -326,6 +326,65 @@ const Admin = () => {
             </div>
           )}
         </div>
+
+        {/* Pending Testimonials */}
+        <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30">
+          <h2 className="text-2xl font-bold text-white mb-6">Témoignages en attente de validation</h2>
+          
+          {pendingTestimonials.length === 0 ? (
+            <div className="text-center py-12 text-white/70">
+              <p>Aucun témoignage en attente</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {pendingTestimonials.map((testimonial) => (
+                <div
+                  key={testimonial.id}
+                  className="bg-purple-500/10 rounded-xl p-6 border border-purple-500/30"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-bold text-white">{testimonial.userName}</h3>
+                      <p className="text-pink-400 text-sm">{testimonial.country}</p>
+                    </div>
+                    <div className="flex space-x-1">
+                      {[...Array(5)].map((_, index) => (
+                        <Star
+                          key={index}
+                          className={`w-5 h-5 ${
+                            index < testimonial.rating
+                              ? 'text-yellow-400 fill-yellow-400'
+                              : 'text-gray-600'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <p className="text-white/80 mb-4 italic">"{testimonial.comment}"</p>
+
+                  <div className="flex space-x-3">
+                    <Button
+                      onClick={() => handleApproveTestimonial(testimonial.id)}
+                      className="bg-green-500 hover:bg-green-600 text-white"
+                    >
+                      <CheckCircle className="w-4 h-4 mr-2" />
+                      Approuver
+                    </Button>
+                    <Button
+                      onClick={() => handleRejectTestimonial(testimonial.id)}
+                      variant="destructive"
+                      className="bg-red-500 hover:bg-red-600"
+                    >
+                      <XCircle className="w-4 h-4 mr-2" />
+                      Rejeter
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
