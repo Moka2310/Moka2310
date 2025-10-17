@@ -98,5 +98,35 @@ class Video(BaseModel):
     description: Optional[str]
     url: str
     duration: str
+    createdAt: datetime = Field(default_factory=datetime.utcnow)
+
+class TestimonialStatus(str, Enum):
+    PENDING = "pending"
+    APPROVED = "approved"
+    REJECTED = "rejected"
+
+class Testimonial(BaseModel):
+    id: str
+    userId: str
+    userName: str  # First + Last name
+    country: str
+    rating: int = Field(ge=1, le=5)  # 1 to 5 stars
+    comment: str
+    status: TestimonialStatus = TestimonialStatus.PENDING
+    createdAt: datetime = Field(default_factory=datetime.utcnow)
+    reviewedAt: Optional[datetime] = None
+
+class TestimonialCreate(BaseModel):
+    rating: int = Field(ge=1, le=5)
+    comment: str
+    country: str
+
+class TestimonialResponse(BaseModel):
+    id: str
+    userName: str
+    country: str
+    rating: int
+    comment: str
+    createdAt: datetime
     order: int
     createdAt: datetime = Field(default_factory=datetime.utcnow)
