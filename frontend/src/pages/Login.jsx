@@ -21,13 +21,30 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!isLogin && formData.password !== formData.confirmPassword) {
+      toast({
+        title: t(language, 'common.error'),
+        description: t(language, 'auth.register.passwordMismatch'),
+        variant: 'destructive'
+      });
+      return;
+    }
 
     try {
-      await login(formData.email, formData.password);
-      toast({
-        title: t(language, 'auth.login.success'),
-        description: language === 'fr' ? 'Bienvenue sur Tradalife' : 'Welcome to Tradalife'
-      });
+      if (isLogin) {
+        await login(formData.email, formData.password);
+        toast({
+          title: t(language, 'auth.login.success'),
+          description: language === 'fr' ? 'Bienvenue sur Tradalife' : 'Welcome to Tradalife'
+        });
+      } else {
+        await register(formData.email, formData.password);
+        toast({
+          title: t(language, 'auth.register.success'),
+          description: t(language, 'auth.register.success')
+        });
+      }
 
       // Redirect to return URL or dashboard
       const returnTo = location.state?.returnTo || '/dashboard';
