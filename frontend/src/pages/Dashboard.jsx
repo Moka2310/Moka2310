@@ -31,6 +31,7 @@ const Dashboard = () => {
   const { user, logout, updateUser } = useAuth();
   const { language } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
   const [kycData, setKycData] = useState({
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
