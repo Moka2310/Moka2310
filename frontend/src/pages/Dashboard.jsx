@@ -17,7 +17,9 @@ import {
   Download,
   ExternalLink,
   Video,
-  ArrowLeft
+  ArrowLeft,
+  Settings,
+  Trash2
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 
