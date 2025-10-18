@@ -1,10 +1,12 @@
 from fastapi import APIRouter, HTTPException, Depends, UploadFile, File, Form
+from fastapi.responses import FileResponse
 from models import User, KYCStatus, KYCDocument
 from dependencies import get_db, get_current_user, save_upload_file, get_current_admin
 from email_service import email_service
 import uuid
 from datetime import datetime
 from typing import List
+from pathlib import Path
 
 router = APIRouter(prefix="/kyc", tags=["KYC"])
 
