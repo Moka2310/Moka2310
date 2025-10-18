@@ -53,7 +53,7 @@ Informations clés :
 - La vérification KYC (Know Your Customer) est requise avant tout achat
 - Après l'achat, les clients reçoivent l'accès aux vidéos de formation privées et aux canaux Telegram VIP
 - L'inscription nécessite un email et un mot de passe
-- Toutes les formations incluent un accès à vie et un support communautaire VIP
+- Toutes les formations incluent un accès à vie
 
 Directives :
 - Soyez professionnel, clair et serviable
