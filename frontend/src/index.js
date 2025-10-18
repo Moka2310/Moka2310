@@ -10,7 +10,9 @@ root.render(
   </React.StrictMode>,
 );
 
-// Register Service Worker for PWA
+// TEMPORARILY DISABLED - Service Worker causing cache issues
+// Will re-enable after deployment stabilizes
+/*
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
@@ -21,5 +23,15 @@ if ('serviceWorker' in navigator) {
       .catch((registrationError) => {
         console.log('SW registration failed: ', registrationError);
       });
+  });
+}
+*/
+
+// Unregister existing service workers
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    for(let registration of registrations) {
+      registration.unregister();
+    }
   });
 }
