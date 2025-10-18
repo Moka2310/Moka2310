@@ -80,7 +80,12 @@ async def get_kyc_status(current_user: User = Depends(get_current_user)):
 async def get_my_documents(current_user: User = Depends(get_current_user)):
     db = get_db()
     documents = await db.kyc_documents.find({"userId": current_user.id}).to_list(100)
-
+    
+    # Remove MongoDB ObjectId to avoid serialization issues
+    for doc in documents:
+        if '_id' in doc:
+            del doc['_id']
+    
     return documents
 
 @router.get("/document/{document_id}")
