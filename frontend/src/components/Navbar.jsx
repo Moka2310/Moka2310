@@ -179,12 +179,24 @@ const Navbar = () => {
 
             {/* Telegram Button or User Button */}
             {user ? (
-              <Button
-                onClick={() => navigate('/dashboard')}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-2 rounded-full"
-              >
-                {t(language, 'nav.dashboard')}
-              </Button>
+              <div className="flex items-center gap-3">
+                <Button
+                  onClick={() => navigate('/dashboard')}
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-2 rounded-full"
+                >
+                  {t(language, 'nav.dashboard')}
+                </Button>
+                
+                {/* Admin Button - Only show if user is admin */}
+                {user.role === 'admin' && (
+                  <Button
+                    onClick={() => navigate('/admin')}
+                    className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white px-6 py-2 rounded-full font-bold"
+                  >
+                    ⚙️ ADMIN
+                  </Button>
+                )}
+              </div>
             ) : (
               <>
                 <Button
