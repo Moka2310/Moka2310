@@ -80,4 +80,29 @@ async def get_kyc_status(current_user: User = Depends(get_current_user)):
 async def get_my_documents(current_user: User = Depends(get_current_user)):
     db = get_db()
     documents = await db.kyc_documents.find({"userId": current_user.id}).to_list(100)
+
+    return documents
+
+@router.get("/document/{document_id}")
+async def get_document_file(document_id: str, current_user: User = Depends(get_current_admin)):
+    """Serve document file for admin viewing"""
+    db = get_db()
+    
+    # Get document metadata
+    doc = await db.kyc_documents.find_one({"id": document_id})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Document not found")
+    
+    # Check if file exists
+    file_path = Path(doc["filepath"])
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="File not found on server")
+    
+    # Return file
+    return FileResponse(
+        path=str(file_path),
+        media_type="application/octet-stream",
+        filename=doc["filename"]
+    )
+
     return [KYCDocument(**doc) for doc in documents]
