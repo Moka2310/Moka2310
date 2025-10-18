@@ -253,18 +253,44 @@ const Admin = () => {
                       </div>
                       
                       <div className="mt-4">
-                        <p className="text-white/70 text-sm mb-2">
-                          <strong>Documents:</strong>
+                        <p className="text-white/70 text-sm mb-3">
+                          <strong>Documents KYC :</strong>
                         </p>
-                        <div className="flex flex-wrap gap-2">
-                          {request.documents.map((doc, idx) => (
-                            <span
-                              key={idx}
-                              className="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-sm"
-                            >
-                              {doc.documentType}
-                            </span>
-                          ))}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          {request.documents.map((doc, idx) => {
+                            const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+                            const docUrl = `${BACKEND_URL}/api/kyc/document/${doc.id}`;
+                            const docLabel = doc.documentType === 'passport' ? 'Passeport' :
+                                           doc.documentType === 'idCard' ? 'Carte d\'identité' :
+                                           'Justificatif de domicile';
+                            
+                            return (
+                              <div key={idx} className="bg-purple-500/10 rounded-lg p-3">
+                                <p className="text-purple-300 text-xs mb-2 font-semibold">{docLabel}</p>
+                                {doc.filename.toLowerCase().endsWith('.pdf') ? (
+                                  <div className="bg-white/5 rounded p-4 text-center">
+                                    <p className="text-white/60 text-xs mb-2">📄 PDF</p>
+                                    <a
+                                      href={docUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-pink-400 hover:text-pink-300 text-sm underline"
+                                    >
+                                      Ouvrir
+                                    </a>
+                                  </div>
+                                ) : (
+                                  <a href={docUrl} target="_blank" rel="noopener noreferrer">
+                                    <img
+                                      src={docUrl}
+                                      alt={docLabel}
+                                      className="w-full h-32 object-cover rounded cursor-pointer hover:opacity-80 transition"
+                                    />
+                                  </a>
+                                )}
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
                     </div>
