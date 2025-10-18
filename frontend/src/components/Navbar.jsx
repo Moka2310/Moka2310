@@ -260,15 +260,30 @@ const Navbar = () => {
             )}
             
             {user ? (
-              <Button
-                onClick={() => {
-                  navigate('/dashboard');
-                  setMobileMenuOpen(false);
-                }}
-                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
-              >
-                {t(language, 'nav.dashboard')}
-              </Button>
+              <div className="flex flex-col gap-3">
+                <Button
+                  onClick={() => {
+                    navigate('/dashboard');
+                    setMobileMenuOpen(false);
+                  }}
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+                >
+                  {t(language, 'nav.dashboard')}
+                </Button>
+                
+                {/* Admin Button Mobile - Only show if user is admin */}
+                {user.role === 'admin' && (
+                  <Button
+                    onClick={() => {
+                      navigate('/admin');
+                      setMobileMenuOpen(false);
+                    }}
+                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white font-bold"
+                  >
+                    ⚙️ ADMIN
+                  </Button>
+                )}
+              </div>
             ) : (
               <>
                 <Button
