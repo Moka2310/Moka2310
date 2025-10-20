@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
-import { Shield, AlertTriangle, Info, CheckCircle2, ArrowLeft } from 'lucide-react';
+import { Shield, AlertTriangle, Info, CheckCircle2, ArrowLeft, ArrowUp } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const ProtectionCharter = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const content = {
     fr: {
