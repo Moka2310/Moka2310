@@ -85,5 +85,6 @@ export const stats = [
   { value: '+4.000', label: 'Membres actifs', sublabel: '' },
   { value: '+6', label: 'Canaux V.I.P', sublabel: '' },
   { value: '+5 à 15', label: 'Positions par jour', sublabel: '' },
-  { value: '+2', label: 'Brokers partenaires', sublabel: '' }
+  { value: '+2', label: 'Brokers partenaires', sublabel: '' },
+  { value: '+3', label: 'ans sur le marché financier', sublabel: '' }
 ];
