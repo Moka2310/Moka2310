@@ -147,6 +147,135 @@
     }
 }
 
+/* Styles pour les cartes de statistiques */
+.stat-card-wrapper {
+    position: relative;
+    padding: 2px;
+    border-radius: 1.5rem;
+    background: linear-gradient(
+        135deg,
+        #ec4899,
+        #a855f7,
+        #8b5cf6,
+        #6366f1,
+        #3b82f6
+    );
+    background-size: 300% 300%;
+    animation: statGlow 6s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+@keyframes statGlow {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.stat-card-wrapper:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+        0 10px 40px rgba(236, 72, 153, 0.4),
+        0 20px 60px rgba(168, 85, 247, 0.3),
+        0 30px 80px rgba(99, 102, 241, 0.2);
+}
+
+.stat-card-content {
+    position: relative;
+    background: linear-gradient(
+        135deg,
+        rgba(30, 21, 64, 0.95),
+        rgba(43, 31, 92, 0.95)
+    );
+    border-radius: 1.5rem;
+    padding: 2rem;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.stat-card-content:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(30, 21, 64, 1),
+        rgba(43, 31, 92, 1)
+    );
+}
+
+.stat-card-border {
+    position: absolute;
+    inset: -3px;
+    border-radius: 1.5rem;
+    opacity: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(236, 72, 153, 0.6),
+        rgba(168, 85, 247, 0.6),
+        rgba(99, 102, 241, 0.6)
+    );
+    filter: blur(15px);
+    z-index: -1;
+    animation: statPulse 3s ease-in-out infinite;
+}
+
+.stat-card-wrapper:hover .stat-card-border {
+    opacity: 1;
+}
+
+@keyframes statPulse {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(0.95);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+/* Icône wrapper avec animation */
+.stat-icon-wrapper {
+    display: inline-flex;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.stat-card-content:hover .stat-icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Effet de brillance */
+.stat-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.stat-card-content:hover .stat-shine {
+    left: 100%;
+}
+
 body {
     margin: 0;
     font-family:
