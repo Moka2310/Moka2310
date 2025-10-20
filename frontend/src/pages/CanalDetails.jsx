@@ -120,7 +120,7 @@ const CanalDetails = () => {
       },
       assets: ['NAS100', 'US500', 'UK100', 'FRA40', 'HK50']
     },
-    commodites: {
+    commodités: {
       name: { fr: 'COMMODITÉS', en: 'COMMODITIES' },
       description: { 
         fr: 'Trading des matières premières',
