@@ -354,7 +354,7 @@ const Admin = () => {
         </div>
 
         {/* Pending Testimonials */}
-        <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30">
+        <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30 mt-8">
           <h2 className="text-2xl font-bold text-white mb-6">Témoignages en attente de validation</h2>
           
           {pendingTestimonials.length === 0 ? (
