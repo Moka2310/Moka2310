@@ -81,10 +81,34 @@ export const canaux = [
 ];
 
 export const stats = [
-  { value: '+75%', label: 'de taux de réussite', sublabel: 'Hebdomadaire' },
-  { value: '+4.000', label: 'Membres actifs', sublabel: '' },
-  { value: '+6', label: 'Canaux V.I.P', sublabel: '' },
-  { value: '+5 à 15', label: 'Positions par jour', sublabel: '' },
-  { value: '+2', label: 'Brokers partenaires', sublabel: '' },
-  { value: '+3', label: 'ans sur le marché financier', sublabel: '' }
+  { 
+    value: '+75%', 
+    label: { fr: 'de taux de réussite', en: 'Success Rate' }, 
+    sublabel: { fr: 'Hebdomadaire', en: 'Weekly' } 
+  },
+  { 
+    value: '+4.000', 
+    label: { fr: 'Membres actifs', en: 'Active Members' }, 
+    sublabel: '' 
+  },
+  { 
+    value: '+6', 
+    label: { fr: 'Canaux V.I.P', en: 'V.I.P Channels' }, 
+    sublabel: '' 
+  },
+  { 
+    value: '+5 à 15', 
+    label: { fr: 'Positions par jour', en: 'Positions per Day' }, 
+    sublabel: '' 
+  },
+  { 
+    value: '+2', 
+    label: { fr: 'Brokers partenaires', en: 'Partner Brokers' }, 
+    sublabel: '' 
+  },
+  { 
+    value: '+3', 
+    label: { fr: 'ans sur le marché financier', en: 'Years in Financial Market' }, 
+    sublabel: '' 
+  }
 ];
