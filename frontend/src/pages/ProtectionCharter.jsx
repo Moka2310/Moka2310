@@ -278,6 +278,15 @@ const ProtectionCharter = () => {
           </Button>
         </div>
       </div>
+
+      {/* Floating Scroll to Top Button */}
+      <button
+        onClick={scrollToTop}
+        className="fixed bottom-8 right-8 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white p-4 rounded-full shadow-lg shadow-pink-500/50 hover:shadow-pink-500/70 transition-all hover:scale-110 z-50"
+        aria-label="Scroll to top"
+      >
+        <ArrowUp className="w-6 h-6" />
+      </button>
     </div>
   );
 };
