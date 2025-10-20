@@ -85,30 +85,41 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Video Banner - Groupe TRADALIFE HD Full */}
-      <section className="w-full overflow-hidden bg-black relative">
-        <div className="relative w-full" style={{ height: '600px' }}>
-          <div className="absolute inset-0 overflow-hidden">
-            <iframe
-              src="https://www.youtube.com/embed/kIpu18ACAXc?autoplay=1&mute=1&loop=1&playlist=kIpu18ACAXc&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&vq=hd1080&playsinline=1"
-              className="absolute top-1/2 left-1/2"
-              style={{
-                width: '177.77vh',
-                height: '100vh',
-                minWidth: '100%',
-                minHeight: '100%',
-                transform: 'translate(-50%, -50%) scale(1.3)',
-                border: 'none',
-                pointerEvents: 'none'
-              }}
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              playsInline
-              title="Groupe TRADALIFE"
-            ></iframe>
+      {/* Video Banner - Groupe TRADALIFE HD Full avec cadre lumineux */}
+      <section className="w-full overflow-hidden bg-black relative py-12">
+        <div className="max-w-7xl mx-auto px-4">
+          {/* Conteneur avec animation lumineuse */}
+          <div className="relative rounded-3xl overflow-hidden video-frame-glow">
+            {/* Cadre animé avec bordure lumineuse */}
+            <div className="absolute inset-0 rounded-3xl p-[3px] animated-border">
+              <div className="w-full h-full bg-black rounded-3xl"></div>
+            </div>
+            
+            {/* Vidéo */}
+            <div className="relative w-full rounded-3xl overflow-hidden" style={{ height: '600px' }}>
+              <div className="absolute inset-0 overflow-hidden rounded-3xl">
+                <iframe
+                  src="https://www.youtube.com/embed/kIpu18ACAXc?autoplay=1&mute=1&loop=1&playlist=kIpu18ACAXc&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&vq=hd1080&playsinline=1"
+                  className="absolute top-1/2 left-1/2"
+                  style={{
+                    width: '177.77vh',
+                    height: '100vh',
+                    minWidth: '100%',
+                    minHeight: '100%',
+                    transform: 'translate(-50%, -50%) scale(1.3)',
+                    border: 'none',
+                    pointerEvents: 'none'
+                  }}
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  playsInline
+                  title="Groupe TRADALIFE"
+                ></iframe>
+              </div>
+              {/* Overlay avec lueur subtile */}
+              <div className="absolute inset-0 bg-gradient-to-b from-[#1E1540]/10 via-transparent to-[#1E1540]/10 pointer-events-none"></div>
+            </div>
           </div>
-          {/* Subtle gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1E1540]/20 via-transparent to-[#1E1540]/20 pointer-events-none"></div>
         </div>
       </section>
 
