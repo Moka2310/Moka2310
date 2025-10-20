@@ -19,6 +19,7 @@ const Home = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const [testimonials, setTestimonials] = useState([]);
+  const [telegramMembers, setTelegramMembers] = useState(4000); // Valeur par défaut
   
   const [contactForm, setContactForm] = useState({
     firstName: '',
@@ -26,6 +27,23 @@ const Home = () => {
     email: '',
     message: ''
   });
+
+  // Load Telegram members count
+  useEffect(() => {
+    const loadTelegramMembers = async () => {
+      try {
+        const response = await fetch(`${API}/telegram/member-count`);
+        const data = await response.json();
+        if (data.count) {
+          setTelegramMembers(data.count);
+        }
+      } catch (error) {
+        console.error('Error loading Telegram members:', error);
+        // Garder la valeur par défaut en cas d'erreur
+      }
+    };
+    loadTelegramMembers();
+  }, []);
 
   // Load testimonials
   useEffect(() => {
