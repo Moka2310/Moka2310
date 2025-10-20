@@ -139,15 +139,19 @@ async def update_testimonial_translations(
     }
     
     updated_count = 0
+    updated_names = []
     for name, texts in translations.items():
+        # Mettre à jour SANS filtre sur status pour attraper tous les témoignages
         result = await db.testimonials.update_one(
-            {"userName": name, "status": "approved"},
+            {"userName": name},  # Enlevé le filtre status
             {"$set": texts}
         )
-        updated_count += result.modified_count
+        if result.modified_count > 0:
+            updated_count += 1
+            updated_names.append(name)
     
     return {
         "success": True,
         "message": f"Updated {updated_count} testimonials with translations",
-        "updated": list(translations.keys())
+        "updated": updated_names
     }
