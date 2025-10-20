@@ -127,5 +127,7 @@ class TestimonialResponse(BaseModel):
     country: str
     rating: int
     comment: str
+    comment_fr: str = ""
+    comment_en: str = ""
     createdAt: datetime = Field(default_factory=datetime.utcnow)
     order: int = 0
