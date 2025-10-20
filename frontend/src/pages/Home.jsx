@@ -267,42 +267,46 @@ const Home = () => {
                   <div className="relative z-10">
                     {/* Icône décorative */}
                     <div className="stat-icon-wrapper mb-4">
-                      {stat.label === 'de taux de réussite' && (
+                      {(typeof stat.label === 'object' ? stat.label.fr : stat.label) === 'de taux de réussite' && (
                         <TrendingUp className="w-10 h-10 text-green-400" />
                       )}
-                      {stat.label === 'Membres actifs' && (
+                      {(typeof stat.label === 'object' ? stat.label.fr : stat.label) === 'Membres actifs' && (
                         <Users className="w-10 h-10 text-blue-400" />
                       )}
-                      {stat.label === 'Canaux V.I.P' && (
+                      {(typeof stat.label === 'object' ? stat.label.fr : stat.label) === 'Canaux V.I.P' && (
                         <Star className="w-10 h-10 text-yellow-400" />
                       )}
-                      {stat.label === 'Positions par jour' && (
+                      {(typeof stat.label === 'object' ? stat.label.fr : stat.label) === 'Positions par jour' && (
                         <BarChart3 className="w-10 h-10 text-purple-400" />
                       )}
-                      {stat.label === 'Brokers partenaires' && (
+                      {(typeof stat.label === 'object' ? stat.label.fr : stat.label) === 'Brokers partenaires' && (
                         <Handshake className="w-10 h-10 text-pink-400" />
                       )}
-                      {stat.label === 'ans sur le marché financier' && (
+                      {(typeof stat.label === 'object' ? stat.label.fr : stat.label) === 'ans sur le marché financier' && (
                         <Calendar className="w-10 h-10 text-indigo-400" />
                       )}
                     </div>
                     
                     {/* Valeur */}
                     <h3 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 mb-3 leading-tight">
-                      {stat.label === 'Membres actifs' 
+                      {(typeof stat.label === 'object' ? stat.label[language] : stat.label) === 'Active Members' || (typeof stat.label === 'object' ? stat.label[language] : stat.label) === 'Membres actifs'
                         ? `+${telegramMembers.toLocaleString('fr-FR')}`
                         : stat.value
                       }
                     </h3>
                     
                     {/* Label */}
-                    <p className="text-white font-semibold text-lg mb-1">{stat.label}</p>
+                    <p className="text-white font-semibold text-lg mb-1">
+                      {typeof stat.label === 'object' ? stat.label[language] : stat.label}
+                    </p>
                     {stat.sublabel && (
-                      <p className="text-white/60 text-sm">{stat.sublabel}</p>
+                      <p className="text-white/60 text-sm">
+                        {typeof stat.sublabel === 'object' ? stat.sublabel[language] : stat.sublabel}
+                      </p>
                     )}
                     
                     {/* Badge "Live" pour les membres actifs */}
-                    {stat.label === 'Membres actifs' && (
+                    {((typeof stat.label === 'object' ? stat.label[language] : stat.label) === 'Active Members' || (typeof stat.label === 'object' ? stat.label[language] : stat.label) === 'Membres actifs') && (
                       <div className="flex items-center justify-center gap-2 mt-3">
                         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                         <span className="text-green-400 text-xs font-semibold">LIVE</span>
