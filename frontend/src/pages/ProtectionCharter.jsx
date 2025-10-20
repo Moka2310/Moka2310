@@ -100,48 +100,89 @@ const ProtectionCharter = () => {
       backButton: "Retour à l'accueil"
     },
     en: {
-      title: "Protection Charter - Trading",
-      subtitle: "Your security is our priority",
+      title: "Protection Charter",
+      subtitle: "Your security and your rights",
       sections: [
         {
-          icon: AlertTriangle,
-          title: "Risk Warning",
+          icon: Info,
+          title: "1. Purpose of the Charter",
           content: [
-            "Trading in financial markets (Forex, Crypto, Stocks, Indices, Commodities) carries a high risk of financial loss.",
-            "Past performance does not guarantee future results.",
-            "Never trade with funds you cannot afford to lose.",
-            "The signals and training provided are for educational purposes only and do not constitute financial advice."
+            "This charter defines the general terms and conditions of use of the TRADALIFE website as well as the commitments made for the protection of users and their personal data.",
+            "TRADALIFE is a platform for information, training and support in trading. It does not offer any brokerage services, does not hold any user funds and does not directly execute financial transactions."
+          ]
+        },
+        {
+          icon: AlertTriangle,
+          title: "2. Responsibilities and Limitation of Warranty",
+          content: [
+            "Trading in financial markets (Forex, indices, crypto, commodities, stocks, etc.) carries a high risk of partial or total loss of invested capital.",
+            "The analyzes, signals or training broadcast by TRADALIFE are for educational and informational purposes only.",
+            "TRADALIFE cannot be held responsible for losses, decisions, or results related to transactions carried out by users on their own trading accounts.",
+            "Each user remains fully responsible for their risk management, investments and financial choices.",
+            "TRADALIFE disclaims all responsibility for financial losses, technical failures of partner platforms, or errors/temporary service interruptions."
           ]
         },
         {
           icon: Shield,
-          title: "Data Protection",
+          title: "3. Personal Data Protection",
           content: [
-            "Your personal information is encrypted and secured.",
-            "We never share your data with third parties without your consent.",
-            "Your KYC documents are stored confidentially.",
-            "You have the RIGHT to request deletion of your data at any time via your Dashboard (GDPR compliant).",
-            "Deletion is automatic and permanent within 48 hours maximum."
+            "TRADALIFE attaches paramount importance to the confidentiality of user data and complies with GDPR (European Union) and PIPEDA (Canada).",
+            "The data collected (name, first name, address, email, identity documents, proof of address) are strictly necessary for creating the trading account and identity verification.",
+            "No data is sold, exchanged or shared with unauthorized third parties."
+          ]
+        },
+        {
+          icon: Shield,
+          title: "4. Data Security and Storage",
+          content: [
+            "All personal data is stored on secure servers compliant with international standards (SSL encryption, certified hosting).",
+            "Accessible only by authorized members of TRADALIFE or by partner brokers for account verification purposes.",
+            "Kept for the duration necessary to manage the account, then securely deleted upon user request."
           ]
         },
         {
           icon: CheckCircle2,
-          title: "Your Rights",
+          title: "5. Right to Deletion and Portability",
           content: [
-            "Access to all training content after purchase.",
-            "Customer support available for any questions.",
-            "Full transparency on our services and pricing.",
-            "Right of withdrawal according to terms and conditions."
+            "Right of access to your data.",
+            "Right to rectification in case of error or change of information.",
+            "Right to complete deletion of your account and all personal data.",
+            "Account deletion can be done directly via the TRADALIFE client portal, or by simple written request to support.",
+            "Once deleted, data is permanently erased from our servers within a maximum of 30 days."
           ]
         },
         {
           icon: Info,
-          title: "Responsibilities",
+          title: "6. Cookies and Tracking Tools",
           content: [
-            "Tradalife provides educational tools and trading signals.",
-            "You are solely responsible for your trading decisions.",
-            "We strongly recommend practicing on a demo account before live trading.",
-            "Consult an independent financial advisor if necessary."
+            "The TRADALIFE website uses cookies for technical, analytical and security purposes.",
+            "The user can disable or delete cookies at any time via their browser settings.",
+            "No behavioral data is used for advertising purposes without explicit consent."
+          ]
+        },
+        {
+          icon: Info,
+          title: "7. Jurisdiction and Applicable Law",
+          content: [
+            "This charter is governed by the laws in force in Canada, in the province of Quebec, and in accordance with international data protection standards.",
+            "In the event of a dispute, the competent courts will be those of the judicial district of Montreal (Quebec, Canada)."
+          ]
+        },
+        {
+          icon: CheckCircle2,
+          title: "8. Acceptance of the Charter",
+          content: [
+            "By using the TRADALIFE site, the user acknowledges having read, understood and accepted this charter in its entirety.",
+            "Registration, consultation of the site or participation in the services offered implies full and complete adherence to these conditions."
+          ]
+        },
+        {
+          icon: Info,
+          title: "9. Contact",
+          content: [
+            "For any questions concerning the charter, the management of your data or a request for account deletion:",
+            "📧 kalot2310@gmail.com or support@tradalife.com",
+            "🌐 www.tradalife.com"
           ]
         }
       ],
