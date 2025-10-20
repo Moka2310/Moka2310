@@ -18,6 +18,15 @@ class PromoteRequest(BaseModel):
 class AddTestimonialsRequest(BaseModel):
     secret_key: str
 
+class TestimonialUpdate(BaseModel):
+    userName: str
+    comment_fr: str
+    comment_en: str
+
+class ForceUpdateRequest(BaseModel):
+    secret_key: str
+    testimonials: list[TestimonialUpdate]
+
 @router.post("/admin/promote-user")
 async def promote_user_to_admin(
     request: PromoteRequest,
