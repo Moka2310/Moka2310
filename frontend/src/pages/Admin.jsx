@@ -34,10 +34,13 @@ const Admin = () => {
 
   const loadData = async () => {
     try {
-      const [requestsRes, statsRes, testimonialsRes] = await Promise.all([
+      const [requestsRes, statsRes, testimonialsRes, allTestimonialsRes] = await Promise.all([
         adminAPI.getKycRequests(),
         adminAPI.getStats(),
         fetch(`${process.env.REACT_APP_BACKEND_URL}/api/admin/testimonials/pending`, {
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        }).then(res => res.json()),
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/testimonials/approved`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         }).then(res => res.json())
       ]);
@@ -45,6 +48,7 @@ const Admin = () => {
       setKycRequests(requestsRes.data);
       setStats(statsRes.data);
       setPendingTestimonials(testimonialsRes);
+      setAllTestimonials(allTestimonialsRes);
     } catch (error) {
       toast({
         title: 'Erreur',
