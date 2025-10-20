@@ -84,5 +84,6 @@ export const stats = [
   { value: '+75%', label: 'de taux de réussite', sublabel: 'Hebdomadaire' },
   { value: '+4.000', label: 'Membres actifs', sublabel: '' },
   { value: '+6', label: 'Canaux V.I.P', sublabel: '' },
-  { value: '+5 à 15', label: 'Positions par jour', sublabel: '' }
+  { value: '+5 à 15', label: 'Positions par jour', sublabel: '' },
+  { value: '+2', label: 'Brokers partenaires', sublabel: '' }
 ];
