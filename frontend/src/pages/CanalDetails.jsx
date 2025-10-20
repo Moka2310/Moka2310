@@ -13,10 +13,10 @@ const CanalDetails = () => {
     crypto: {
       name: { fr: 'CRYPTO', en: 'CRYPTO' },
       description: { 
-        fr: 'Trading de cryptomonnaies sur les paires majeures',
-        en: 'Cryptocurrency trading on major pairs'
+        fr: 'Trading de cryptomonnaies',
+        en: 'Cryptocurrency trading'
       },
-      assets: ['BTCUSD', 'ETHUSD', 'BNBUSD', 'SOLUSD', 'ADAUSD']
+      assets: ['BTCUSD']
     },
     gold: {
       name: { fr: 'GOLD', en: 'GOLD' },
@@ -24,39 +24,39 @@ const CanalDetails = () => {
         fr: 'Trading de l\'or et métaux précieux',
         en: 'Gold and precious metals trading'
       },
-      assets: ['XAUUSD', 'XAGUSD', 'GOLD']
+      assets: ['XAUUSD', 'XAUEUR', 'XAGUSD', 'XAGEUR']
     },
     forex: {
       name: { fr: 'FOREX', en: 'FOREX' },
       description: { 
-        fr: 'Trading des paires de devises majeures et exotiques',
-        en: 'Major and exotic currency pairs trading'
+        fr: 'Trading des paires de devises',
+        en: 'Currency pairs trading'
       },
-      assets: ['EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD', 'USDCAD', 'NZDUSD', 'USDCHF', 'EURGBP', 'EURJPY']
+      assets: ['USDJPY', 'USDCAD', 'USDCHF', 'GBPJPY', 'GBPUSD', 'GBPAUD', 'GBPCAD', 'GBPNZD', 'GBPCHF', 'EURUSD', 'EURAUD', 'EURJPY', 'EURNZD', 'EURCAD', 'AUDJPY', 'AUDCHF', 'AUDUSD', 'AUDCAD', 'NZDUSD', 'CADJPY', 'NZDJPY', 'NZDCHF', 'NZDCAD']
     },
     indices: {
       name: { fr: 'INDICES', en: 'INDICES' },
       description: { 
-        fr: 'Trading des indices boursiers mondiaux',
-        en: 'Global stock indices trading'
+        fr: 'Trading des indices boursiers',
+        en: 'Stock indices trading'
       },
-      assets: ['US30', 'US500', 'NAS100', 'GER40', 'UK100', 'JPN225']
+      assets: ['NAS100', 'UK100', 'FRA40', 'HK50', 'US500']
     },
-    petrole: {
-      name: { fr: 'PÉTROLE & GAZ', en: 'OIL & GAS' },
+    commodites: {
+      name: { fr: 'COMMODITÉS', en: 'COMMODITIES' },
       description: { 
-        fr: 'Trading des matières premières énergétiques',
-        en: 'Energy commodities trading'
+        fr: 'Trading des matières premières',
+        en: 'Commodities trading'
       },
-      assets: ['WTI', 'BRENT', 'NATGAS']
+      assets: ['SUGARRAW', 'SOYBEAN', 'XTIUSD', 'XPTUSD', 'XPDUSD', 'WHEAT', 'CORN']
     },
     actions: {
       name: { fr: 'ACTIONS', en: 'STOCKS' },
       description: { 
-        fr: 'Trading des actions des grandes entreprises',
-        en: 'Major companies stock trading'
+        fr: 'Trading des actions',
+        en: 'Stock trading'
       },
-      assets: ['AAPL', 'TSLA', 'AMZN', 'GOOGL', 'MSFT', 'META', 'NVDA', 'NFLX']
+      assets: ['AAPL', 'AAL', 'ADBE', 'AMD', 'AMZN', 'EA', 'EBAY', 'META', 'GOOG', 'MSFT', 'NFLX', 'NVDA', 'PEP', 'TSLA']
     }
   };
 
