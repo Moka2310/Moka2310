@@ -100,6 +100,30 @@ const Admin = () => {
     }
   };
 
+  const handleDeleteTestimonial = async (testimonialId) => {
+    if (!window.confirm('Êtes-vous sûr de vouloir supprimer ce témoignage ?')) {
+      return;
+    }
+
+    try {
+      await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/admin/testimonials/delete/${testimonialId}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+      });
+      toast({
+        title: '✓ Témoignage supprimé',
+        description: 'Le témoignage a été supprimé définitivement'
+      });
+      loadData();
+    } catch (error) {
+      toast({
+        title: 'Erreur',
+        description: 'Impossible de supprimer le témoignage',
+        variant: 'destructive'
+      });
+    }
+  };
+
   const handleApprove = async (userId) => {
     try {
       await adminAPI.approveKyc(userId);
