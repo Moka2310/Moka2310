@@ -63,6 +63,90 @@
     animation: videoGlow 3s ease-in-out infinite;
 }
 
+/* Animation pour les cartes de canaux */
+@keyframes canalGlow {
+    0%, 100% {
+        background: linear-gradient(
+            135deg,
+            #ec4899,
+            #a855f7,
+            #6366f1,
+            #3b82f6,
+            #ec4899
+        );
+        background-size: 400% 400%;
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.canal-card-wrapper {
+    position: relative;
+    padding: 3px;
+    border-radius: 1rem;
+    background: linear-gradient(
+        135deg,
+        #ec4899,
+        #a855f7,
+        #6366f1,
+        #3b82f6,
+        #ec4899
+    );
+    background-size: 400% 400%;
+    animation: canalGlow 4s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+.canal-card-wrapper:hover {
+    padding: 4px;
+    box-shadow: 
+        0 0 20px rgba(236, 72, 153, 0.6),
+        0 0 40px rgba(168, 85, 247, 0.4),
+        0 0 60px rgba(99, 102, 241, 0.3);
+    transform: translateY(-5px);
+}
+
+.canal-card-content {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: #000;
+}
+
+.canal-card-border {
+    position: absolute;
+    inset: -2px;
+    border-radius: 1rem;
+    opacity: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(236, 72, 153, 0.5),
+        rgba(168, 85, 247, 0.5),
+        rgba(99, 102, 241, 0.5),
+        rgba(59, 130, 246, 0.5)
+    );
+    filter: blur(10px);
+    z-index: -1;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.canal-card-wrapper:hover .canal-card-border {
+    opacity: 1;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.05);
+    }
+}
+
 body {
     margin: 0;
     font-family:
