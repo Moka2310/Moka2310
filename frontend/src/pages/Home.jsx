@@ -251,7 +251,10 @@ const Home = () => {
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
                 <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 mb-2">
-                  {stat.value}
+                  {stat.label === 'Membres actifs' 
+                    ? `+${telegramMembers.toLocaleString('fr-FR')}`
+                    : stat.value
+                  }
                 </h3>
                 <p className="text-white font-semibold">{stat.label}</p>
                 {stat.sublabel && <p className="text-white/60 text-sm">{stat.sublabel}</p>}
