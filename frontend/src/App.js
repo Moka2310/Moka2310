@@ -12,6 +12,7 @@ import Checkout from "./pages/Checkout";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
 import ProtectionCharter from "./pages/ProtectionCharter";
+import CanalDetails from "./pages/CanalDetails";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/protection-charter" element={<ProtectionCharter />} />
+              <Route path="/canal/:canalName" element={<CanalDetails />} />
             </Routes>
             <Footer />
             <Toaster />
