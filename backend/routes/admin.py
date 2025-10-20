@@ -174,3 +174,17 @@ async def reject_testimonial(
         raise HTTPException(status_code=404, detail="Testimonial not found")
     
     return {"success": True, "message": "Testimonial rejected"}
+@router.delete("/testimonials/delete/{testimonial_id}")
+async def delete_testimonial(
+    testimonial_id: str,
+    current_admin: User = Depends(get_current_admin)
+):
+    """Delete a testimonial permanently"""
+    db = get_db()
+    
+    result = await db.testimonials.delete_one({"id": testimonial_id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Testimonial not found")
+    
+    return {"success": True, "message": "Testimonial deleted"}
