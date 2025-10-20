@@ -164,3 +164,33 @@ async def update_testimonial_translations(
         "message": f"Updated {updated_count} testimonials with translations",
         "updated": updated_names
     }
+
+@router.post("/admin/force-update-testimonials")
+async def force_update_testimonials(
+    request: ForceUpdateRequest,
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Force la mise à jour des témoignages avec les traductions"""
+    if request.secret_key != "tradalife-admin-promote-2025":
+        raise HTTPException(status_code=403, detail="Invalid secret key")
+    
+    updated_count = 0
+    updated_names = []
+    
+    for testimonial in request.testimonials:
+        result = await db.testimonials.update_many(
+            {"userName": testimonial.userName},
+            {"$set": {
+                "comment_fr": testimonial.comment_fr,
+                "comment_en": testimonial.comment_en
+            }}
+        )
+        if result.modified_count > 0:
+            updated_count += result.modified_count
+            updated_names.append(testimonial.userName)
+    
+    return {
+        "success": True,
+        "message": f"Updated {updated_count} testimonials",
+        "updated": updated_names
+    }
