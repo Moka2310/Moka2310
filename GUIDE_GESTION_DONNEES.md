@@ -407,5 +407,5 @@ R: Oui, aucun problème !
 
 Si vous avez besoin d'aide :
 1. Vérifier les logs : `tail -f /var/log/supervisor/backend.err.log`
-2. Tester l'API : `curl https://edutrader.preview.emergentagent.com/api/formations`
+2. Tester l'API : `curl https://tradalife-platform.preview.emergentagent.com/api/formations`
 3. Vérifier MongoDB : `mongosh` puis `use tradalife` puis `db.formations.find()`
