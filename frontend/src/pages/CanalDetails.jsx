@@ -8,6 +8,11 @@ const CanalDetails = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
 
+  // Scroll to top when page loads
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [canalName]);
+
   // Définir les actifs pour chaque canal
   const canalsData = {
     crypto: {
