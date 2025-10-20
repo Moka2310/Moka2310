@@ -247,6 +247,7 @@ const Home = () => {
             {canaux.map((canal, index) => (
               <div
                 key={index}
+                onClick={() => navigate(`/canal/${canal.name.toLowerCase()}`)}
                 className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform duration-300 cursor-pointer"
               >
                 <img
