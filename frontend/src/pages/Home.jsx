@@ -458,7 +458,11 @@ const Home = () => {
                   </div>
 
                   {/* Comment */}
-                  <p className="text-white/80 mb-4 italic">"{testimonial.comment}"</p>
+                  <p className="text-white/80 mb-4 italic">
+                    "{language === 'en' && testimonial.comment_en 
+                      ? testimonial.comment_en 
+                      : testimonial.comment}"
+                  </p>
 
                   {/* Author */}
                   <div className="border-t border-purple-500/30 pt-4">
