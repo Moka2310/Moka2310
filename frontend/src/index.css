@@ -276,6 +276,126 @@
     left: 100%;
 }
 
+/* Styles pour la carte Charte de Protection dans le Footer */
+.charter-card-wrapper {
+    position: relative;
+    padding: 3px;
+    border-radius: 1.5rem;
+    background: linear-gradient(
+        135deg,
+        #ec4899,
+        #a855f7,
+        #6366f1,
+        #3b82f6
+    );
+    background-size: 300% 300%;
+    animation: charterGlow 5s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+@keyframes charterGlow {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.charter-card-wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 10px 40px rgba(236, 72, 153, 0.5),
+        0 20px 60px rgba(168, 85, 247, 0.4);
+}
+
+.charter-card-content {
+    background: linear-gradient(
+        135deg,
+        rgba(30, 21, 64, 0.98),
+        rgba(43, 31, 92, 0.98)
+    );
+    border-radius: 1.5rem;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.charter-card-content:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(30, 21, 64, 1),
+        rgba(43, 31, 92, 1)
+    );
+}
+
+.charter-card-border {
+    position: absolute;
+    inset: -3px;
+    border-radius: 1.5rem;
+    opacity: 0.5;
+    background: linear-gradient(
+        135deg,
+        rgba(236, 72, 153, 0.6),
+        rgba(168, 85, 247, 0.6),
+        rgba(99, 102, 241, 0.6)
+    );
+    filter: blur(20px);
+    z-index: -1;
+    animation: charterPulse 3s ease-in-out infinite;
+}
+
+.charter-card-wrapper:hover .charter-card-border {
+    opacity: 1;
+}
+
+@keyframes charterPulse {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scale(0.98);
+    }
+    50% {
+        opacity: 0.9;
+        transform: scale(1.02);
+    }
+}
+
+.charter-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-center;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(168, 85, 247, 0.2));
+    border-radius: 1.5rem;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.charter-card-content:hover .charter-icon-wrapper {
+    transform: scale(1.1) rotate(-5deg);
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(168, 85, 247, 0.3));
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.charter-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #ec4899, #a855f7);
+    border-radius: 9999px;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(236, 72, 153, 0.4);
+}
+
+.charter-card-content:hover .charter-button {
+    transform: scale(1.05);
+    box-shadow: 0 6px 30px rgba(236, 72, 153, 0.6);
+}
+
 body {
     margin: 0;
     font-family:
