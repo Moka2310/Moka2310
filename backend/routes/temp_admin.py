@@ -6,12 +6,17 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from dependencies import get_db
+from datetime import datetime, timezone
+import uuid
 
 router = APIRouter()
 
 class PromoteRequest(BaseModel):
     email: str
     secret_key: str  # Pour sécuriser l'endpoint
+
+class AddTestimonialsRequest(BaseModel):
+    secret_key: str
 
 @router.post("/admin/promote-user")
 async def promote_user_to_admin(
@@ -40,4 +45,71 @@ async def promote_user_to_admin(
         "email": request.email,
         "previous_role": user.get("role", "user"),
         "new_role": "admin"
+    }
+
+@router.post("/admin/add-default-testimonials")
+async def add_default_testimonials(
+    request: AddTestimonialsRequest,
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    # Clé secrète pour sécuriser
+    if request.secret_key != "tradalife-admin-promote-2025":
+        raise HTTPException(status_code=403, detail="Invalid secret key")
+    
+    # Témoignages à ajouter
+    testimonials = [
+        {
+            "id": str(uuid.uuid4()),
+            "userName": "Kevin A.",
+            "country": "Montréal, Canada",
+            "comment": "Grâce à TRADALIFE, j'ai enfin compris comment gérer mes positions et mes risques. Les signaux sont clairs, précis et les résultats sont là ! En quelques semaines, j'ai pu améliorer ma performance de manière constante. Une équipe sérieuse et toujours disponible. Merci à Moka et toute la communauté !",
+            "rating": 5,
+            "status": "approved",
+            "order": 0,
+            "createdAt": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "userName": "Amy D.",
+            "country": "Abidjan, Côte d'Ivoire",
+            "comment": "TRADALIFE, c'est plus qu'un groupe de trading, c'est une vraie famille ! L'accompagnement est professionnel, les formations sont faciles à suivre, et les conseils m'ont permis de prendre confiance dans mes trades. Je recommande à 100 % pour tous ceux qui veulent progresser rapidement.",
+            "rating": 5,
+            "status": "approved",
+            "order": 0,
+            "createdAt": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "userName": "Sami L.",
+            "country": "Nice, France",
+            "comment": "J'ai testé plusieurs communautés de trading avant TRADALIFE, mais aucune n'offre un tel niveau de transparence et de suivi. Les canaux VIP sont super bien organisés, les résultats sont constants et surtout, on apprend à devenir autonome. Bravo à toute l'équipe ! Merci à MOKA pour sa disponibilité",
+            "rating": 5,
+            "status": "approved",
+            "order": 0,
+            "createdAt": datetime.now(timezone.utc).isoformat()
+        }
+    ]
+    
+    # Vérifier si les témoignages existent déjà
+    existing_count = await db.testimonials.count_documents({
+        "userName": {"$in": ["Kevin A.", "Amy D.", "Sami L."]}
+    })
+    
+    if existing_count > 0:
+        return {
+            "success": False,
+            "message": f"{existing_count} testimonials already exist",
+            "action": "skipped"
+        }
+    
+    # Insérer les témoignages
+    result = await db.testimonials.insert_many(testimonials)
+    
+    return {
+        "success": True,
+        "message": f"Added {len(result.inserted_ids)} testimonials",
+        "testimonials": [
+            {"name": t["userName"], "country": t["country"]} 
+            for t in testimonials
+        ]
     }
