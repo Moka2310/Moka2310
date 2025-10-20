@@ -607,7 +607,7 @@ const Dashboard = () => {
                 </div>
               ) : null}
               
-              {(!user?.kycStatus || user?.kycStatus === 'pending' && !user?.kycSubmittedAt || user?.kycStatus === 'rejected') && (
+              {(!user?.kycStatus || user?.kycStatus === 'rejected') && (
                 <form onSubmit={handleKycSubmit} className="space-y-6">
                   {/* Personal Info */}
                   <div className="grid md:grid-cols-2 gap-6">
