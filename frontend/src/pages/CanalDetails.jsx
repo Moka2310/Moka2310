@@ -83,11 +83,11 @@ const CanalDetails = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Bouton retour */}
         <button
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/#canaux')}
           className="flex items-center space-x-2 text-pink-400 hover:text-pink-300 mb-8 transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
-          <span>{language === 'fr' ? 'Retour à l\'accueil' : 'Back to home'}</span>
+          <span>{language === 'fr' ? 'Retour aux canaux' : 'Back to channels'}</span>
         </button>
 
         {/* En-tête du canal */}
