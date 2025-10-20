@@ -244,20 +244,75 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* Stats Section - Redesigned */}
       <section className="py-20 px-4 bg-gradient-to-b from-transparent to-[#2B1F5C]/30">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-4">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
+              {language === 'fr' ? 'TRADALIFE en Chiffres' : 'TRADALIFE in Numbers'}
+            </span>
+          </h2>
+          <p className="text-white/70 text-center mb-12">
+            {language === 'fr' ? 'Notre communauté grandit chaque jour' : 'Our community grows every day'}
+          </p>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 mb-2">
-                  {stat.label === 'Membres actifs' 
-                    ? `+${telegramMembers.toLocaleString('fr-FR')}`
-                    : stat.value
-                  }
-                </h3>
-                <p className="text-white font-semibold">{stat.label}</p>
-                {stat.sublabel && <p className="text-white/60 text-sm">{stat.sublabel}</p>}
+              <div key={index} className="stat-card-wrapper">
+                {/* Bordure lumineuse */}
+                <div className="stat-card-border"></div>
+                
+                {/* Contenu de la carte */}
+                <div className="stat-card-content group">
+                  <div className="relative z-10">
+                    {/* Icône décorative */}
+                    <div className="stat-icon-wrapper mb-4">
+                      {stat.label === 'de taux de réussite' && (
+                        <TrendingUp className="w-10 h-10 text-green-400" />
+                      )}
+                      {stat.label === 'Membres actifs' && (
+                        <Users className="w-10 h-10 text-blue-400" />
+                      )}
+                      {stat.label === 'Canaux V.I.P' && (
+                        <Star className="w-10 h-10 text-yellow-400" />
+                      )}
+                      {stat.label === 'Positions par jour' && (
+                        <BarChart3 className="w-10 h-10 text-purple-400" />
+                      )}
+                      {stat.label === 'Brokers partenaires' && (
+                        <Handshake className="w-10 h-10 text-pink-400" />
+                      )}
+                      {stat.label === 'ans sur le marché financier' && (
+                        <Calendar className="w-10 h-10 text-indigo-400" />
+                      )}
+                    </div>
+                    
+                    {/* Valeur */}
+                    <h3 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 mb-3 leading-tight">
+                      {stat.label === 'Membres actifs' 
+                        ? `+${telegramMembers.toLocaleString('fr-FR')}`
+                        : stat.value
+                      }
+                    </h3>
+                    
+                    {/* Label */}
+                    <p className="text-white font-semibold text-lg mb-1">{stat.label}</p>
+                    {stat.sublabel && (
+                      <p className="text-white/60 text-sm">{stat.sublabel}</p>
+                    )}
+                    
+                    {/* Badge "Live" pour les membres actifs */}
+                    {stat.label === 'Membres actifs' && (
+                      <div className="flex items-center justify-center gap-2 mt-3">
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span className="text-green-400 text-xs font-semibold">LIVE</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Effet de brillance au hover */}
+                  <div className="stat-shine"></div>
+                </div>
               </div>
             ))}
           </div>
