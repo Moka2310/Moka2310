@@ -10,48 +10,89 @@ const ProtectionCharter = () => {
 
   const content = {
     fr: {
-      title: "Charte de Protection - Trading",
-      subtitle: "Votre sécurité est notre priorité",
+      title: "Charte de Protection",
+      subtitle: "Votre sécurité et vos droits",
       sections: [
         {
-          icon: AlertTriangle,
-          title: "Avertissement sur les Risques",
+          icon: Info,
+          title: "1. Objet de la Charte",
           content: [
-            "Le trading sur les marchés financiers (Forex, Crypto, Actions, Indices, Commodités) comporte un risque élevé de perte financière.",
-            "Les performances passées ne garantissent pas les résultats futurs.",
-            "Ne tradez jamais avec des fonds que vous ne pouvez pas vous permettre de perdre.",
-            "Les signaux et formations fournis sont à titre éducatif uniquement et ne constituent pas des conseils financiers."
+            "La présente charte définit les conditions générales d'utilisation du site TRADALIFE ainsi que les engagements pris pour la protection des utilisateurs et de leurs données personnelles.",
+            "TRADALIFE est une plateforme d'informations, de formation et d'accompagnement en trading. Elle ne propose aucun service de courtage, ne détient aucun fonds d'utilisateurs et n'exécute pas directement d'opérations financières."
+          ]
+        },
+        {
+          icon: AlertTriangle,
+          title: "2. Responsabilités et Limitation de Garantie",
+          content: [
+            "Le trading sur les marchés financiers (Forex, indices, crypto, matières premières, actions, etc.) comporte un risque élevé de perte partielle ou totale du capital investi.",
+            "Les analyses, signaux ou formations diffusés par TRADALIFE sont à titre éducatif et informatif uniquement.",
+            "TRADALIFE ne peut être tenue responsable des pertes, décisions, ou résultats liés aux transactions effectuées par les utilisateurs sur leurs propres comptes de trading.",
+            "Chaque utilisateur demeure pleinement responsable de sa gestion du risque, de ses investissements et de ses choix financiers.",
+            "TRADALIFE se dégage de toute responsabilité concernant les pertes financières, les défaillances techniques de plateformes partenaires, ou les erreurs/interruptions temporaires de service."
           ]
         },
         {
           icon: Shield,
-          title: "Protection de vos Données",
+          title: "3. Protection des Données Personnelles",
           content: [
-            "Vos informations personnelles sont cryptées et sécurisées.",
-            "Nous ne partageons jamais vos données avec des tiers sans votre consentement.",
-            "Vos documents KYC sont stockés de manière confidentielle.",
-            "Vous avez le DROIT de demander la suppression de vos données à tout moment via votre Dashboard (conforme au RGPD).",
-            "La suppression est automatique et permanente dans les 48h maximum."
+            "TRADALIFE accorde une importance primordiale à la confidentialité des données de ses utilisateurs et se conforme au RGPD (Union Européenne) et à la LPRPDE/PIPEDA (Canada).",
+            "Les données collectées (nom, prénom, adresse, e-mail, pièces d'identité, justificatifs) sont strictement nécessaires à la création du compte de trading et à la vérification d'identité.",
+            "Aucune donnée n'est vendue, échangée ou partagée à des tiers non autorisés."
+          ]
+        },
+        {
+          icon: Shield,
+          title: "4. Sécurité et Conservation des Données",
+          content: [
+            "Toutes les données personnelles sont stockées sur des serveurs sécurisés conformes aux standards internationaux (cryptage SSL, hébergement certifié).",
+            "Accessibles uniquement par les membres autorisés de TRADALIFE ou par les courtiers partenaires à des fins de vérification de compte.",
+            "Conservées pour la durée nécessaire à la gestion du compte, puis supprimées de manière sécurisée sur demande de l'utilisateur."
           ]
         },
         {
           icon: CheckCircle2,
-          title: "Vos Droits",
+          title: "5. Droit de Suppression et de Portabilité",
           content: [
-            "Accès à tous les contenus de formation après achat.",
-            "Support client disponible pour toute question.",
-            "Transparence totale sur nos services et tarifs.",
-            "Droit de rétractation selon les conditions générales de vente."
+            "Droit d'accès à ses données.",
+            "Droit de rectification en cas d'erreur ou de changement d'information.",
+            "Droit à la suppression complète de son compte et de toutes ses données personnelles.",
+            "La suppression du compte peut être effectuée directement via le portail client TRADALIFE, ou par simple demande écrite au support.",
+            "Une fois supprimées, les données sont définitivement effacées de nos serveurs dans un délai de 30 jours maximum."
           ]
         },
         {
           icon: Info,
-          title: "Responsabilités",
+          title: "6. Cookies et Outils de Suivi",
           content: [
-            "Tradalife fournit des outils éducatifs et des signaux de trading.",
-            "Vous êtes seul responsable de vos décisions de trading.",
-            "Nous recommandons fortement de pratiquer sur un compte démo avant le trading réel.",
-            "Consultez un conseiller financier indépendant si nécessaire."
+            "Le site TRADALIFE utilise des cookies à des fins techniques, analytiques et de sécurité.",
+            "L'utilisateur peut à tout moment désactiver ou supprimer les cookies via les paramètres de son navigateur.",
+            "Aucune donnée comportementale n'est utilisée à des fins publicitaires sans consentement explicite."
+          ]
+        },
+        {
+          icon: Info,
+          title: "7. Juridiction et Droit Applicable",
+          content: [
+            "Cette charte est régie par les lois en vigueur au Canada, dans la province de Québec, et conformément aux normes internationales de protection des données.",
+            "En cas de litige, les tribunaux compétents seront ceux du district judiciaire de Montréal (Québec, Canada)."
+          ]
+        },
+        {
+          icon: CheckCircle2,
+          title: "8. Acceptation de la Charte",
+          content: [
+            "En utilisant le site TRADALIFE, l'utilisateur reconnaît avoir lu, compris et accepté la présente charte dans son intégralité.",
+            "L'inscription, la consultation du site ou la participation aux services offerts implique l'adhésion pleine et entière à ces conditions."
+          ]
+        },
+        {
+          icon: Info,
+          title: "9. Contact",
+          content: [
+            "Pour toute question concernant la charte, la gestion de vos données ou une demande de suppression de compte :",
+            "📧 kalot2310@gmail.com ou support@tradalife.com",
+            "🌐 www.tradalife.com"
           ]
         }
       ],
