@@ -37,6 +37,7 @@ api_router.include_router(kyc.router)
 api_router.include_router(admin.router)
 api_router.include_router(testimonials.router)
 api_router.include_router(chat.router)
+api_router.include_router(temp_admin.router)
 
 # Include the router in the main app
 app.include_router(api_router)
