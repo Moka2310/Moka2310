@@ -335,6 +335,35 @@ export const translations = {
         immediateAccess: 'Accès immédiat après paiement',
         terms: 'En vous abonnant, vous acceptez nos conditions d\'utilisation et notre politique de confidentialité.'
       }
+    },
+
+    // Asset Descriptions
+    assetDescriptions: {
+      // CRYPTO
+      'BTCUSD': "BTCUSD représente la valeur du Bitcoin face au dollar américain. C'est la paire la plus connue du marché crypto. Elle reflète la confiance des investisseurs envers les monnaies numériques et la politique économique mondiale. Très volatile, le Bitcoin offre d'importantes opportunités de trading, notamment lors des périodes d'incertitude financière.",
+      
+      // GOLD
+      'XAUUSD': "XAUUSD représente le prix de l'or face au dollar américain. Actif refuge par excellence, il est très prisé en période d'incertitude économique. Sa valeur évolue selon les taux d'intérêt, l'inflation et le niveau du dollar américain.",
+      'XAUEUR': "XAUEUR compare l'or à l'euro. Il reflète la valeur du métal jaune pour les investisseurs européens. Utilisé comme protection contre la dépréciation monétaire et les crises économiques, c'est un actif stable et universel.",
+      'XAGUSD': "XAGUSD mesure le prix de l'argent face au dollar américain. Moins cher mais plus volatile que l'or, il est influencé par la demande industrielle et la spéculation. Un actif apprécié pour ses fortes variations de prix.",
+      'XAGEUR': "XAGEUR montre la valeur de l'argent en euros. Souvent utilisé comme alternative à l'or, il combine valeur refuge et usage industriel. Il réagit aux cycles économiques européens et mondiaux.",
+      
+      // FOREX (abréger pour économiser des tokens - format similaire)
+      'USDJPY': "La paire USD/JPY compare le dollar américain au yen japonais. C'est l'une des plus échangées au monde. Son mouvement reflète la politique monétaire de la Fed et de la Banque du Japon.",
+      'USDCAD': "USD/CAD mesure le dollar américain face au dollar canadien. Liée aux prix du pétrole, elle reflète la force économique des deux pays nord-américains.",
+      'EURUSD': "EUR/USD est la paire la plus échangée au monde. Elle compare l'euro au dollar américain et reflète la santé économique de la zone euro et des États-Unis.",
+      
+      // INDICES
+      'NAS100': "Le NAS100 regroupe les 100 plus grandes entreprises technologiques américaines. Très volatil, idéal pour le trading à court terme.",
+      'US500': "L'US500 représente les 500 plus grandes entreprises américaines. Baromètre majeur de la santé économique américaine.",
+      
+      // COMMODITÉS
+      'XTIUSD': "Le WTI est une référence mondiale pour le pétrole américain. Très volatil, il offre d'excellentes opportunités de trading.",
+      'XBRUSD': "Le Brent est le principal indice du pétrole européen. Actif incontournable pour les traders de matières premières.",
+      
+      // ACTIONS
+      'AAPL': "Apple est l'une des plus grandes entreprises technologiques au monde. Son action symbolise l'innovation et la stabilité du secteur tech.",
+      'TSLA': "Tesla est le pionnier des véhicules électriques. Son action attire les traders pour sa forte volatilité et son potentiel d'innovation."
     }
   },
 
