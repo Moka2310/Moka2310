@@ -178,20 +178,20 @@ const Admin = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#1E1540] pt-28 pb-20 px-4">
+    <div className="min-h-screen bg-[#1E1540] pt-28 pb-20 px-3 sm:px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
         {/* Back Button */}
         <Button
           onClick={() => navigate('/')}
           variant="ghost"
-          className="mb-6 text-pink-400 hover:text-pink-300 hover:bg-pink-500/10"
+          className="mb-6 text-pink-400 hover:text-pink-300 hover:bg-pink-500/10 text-sm sm:text-base"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Retour à l'accueil
         </Button>
 
         {/* Header */}
-        <h1 className="text-4xl font-bold mb-8">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
             Panel Admin
           </span>
@@ -199,51 +199,51 @@ const Admin = () => {
 
         {/* Stats */}
         {stats && (
-          <div className="grid md:grid-cols-4 gap-6 mb-12">
-            <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-3xl p-6 border border-purple-500/30">
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center">
-                  <Users className="w-6 h-6 text-blue-400" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-12">
+            <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-purple-500/30">
+              <div className="flex items-center space-x-3 sm:space-x-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Users className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
                 </div>
-                <div>
-                  <p className="text-white/70 text-sm">Utilisateurs</p>
-                  <p className="text-2xl font-bold text-white">{stats.totalUsers}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-3xl p-6 border border-purple-500/30">
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-yellow-500/20 rounded-full flex items-center justify-center">
-                  <Clock className="w-6 h-6 text-yellow-400" />
-                </div>
-                <div>
-                  <p className="text-white/70 text-sm">KYC en attente</p>
-                  <p className="text-2xl font-bold text-white">{stats.pendingKyc}</p>
+                <div className="min-w-0">
+                  <p className="text-white/70 text-xs sm:text-sm">Utilisateurs</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white truncate">{stats.totalUsers}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-3xl p-6 border border-purple-500/30">
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
-                  <ShoppingCart className="w-6 h-6 text-green-400" />
+            <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-purple-500/30">
+              <div className="flex items-center space-x-3 sm:space-x-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400" />
                 </div>
-                <div>
-                  <p className="text-white/70 text-sm">Achats</p>
-                  <p className="text-2xl font-bold text-white">{stats.totalPurchases}</p>
+                <div className="min-w-0">
+                  <p className="text-white/70 text-xs sm:text-sm">KYC en attente</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white truncate">{stats.pendingKyc}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-3xl p-6 border border-purple-500/30">
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-pink-500/20 rounded-full flex items-center justify-center">
-                  <DollarSign className="w-6 h-6 text-pink-400" />
+            <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-purple-500/30">
+              <div className="flex items-center space-x-3 sm:space-x-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
                 </div>
-                <div>
-                  <p className="text-white/70 text-sm">Revenu total</p>
-                  <p className="text-2xl font-bold text-white">{stats.totalRevenue.toFixed(2)}€</p>
+                <div className="min-w-0">
+                  <p className="text-white/70 text-xs sm:text-sm">Achats</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white truncate">{stats.totalPurchases}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-purple-500/30">
+              <div className="flex items-center space-x-3 sm:space-x-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-pink-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-pink-400" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-white/70 text-xs sm:text-sm">Revenu total</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white truncate">{stats.totalRevenue.toFixed(2)}€</p>
                 </div>
               </div>
             </div>
