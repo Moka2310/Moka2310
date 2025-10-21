@@ -617,6 +617,63 @@ export const translations = {
       edit: 'Edit',
       back: 'Back',
       next: 'Next'
+    },
+
+    // Subscription
+    subscription: {
+      title: 'Signals Subscription',
+      subtitle: 'Access professional trading signals in real-time',
+      price: '150$ CAD',
+      perMonth: 'per month',
+      autoRenewal: 'Automatic renewal',
+      subscribe: 'Subscribe now',
+      subscribeButton: 'Subscribe - 150$ CAD/month',
+      features: {
+        title: 'What you get:',
+        realTimeSignals: 'Real-time signals',
+        allChannels: 'Forex, Crypto, Indices, Gold',
+        telegramChannels: 'Private Telegram channels',
+        instantNotifications: 'Instant notifications',
+        support247: '24/7 Support',
+        cancelAnytime: 'Cancel anytime'
+      },
+      status: {
+        active: 'Active',
+        pastDue: 'Payment pending',
+        canceled: 'Canceled',
+        incomplete: 'Pending'
+      },
+      dashboard: {
+        title: 'Trading Signals Subscription',
+        noSubscription: 'Subscribe to trading signals',
+        noSubscriptionText: 'Access all our real-time trading signals on Forex, Crypto, Indices and more for only 150$ CAD/month',
+        nextRenewal: 'Next renewal',
+        cancelScheduled: 'Cancellation scheduled',
+        accessUntil: 'Access until',
+        getTelegramLinks: 'Get Telegram links',
+        linksGenerated: 'Your personal invitation links:',
+        channel: 'Channel',
+        clickToJoin: 'Click on each link to join the channels',
+        cancelSubscription: 'Cancel subscription',
+        reactivateSubscription: 'Reactivate subscription',
+        paymentRequired: 'Payment required',
+        paymentFailedText: 'Your last payment failed. Please update your payment method.',
+        updatePayment: 'Update payment',
+        included: 'Your subscription includes:'
+      },
+      form: {
+        telegramUsername: 'Telegram Username',
+        telegramPlaceholder: '@your_username',
+        telegramHelp: 'Start with @ (e.g: @john_trader)',
+        creditCard: 'Credit card',
+        securedByStripe: 'Secured payments by Stripe',
+        importantInfo: 'Important information:',
+        firstPayment: 'First payment: 150$ CAD today',
+        autoRenewalInfo: 'Automatic renewal every month',
+        cancelInfo: 'Cancel anytime',
+        immediateAccess: 'Immediate access after payment',
+        terms: 'By subscribing, you agree to our terms of service and privacy policy.'
+      }
     }
   }
 };
