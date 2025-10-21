@@ -11,7 +11,7 @@ from subscription_service import SubscriptionService
 from telegram_service import telegram_service
 from email_service import EmailService
 
-router = APIRouter(prefix="/api/subscriptions", tags=["subscriptions"])
+router = APIRouter(prefix="/subscriptions", tags=["subscriptions"])
 
 # Configuration
 TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID', '-1002067865549')
