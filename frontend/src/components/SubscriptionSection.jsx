@@ -223,22 +223,42 @@ const SubscriptionSection = ({ user }) => {
                 className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white"
               >
                 <ExternalLink className="w-4 h-4 mr-2" />
-                Obtenir le lien Telegram
+                Obtenir les liens Telegram
               </Button>
 
-              {inviteLink && (
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                  <p className="text-green-400 text-sm font-semibold mb-2">
-                    ✓ Votre lien d'invitation personnel :
+              {inviteLinks && (
+                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 space-y-3">
+                  <p className="text-green-400 text-sm font-semibold mb-3">
+                    ✓ Vos liens d'invitation personnels :
                   </p>
-                  <a
-                    href={inviteLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-400 hover:text-blue-300 underline text-sm break-all"
-                  >
-                    {inviteLink}
-                  </a>
+                  
+                  {Object.entries(inviteLinks).map(([channelName, link]) => (
+                    link ? (
+                      <div key={channelName} className="bg-white/5 rounded-lg p-3">
+                        <p className="text-white font-semibold text-sm mb-1">
+                          📢 Canal {channelName}
+                        </p>
+                        <a
+                          href={link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-400 hover:text-blue-300 underline text-xs break-all"
+                        >
+                          {link}
+                        </a>
+                      </div>
+                    ) : (
+                      <div key={channelName} className="bg-red-500/10 rounded-lg p-3">
+                        <p className="text-red-400 text-sm">
+                          ⚠️ {channelName}: Lien non disponible
+                        </p>
+                      </div>
+                    )
+                  ))}
+                  
+                  <p className="text-white/60 text-xs mt-3">
+                    💡 Cliquez sur chaque lien pour rejoindre les canaux
+                  </p>
                 </div>
               )}
 
