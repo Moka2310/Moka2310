@@ -15,8 +15,16 @@ const CanalDetails = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [canalName]);
 
-  // Descriptions des actifs
-  const assetDescriptions = {
+  // Get asset description based on language
+  const getAssetDescription = (assetCode) => {
+    if (language === 'en' && assetDescriptionsEN[assetCode]) {
+      return assetDescriptionsEN[assetCode];
+    }
+    return assetDescriptionsFR[assetCode] || "Description non disponible";
+  };
+
+  // Descriptions des actifs (French)
+  const assetDescriptionsFR = {
     // CRYPTO
     'BTCUSD': "BTCUSD représente la valeur du Bitcoin face au dollar américain. C'est la paire la plus connue du marché crypto. Elle reflète la confiance des investisseurs envers les monnaies numériques et la politique économique mondiale. Très volatile, le Bitcoin offre d'importantes opportunités de trading, notamment lors des périodes d'incertitude financière.",
     
