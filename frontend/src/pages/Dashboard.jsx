@@ -22,10 +22,12 @@ import {
   Settings,
   Trash2,
   Star,
-  X
+  X,
+  Zap
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
+import SubscriptionSection from '../components/SubscriptionSection';
 
 const Dashboard = () => {
   const { user, logout, updateUser } = useAuth();
