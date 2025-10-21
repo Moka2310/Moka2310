@@ -226,6 +226,7 @@ async def get_telegram_invite_links(
     Génère des liens d'invitation Telegram pour TOUS les canaux VIP
     """
     try:
+        db = get_db()
         user_id = current_user.id
         user = db.users.find_one({"id": user_id})
         
