@@ -111,6 +111,7 @@ async def get_subscription_status(
     Récupère le statut de l'abonnement de l'utilisateur
     """
     try:
+        db = get_db()
         user_id = current_user.id
         user = db.users.find_one({"id": user_id})
         
