@@ -141,8 +141,7 @@ async def get_subscription_status(
 
 @router.post("/cancel")
 async def cancel_subscription(
-    current_user = Depends(get_current_user),
-    db: MongoClient = Depends(get_db)
+    current_user = Depends(get_current_user)
 ):
     """
     Annule l'abonnement à la fin de la période en cours
