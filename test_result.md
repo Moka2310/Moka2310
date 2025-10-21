@@ -357,17 +357,65 @@ agent_communication:
         comment: "CRITICAL: PayPal integration failing with 401 Unauthorized and 'invalid_client' error. PayPal client authentication is failing, likely due to invalid client credentials in production environment."
 
 frontend:
-  - task: "Frontend Testing"
+  - task: "Subscription Banner in Boutique Page"
     implemented: false
-    working: "NA"
-    file: "N/A"
-    stuck_count: 0
-    priority: "low"
+    working: false
+    file: "/app/frontend/src/pages/Boutique.jsx"
+    stuck_count: 1
+    priority: "high"
     needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL: Subscription banner completely missing from Boutique page. Code shows banner implementation in Boutique.jsx lines 112-187, but banner is not rendering on live site. No promotional content for 150$/mois subscription visible to users. This prevents users from discovering the subscription service."
+
+  - task: "Subscription Page (/subscription)"
+    implemented: false
+    working: false
+    file: "/app/frontend/src/pages/Subscription.jsx"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL: /subscription route exists but shows empty page with React routing warnings 'No routes matched location /subscription'. Subscription.jsx component exists with full Stripe integration but is not properly routed. Users cannot access subscription form."
+
+  - task: "Dashboard Subscription Tab"
+    implemented: false
+    working: false
+    file: "/app/frontend/src/pages/Dashboard.jsx"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL: Dashboard missing Subscription tab. Only 4 tabs visible (Formations, KYC, Témoignage, Paramètres) but no Abonnement tab with Zap icon. SubscriptionSection component exists but not integrated. Users cannot manage subscriptions from Dashboard."
+
+  - task: "Mobile Responsive Design"
+    implemented: "NA"
+    working: "NA"
+    file: "/app/frontend/src/pages/Subscription.jsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "testing"
-        comment: "Frontend testing not performed as per testing agent instructions to focus only on backend API testing."
+        comment: "Cannot test mobile responsiveness because subscription pages are not functional. Need to fix routing and component integration first."
+
+  - task: "Navigation Between Pages"
+    implemented: false
+    working: false
+    file: "/app/frontend/src/App.js"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL: Navigation to subscription pages broken. Routes defined in App.js but React Router not matching /subscription path. Console shows 'No routes matched location' warnings."
 
 metadata:
   created_by: "testing_agent"
