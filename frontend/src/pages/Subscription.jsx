@@ -6,6 +6,8 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Check, Zap, TrendingUp, Shield, Clock, Users, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
