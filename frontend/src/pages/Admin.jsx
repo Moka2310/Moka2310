@@ -260,19 +260,19 @@ const Admin = () => {
               <p className="text-white/70">Aucune demande KYC en attente</p>
             </div>
           ) : (
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {kycRequests.map((request) => (
                 <div
                   key={request.user.id}
-                  className="bg-[#1E1540]/50 rounded-2xl p-6 border border-purple-500/20"
+                  className="bg-[#1E1540]/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-purple-500/20"
                 >
-                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                  <div className="flex flex-col gap-4">
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-white mb-2">
+                      <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
                         {request.user.firstName} {request.user.lastName}
                       </h3>
-                      <div className="grid md:grid-cols-2 gap-2 text-white/70">
-                        <p><strong>Email:</strong> {request.user.email}</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base text-white/70 break-words">
+                        <p className="break-all"><strong>Email:</strong> {request.user.email}</p>
                         <p><strong>Pays:</strong> {request.user.country}</p>
                         <p><strong>Téléphone:</strong> {request.user.phone}</p>
                         <p>
@@ -285,7 +285,7 @@ const Admin = () => {
                         <p className="text-white/70 text-sm mb-3">
                           <strong>Documents KYC :</strong>
                         </p>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                           {request.documents.map((doc, idx) => {
                             const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
                             const docUrl = `${BACKEND_URL}/api/kyc/document/${doc.id}`;
@@ -324,10 +324,10 @@ const Admin = () => {
                       </div>
                     </div>
 
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto sm:self-end">
                       <Button
                         onClick={() => handleApprove(request.user.id)}
-                        className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white"
+                        className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white w-full sm:w-auto"
                       >
                         <CheckCircle className="w-4 h-4 mr-2" />
                         Approuver
@@ -335,7 +335,7 @@ const Admin = () => {
                       <Button
                         onClick={() => setSelectedUserId(request.user.id)}
                         variant="outline"
-                        className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+                        className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white w-full sm:w-auto"
                       >
                         <XCircle className="w-4 h-4 mr-2" />
                         Rejeter
