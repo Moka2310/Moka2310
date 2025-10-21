@@ -86,8 +86,8 @@ const Home = () => {
               </h1>
               <p className="text-white/80 text-lg mb-8">
                 {language === 'fr' 
-                  ? 'Rejoignez notre communauté de plus de 4000 traders et accédez à des signaux exclusifs sur Crypto, Forex, Gold, Indices et plus encore.'
-                  : 'Join our community of over 4000 traders and access exclusive signals on Crypto, Forex, Gold, Indices and more.'
+                  ? `Rejoignez notre communauté de plus de ${telegramMembers.toLocaleString('fr-FR')} traders et accédez à des signaux exclusifs sur Crypto, Forex, Gold, Indices et plus encore.`
+                  : `Join our community of over ${telegramMembers.toLocaleString('en-US')} traders and access exclusive signals on Crypto, Forex, Gold, Indices and more.`
                 }
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
