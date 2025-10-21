@@ -185,13 +185,13 @@ const SubscriptionSection = ({ user }) => {
         <div className="flex items-start justify-between mb-6">
           <div>
             <h3 className="text-2xl font-bold text-white mb-2">
-              Abonnement Signaux de Trading
+              {t(language, 'subscription.dashboard.title')}
             </h3>
             {getStatusBadge(subscription.status)}
           </div>
           <div className="text-right">
-            <div className="text-3xl font-bold text-white">150$ CAD</div>
-            <div className="text-white/60 text-sm">par mois</div>
+            <div className="text-3xl font-bold text-white">{t(language, 'subscription.price')}</div>
+            <div className="text-white/60 text-sm">{t(language, 'subscription.perMonth')}</div>
           </div>
         </div>
 
