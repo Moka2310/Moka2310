@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { toast } from '../hooks/use-toast';
 import { Check, Zap, TrendingUp, Shield, Clock, Users, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
 
