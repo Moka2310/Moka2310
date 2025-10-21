@@ -27,8 +27,7 @@ def get_db():
 @router.post("/create")
 async def create_subscription(
     subscription_data: SubscriptionCreate,
-    current_user = Depends(get_current_user),
-    db: MongoClient = Depends(get_db)
+    current_user = Depends(get_current_user)
 ):
     """
     Crée un nouvel abonnement mensuel à 150$/mois pour accéder aux signaux
