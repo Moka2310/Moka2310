@@ -80,13 +80,9 @@ INITIAL_FORMATIONS = [
 @router.on_event("startup")
 async def init_formations():
     """Initialize formations in database if not exists"""
-    db = get_db()
-    
-    # Check if formations already exist
-    existing = await db.formations.count_documents({})
-    if existing == 0:
-        # Insert initial formations
-        await db.formations.insert_many(INITIAL_FORMATIONS)
+    # Cette fonction est désactivée car les formations sont gérées manuellement
+    # Les formations sont insérées/mises à jour directement dans MongoDB
+    pass
 
 @router.get("", response_model=List[Formation])
 async def get_formations():
