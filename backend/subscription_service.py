@@ -33,7 +33,7 @@ class SubscriptionService:
             # Créer le produit
             product = stripe.Product.create(
                 name="Abonnement Signaux de Trading TRADALIFE",
-                description="Accès mensuel aux signaux de trading sur tous les canaux Telegram (Forex, Crypto, Indices, etc.)",
+                description="Accès mensuel aux signaux de trading sur tous les canaux Telegram (Forex, Crypto, Indices, Gold, Actions, Commodités)",
             )
             
             # Créer le price
