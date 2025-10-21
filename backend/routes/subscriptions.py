@@ -147,6 +147,7 @@ async def cancel_subscription(
     Annule l'abonnement à la fin de la période en cours
     """
     try:
+        db = get_db()
         user_id = current_user.id
         user = db.users.find_one({"id": user_id})
         
