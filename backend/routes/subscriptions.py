@@ -213,14 +213,14 @@ async def reactivate_subscription(
 
 @router.get("/invite-links")
 async def get_telegram_invite_links(
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: MongoClient = Depends(get_db)
 ):
     """
     Génère des liens d'invitation Telegram pour TOUS les canaux VIP
     """
     try:
-        user_id = current_user['id']
+        user_id = current_user.id
         user = db.users.find_one({"id": user_id})
         
         # Vérifier que l'utilisateur a un abonnement actif
