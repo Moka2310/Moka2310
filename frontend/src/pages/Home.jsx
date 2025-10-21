@@ -197,13 +197,7 @@ const Home = () => {
             </div>
             
             {/* Vidéo */}
-            <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden" 
-                 style={{ 
-                   height: '250px',
-                   '@media (min-width: 640px)': { height: '400px' },
-                   '@media (min-width: 768px)': { height: '500px' },
-                   '@media (min-width: 1024px)': { height: '600px' }
-                 }}>
+            <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden video-container-responsive">
               <div className="absolute inset-0 overflow-hidden rounded-2xl sm:rounded-3xl">
                 <iframe
                   src="https://www.youtube.com/embed/kIpu18ACAXc?autoplay=1&mute=1&loop=1&playlist=kIpu18ACAXc&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&vq=hd1080&playsinline=1"
