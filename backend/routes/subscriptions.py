@@ -134,14 +134,14 @@ async def get_subscription_status(
 
 @router.post("/cancel")
 async def cancel_subscription(
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: MongoClient = Depends(get_db)
 ):
     """
     Annule l'abonnement à la fin de la période en cours
     """
     try:
-        user_id = current_user['id']
+        user_id = current_user.id
         user = db.users.find_one({"id": user_id})
         
         if not user or not user.get('subscriptionId'):
