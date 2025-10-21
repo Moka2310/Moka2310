@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
 import ProtectionCharter from "./pages/ProtectionCharter";
 import CanalDetails from "./pages/CanalDetails";
+import Subscription from "./pages/Subscription";
 
 function App() {
   return (
