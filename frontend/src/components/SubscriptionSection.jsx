@@ -12,7 +12,7 @@ const SubscriptionSection = ({ user }) => {
   const navigate = useNavigate();
   const [subscription, setSubscription] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [inviteLink, setInviteLink] = useState(null);
+  const [inviteLinks, setInviteLinks] = useState(null);
   const [actionLoading, setActionLoading] = useState(false);
 
   useEffect(() => {
