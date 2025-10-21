@@ -187,7 +187,7 @@ const SubscriptionSection = ({ user }) => {
             {getStatusBadge(subscription.status)}
           </div>
           <div className="text-right">
-            <div className="text-3xl font-bold text-white">150$</div>
+            <div className="text-3xl font-bold text-white">150$ CAD</div>
             <div className="text-white/60 text-sm">par mois</div>
           </div>
         </div>
