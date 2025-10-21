@@ -198,7 +198,7 @@ const SubscriptionSection = ({ user }) => {
         {/* Info */}
         <div className="grid sm:grid-cols-2 gap-4 mb-6">
           <div className="bg-white/5 rounded-lg p-4">
-            <div className="text-white/60 text-sm mb-1">Prochain renouvellement</div>
+            <div className="text-white/60 text-sm mb-1">{t(language, 'subscription.dashboard.nextRenewal')}</div>
             <div className="text-white font-semibold">
               {formatDate(subscription.currentPeriodEnd)}
             </div>
@@ -207,10 +207,10 @@ const SubscriptionSection = ({ user }) => {
           {subscription.cancelAtPeriodEnd && (
             <div className="bg-yellow-500/10 rounded-lg p-4 border border-yellow-500/30">
               <div className="text-yellow-400 text-sm font-semibold mb-1">
-                ⚠️ Annulation prévue
+                ⚠️ {t(language, 'subscription.dashboard.cancelScheduled')}
               </div>
               <div className="text-white/80 text-sm">
-                Accès jusqu'au {formatDate(subscription.currentPeriodEnd)}
+                {t(language, 'subscription.dashboard.accessUntil')} {formatDate(subscription.currentPeriodEnd)}
               </div>
             </div>
           )}
