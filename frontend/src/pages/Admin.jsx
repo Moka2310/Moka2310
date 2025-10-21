@@ -395,18 +395,18 @@ const Admin = () => {
               {pendingTestimonials.map((testimonial) => (
                 <div
                   key={testimonial.id}
-                  className="bg-purple-500/10 rounded-xl p-6 border border-purple-500/30"
+                  className="bg-purple-500/10 rounded-xl p-4 sm:p-6 border border-purple-500/30"
                 >
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="text-lg font-bold text-white">{testimonial.userName}</h3>
+                  <div className="flex flex-col sm:flex-row items-start justify-between mb-4 gap-3">
+                    <div className="flex-1">
+                      <h3 className="text-base sm:text-lg font-bold text-white">{testimonial.userName}</h3>
                       <p className="text-pink-400 text-sm">{testimonial.country}</p>
                     </div>
                     <div className="flex space-x-1">
                       {[...Array(5)].map((_, index) => (
                         <Star
                           key={index}
-                          className={`w-5 h-5 ${
+                          className={`w-4 h-4 sm:w-5 sm:h-5 ${
                             index < testimonial.rating
                               ? 'text-yellow-400 fill-yellow-400'
                               : 'text-gray-600'
@@ -416,12 +416,12 @@ const Admin = () => {
                     </div>
                   </div>
 
-                  <p className="text-white/80 mb-4 italic">"{testimonial.comment}"</p>
+                  <p className="text-white/80 mb-4 italic text-sm sm:text-base break-words">"{testimonial.comment}"</p>
 
-                  <div className="flex space-x-3">
+                  <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                     <Button
                       onClick={() => handleApproveTestimonial(testimonial.id)}
-                      className="bg-green-500 hover:bg-green-600 text-white"
+                      className="bg-green-500 hover:bg-green-600 text-white w-full sm:w-auto"
                     >
                       <CheckCircle className="w-4 h-4 mr-2" />
                       Approuver
@@ -429,7 +429,7 @@ const Admin = () => {
                     <Button
                       onClick={() => handleRejectTestimonial(testimonial.id)}
                       variant="destructive"
-                      className="bg-red-500 hover:bg-red-600"
+                      className="bg-red-500 hover:bg-red-600 w-full sm:w-auto"
                     >
                       <XCircle className="w-4 h-4 mr-2" />
                       Rejeter
