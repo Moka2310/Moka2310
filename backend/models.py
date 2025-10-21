@@ -147,3 +147,27 @@ class TestimonialResponse(BaseModel):
     comment_en: str = ""
     createdAt: datetime = Field(default_factory=datetime.utcnow)
     order: int = 0
+
+class Subscription(BaseModel):
+    id: str
+    userId: str
+    stripeSubscriptionId: str
+    stripeCustomerId: str
+    status: SubscriptionStatus
+    priceId: str  # Stripe Price ID
+    currentPeriodStart: datetime
+    currentPeriodEnd: datetime
+    cancelAtPeriodEnd: bool = False
+    createdAt: datetime = Field(default_factory=datetime.utcnow)
+    updatedAt: datetime = Field(default_factory=datetime.utcnow)
+
+class SubscriptionCreate(BaseModel):
+    telegramUsername: str
+    paymentMethodId: str  # Stripe Payment Method ID
+
+class SubscriptionResponse(BaseModel):
+    id: str
+    status: str
+    currentPeriodEnd: datetime
+    cancelAtPeriodEnd: bool
+    pricePerMonth: float = 150.0
