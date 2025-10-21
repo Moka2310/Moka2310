@@ -160,7 +160,7 @@ const Boutique = () => {
             <div className="hidden md:block">
               <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
                 <div className="text-center mb-4">
-                  <div className="text-5xl font-bold text-white">150$</div>
+                  <div className="text-5xl font-bold text-white">150$ CAD</div>
                   <div className="text-white/60">par mois</div>
                 </div>
                 <div className="space-y-3 text-sm text-white/70">
