@@ -14,7 +14,6 @@ const API = `${BACKEND_URL}/api`;
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || 'pk_live_51SGsdR0kb9a0ErqLuEcBJWWUXLHQV2XlNrh14IVdN0C2yT2yd9mxZF6UO0Z9OBb1MpxhKwZUyBN0kPgDtXhEhTB700P6s8VLQ2');
 
 const SubscriptionForm = () => {
-  const { user } = useAuth();
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
@@ -31,11 +30,7 @@ const SubscriptionForm = () => {
     }
 
     if (!telegramUsername || !telegramUsername.startsWith('@')) {
-      toast({
-        title: 'Erreur',
-        description: 'Veuillez entrer un username Telegram valide (commençant par @)',
-        variant: 'destructive'
-      });
+      alert('Veuillez entrer un username Telegram valide (commençant par @)');
       return;
     }
 
@@ -79,10 +74,7 @@ const SubscriptionForm = () => {
         }
       }
 
-      toast({
-        title: '🎉 Abonnement activé !',
-        description: 'Bienvenue dans la communauté TRADALIFE. Redirecting vers votre Dashboard...',
-      });
+      alert('🎉 Abonnement activé ! Redirection vers votre Dashboard...');
 
       setTimeout(() => {
         navigate('/dashboard');
@@ -90,11 +82,7 @@ const SubscriptionForm = () => {
 
     } catch (error) {
       console.error('Subscription error:', error);
-      toast({
-        title: 'Erreur',
-        description: error.response?.data?.detail || error.message || 'Une erreur est survenue',
-        variant: 'destructive'
-      });
+      alert(error.response?.data?.detail || error.message || 'Une erreur est survenue');
     } finally {
       setLoading(false);
       setProcessingPayment(false);
