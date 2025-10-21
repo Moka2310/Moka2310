@@ -232,14 +232,14 @@ const SubscriptionSection = ({ user }) => {
               {inviteLinks && (
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 space-y-3">
                   <p className="text-green-400 text-sm font-semibold mb-3">
-                    ✓ Vos liens d'invitation personnels :
+                    ✓ {t(language, 'subscription.dashboard.linksGenerated')}
                   </p>
                   
                   {Object.entries(inviteLinks).map(([channelName, link]) => (
                     link ? (
                       <div key={channelName} className="bg-white/5 rounded-lg p-3">
                         <p className="text-white font-semibold text-sm mb-1">
-                          📢 Canal {channelName}
+                          📢 {t(language, 'subscription.dashboard.channel')} {channelName}
                         </p>
                         <a
                           href={link}
@@ -253,14 +253,14 @@ const SubscriptionSection = ({ user }) => {
                     ) : (
                       <div key={channelName} className="bg-red-500/10 rounded-lg p-3">
                         <p className="text-red-400 text-sm">
-                          ⚠️ {channelName}: Lien non disponible
+                          ⚠️ {channelName}: {language === 'fr' ? 'Lien non disponible' : 'Link unavailable'}
                         </p>
                       </div>
                     )
                   ))}
                   
                   <p className="text-white/60 text-xs mt-3">
-                    💡 Cliquez sur chaque lien pour rejoindre les canaux
+                    💡 {t(language, 'subscription.dashboard.clickToJoin')}
                   </p>
                 </div>
               )}
@@ -271,7 +271,7 @@ const SubscriptionSection = ({ user }) => {
                 variant="outline"
                 className="w-full border-red-500/30 text-red-400 hover:bg-red-500/10"
               >
-                Annuler l'abonnement
+                {t(language, 'subscription.dashboard.cancelSubscription')}
               </Button>
             </>
           )}
