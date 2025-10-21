@@ -220,7 +220,7 @@ const CanalDetails = () => {
                   <div className="px-4 pb-4 pt-0">
                     <div className="border-t border-purple-500/30 pt-3">
                       <p className="text-white/80 text-sm leading-relaxed">
-                        {assetDescriptions[asset] || 'Description non disponible'}
+                        {getAssetDescription(asset)}
                       </p>
                     </div>
                   </div>
