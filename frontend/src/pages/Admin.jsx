@@ -454,18 +454,18 @@ const Admin = () => {
               {allTestimonials.map((testimonial) => (
                 <div
                   key={testimonial.id}
-                  className="bg-purple-500/10 rounded-xl p-6 border border-purple-500/30"
+                  className="bg-purple-500/10 rounded-xl p-4 sm:p-6 border border-purple-500/30"
                 >
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="text-lg font-bold text-white">{testimonial.userName}</h3>
+                  <div className="flex flex-col sm:flex-row items-start justify-between mb-4 gap-3">
+                    <div className="flex-1">
+                      <h3 className="text-base sm:text-lg font-bold text-white">{testimonial.userName}</h3>
                       <p className="text-pink-400 text-sm">{testimonial.country}</p>
                     </div>
                     <div className="flex space-x-1">
                       {[...Array(5)].map((_, index) => (
                         <Star
                           key={index}
-                          className={`w-5 h-5 ${
+                          className={`w-4 h-4 sm:w-5 sm:h-5 ${
                             index < testimonial.rating
                               ? 'text-yellow-400 fill-yellow-400'
                               : 'text-gray-600'
@@ -476,16 +476,16 @@ const Admin = () => {
                   </div>
 
                   <div className="mb-4">
-                    <p className="text-white/80 italic mb-2">
+                    <p className="text-white/80 italic mb-2 text-sm sm:text-base break-words">
                       <strong className="text-purple-300">🇫🇷 Français:</strong> "{testimonial.comment}"
                     </p>
                     {testimonial.comment_en && (
-                      <p className="text-white/80 italic">
+                      <p className="text-white/80 italic text-sm sm:text-base break-words">
                         <strong className="text-blue-300">🇬🇧 Anglais:</strong> "{testimonial.comment_en}"
                       </p>
                     )}
                     {!testimonial.comment_en && (
-                      <p className="text-yellow-400 text-sm">⚠️ Traduction anglaise manquante</p>
+                      <p className="text-yellow-400 text-xs sm:text-sm">⚠️ Traduction anglaise manquante</p>
                     )}
                   </div>
 
@@ -493,7 +493,7 @@ const Admin = () => {
                     <Button
                       onClick={() => handleDeleteTestimonial(testimonial.id)}
                       variant="destructive"
-                      className="bg-red-500 hover:bg-red-600"
+                      className="bg-red-500 hover:bg-red-600 w-full sm:w-auto"
                     >
                       <XCircle className="w-4 h-4 mr-2" />
                       Supprimer
