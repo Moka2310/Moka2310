@@ -13,6 +13,12 @@ class UserRole(str, Enum):
     USER = "user"
     ADMIN = "admin"
 
+class SubscriptionStatus(str, Enum):
+    ACTIVE = "active"
+    PAST_DUE = "past_due"  # Paiement échoué, période de grâce
+    CANCELED = "canceled"
+    INCOMPLETE = "incomplete"  # Paiement initial en attente
+
 class TelegramLink(BaseModel):
     name: str
     url: str
