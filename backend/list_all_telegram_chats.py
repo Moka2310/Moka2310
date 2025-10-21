@@ -25,7 +25,7 @@ async def get_bot_chats():
     print(f"1. Ouvrez ce lien dans votre navigateur :\n")
     print(f"   https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getUpdates\n")
     print(f"2. Vous verrez un JSON avec tous les messages récents")
-    print(f"3. Cherchez 'chat':{'id': XXXXXXX} pour chaque canal\n")
+    print(f"3. Cherchez 'chat':{{id: XXXXXXX}} pour chaque canal\n")
     
     print("\nMéthode 2 : Via ce script")
     print("-" * 70)
