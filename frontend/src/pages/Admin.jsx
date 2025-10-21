@@ -178,8 +178,8 @@ const Admin = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#1E1540] pt-28 pb-20 px-3 sm:px-4 md:px-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#1E1540] pt-24 pb-16 px-4 sm:px-6 md:px-8">
+      <div className="max-w-7xl mx-auto w-full">
         {/* Back Button */}
         <Button
           onClick={() => navigate('/')}
