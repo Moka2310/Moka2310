@@ -4,6 +4,8 @@ import { Button } from '../components/ui/button';
 import { toast } from '../hooks/use-toast';
 import { Check, X, Clock, ExternalLink, CreditCard, Zap } from 'lucide-react';
 import axios from 'axios';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
