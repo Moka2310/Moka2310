@@ -220,8 +220,7 @@ async def reactivate_subscription(
 
 @router.get("/invite-links")
 async def get_telegram_invite_links(
-    current_user = Depends(get_current_user),
-    db: MongoClient = Depends(get_db)
+    current_user = Depends(get_current_user)
 ):
     """
     Génère des liens d'invitation Telegram pour TOUS les canaux VIP
