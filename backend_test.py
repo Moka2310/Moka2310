@@ -962,17 +962,29 @@ class TradalifeTester:
             # Health Check
             self.test_health_check,
             
-            # Chat API Tests (High Priority - Current Focus)
-            self.test_chat_health_check,
-            self.test_chat_french_message,
-            self.test_chat_english_message,
-            self.test_chat_session_persistence,
-            self.test_chat_edge_cases,
+            # Telegram Channels Configuration (High Priority)
+            self.test_telegram_channels_configuration,
             
             # Authentication & User Management
             self.test_register,
             self.test_login,
             self.test_get_me,
+            
+            # Subscription System Tests (High Priority - Current Focus)
+            self.test_subscription_status_no_subscription,
+            self.test_subscription_invite_links_no_subscription,
+            self.test_subscription_endpoints_exist,
+            
+            # Admin Subscription Tests
+            self.test_admin_subscription_login,
+            self.test_admin_subscription_status,
+            
+            # Chat API Tests
+            self.test_chat_health_check,
+            self.test_chat_french_message,
+            self.test_chat_english_message,
+            self.test_chat_session_persistence,
+            self.test_chat_edge_cases,
             
             # Formations Management
             self.test_get_formations,
