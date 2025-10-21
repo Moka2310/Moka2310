@@ -43,11 +43,18 @@ class User(BaseModel):
     lastName: Optional[str] = ""
     country: Optional[str] = ""
     phone: Optional[str] = ""
+    telegramUsername: Optional[str] = None  # Pour gérer l'accès aux canaux
     kycStatus: KYCStatus = KYCStatus.PENDING
     kycSubmittedAt: Optional[datetime] = None
     kycReviewedAt: Optional[datetime] = None
     kycRejectionReason: Optional[str] = None
     role: UserRole = UserRole.USER
+    # Champs d'abonnement
+    subscriptionId: Optional[str] = None  # Stripe Subscription ID
+    subscriptionStatus: Optional[SubscriptionStatus] = None
+    subscriptionStartDate: Optional[datetime] = None
+    subscriptionEndDate: Optional[datetime] = None
+    lastPaymentDate: Optional[datetime] = None
     createdAt: datetime = Field(default_factory=datetime.utcnow)
 
 class UserCreate(BaseModel):
