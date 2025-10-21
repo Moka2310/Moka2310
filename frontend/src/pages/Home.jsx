@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { canaux, stats } from '../mockData';
-import { Check, Download, Star, TrendingUp, Users, BarChart3, Handshake, Calendar } from 'lucide-react';
+import { Check, Download, Star, TrendingUp, Users, BarChart3, Handshake, Calendar, Bot, Zap, Settings } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
