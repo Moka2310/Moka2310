@@ -5,8 +5,8 @@ from typing import List
 
 router = APIRouter(prefix="/formations", tags=["Formations"])
 
-# Initial formations data
-INITIAL_FORMATIONS = [
+# Initial formations data - DÉSACTIVÉ car géré manuellement dans MongoDB
+INITIAL_FORMATIONS = []
     {
         "id": "1",
         "title": "Formation Trading Crypto",
