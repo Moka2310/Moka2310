@@ -162,7 +162,7 @@ const SubscriptionSection = ({ user }) => {
           Abonnez-vous aux signaux de trading
         </h3>
         <p className="text-white/60 mb-6 max-w-md mx-auto">
-          Accédez à tous nos signaux de trading en temps réel sur Forex, Crypto, Indices et plus encore pour seulement 150$/mois
+          Accédez à tous nos signaux de trading en temps réel sur Forex, Crypto, Indices et plus encore pour seulement 150$ CAD/mois
         </p>
         <Button
           onClick={() => navigate('/subscription')}
