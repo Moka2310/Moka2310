@@ -59,6 +59,16 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+@app.on_event("startup")
+async def startup_event():
+    """Run migrations on startup"""
+    import subprocess
+    try:
+        subprocess.run(["python3", "/app/backend/migrate_formations.py"], check=True)
+        logger.info("✅ Migrations executed successfully")
+    except Exception as e:
+        logger.error(f"❌ Migration error: {e}")
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
