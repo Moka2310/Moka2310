@@ -17,6 +17,13 @@ router = APIRouter(prefix="/subscriptions", tags=["subscriptions"])
 TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID', '-1002067865549')
 STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET', '')
 
+# MongoDB connection
+def get_db():
+    mongo_url = os.environ['MONGO_URL']
+    client = MongoClient(mongo_url)
+    db = client[os.environ.get('DB_NAME', 'tradalife')]
+    return db
+
 @router.post("/create")
 async def create_subscription(
     subscription_data: SubscriptionCreate,
