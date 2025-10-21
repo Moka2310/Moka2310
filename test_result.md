@@ -386,6 +386,7 @@ test_plan:
     - "Email Service Integration"
   test_all: true
   test_priority: "high_first"
+  subscription_testing_complete: true
 
 agent_communication:
   - agent: "testing"
