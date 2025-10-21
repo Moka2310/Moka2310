@@ -12,7 +12,7 @@ import axios from 'axios';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// Clé publique Stripe (à ajouter dans .env)
+// Clé publique Stripe
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || 'pk_live_51SGsdR0kb9a0ErqLuEcBJWWUXLHQV2XlNrh14IVdN0C2yT2yd9mxZF6UO0Z9OBb1MpxhKwZUyBN0kPgDtXhEhTB700P6s8VLQ2');
 
 const SubscriptionForm = () => {
