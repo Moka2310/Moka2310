@@ -5,9 +5,8 @@ S'exécute automatiquement au démarrage du backend
 """
 import os
 from pymongo import MongoClient
-import asyncio
 
-async def migrate_formations():
+def migrate_formations():
     """Mise à jour des formations avec les bonnes images et suppression de la formation à 1799"""
     
     # Connexion MongoDB (utilise la variable d'environnement)
@@ -49,4 +48,4 @@ async def migrate_formations():
         client.close()
 
 if __name__ == "__main__":
-    asyncio.run(migrate_formations())
+    migrate_formations()
