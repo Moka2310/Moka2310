@@ -571,6 +571,29 @@
     animation: spin-slow 3s linear infinite;
 }
 
+/* Responsive video container */
+.video-container-responsive {
+    height: 250px;
+}
+
+@media (min-width: 640px) {
+    .video-container-responsive {
+        height: 400px;
+    }
+}
+
+@media (min-width: 768px) {
+    .video-container-responsive {
+        height: 500px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .video-container-responsive {
+        height: 600px;
+    }
+}
+
 /* Effet de lueur pour le logo dans la navbar */
 .logo-glow-wrapper {
     position: relative;
