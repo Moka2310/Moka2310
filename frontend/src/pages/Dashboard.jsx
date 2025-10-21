@@ -559,6 +559,11 @@ const Dashboard = () => {
             )}
           </TabsContent>
 
+          {/* Subscription Tab */}
+          <TabsContent value="subscription">
+            <SubscriptionSection user={user} />
+          </TabsContent>
+
           {/* KYC Tab */}
           <TabsContent value="kyc">
             <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30">
