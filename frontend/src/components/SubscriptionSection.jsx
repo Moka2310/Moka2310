@@ -12,6 +12,7 @@ const API = `${BACKEND_URL}/api`;
 
 const SubscriptionSection = ({ user }) => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [subscription, setSubscription] = useState(null);
   const [loading, setLoading] = useState(true);
   const [inviteLinks, setInviteLinks] = useState(null);
