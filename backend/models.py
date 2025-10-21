@@ -72,7 +72,7 @@ class UserResponse(BaseModel):
     lastName: Optional[str]
     country: Optional[str]
     phone: Optional[str]
-    telegramUsername: Optional[str]
+    telegramUsername: Optional[str] = None
     kycStatus: str
     role: str
     subscriptionStatus: Optional[str] = None
