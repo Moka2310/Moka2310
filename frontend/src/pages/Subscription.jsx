@@ -259,7 +259,7 @@ const SubscriptionForm = () => {
                 ) : (
                   <span className="flex items-center gap-2">
                     <Check className="w-5 h-5" />
-                    S'abonner - 150$/mois
+                    S'abonner - 150$ CAD/mois
                   </span>
                 )}
               </Button>
