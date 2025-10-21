@@ -130,15 +130,15 @@ const SubscriptionForm = () => {
 
             {/* Features List */}
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-white mb-4">✨ Ce que vous obtenez :</h3>
+              <h3 className="text-xl font-bold text-white mb-4">{t(language, 'subscription.features.title')}</h3>
               
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
                   <TrendingUp className="w-5 h-5 text-green-400" />
                 </div>
                 <div>
-                  <h4 className="text-white font-semibold">Signaux en temps réel</h4>
-                  <p className="text-white/60 text-sm">Forex, Crypto, Indices, Gold et plus</p>
+                  <h4 className="text-white font-semibold">{t(language, 'subscription.features.realTimeSignals')}</h4>
+                  <p className="text-white/60 text-sm">{t(language, 'subscription.features.allChannels')}</p>
                 </div>
               </div>
 
@@ -147,8 +147,8 @@ const SubscriptionForm = () => {
                   <Users className="w-5 h-5 text-blue-400" />
                 </div>
                 <div>
-                  <h4 className="text-white font-semibold">Canaux Telegram privés</h4>
-                  <p className="text-white/60 text-sm">Rejoignez notre communauté exclusive</p>
+                  <h4 className="text-white font-semibold">{t(language, 'subscription.features.telegramChannels')}</h4>
+                  <p className="text-white/60 text-sm">{language === 'fr' ? 'Rejoignez notre communauté exclusive' : 'Join our exclusive community'}</p>
                 </div>
               </div>
 
@@ -157,8 +157,8 @@ const SubscriptionForm = () => {
                   <Zap className="w-5 h-5 text-yellow-400" />
                 </div>
                 <div>
-                  <h4 className="text-white font-semibold">Notifications instantanées</h4>
-                  <p className="text-white/60 text-sm">Ne ratez aucune opportunité</p>
+                  <h4 className="text-white font-semibold">{t(language, 'subscription.features.instantNotifications')}</h4>
+                  <p className="text-white/60 text-sm">{language === 'fr' ? 'Ne ratez aucune opportunité' : 'Don\'t miss any opportunity'}</p>
                 </div>
               </div>
 
@@ -167,8 +167,8 @@ const SubscriptionForm = () => {
                   <Shield className="w-5 h-5 text-purple-400" />
                 </div>
                 <div>
-                  <h4 className="text-white font-semibold">Support 24/7</h4>
-                  <p className="text-white/60 text-sm">Assistance disponible à tout moment</p>
+                  <h4 className="text-white font-semibold">{t(language, 'subscription.features.support247')}</h4>
+                  <p className="text-white/60 text-sm">{language === 'fr' ? 'Assistance disponible à tout moment' : 'Support available anytime'}</p>
                 </div>
               </div>
 
@@ -177,8 +177,8 @@ const SubscriptionForm = () => {
                   <Clock className="w-5 h-5 text-pink-400" />
                 </div>
                 <div>
-                  <h4 className="text-white font-semibold">Annulation facile</h4>
-                  <p className="text-white/60 text-sm">Annulez à tout moment depuis votre Dashboard</p>
+                  <h4 className="text-white font-semibold">{t(language, 'subscription.features.cancelAnytime')}</h4>
+                  <p className="text-white/60 text-sm">{language === 'fr' ? 'Annulez à tout moment depuis votre Dashboard' : 'Cancel anytime from your Dashboard'}</p>
                 </div>
               </div>
             </div>
