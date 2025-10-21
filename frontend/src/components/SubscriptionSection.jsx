@@ -282,7 +282,7 @@ const SubscriptionSection = ({ user }) => {
               disabled={actionLoading}
               className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white"
             >
-              Réactiver l'abonnement
+              {t(language, 'subscription.dashboard.reactivateSubscription')}
             </Button>
           )}
 
