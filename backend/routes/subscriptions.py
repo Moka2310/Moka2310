@@ -33,6 +33,7 @@ async def create_subscription(
     Crée un nouvel abonnement mensuel à 150$/mois pour accéder aux signaux
     """
     try:
+        db = get_db()
         user_id = current_user.id
         user_email = current_user.email
         user_name = f"{getattr(current_user, 'firstName', '') or ''} {getattr(current_user, 'lastName', '') or ''}".strip() or user_email
