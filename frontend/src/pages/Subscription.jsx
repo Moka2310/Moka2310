@@ -186,31 +186,31 @@ const SubscriptionForm = () => {
 
           {/* Right Side - Payment Form */}
           <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30">
-            <h2 className="text-2xl font-bold text-white mb-6">Informations de paiement</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">{language === 'fr' ? 'Informations de paiement' : 'Payment information'}</h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Telegram Username */}
               <div>
                 <label className="block text-white/80 mb-2 text-sm font-medium">
-                  Username Telegram *
+                  {t(language, 'subscription.form.telegramUsername')} *
                 </label>
                 <Input
                   type="text"
                   value={telegramUsername}
                   onChange={(e) => setTelegramUsername(e.target.value)}
-                  placeholder="@votre_username"
+                  placeholder={t(language, 'subscription.form.telegramPlaceholder')}
                   className="bg-white/10 border-purple-500/30 text-white placeholder:text-white/50"
                   required
                 />
                 <p className="text-white/50 text-xs mt-1">
-                  Commencez par @ (ex: @john_trader)
+                  {t(language, 'subscription.form.telegramHelp')}
                 </p>
               </div>
 
               {/* Card Element */}
               <div>
                 <label className="block text-white/80 mb-2 text-sm font-medium">
-                  Carte de crédit *
+                  {t(language, 'subscription.form.creditCard')} *
                 </label>
                 <div className="bg-white/10 border border-purple-500/30 rounded-lg p-4">
                   <CardElement
@@ -231,20 +231,20 @@ const SubscriptionForm = () => {
                   />
                 </div>
                 <p className="text-white/50 text-xs mt-1">
-                  Paiements sécurisés par Stripe
+                  {t(language, 'subscription.form.securedByStripe')}
                 </p>
               </div>
 
               {/* Info Box */}
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                 <p className="text-blue-300 text-sm">
-                  <strong>ℹ️ Informations importantes :</strong>
+                  <strong>ℹ️ {t(language, 'subscription.form.importantInfo')}</strong>
                 </p>
                 <ul className="text-white/70 text-sm mt-2 space-y-1 list-disc list-inside">
-                  <li>Premier paiement : 150$ CAD aujourd'hui</li>
-                  <li>Renouvellement automatique chaque mois</li>
-                  <li>Annulation possible à tout moment</li>
-                  <li>Accès immédiat après paiement</li>
+                  <li>{t(language, 'subscription.form.firstPayment')}</li>
+                  <li>{t(language, 'subscription.form.autoRenewalInfo')}</li>
+                  <li>{t(language, 'subscription.form.cancelInfo')}</li>
+                  <li>{t(language, 'subscription.form.immediateAccess')}</li>
                 </ul>
               </div>
 
@@ -257,18 +257,18 @@ const SubscriptionForm = () => {
                 {processingPayment ? (
                   <span className="flex items-center gap-2">
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Traitement en cours...
+                    {language === 'fr' ? 'Traitement en cours...' : 'Processing...'}
                   </span>
                 ) : (
                   <span className="flex items-center gap-2">
                     <Check className="w-5 h-5" />
-                    S'abonner - 150$ CAD/mois
+                    {t(language, 'subscription.subscribeButton')}
                   </span>
                 )}
               </Button>
 
               <p className="text-white/50 text-xs text-center">
-                En vous abonnant, vous acceptez nos conditions d'utilisation et notre politique de confidentialité.
+                {t(language, 'subscription.form.terms')}
               </p>
             </form>
           </div>
