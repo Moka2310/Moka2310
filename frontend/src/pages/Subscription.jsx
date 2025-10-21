@@ -238,7 +238,7 @@ const SubscriptionForm = () => {
                   <strong>ℹ️ Informations importantes :</strong>
                 </p>
                 <ul className="text-white/70 text-sm mt-2 space-y-1 list-disc list-inside">
-                  <li>Premier paiement : 150$ aujourd'hui</li>
+                  <li>Premier paiement : 150$ CAD aujourd'hui</li>
                   <li>Renouvellement automatique chaque mois</li>
                   <li>Annulation possible à tout moment</li>
                   <li>Accès immédiat après paiement</li>
