@@ -69,11 +69,17 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-[#1E1540]">
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
-        <div className="max-w-6xl mx-auto">
+      {/* Hero Section avec Bot */}
+      <section className="pt-32 pb-20 px-4 relative overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        </div>
+
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Left Side - Text */}
+            {/* Left Side - Text BIENVENUE */}
             <div>
               <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
                 {language === 'fr' ? 'Bienvenue chez' : 'Welcome to'} <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">TRADALIFE</span>
@@ -97,6 +103,83 @@ const Home = () => {
                 >
                   {language === 'fr' ? 'Rejoindre Telegram' : 'Join Telegram'}
                 </Button>
+              </div>
+            </div>
+
+            {/* Right Side - Bot de Copy Trading */}
+            <div>
+              <div className="bot-download-wrapper">
+                {/* Bordure lumineuse animée */}
+                <div className="bot-download-border"></div>
+                
+                {/* Contenu */}
+                <div className="bot-download-content p-6">
+                  {/* Badge "En construction" */}
+                  <div className="flex justify-center mb-4">
+                    <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg animate-bounce inline-flex items-center">
+                      <Zap className="w-3 h-3 mr-1" />
+                      {language === 'fr' ? 'EN CONSTRUCTION' : 'UNDER CONSTRUCTION'}
+                    </div>
+                  </div>
+
+                  {/* Icône */}
+                  <div className="flex justify-center mb-4">
+                    <div className="bot-icon-wrapper-small">
+                      <Bot className="w-12 h-12 text-white" />
+                    </div>
+                  </div>
+
+                  {/* Texte */}
+                  <div className="text-center mb-4">
+                    <h3 className="text-2xl font-bold text-white mb-2">
+                      {language === 'fr' ? 'Bot de Copie Trading MT4' : 'MT4 Copy Trading Bot'}
+                    </h3>
+                    <p className="text-white/70 text-sm mb-4">
+                      {language === 'fr' 
+                        ? 'Copiez automatiquement nos signaux sur votre compte MetaTrader 4'
+                        : 'Automatically copy our signals to your MetaTrader 4 account'}
+                    </p>
+                  </div>
+                  
+                  {/* Features */}
+                  <div className="grid grid-cols-2 gap-2 text-sm text-white/70 mb-6">
+                    <div className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-green-400" />
+                      <span>{language === 'fr' ? 'Copie instantanée' : 'Instant copy'}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-green-400" />
+                      <span>{language === 'fr' ? 'Lots personnalisables' : 'Customizable lots'}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-green-400" />
+                      <span>{language === 'fr' ? 'Gestion du risque' : 'Risk management'}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-green-400" />
+                      <span>{language === 'fr' ? 'Support 24/7' : '24/7 Support'}</span>
+                    </div>
+                  </div>
+
+                  {/* Bouton */}
+                  <button
+                    disabled
+                    className="bot-download-button group relative w-full"
+                  >
+                    <div className="bot-button-glow"></div>
+                    <div className="relative flex items-center justify-center gap-3 px-6 py-3">
+                      <Settings className="w-5 h-5 animate-spin-slow" />
+                      <div className="text-center">
+                        <div className="text-sm font-semibold">
+                          {language === 'fr' ? 'Bientôt disponible' : 'Coming Soon'}
+                        </div>
+                        <div className="text-xs opacity-80">
+                          {language === 'fr' ? 'En développement' : 'In Development'}
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
