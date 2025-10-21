@@ -129,10 +129,10 @@ const SubscriptionSection = ({ user }) => {
 
   const getStatusBadge = (status) => {
     const badges = {
-      'active': { icon: Check, color: 'bg-green-500/20 text-green-400 border-green-500/30', text: 'Actif' },
-      'past_due': { icon: Clock, color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30', text: 'Paiement en attente' },
-      'canceled': { icon: X, color: 'bg-red-500/20 text-red-400 border-red-500/30', text: 'Annulé' },
-      'incomplete': { icon: Clock, color: 'bg-blue-500/20 text-blue-400 border-blue-500/30', text: 'En attente' },
+      'active': { icon: Check, color: 'bg-green-500/20 text-green-400 border-green-500/30', text: t(language, 'subscription.status.active') },
+      'past_due': { icon: Clock, color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30', text: t(language, 'subscription.status.pastDue') },
+      'canceled': { icon: X, color: 'bg-red-500/20 text-red-400 border-red-500/30', text: t(language, 'subscription.status.canceled') },
+      'incomplete': { icon: Clock, color: 'bg-blue-500/20 text-blue-400 border-blue-500/30', text: t(language, 'subscription.status.incomplete') },
     };
 
     const badge = badges[status] || badges['incomplete'];
