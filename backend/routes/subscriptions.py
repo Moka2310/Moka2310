@@ -105,8 +105,7 @@ async def create_subscription(
 
 @router.get("/status", response_model=SubscriptionResponse)
 async def get_subscription_status(
-    current_user = Depends(get_current_user),
-    db: MongoClient = Depends(get_db)
+    current_user = Depends(get_current_user)
 ):
     """
     Récupère le statut de l'abonnement de l'utilisateur
