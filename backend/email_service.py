@@ -434,6 +434,222 @@ class EmailService:
         """
         
         return await self.send_email(to_email, subject, html_content)
+    
+    async def send_subscription_confirmation(self, to_email: str):
+        """Send subscription confirmation email"""
+        subject = "✓ Bienvenue - Votre abonnement aux signaux TRADALIFE est activé !"
+        
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background: linear-gradient(135deg, #E91E8C 0%, #7B3FF2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }}
+                .content {{ background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }}
+                .success-box {{ background: #d4edda; border-left: 4px solid #28a745; padding: 15px; margin: 20px 0; }}
+                .feature {{ background: white; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 3px solid #7B3FF2; }}
+                .cta-button {{ display: inline-block; background: linear-gradient(135deg, #E91E8C 0%, #7B3FF2 100%); color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; margin: 20px 0; font-weight: bold; }}
+                .footer {{ text-align: center; margin-top: 30px; color: #666; font-size: 12px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>🎉 Abonnement Activé !</h1>
+                </div>
+                <div class="content">
+                    <div class="success-box">
+                        <strong>✓ Votre paiement a été traité avec succès !</strong>
+                        <p style="margin: 5px 0 0 0;">Vous avez maintenant accès à tous nos signaux de trading.</p>
+                    </div>
+                    
+                    <h2 style="color: #7B3FF2;">📊 Ce que vous obtenez :</h2>
+                    
+                    <div class="feature">
+                        <strong>💹 Signaux en temps réel</strong>
+                        <p>Forex, Crypto, Indices, Gold, et plus encore</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <strong>📱 Accès aux canaux Telegram privés</strong>
+                        <p>Rejoignez notre communauté de traders professionnels</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <strong>🔔 Notifications instantanées</strong>
+                        <p>Ne ratez aucune opportunité de trading</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <strong>📈 Analyses de marché</strong>
+                        <p>Décisions basées sur des analyses professionnelles</p>
+                    </div>
+                    
+                    <p style="margin-top: 20px;"><strong>📝 Prochaines étapes :</strong></p>
+                    <ol>
+                        <li>Connectez-vous à votre Dashboard</li>
+                        <li>Cliquez sur "Obtenir le lien Telegram"</li>
+                        <li>Rejoignez les canaux de signaux</li>
+                        <li>Commencez à recevoir nos signaux !</li>
+                    </ol>
+                    
+                    <div style="text-align: center;">
+                        <a href="{self.frontend_url}/dashboard" class="cta-button">Accéder au Dashboard</a>
+                    </div>
+                    
+                    <p style="margin-top: 30px;"><strong>💳 Renouvellement automatique :</strong></p>
+                    <p>Votre abonnement se renouvellera automatiquement chaque mois à 150$. Vous pouvez annuler à tout moment depuis votre Dashboard.</p>
+                    
+                    <p style="margin-top: 20px;">Besoin d'aide ? Notre équipe est disponible 24/7 sur Telegram.</p>
+                    
+                    <p>Bon trading !<br><strong>L'équipe TRADALIFE</strong></p>
+                </div>
+                <div class="footer">
+                    <p>Abonnement : 150$ / mois | Renouvellement automatique</p>
+                    <p>© 2025 TRADALIFE - Tous droits réservés</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        return await self.send_email(to_email, subject, html_content)
+    
+    async def send_payment_failed_reminder(self, to_email: str):
+        """Send payment failed reminder email"""
+        subject = "⚠️ Échec de paiement - Action requise pour votre abonnement TRADALIFE"
+        
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }}
+                .content {{ background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }}
+                .warning-box {{ background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; }}
+                .cta-button {{ display: inline-block; background: linear-gradient(135deg, #E91E8C 0%, #7B3FF2 100%); color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; margin: 20px 0; font-weight: bold; }}
+                .footer {{ text-align: center; margin-top: 30px; color: #666; font-size: 12px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>⚠️ Échec de Paiement</h1>
+                </div>
+                <div class="content">
+                    <p>Bonjour,</p>
+                    
+                    <div class="warning-box">
+                        <strong>⚠️ Nous n'avons pas pu traiter votre paiement mensuel</strong>
+                        <p style="margin: 5px 0 0 0;">Votre abonnement aux signaux TRADALIFE est en attente de paiement.</p>
+                    </div>
+                    
+                    <p><strong>Ce qui se passe maintenant :</strong></p>
+                    <ul>
+                        <li>✓ Vous conservez l'accès pour encore <strong>3 jours</strong></li>
+                        <li>⚠️ Après 3 jours, votre accès sera suspendu</li>
+                        <li>❌ Vous serez retiré des canaux Telegram privés</li>
+                    </ul>
+                    
+                    <p><strong>Raisons possibles :</strong></p>
+                    <ul>
+                        <li>Carte expirée ou invalide</li>
+                        <li>Fonds insuffisants</li>
+                        <li>Problème avec votre banque</li>
+                    </ul>
+                    
+                    <p><strong>Comment résoudre :</strong></p>
+                    <ol>
+                        <li>Vérifiez les informations de votre carte</li>
+                        <li>Assurez-vous d'avoir des fonds suffisants</li>
+                        <li>Mettez à jour votre méthode de paiement dans le Dashboard</li>
+                    </ol>
+                    
+                    <div style="text-align: center;">
+                        <a href="{self.frontend_url}/dashboard" class="cta-button">Mettre à jour le paiement</a>
+                    </div>
+                    
+                    <p style="margin-top: 30px;"><strong>Besoin d'aide ?</strong></p>
+                    <p>Notre équipe support est disponible 24/7 pour vous aider. Contactez-nous sur Telegram ou par email.</p>
+                    
+                    <p>Cordialement,<br><strong>L'équipe TRADALIFE</strong></p>
+                </div>
+                <div class="footer">
+                    <p>Abonnement : 150$ / mois</p>
+                    <p>© 2025 TRADALIFE - Tous droits réservés</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        return await self.send_email(to_email, subject, html_content)
+    
+    async def send_subscription_canceled(self, to_email: str, end_date: str):
+        """Send subscription cancellation confirmation email"""
+        subject = "Confirmation d'annulation de votre abonnement TRADALIFE"
+        
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background: linear-gradient(135deg, #6c757d 0%, #495057 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }}
+                .content {{ background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }}
+                .info-box {{ background: #d1ecf1; border-left: 4px solid #0c5460; padding: 15px; margin: 20px 0; }}
+                .cta-button {{ display: inline-block; background: linear-gradient(135deg, #E91E8C 0%, #7B3FF2 100%); color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; margin: 20px 0; font-weight: bold; }}
+                .footer {{ text-align: center; margin-top: 30px; color: #666; font-size: 12px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>Annulation d'abonnement</h1>
+                </div>
+                <div class="content">
+                    <p>Bonjour,</p>
+                    
+                    <p>Nous avons bien reçu votre demande d'annulation d'abonnement.</p>
+                    
+                    <div class="info-box">
+                        <strong>ℹ️ Information importante :</strong>
+                        <p style="margin: 10px 0 0 0;">Vous conserverez l'accès à tous les signaux jusqu'au <strong>{end_date}</strong></p>
+                        <p style="margin: 5px 0 0 0;">Aucun prélèvement ne sera effectué après cette date.</p>
+                    </div>
+                    
+                    <p><strong>Ce qui se passe ensuite :</strong></p>
+                    <ul>
+                        <li>✓ Vous gardez l'accès complet jusqu'à la fin de votre période</li>
+                        <li>❌ Aucun renouvellement automatique</li>
+                        <li>📱 Retrait automatique des canaux Telegram après la date d'expiration</li>
+                    </ul>
+                    
+                    <p><strong>Vous changez d'avis ?</strong></p>
+                    <p>Vous pouvez réactiver votre abonnement à tout moment avant la date d'expiration depuis votre Dashboard.</p>
+                    
+                    <div style="text-align: center;">
+                        <a href="{self.frontend_url}/dashboard" class="cta-button">Réactiver mon abonnement</a>
+                    </div>
+                    
+                    <p style="margin-top: 30px;">Nous sommes désolés de vous voir partir. Si vous avez des suggestions pour améliorer nos services, n'hésitez pas à nous contacter.</p>
+                    
+                    <p>Cordialement,<br><strong>L'équipe TRADALIFE</strong></p>
+                </div>
+                <div class="footer">
+                    <p>© 2025 TRADALIFE - Tous droits réservés</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        return await self.send_email(to_email, subject, html_content)
 
 # Create singleton instance
 email_service = EmailService()
