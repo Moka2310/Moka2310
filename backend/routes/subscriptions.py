@@ -6,7 +6,7 @@ import os
 from typing import Optional
 
 from models import SubscriptionCreate, SubscriptionResponse, Subscription, SubscriptionStatus
-from dependencies import get_current_user, get_db
+from dependencies import get_current_user
 from subscription_service import SubscriptionService
 from telegram_service import telegram_service
 from email_service import EmailService
