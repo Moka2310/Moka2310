@@ -188,6 +188,7 @@ async def reactivate_subscription(
     Réactive un abonnement qui était prévu pour être annulé
     """
     try:
+        db = get_db()
         user_id = current_user.id
         user = db.users.find_one({"id": user_id})
         
