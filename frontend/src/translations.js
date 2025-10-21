@@ -278,6 +278,63 @@ export const translations = {
       edit: 'Modifier',
       back: 'Retour',
       next: 'Suivant'
+    },
+
+    // Subscription
+    subscription: {
+      title: 'Abonnement Signaux',
+      subtitle: 'Accédez aux signaux de trading professionnels en temps réel',
+      price: '150$ CAD',
+      perMonth: 'par mois',
+      autoRenewal: 'Renouvellement automatique',
+      subscribe: 'S\'abonner maintenant',
+      subscribeButton: 'S\'abonner - 150$ CAD/mois',
+      features: {
+        title: 'Ce que vous obtenez :',
+        realTimeSignals: 'Signaux en temps réel',
+        allChannels: 'Forex, Crypto, Indices, Gold',
+        telegramChannels: 'Canaux Telegram privés',
+        instantNotifications: 'Notifications instantanées',
+        support247: 'Support 24/7',
+        cancelAnytime: 'Annulation à tout moment'
+      },
+      status: {
+        active: 'Actif',
+        pastDue: 'Paiement en attente',
+        canceled: 'Annulé',
+        incomplete: 'En attente'
+      },
+      dashboard: {
+        title: 'Abonnement Signaux de Trading',
+        noSubscription: 'Abonnez-vous aux signaux de trading',
+        noSubscriptionText: 'Accédez à tous nos signaux de trading en temps réel sur Forex, Crypto, Indices et plus encore pour seulement 150$ CAD/mois',
+        nextRenewal: 'Prochain renouvellement',
+        cancelScheduled: 'Annulation prévue',
+        accessUntil: 'Accès jusqu\'au',
+        getTelegramLinks: 'Obtenir les liens Telegram',
+        linksGenerated: 'Vos liens d\'invitation personnels :',
+        channel: 'Canal',
+        clickToJoin: 'Cliquez sur chaque lien pour rejoindre les canaux',
+        cancelSubscription: 'Annuler l\'abonnement',
+        reactivateSubscription: 'Réactiver l\'abonnement',
+        paymentRequired: 'Paiement requis',
+        paymentFailedText: 'Votre dernier paiement a échoué. Veuillez mettre à jour votre méthode de paiement.',
+        updatePayment: 'Mettre à jour le paiement',
+        included: 'Votre abonnement inclut :'
+      },
+      form: {
+        telegramUsername: 'Username Telegram',
+        telegramPlaceholder: '@votre_username',
+        telegramHelp: 'Commencez par @ (ex: @john_trader)',
+        creditCard: 'Carte de crédit',
+        securedByStripe: 'Paiements sécurisés par Stripe',
+        importantInfo: 'Informations importantes :',
+        firstPayment: 'Premier paiement : 150$ CAD aujourd\'hui',
+        autoRenewalInfo: 'Renouvellement automatique chaque mois',
+        cancelInfo: 'Annulation possible à tout moment',
+        immediateAccess: 'Accès immédiat après paiement',
+        terms: 'En vous abonnant, vous acceptez nos conditions d\'utilisation et notre politique de confidentialité.'
+      }
     }
   },
 
