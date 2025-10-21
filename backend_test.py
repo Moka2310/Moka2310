@@ -751,6 +751,204 @@ class TradalifeTester:
         except Exception as e:
             self.log_test("Chat Edge Cases", False, f"Error: {str(e)}")
             return False
+
+    def test_subscription_status_no_subscription(self):
+        """Test subscription status for user without subscription"""
+        if not self.token:
+            self.log_test("Subscription Status (No Subscription)", False, "No auth token available")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.token}"}
+            response = self.session.get(f"{API_URL}/subscriptions/status", headers=headers)
+            
+            if response.status_code == 404:
+                self.log_test("Subscription Status (No Subscription)", True, "Correctly returned 404 for user without subscription")
+                return True
+            else:
+                self.log_test("Subscription Status (No Subscription)", False, f"Expected 404, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Subscription Status (No Subscription)", False, f"Error: {str(e)}")
+            return False
+
+    def test_subscription_invite_links_no_subscription(self):
+        """Test invite links for user without active subscription"""
+        if not self.token:
+            self.log_test("Invite Links (No Subscription)", False, "No auth token available")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.token}"}
+            response = self.session.get(f"{API_URL}/subscriptions/invite-links", headers=headers)
+            
+            if response.status_code == 403:
+                data = response.json()
+                expected_message = "Vous devez avoir un abonnement actif pour accéder aux canaux"
+                if data.get("detail") == expected_message:
+                    self.log_test("Invite Links (No Subscription)", True, "Correctly returned 403 with proper error message")
+                    return True
+                else:
+                    self.log_test("Invite Links (No Subscription)", True, f"Returned 403 but with different message: {data.get('detail')}")
+                    return True
+            else:
+                self.log_test("Invite Links (No Subscription)", False, f"Expected 403, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Invite Links (No Subscription)", False, f"Error: {str(e)}")
+            return False
+
+    def test_subscription_endpoints_exist(self):
+        """Test that all subscription endpoints exist"""
+        if not self.token:
+            self.log_test("Subscription Endpoints Exist", False, "No auth token available")
+            return False
+            
+        success_count = 0
+        total_endpoints = 4
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.token}"}
+            
+            # Test create subscription endpoint exists (should fail without proper data)
+            response = self.session.post(f"{API_URL}/subscriptions/create", json={}, headers=headers)
+            if response.status_code in [400, 422, 500]:  # Endpoint exists but validation fails
+                self.log_test("Subscription Create Endpoint", True, f"Endpoint exists (returned {response.status_code})")
+                success_count += 1
+            else:
+                self.log_test("Subscription Create Endpoint", False, f"Unexpected status: {response.status_code}")
+            
+            # Test cancel subscription endpoint exists
+            response = self.session.post(f"{API_URL}/subscriptions/cancel", headers=headers)
+            if response.status_code in [404, 500]:  # Endpoint exists but no subscription to cancel
+                self.log_test("Subscription Cancel Endpoint", True, f"Endpoint exists (returned {response.status_code})")
+                success_count += 1
+            else:
+                self.log_test("Subscription Cancel Endpoint", False, f"Unexpected status: {response.status_code}")
+            
+            # Test reactivate subscription endpoint exists
+            response = self.session.post(f"{API_URL}/subscriptions/reactivate", headers=headers)
+            if response.status_code in [404, 500]:  # Endpoint exists but no subscription to reactivate
+                self.log_test("Subscription Reactivate Endpoint", True, f"Endpoint exists (returned {response.status_code})")
+                success_count += 1
+            else:
+                self.log_test("Subscription Reactivate Endpoint", False, f"Unexpected status: {response.status_code}")
+            
+            # Test webhook endpoint exists (should accept POST without auth)
+            response = self.session.post(f"{API_URL}/subscriptions/webhook", json={})
+            if response.status_code in [400, 422, 500]:  # Endpoint exists but validation fails
+                self.log_test("Subscription Webhook Endpoint", True, f"Endpoint exists (returned {response.status_code})")
+                success_count += 1
+            else:
+                self.log_test("Subscription Webhook Endpoint", False, f"Unexpected status: {response.status_code}")
+            
+            return success_count == total_endpoints
+            
+        except Exception as e:
+            self.log_test("Subscription Endpoints Exist", False, f"Error: {str(e)}")
+            return False
+
+    def test_telegram_channels_configuration(self):
+        """Test that all 6 Telegram channels are configured"""
+        try:
+            # Check backend .env file for channel configuration
+            expected_channels = [
+                "TELEGRAM_CHANNEL_INDICES",
+                "TELEGRAM_CHANNEL_ACTIONS", 
+                "TELEGRAM_CHANNEL_GOLD",
+                "TELEGRAM_CHANNEL_FOREX",
+                "TELEGRAM_CHANNEL_CRYPTO",
+                "TELEGRAM_CHANNEL_COMMODITES"
+            ]
+            
+            configured_channels = []
+            missing_channels = []
+            
+            # Read backend .env file
+            try:
+                with open('/app/backend/.env', 'r') as f:
+                    env_content = f.read()
+                    
+                for channel in expected_channels:
+                    if channel in env_content and f"{channel}=" in env_content:
+                        # Extract the value
+                        for line in env_content.split('\n'):
+                            if line.startswith(f"{channel}="):
+                                value = line.split('=', 1)[1].strip()
+                                if value and value != '':
+                                    configured_channels.append(channel)
+                                    break
+                        else:
+                            missing_channels.append(channel)
+                    else:
+                        missing_channels.append(channel)
+                        
+            except FileNotFoundError:
+                self.log_test("Telegram Channels Configuration", False, "Backend .env file not found")
+                return False
+            
+            if len(configured_channels) == 6:
+                channel_names = [ch.replace('TELEGRAM_CHANNEL_', '') for ch in configured_channels]
+                self.log_test("Telegram Channels Configuration", True, f"All 6 channels configured: {', '.join(channel_names)}")
+                return True
+            else:
+                missing_names = [ch.replace('TELEGRAM_CHANNEL_', '') for ch in missing_channels]
+                self.log_test("Telegram Channels Configuration", False, f"Missing channels: {', '.join(missing_names)}. Configured: {len(configured_channels)}/6")
+                return False
+                
+        except Exception as e:
+            self.log_test("Telegram Channels Configuration", False, f"Error: {str(e)}")
+            return False
+
+    def test_admin_subscription_login(self):
+        """Test admin login for subscription testing"""
+        try:
+            credentials = {
+                "email": "admin@tradalife.com",
+                "password": "admin123"
+            }
+            
+            response = self.session.post(f"{API_URL}/auth/login", json=credentials)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "user" in data and "token" in data:
+                    self.admin_token = data["token"]
+                    self.log_test("Admin Login (Subscription Test)", True, f"Admin login successful: {data['user']['email']}")
+                    return True
+                else:
+                    self.log_test("Admin Login (Subscription Test)", False, "Missing user or token in response", data)
+                    return False
+            else:
+                self.log_test("Admin Login (Subscription Test)", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Login (Subscription Test)", False, f"Error: {str(e)}")
+            return False
+
+    def test_admin_subscription_status(self):
+        """Test subscription status for admin user (should also return 404 if no subscription)"""
+        if not self.admin_token:
+            self.log_test("Admin Subscription Status", False, "No admin token available")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            response = self.session.get(f"{API_URL}/subscriptions/status", headers=headers)
+            
+            if response.status_code == 404:
+                self.log_test("Admin Subscription Status", True, "Admin correctly returned 404 for no subscription")
+                return True
+            elif response.status_code == 200:
+                data = response.json()
+                self.log_test("Admin Subscription Status", True, f"Admin has subscription: {data.get('status')}")
+                return True
+            else:
+                self.log_test("Admin Subscription Status", False, f"Unexpected status: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Subscription Status", False, f"Error: {str(e)}")
+            return False
     
     def run_all_tests(self):
         """Run all tests in sequence"""
