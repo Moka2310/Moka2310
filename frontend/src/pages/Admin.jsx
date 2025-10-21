@@ -352,14 +352,14 @@ const Admin = () => {
                       <Textarea
                         value={rejectionReason}
                         onChange={(e) => setRejectionReason(e.target.value)}
-                        className="bg-white/10 border-purple-500/30 text-white placeholder:text-white/50 focus:border-red-500 mb-4"
+                        className="bg-white/10 border-purple-500/30 text-white placeholder:text-white/50 focus:border-red-500 mb-4 w-full"
                         placeholder="Documents illisibles, informations incorrectes, etc."
                         rows={3}
                       />
-                      <div className="flex gap-2">
+                      <div className="flex flex-col sm:flex-row gap-2">
                         <Button
                           onClick={handleReject}
-                          className="bg-red-500 hover:bg-red-600 text-white"
+                          className="bg-red-500 hover:bg-red-600 text-white w-full sm:w-auto"
                         >
                           Confirmer le rejet
                         </Button>
@@ -369,7 +369,7 @@ const Admin = () => {
                             setRejectionReason('');
                           }}
                           variant="outline"
-                          className="border-white/30 text-white hover:bg-white/10"
+                          className="border-white/30 text-white hover:bg-white/10 w-full sm:w-auto"
                         >
                           Annuler
                         </Button>
