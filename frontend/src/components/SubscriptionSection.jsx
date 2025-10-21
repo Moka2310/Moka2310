@@ -39,20 +39,20 @@ const SubscriptionSection = ({ user }) => {
   const handleGetInviteLink = async () => {
     setActionLoading(true);
     try {
-      const response = await axios.get(`${API}/subscriptions/invite-link`, {
+      const response = await axios.get(`${API}/subscriptions/invite-links`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-      setInviteLink(response.data.inviteLink);
+      setInviteLinks(response.data.inviteLinks);
       toast({
-        title: '✓ Lien généré',
-        description: 'Votre lien d\'invitation Telegram est prêt !',
+        title: '✓ Liens générés',
+        description: 'Vos liens d\'invitation Telegram sont prêts !',
       });
     } catch (error) {
       toast({
         title: 'Erreur',
-        description: error.response?.data?.detail || 'Impossible de générer le lien',
+        description: error.response?.data?.detail || 'Impossible de générer les liens',
         variant: 'destructive'
       });
     } finally {
