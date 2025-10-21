@@ -182,8 +182,7 @@ async def cancel_subscription(
 
 @router.post("/reactivate")
 async def reactivate_subscription(
-    current_user = Depends(get_current_user),
-    db: MongoClient = Depends(get_db)
+    current_user = Depends(get_current_user)
 ):
     """
     Réactive un abonnement qui était prévu pour être annulé
