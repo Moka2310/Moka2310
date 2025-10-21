@@ -425,16 +425,22 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Payment Integration - Stripe"
-    - "Payment Integration - PayPal"
-    - "Email Service Integration"
+    - "Subscription Banner in Boutique Page"
+    - "Subscription Page (/subscription)"
+    - "Dashboard Subscription Tab"
+    - "Navigation Between Pages"
   stuck_tasks:
+    - "Subscription Banner in Boutique Page"
+    - "Subscription Page (/subscription)"
+    - "Dashboard Subscription Tab"
+    - "Navigation Between Pages"
     - "Payment Integration - Stripe"
     - "Payment Integration - PayPal"
     - "Email Service Integration"
-  test_all: true
+  test_all: false
   test_priority: "high_first"
-  subscription_testing_complete: true
+  subscription_testing_complete: false
+  frontend_subscription_testing_complete: true
 
 agent_communication:
   - agent: "testing"
