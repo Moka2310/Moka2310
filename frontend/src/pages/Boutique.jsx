@@ -108,6 +108,84 @@ const Boutique = () => {
           </p>
         </div>
 
+        {/* Subscription Banner */}
+        <div className="mb-12 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20 border-2 border-pink-500/50 rounded-3xl p-8 relative overflow-hidden">
+          {/* Animated Background */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-0 left-1/4 w-64 h-64 bg-pink-500 rounded-full filter blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-500 rounded-full filter blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+          </div>
+
+          <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center">
+            {/* Left Content */}
+            <div>
+              <div className="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-4 py-1.5 rounded-full mb-4">
+                ⚡ NOUVEAU
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Abonnement Signaux
+              </h2>
+              <p className="text-white/80 text-lg mb-6">
+                Recevez nos signaux de trading en temps réel sur Telegram pour seulement <strong className="text-pink-400">150$/mois</strong>
+              </p>
+              <ul className="space-y-2 text-white/70 mb-6">
+                <li className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-green-400 text-sm">✓</span>
+                  </div>
+                  Forex, Crypto, Indices, Gold
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-green-400 text-sm">✓</span>
+                  </div>
+                  Signaux en temps réel
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-green-400 text-sm">✓</span>
+                  </div>
+                  Annulation à tout moment
+                </li>
+              </ul>
+              <Button
+                onClick={() => navigate('/subscription')}
+                className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-6 text-lg font-bold"
+              >
+                S'abonner maintenant
+              </Button>
+            </div>
+
+            {/* Right Content - Features */}
+            <div className="hidden md:block">
+              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                <div className="text-center mb-4">
+                  <div className="text-5xl font-bold text-white">150$</div>
+                  <div className="text-white/60">par mois</div>
+                </div>
+                <div className="space-y-3 text-sm text-white/70">
+                  <div className="flex items-center justify-between py-2 border-b border-white/10">
+                    <span>Accès illimité</span>
+                    <span className="text-green-400 font-bold">✓</span>
+                  </div>
+                  <div className="flex items-center justify-between py-2 border-b border-white/10">
+                    <span>Tous les canaux</span>
+                    <span className="text-green-400 font-bold">✓</span>
+                  </div>
+                  <div className="flex items-center justify-between py-2 border-b border-white/10">
+                    <span>Support 24/7</span>
+                    <span className="text-green-400 font-bold">✓</span>
+                  </div>
+                  <div className="flex items-center justify-between py-2">
+                    <span>Analyses premium</span>
+                    <span className="text-green-400 font-bold">✓</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Formations Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {formations.map((formation) => (
