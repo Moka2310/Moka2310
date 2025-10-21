@@ -19,6 +19,7 @@ const SubscriptionForm = () => {
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
+  const { language } = useLanguage();
   
   const [telegramUsername, setTelegramUsername] = useState('');
   const [loading, setLoading] = useState(false);
