@@ -126,7 +126,7 @@ const Boutique = () => {
                 Abonnement Signaux
               </h2>
               <p className="text-white/80 text-lg mb-6">
-                Recevez nos signaux de trading en temps réel sur Telegram pour seulement <strong className="text-pink-400">150$/mois</strong>
+                Recevez nos signaux de trading en temps réel sur Telegram pour seulement <strong className="text-pink-400">150$ CAD/mois</strong>
               </p>
               <ul className="space-y-2 text-white/70 mb-6">
                 <li className="flex items-center gap-2">
