@@ -8,12 +8,7 @@ router = APIRouter(prefix="/formations", tags=["Formations"])
 # Initial formations data - DÉSACTIVÉ car géré manuellement dans MongoDB
 INITIAL_FORMATIONS = []
 
-@router.on_event("startup")
-async def init_formations():
-    """Initialize formations in database if not exists"""
-    # Cette fonction est désactivée car les formations sont gérées manuellement
-    # Les formations sont insérées/mises à jour directement dans MongoDB
-    pass
+# Initialization disabled - formations are managed directly in MongoDB
 
 @router.get("", response_model=List[Formation])
 async def get_formations():
