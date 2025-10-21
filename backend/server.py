@@ -62,9 +62,18 @@ logger = logging.getLogger(__name__)
 @app.on_event("startup")
 async def startup_event():
     """Run migrations on startup"""
-    import subprocess
     try:
-        subprocess.run(["python3", "/app/backend/migrate_formations.py"], check=True)
+        from pymongo import MongoClient
+        MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
+        mongo_client = MongoClient(MONGO_URL)
+        db_migrate = mongo_client.tradalife
+        
+        # Migration: Supprimer formation 1799 et mettre à jour images
+        db_migrate.formations.delete_many({"price": 1799.0})
+        db_migrate.formations.update_many({"price": 1100.0}, {"$set": {"image": "https://i.imgur.com/0wGvLuk.jpg"}})
+        db_migrate.formations.update_many({"price": 700.0}, {"$set": {"image": "https://i.imgur.com/CcllRfh.jpg"}})
+        
+        mongo_client.close()
         logger.info("✅ Migrations executed successfully")
     except Exception as e:
         logger.error(f"❌ Migration error: {e}")
