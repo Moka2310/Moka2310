@@ -211,13 +211,13 @@ async def reactivate_subscription(
         print(f"Error reactivating subscription: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.get("/invite-link")
-async def get_telegram_invite_link(
+@router.get("/invite-links")
+async def get_telegram_invite_links(
     current_user: dict = Depends(get_current_user),
     db: MongoClient = Depends(get_db)
 ):
     """
-    Génère un lien d'invitation Telegram pour l'utilisateur abonné
+    Génère des liens d'invitation Telegram pour TOUS les canaux VIP
     """
     try:
         user_id = current_user['id']
@@ -230,18 +230,39 @@ async def get_telegram_invite_link(
                 detail="Vous devez avoir un abonnement actif pour accéder aux canaux"
             )
         
-        # Créer un lien d'invitation unique
-        invite_link = await telegram_service.create_chat_invite_link(TELEGRAM_CHAT_ID, member_limit=1)
+        # Liste des canaux avec leurs Chat IDs
+        channels = {
+            "INDICES": os.environ.get('TELEGRAM_CHANNEL_INDICES'),
+            "ACTIONS": os.environ.get('TELEGRAM_CHANNEL_ACTIONS'),
+            "GOLD": os.environ.get('TELEGRAM_CHANNEL_GOLD'),
+            "FOREX": os.environ.get('TELEGRAM_CHANNEL_FOREX'),
+            "CRYPTO": os.environ.get('TELEGRAM_CHANNEL_CRYPTO'),
+            "COMMODITES": os.environ.get('TELEGRAM_CHANNEL_COMMODITES'),
+        }
         
-        if not invite_link:
-            raise HTTPException(status_code=500, detail="Impossible de créer le lien d'invitation")
+        # Générer un lien d'invitation pour chaque canal
+        invite_links = {}
         
-        return {"inviteLink": invite_link}
+        for channel_name, chat_id in channels.items():
+            if not chat_id:
+                continue
+                
+            invite_link = await telegram_service.create_chat_invite_link(chat_id, member_limit=1)
+            
+            if invite_link:
+                invite_links[channel_name] = invite_link
+            else:
+                invite_links[channel_name] = None
+        
+        if not invite_links:
+            raise HTTPException(status_code=500, detail="Impossible de créer les liens d'invitation")
+        
+        return {"inviteLinks": invite_links}
         
     except HTTPException:
         raise
     except Exception as e:
-        print(f"Error getting invite link: {e}")
+        print(f"Error getting invite links: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/webhook")
