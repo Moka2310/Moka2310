@@ -559,6 +559,41 @@
     animation: spin-slow 3s linear infinite;
 }
 
+/* Effet de lueur pour le logo dans la navbar */
+.logo-glow-wrapper {
+    position: relative;
+}
+
+.logo-glow-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(
+        circle,
+        rgba(236, 72, 153, 0.4),
+        rgba(168, 85, 247, 0.3),
+        transparent 70%
+    );
+    filter: blur(20px);
+    opacity: 0.8;
+    animation: logoGlow 3s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes logoGlow {
+    0%, 100% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
 body {
     margin: 0;
     font-family:
