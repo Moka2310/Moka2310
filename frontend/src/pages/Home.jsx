@@ -70,7 +70,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-[#1E1540]">
       {/* Hero Section avec Bot */}
-      <section className="pt-32 pb-20 px-4 relative overflow-hidden">
+      <section className="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-3 sm:px-4 md:px-6 relative overflow-hidden">
         {/* Background effects */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl animate-pulse"></div>
@@ -78,28 +78,28 @@ const Home = () => {
         </div>
 
         <div className="max-w-6xl mx-auto relative z-10">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left Side - Text BIENVENUE */}
-            <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            <div className="text-center md:text-left">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight">
                 {language === 'fr' ? 'Bienvenue chez' : 'Welcome to'} <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">TRADALIFE</span>
               </h1>
-              <p className="text-white/80 text-lg mb-8">
+              <p className="text-white/80 text-base sm:text-lg mb-6 sm:mb-8">
                 {language === 'fr' 
                   ? `Rejoignez notre communauté de plus de ${telegramMembers.toLocaleString('fr-FR')} traders et accédez à des signaux exclusifs sur Crypto, Forex, Gold, Indices et plus encore.`
                   : `Join our community of over ${telegramMembers.toLocaleString('en-US')} traders and access exclusive signals on Crypto, Forex, Gold, Indices and more.`
                 }
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
                 <Button
                   onClick={() => navigate('/boutique')}
-                  className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-6 text-lg rounded-full"
+                  className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg rounded-full w-full sm:w-auto"
                 >
                   {language === 'fr' ? 'Découvrir nos formations' : 'Explore Our Courses'}
                 </Button>
                 <Button
                   onClick={() => window.open('https://t.me/TRADALIFE', '_blank')}
-                  className="bg-transparent border-2 border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white px-8 py-6 text-lg rounded-full transition-all"
+                  className="bg-transparent border-2 border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg rounded-full transition-all w-full sm:w-auto"
                 >
                   {language === 'fr' ? 'Rejoindre Telegram' : 'Join Telegram'}
                 </Button>
@@ -107,34 +107,34 @@ const Home = () => {
             </div>
 
             {/* Right Side - Bot de Copy Trading */}
-            <div>
+            <div className="order-first md:order-last">
               <div className="bot-download-wrapper">
                 {/* Bordure lumineuse animée */}
                 <div className="bot-download-border"></div>
                 
                 {/* Contenu */}
-                <div className="bot-download-content p-6">
+                <div className="bot-download-content p-4 sm:p-6">
                   {/* Badge "En construction" */}
-                  <div className="flex justify-center mb-4">
-                    <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg animate-bounce inline-flex items-center">
+                  <div className="flex justify-center mb-3 sm:mb-4">
+                    <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-lg animate-bounce inline-flex items-center">
                       <Zap className="w-3 h-3 mr-1" />
                       {language === 'fr' ? 'EN CONSTRUCTION' : 'UNDER CONSTRUCTION'}
                     </div>
                   </div>
 
                   {/* Icône */}
-                  <div className="flex justify-center mb-4">
+                  <div className="flex justify-center mb-3 sm:mb-4">
                     <div className="bot-icon-wrapper-small">
-                      <Bot className="w-12 h-12 text-white" />
+                      <Bot className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
                     </div>
                   </div>
 
                   {/* Texte */}
-                  <div className="text-center mb-4">
-                    <h3 className="text-2xl font-bold text-white mb-2">
+                  <div className="text-center mb-3 sm:mb-4">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
                       {language === 'fr' ? 'Bot de Copie Trading MT4' : 'MT4 Copy Trading Bot'}
                     </h3>
-                    <p className="text-white/70 text-sm mb-4">
+                    <p className="text-white/70 text-xs sm:text-sm mb-3 sm:mb-4">
                       {language === 'fr' 
                         ? 'Copiez automatiquement nos signaux sur votre compte MetaTrader 4'
                         : 'Automatically copy our signals to your MetaTrader 4 account'}
@@ -142,22 +142,22 @@ const Home = () => {
                   </div>
                   
                   {/* Features */}
-                  <div className="grid grid-cols-2 gap-2 text-sm text-white/70 mb-6">
-                    <div className="flex items-center gap-2">
-                      <Check className="w-4 h-4 text-green-400" />
-                      <span>{language === 'fr' ? 'Copie instantanée' : 'Instant copy'}</span>
+                  <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm text-white/70 mb-4 sm:mb-6">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <Check className="w-3 h-3 sm:w-4 sm:h-4 text-green-400 flex-shrink-0" />
+                      <span className="truncate">{language === 'fr' ? 'Copie instantanée' : 'Instant copy'}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Check className="w-4 h-4 text-green-400" />
-                      <span>{language === 'fr' ? 'Lots personnalisables' : 'Customizable lots'}</span>
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <Check className="w-3 h-3 sm:w-4 sm:h-4 text-green-400 flex-shrink-0" />
+                      <span className="truncate">{language === 'fr' ? 'Lots personnalisables' : 'Customizable lots'}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Check className="w-4 h-4 text-green-400" />
-                      <span>{language === 'fr' ? 'Gestion du risque' : 'Risk management'}</span>
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <Check className="w-3 h-3 sm:w-4 sm:h-4 text-green-400 flex-shrink-0" />
+                      <span className="truncate">{language === 'fr' ? 'Gestion du risque' : 'Risk management'}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Check className="w-4 h-4 text-green-400" />
-                      <span>{language === 'fr' ? 'Support 24/7' : '24/7 Support'}</span>
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <Check className="w-3 h-3 sm:w-4 sm:h-4 text-green-400 flex-shrink-0" />
+                      <span className="truncate">{language === 'fr' ? 'Support 24/7' : '24/7 Support'}</span>
                     </div>
                   </div>
 
@@ -167,13 +167,13 @@ const Home = () => {
                     className="bot-download-button group relative w-full"
                   >
                     <div className="bot-button-glow"></div>
-                    <div className="relative flex items-center justify-center gap-3 px-6 py-3">
-                      <Settings className="w-5 h-5 animate-spin-slow" />
+                    <div className="relative flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3">
+                      <Settings className="w-4 h-4 sm:w-5 sm:h-5 animate-spin-slow flex-shrink-0" />
                       <div className="text-center">
-                        <div className="text-sm font-semibold">
+                        <div className="text-xs sm:text-sm font-semibold">
                           {language === 'fr' ? 'Bientôt disponible' : 'Coming Soon'}
                         </div>
-                        <div className="text-xs opacity-80">
+                        <div className="text-xs opacity-80 hidden sm:block">
                           {language === 'fr' ? 'En développement' : 'In Development'}
                         </div>
                       </div>
