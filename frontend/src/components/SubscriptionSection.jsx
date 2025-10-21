@@ -162,16 +162,16 @@ const SubscriptionSection = ({ user }) => {
           <Zap className="w-10 h-10 text-pink-400" />
         </div>
         <h3 className="text-2xl font-bold text-white mb-4">
-          Abonnez-vous aux signaux de trading
+          {t(language, 'subscription.dashboard.noSubscription')}
         </h3>
         <p className="text-white/60 mb-6 max-w-md mx-auto">
-          Accédez à tous nos signaux de trading en temps réel sur Forex, Crypto, Indices et plus encore pour seulement 150$ CAD/mois
+          {t(language, 'subscription.dashboard.noSubscriptionText')}
         </p>
         <Button
           onClick={() => navigate('/subscription')}
           className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-6 text-lg"
         >
-          S'abonner maintenant
+          {t(language, 'subscription.subscribe')}
         </Button>
       </div>
     );
