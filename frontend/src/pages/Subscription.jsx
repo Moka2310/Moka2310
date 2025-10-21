@@ -119,7 +119,7 @@ const SubscriptionForm = () => {
             {/* Price */}
             <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30">
               <div className="flex items-baseline gap-2 mb-2">
-                <span className="text-5xl font-bold text-white">150$</span>
+                <span className="text-5xl font-bold text-white">150$ CAD</span>
                 <span className="text-white/60 text-xl">/ mois</span>
               </div>
               <p className="text-white/60">Renouvellement automatique</p>
