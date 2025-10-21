@@ -19,7 +19,11 @@ const Boutique = () => {
     const loadFormations = async () => {
       try {
         const response = await formationsAPI.getAll();
-        setFormations(response.data);
+        // Filtrer pour garder seulement les formations Ultra et Premium
+        const filteredFormations = response.data.filter(
+          f => f.price === 1100 || f.price === 700
+        );
+        setFormations(filteredFormations);
       } catch (error) {
         console.error('Failed to load formations:', error);
         toast({
