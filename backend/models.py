@@ -72,8 +72,11 @@ class UserResponse(BaseModel):
     lastName: Optional[str]
     country: Optional[str]
     phone: Optional[str]
+    telegramUsername: Optional[str]
     kycStatus: str
     role: str
+    subscriptionStatus: Optional[str] = None
+    subscriptionEndDate: Optional[datetime] = None
 
 class KYCDocument(BaseModel):
     id: str
