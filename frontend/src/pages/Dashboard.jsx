@@ -399,34 +399,46 @@ const Dashboard = () => {
 
         {/* Tabs */}
         <Tabs defaultValue={new URLSearchParams(location.search).get('tab') || 'formations'} className="w-full">
-          <TabsList className="bg-[#2B1F5C] border border-purple-500/30 p-1 mb-8">
+          <TabsList className="bg-[#2B1F5C] border border-purple-500/30 p-1 mb-8 grid grid-cols-2 sm:grid-cols-5 gap-1">
             <TabsTrigger 
               value="formations"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white text-xs sm:text-sm"
             >
-              <Video className="w-4 h-4 mr-2" />
-              {t(language, 'dashboard.myFormations')}
+              <Video className="w-4 h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">{t(language, 'dashboard.myFormations')}</span>
+              <span className="sm:hidden">Formations</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="subscription"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white text-xs sm:text-sm"
+            >
+              <Zap className="w-4 h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">{language === 'fr' ? 'Abonnement' : 'Subscription'}</span>
+              <span className="sm:hidden">Abonnement</span>
             </TabsTrigger>
             <TabsTrigger 
               value="kyc"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white text-xs sm:text-sm"
             >
-              <User className="w-4 h-4 mr-2" />
-              {t(language, 'dashboard.kyc.title')}
+              <User className="w-4 h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">{t(language, 'dashboard.kyc.title')}</span>
+              <span className="sm:hidden">KYC</span>
             </TabsTrigger>
             <TabsTrigger 
               value="testimonial"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white text-xs sm:text-sm"
             >
-              <Star className="w-4 h-4 mr-2" />
-              {language === 'fr' ? 'Témoignage' : 'Testimonial'}
+              <Star className="w-4 h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">{language === 'fr' ? 'Témoignage' : 'Testimonial'}</span>
+              <span className="sm:hidden">Avis</span>
             </TabsTrigger>
             <TabsTrigger 
               value="settings"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white text-xs sm:text-sm"
             >
-              <Settings className="w-4 h-4 mr-2" />
-              {language === 'fr' ? 'Paramètres' : 'Settings'}
+              <Settings className="w-4 h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">{language === 'fr' ? 'Paramètres' : 'Settings'}</span>
+              <span className="sm:hidden">Réglages</span>
             </TabsTrigger>
           </TabsList>
 
