@@ -383,8 +383,8 @@ const Admin = () => {
         </div>
 
         {/* Pending Testimonials */}
-        <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30 mt-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Témoignages en attente de validation</h2>
+        <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-purple-500/30 mt-6 sm:mt-8">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">Témoignages en attente de validation</h2>
           
           {pendingTestimonials.length === 0 ? (
             <div className="text-center py-12 text-white/70">
