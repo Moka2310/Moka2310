@@ -111,21 +111,21 @@ const SubscriptionForm = () => {
             <div>
               <h1 className="text-4xl font-bold mb-4">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
-                  Abonnement Signaux
+                  {t(language, 'subscription.title')}
                 </span>
               </h1>
               <p className="text-white/70 text-lg">
-                Accédez aux signaux de trading professionnels en temps réel
+                {t(language, 'subscription.subtitle')}
               </p>
             </div>
 
             {/* Price */}
             <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30">
               <div className="flex items-baseline gap-2 mb-2">
-                <span className="text-5xl font-bold text-white">150$ CAD</span>
-                <span className="text-white/60 text-xl">/ mois</span>
+                <span className="text-5xl font-bold text-white">{t(language, 'subscription.price')}</span>
+                <span className="text-white/60 text-xl">/ {t(language, 'subscription.perMonth')}</span>
               </div>
-              <p className="text-white/60">Renouvellement automatique</p>
+              <p className="text-white/60">{t(language, 'subscription.autoRenewal')}</p>
             </div>
 
             {/* Features List */}
