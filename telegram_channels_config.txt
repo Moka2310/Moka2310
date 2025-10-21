@@ -1,0 +1,11 @@
+Configuration des canaux Telegram
+======================================================================
+
+Canal 1: TRADALIFE
+Chat ID: -1002067865549
+Type: supergroup
+
+
+Configuration .env:
+----------------------------------------------------------------------
+TELEGRAM_CHANNEL_1_TRADALIFE=-1002067865549
