@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronDown, ChevronUp } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { assetDescriptionsEN } from '../assetDescriptionsEN';
 
 const CanalDetails = () => {
   const { canalName } = useParams();
