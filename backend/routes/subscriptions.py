@@ -20,16 +20,16 @@ STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET', '')
 @router.post("/create")
 async def create_subscription(
     subscription_data: SubscriptionCreate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: MongoClient = Depends(get_db)
 ):
     """
     Crée un nouvel abonnement mensuel à 150$/mois pour accéder aux signaux
     """
     try:
-        user_id = current_user['id']
-        user_email = current_user['email']
-        user_name = f"{current_user.get('firstName', '')} {current_user.get('lastName', '')}".strip() or user_email
+        user_id = current_user.id
+        user_email = current_user.email
+        user_name = f"{getattr(current_user, 'firstName', '') or ''} {getattr(current_user, 'lastName', '') or ''}".strip() or user_email
         
         # Vérifier si l'utilisateur a déjà un abonnement actif
         existing_user = db.users.find_one({"id": user_id})
