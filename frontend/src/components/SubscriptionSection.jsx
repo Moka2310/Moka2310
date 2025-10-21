@@ -226,7 +226,7 @@ const SubscriptionSection = ({ user }) => {
                 className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white"
               >
                 <ExternalLink className="w-4 h-4 mr-2" />
-                Obtenir les liens Telegram
+                {t(language, 'subscription.dashboard.getTelegramLinks')}
               </Button>
 
               {inviteLinks && (
