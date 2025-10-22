@@ -28,6 +28,26 @@ const Home = () => {
     message: ''
   });
 
+  // Gérer la précommande du bot
+  const handleBotPreorder = () => {
+    const token = localStorage.getItem('tradalife_token');
+    
+    if (!token) {
+      toast({
+        title: language === 'fr' ? '🔐 Connexion requise' : '🔐 Login required',
+        description: t(language, 'home.bot.loginRequired'),
+        variant: 'destructive',
+        duration: 3000
+      });
+      // Rediriger vers la page de connexion
+      setTimeout(() => navigate('/login'), 1000);
+      return;
+    }
+    
+    // Rediriger vers une page de précommande ou ouvrir un modal
+    navigate('/bot-preorder');
+  };
+
   // Load Telegram members count
   useEffect(() => {
     const loadTelegramMembers = async () => {
