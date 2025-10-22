@@ -164,24 +164,24 @@ const Boutique = () => {
             <div className="hidden md:block">
               <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
                 <div className="text-center mb-4">
-                  <div className="text-5xl font-bold text-white">150$ CAD</div>
-                  <div className="text-white/60">par mois</div>
+                  <div className="text-5xl font-bold text-white">{t(language, 'shop.banner.price')}</div>
+                  <div className="text-white/60">{t(language, 'shop.banner.perMonthShort')}</div>
                 </div>
                 <div className="space-y-3 text-sm text-white/70">
                   <div className="flex items-center justify-between py-2 border-b border-white/10">
-                    <span>Accès illimité</span>
+                    <span>{t(language, 'shop.banner.unlimitedAccess')}</span>
                     <span className="text-green-400 font-bold">✓</span>
                   </div>
                   <div className="flex items-center justify-between py-2 border-b border-white/10">
-                    <span>Tous les canaux</span>
+                    <span>{t(language, 'shop.banner.allChannels')}</span>
                     <span className="text-green-400 font-bold">✓</span>
                   </div>
                   <div className="flex items-center justify-between py-2 border-b border-white/10">
-                    <span>Support 24/7</span>
+                    <span>{t(language, 'shop.banner.support247')}</span>
                     <span className="text-green-400 font-bold">✓</span>
                   </div>
                   <div className="flex items-center justify-between py-2">
-                    <span>Analyses premium</span>
+                    <span>{t(language, 'shop.banner.premiumAnalysis')}</span>
                     <span className="text-green-400 font-bold">✓</span>
                   </div>
                 </div>
