@@ -55,6 +55,23 @@ export const translations = {
         title: 'Prêt à Commencer Votre Parcours de Trading ?',
         subtitle: 'Rejoignez des milliers de traders qui ont transformé leur vie financière',
         button: 'Voir les Formations'
+      },
+      bot: {
+        title: 'Bot de Copie Trading MT4',
+        subtitle: 'Copiez automatiquement nos signaux sur votre compte MetaTrader 4',
+        preorderBadge: 'PRÉCOMMANDE',
+        price: '300$ CAD',
+        preorderPrice: 'Prix de précommande : 300$ CAD',
+        features: {
+          instantCopy: 'Copie instantanée',
+          customizableLots: 'Lots personnalisables',
+          riskManagement: 'Gestion du risque',
+          support247: 'Support 24/7'
+        },
+        preorderButton: 'Précommander maintenant',
+        preorderInfo: 'Recevez le bot dès sa sortie + accès prioritaire',
+        loginRequired: 'Connectez-vous pour précommander',
+        alreadyPreordered: 'Vous avez déjà précommandé ce bot'
       }
     },
 
