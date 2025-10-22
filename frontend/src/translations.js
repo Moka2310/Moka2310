@@ -464,7 +464,22 @@ export const translations = {
         copytrading: 'Copy trading training'
       },
       buy: 'Buy now',
-      perMonth: '/month'
+      perMonth: '/month',
+      banner: {
+        new: 'NEW',
+        title: 'Signals Subscription',
+        description: 'Receive our real-time trading signals on Telegram for only',
+        feature1: 'Forex, Crypto, Indices, Gold',
+        feature2: 'Real-time signals',
+        feature3: 'Cancel anytime',
+        subscribeNow: 'Subscribe now',
+        price: '150$ CAD',
+        perMonthShort: 'per month',
+        unlimitedAccess: 'Unlimited access',
+        allChannels: 'All channels',
+        support247: '24/7 Support',
+        premiumAnalysis: 'Premium analysis'
+      }
     },
 
     // Formations
