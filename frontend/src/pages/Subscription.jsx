@@ -168,7 +168,7 @@ const SubscriptionForm = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-semibold">{t(language, 'subscription.features.support247')}</h4>
-                  <p className="text-white/60 text-sm">{language === 'fr' ? 'Assistance disponible à tout moment' : 'Support available anytime'}</p>
+                  <p className="text-white/60 text-sm">{t(language, 'subscription.form.supportAnytime')}</p>
                 </div>
               </div>
 
