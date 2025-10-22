@@ -124,39 +124,39 @@ const Boutique = () => {
             {/* Left Content */}
             <div>
               <div className="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-4 py-1.5 rounded-full mb-4">
-                ⚡ NOUVEAU
+                ⚡ {t(language, 'shop.banner.new')}
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                Abonnement Signaux
+                {t(language, 'shop.banner.title')}
               </h2>
               <p className="text-white/80 text-lg mb-6">
-                Recevez nos signaux de trading en temps réel sur Telegram pour seulement <strong className="text-pink-400">150$ CAD/mois</strong>
+                {t(language, 'shop.banner.description')} <strong className="text-pink-400">{t(language, 'shop.banner.price')}/{language === 'fr' ? 'mois' : 'month'}</strong>
               </p>
               <ul className="space-y-2 text-white/70 mb-6">
                 <li className="flex items-center gap-2">
                   <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-green-400 text-sm">✓</span>
                   </div>
-                  Forex, Crypto, Indices, Gold
+                  {t(language, 'shop.banner.feature1')}
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-green-400 text-sm">✓</span>
                   </div>
-                  Signaux en temps réel
+                  {t(language, 'shop.banner.feature2')}
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-green-400 text-sm">✓</span>
                   </div>
-                  Annulation à tout moment
+                  {t(language, 'shop.banner.feature3')}
                 </li>
               </ul>
               <Button
                 onClick={() => navigate('/subscription')}
                 className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-6 text-lg font-bold"
               >
-                S'abonner maintenant
+                {t(language, 'shop.banner.subscribeNow')}
               </Button>
             </div>
 
