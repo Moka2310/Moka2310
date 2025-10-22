@@ -14,6 +14,7 @@ import Admin from "./pages/Admin";
 import ProtectionCharter from "./pages/ProtectionCharter";
 import CanalDetails from "./pages/CanalDetails";
 import Subscription from "./pages/Subscription";
+import BotPreorder from "./pages/BotPreorder";
 
 function App() {
   return (
