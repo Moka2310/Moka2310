@@ -465,6 +465,23 @@ export const translations = {
         title: 'Ready to Start Your Trading Journey?',
         subtitle: 'Join thousands of traders who have transformed their financial lives',
         button: 'View Courses'
+      },
+      bot: {
+        title: 'MT4 Copy Trading Bot',
+        subtitle: 'Automatically copy our signals to your MetaTrader 4 account',
+        preorderBadge: 'PRE-ORDER',
+        price: '300$ CAD',
+        preorderPrice: 'Pre-order price: 300$ CAD',
+        features: {
+          instantCopy: 'Instant copy',
+          customizableLots: 'Customizable lots',
+          riskManagement: 'Risk management',
+          support247: '24/7 Support'
+        },
+        preorderButton: 'Pre-order now',
+        preorderInfo: 'Receive the bot upon release + priority access',
+        loginRequired: 'Login to pre-order',
+        alreadyPreordered: 'You have already pre-ordered this bot'
       }
     },
 
