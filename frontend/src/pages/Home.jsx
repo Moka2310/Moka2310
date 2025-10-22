@@ -114,11 +114,11 @@ const Home = () => {
                 
                 {/* Contenu */}
                 <div className="bot-download-content p-4 sm:p-6">
-                  {/* Badge "En construction" */}
+                  {/* Badge "PRÉCOMMANDE" */}
                   <div className="flex justify-center mb-3 sm:mb-4">
-                    <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-lg animate-bounce inline-flex items-center">
+                    <div className="bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xs font-bold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-lg animate-pulse inline-flex items-center">
                       <Zap className="w-3 h-3 mr-1" />
-                      {language === 'fr' ? 'EN CONSTRUCTION' : 'UNDER CONSTRUCTION'}
+                      {t(language, 'home.bot.preorderBadge')}
                     </div>
                   </div>
 
@@ -132,12 +132,13 @@ const Home = () => {
                   {/* Texte */}
                   <div className="text-center mb-3 sm:mb-4">
                     <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                      {language === 'fr' ? 'Bot de Copie Trading MT4' : 'MT4 Copy Trading Bot'}
+                      {t(language, 'home.bot.title')}
                     </h3>
-                    <p className="text-white/70 text-xs sm:text-sm mb-3 sm:mb-4">
-                      {language === 'fr' 
-                        ? 'Copiez automatiquement nos signaux sur votre compte MetaTrader 4'
-                        : 'Automatically copy our signals to your MetaTrader 4 account'}
+                    <p className="text-white/70 text-xs sm:text-sm mb-2">
+                      {t(language, 'home.bot.subtitle')}
+                    </p>
+                    <p className="text-pink-400 font-bold text-sm sm:text-base mb-3 sm:mb-4">
+                      {t(language, 'home.bot.preorderPrice')}
                     </p>
                   </div>
                   
@@ -145,36 +146,43 @@ const Home = () => {
                   <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm text-white/70 mb-4 sm:mb-6">
                     <div className="flex items-center gap-1.5 sm:gap-2">
                       <Check className="w-3 h-3 sm:w-4 sm:h-4 text-green-400 flex-shrink-0" />
-                      <span className="truncate">{language === 'fr' ? 'Copie instantanée' : 'Instant copy'}</span>
+                      <span className="truncate">{t(language, 'home.bot.features.instantCopy')}</span>
                     </div>
                     <div className="flex items-center gap-1.5 sm:gap-2">
                       <Check className="w-3 h-3 sm:w-4 sm:h-4 text-green-400 flex-shrink-0" />
-                      <span className="truncate">{language === 'fr' ? 'Lots personnalisables' : 'Customizable lots'}</span>
+                      <span className="truncate">{t(language, 'home.bot.features.customizableLots')}</span>
                     </div>
                     <div className="flex items-center gap-1.5 sm:gap-2">
                       <Check className="w-3 h-3 sm:w-4 sm:h-4 text-green-400 flex-shrink-0" />
-                      <span className="truncate">{language === 'fr' ? 'Gestion du risque' : 'Risk management'}</span>
+                      <span className="truncate">{t(language, 'home.bot.features.riskManagement')}</span>
                     </div>
                     <div className="flex items-center gap-1.5 sm:gap-2">
                       <Check className="w-3 h-3 sm:w-4 sm:h-4 text-green-400 flex-shrink-0" />
-                      <span className="truncate">{language === 'fr' ? 'Support 24/7' : '24/7 Support'}</span>
+                      <span className="truncate">{t(language, 'home.bot.features.support247')}</span>
                     </div>
+                  </div>
+
+                  {/* Info précommande */}
+                  <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-2 mb-4">
+                    <p className="text-blue-300 text-xs text-center">
+                      ✨ {t(language, 'home.bot.preorderInfo')}
+                    </p>
                   </div>
 
                   {/* Bouton */}
                   <button
-                    disabled
-                    className="bot-download-button group relative w-full"
+                    onClick={handleBotPreorder}
+                    className="bot-download-button group relative w-full hover:scale-105 transition-transform"
                   >
                     <div className="bot-button-glow"></div>
                     <div className="relative flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3">
-                      <Settings className="w-4 h-4 sm:w-5 sm:h-5 animate-spin-slow flex-shrink-0" />
+                      <Download className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                       <div className="text-center">
                         <div className="text-xs sm:text-sm font-semibold">
-                          {language === 'fr' ? 'Bientôt disponible' : 'Coming Soon'}
+                          {t(language, 'home.bot.preorderButton')}
                         </div>
                         <div className="text-xs opacity-80 hidden sm:block">
-                          {language === 'fr' ? 'En développement' : 'In Development'}
+                          {t(language, 'home.bot.price')}
                         </div>
                       </div>
                     </div>
