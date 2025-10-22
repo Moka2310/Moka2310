@@ -178,7 +178,7 @@ const SubscriptionForm = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-semibold">{t(language, 'subscription.features.cancelAnytime')}</h4>
-                  <p className="text-white/60 text-sm">{language === 'fr' ? 'Annulez à tout moment depuis votre Dashboard' : 'Cancel anytime from your Dashboard'}</p>
+                  <p className="text-white/60 text-sm">{t(language, 'subscription.form.cancelFromDashboard')}</p>
                 </div>
               </div>
             </div>
