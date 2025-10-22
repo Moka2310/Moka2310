@@ -949,6 +949,165 @@ class TradalifeTester:
         except Exception as e:
             self.log_test("Admin Subscription Status", False, f"Error: {str(e)}")
             return False
+
+    def test_subscription_create_without_auth(self):
+        """Test subscription creation without authentication (should return 401)"""
+        try:
+            subscription_data = {
+                "paymentMethodId": "pm_test_123",
+                "telegramUsername": "@testuser"
+            }
+            
+            response = self.session.post(f"{API_URL}/subscriptions/create", json=subscription_data)
+            
+            if response.status_code == 401:
+                self.log_test("Subscription Create (No Auth)", True, "Correctly returned 401 for unauthenticated request")
+                return True
+            else:
+                self.log_test("Subscription Create (No Auth)", False, f"Expected 401, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Subscription Create (No Auth)", False, f"Error: {str(e)}")
+            return False
+
+    def test_subscription_create_invalid_data(self):
+        """Test subscription creation with invalid data (should return 422)"""
+        if not self.token:
+            self.log_test("Subscription Create (Invalid Data)", False, "No auth token available")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.token}"}
+            # Missing required fields
+            invalid_data = {}
+            
+            response = self.session.post(f"{API_URL}/subscriptions/create", json=invalid_data, headers=headers)
+            
+            if response.status_code == 422:
+                self.log_test("Subscription Create (Invalid Data)", True, "Correctly returned 422 for invalid data")
+                return True
+            elif response.status_code == 400:
+                self.log_test("Subscription Create (Invalid Data)", True, "Returned 400 for invalid data (acceptable)")
+                return True
+            else:
+                self.log_test("Subscription Create (Invalid Data)", False, f"Expected 422/400, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Subscription Create (Invalid Data)", False, f"Error: {str(e)}")
+            return False
+
+    def test_subscription_status_without_auth(self):
+        """Test subscription status without authentication (should return 401)"""
+        try:
+            response = self.session.get(f"{API_URL}/subscriptions/status")
+            
+            if response.status_code == 401:
+                self.log_test("Subscription Status (No Auth)", True, "Correctly returned 401 for unauthenticated request")
+                return True
+            else:
+                self.log_test("Subscription Status (No Auth)", False, f"Expected 401, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Subscription Status (No Auth)", False, f"Error: {str(e)}")
+            return False
+
+    def test_subscription_invite_links_without_auth(self):
+        """Test invite links without authentication (should return 401)"""
+        try:
+            response = self.session.get(f"{API_URL}/subscriptions/invite-links")
+            
+            if response.status_code == 401:
+                self.log_test("Invite Links (No Auth)", True, "Correctly returned 401 for unauthenticated request")
+                return True
+            else:
+                self.log_test("Invite Links (No Auth)", False, f"Expected 401, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Invite Links (No Auth)", False, f"Error: {str(e)}")
+            return False
+
+    def test_subscription_cancel_without_subscription(self):
+        """Test subscription cancellation without subscription (should return 404)"""
+        if not self.token:
+            self.log_test("Subscription Cancel (No Subscription)", False, "No auth token available")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.token}"}
+            response = self.session.post(f"{API_URL}/subscriptions/cancel", headers=headers)
+            
+            if response.status_code == 404:
+                self.log_test("Subscription Cancel (No Subscription)", True, "Correctly returned 404 for user without subscription")
+                return True
+            else:
+                self.log_test("Subscription Cancel (No Subscription)", False, f"Expected 404, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Subscription Cancel (No Subscription)", False, f"Error: {str(e)}")
+            return False
+
+    def test_subscription_reactivate_without_subscription(self):
+        """Test subscription reactivation without subscription (should return 404)"""
+        if not self.token:
+            self.log_test("Subscription Reactivate (No Subscription)", False, "No auth token available")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.token}"}
+            response = self.session.post(f"{API_URL}/subscriptions/reactivate", headers=headers)
+            
+            if response.status_code == 404:
+                self.log_test("Subscription Reactivate (No Subscription)", True, "Correctly returned 404 for user without subscription")
+                return True
+            else:
+                self.log_test("Subscription Reactivate (No Subscription)", False, f"Expected 404, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Subscription Reactivate (No Subscription)", False, f"Error: {str(e)}")
+            return False
+
+    def test_subscription_webhook_invalid_data(self):
+        """Test Stripe webhook with invalid data (should return 400)"""
+        try:
+            # Test with empty payload
+            response = self.session.post(f"{API_URL}/subscriptions/webhook", json={})
+            
+            if response.status_code == 400:
+                self.log_test("Subscription Webhook (Invalid Data)", True, "Correctly returned 400 for invalid webhook data")
+                return True
+            else:
+                self.log_test("Subscription Webhook (Invalid Data)", False, f"Expected 400, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Subscription Webhook (Invalid Data)", False, f"Error: {str(e)}")
+            return False
+
+    def test_subscription_webhook_valid_structure(self):
+        """Test Stripe webhook with valid structure but test data"""
+        try:
+            # Test with valid webhook structure but test data
+            webhook_data = {
+                "type": "invoice.payment_succeeded",
+                "data": {
+                    "object": {
+                        "subscription": "sub_test_123",
+                        "customer": "cus_test_123"
+                    }
+                }
+            }
+            
+            response = self.session.post(f"{API_URL}/subscriptions/webhook", json=webhook_data)
+            
+            # Should process without error even if customer doesn't exist
+            if response.status_code == 200:
+                self.log_test("Subscription Webhook (Valid Structure)", True, "Webhook processed successfully with test data")
+                return True
+            else:
+                self.log_test("Subscription Webhook (Valid Structure)", False, f"Expected 200, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Subscription Webhook (Valid Structure)", False, f"Error: {str(e)}")
+            return False
     
     def run_all_tests(self):
         """Run all tests in sequence"""
