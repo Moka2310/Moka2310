@@ -85,7 +85,7 @@ const SubscriptionForm = () => {
 
     } catch (error) {
       console.error('Subscription error:', error);
-      alert(error.response?.data?.detail || error.message || 'Une erreur est survenue');
+      alert(error.response?.data?.detail || error.message || t(language, 'subscription.form.error'));
     } finally {
       setLoading(false);
       setProcessingPayment(false);
