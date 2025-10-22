@@ -38,10 +38,10 @@ const Admin = () => {
         adminAPI.getKycRequests(),
         adminAPI.getStats(),
         fetch(`${process.env.REACT_APP_BACKEND_URL}/api/admin/testimonials/pending`, {
-          headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}` }
         }).then(res => res.json()),
         fetch(`${process.env.REACT_APP_BACKEND_URL}/api/testimonials/approved`, {
-          headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}` }
         }).then(res => res.json())
       ]);
       
