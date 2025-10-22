@@ -71,7 +71,22 @@ export const translations = {
         copytrading: 'Formation au copytrading'
       },
       buy: 'Acheter maintenant',
-      perMonth: '/mois'
+      perMonth: '/mois',
+      banner: {
+        new: 'NOUVEAU',
+        title: 'Abonnement Signaux',
+        description: 'Recevez nos signaux de trading en temps réel sur Telegram pour seulement',
+        feature1: 'Forex, Crypto, Indices, Gold',
+        feature2: 'Signaux en temps réel',
+        feature3: 'Annulation à tout moment',
+        subscribeNow: 'S\'abonner maintenant',
+        price: '150$ CAD',
+        perMonthShort: 'par mois',
+        unlimitedAccess: 'Accès illimité',
+        allChannels: 'Tous les canaux',
+        support247: 'Support 24/7',
+        premiumAnalysis: 'Analyses premium'
+      }
     },
 
     // Formations
