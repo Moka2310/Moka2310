@@ -41,6 +41,7 @@ api_router.include_router(temp_admin.router)
 api_router.include_router(telegram.router)
 api_router.include_router(subscriptions.router)
 api_router.include_router(migrations.router)
+api_router.include_router(bot_preorders.router)
 
 # Include the router in the main app
 app.include_router(api_router)
