@@ -287,7 +287,7 @@ agent_communication:
         agent: "testing"
         comment: "CRITICAL: Email service failing with Gmail authentication error: '5.7.8 Username and Password not accepted'. Backend logs show email sending attempts fail during user registration and KYC submission. Email templates and logic are implemented but SMTP authentication is broken."
 
-  - task: "Subscription System - Status Endpoint"
+  - task: "Subscription System - Comprehensive Backend Testing"
     implemented: true
     working: true
     file: "/app/backend/routes/subscriptions.py"
@@ -298,30 +298,15 @@ agent_communication:
       - working: true
         agent: "testing"
         comment: "✅ PASS - Subscription status endpoint working correctly. Returns 404 'Aucun abonnement trouvé' for users without subscription as expected. Fixed route prefix issue and User object access bug."
-
-  - task: "Subscription System - Invite Links"
-    implemented: true
-    working: true
-    file: "/app/backend/routes/subscriptions.py"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
       - working: true
         agent: "testing"
         comment: "✅ PASS - Invite links endpoint working correctly. Returns 403 'Vous devez avoir un abonnement actif pour accéder aux canaux' for users without active subscription as expected."
-
-  - task: "Subscription System - CRUD Endpoints"
-    implemented: true
-    working: true
-    file: "/app/backend/routes/subscriptions.py"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
       - working: true
         agent: "testing"
         comment: "✅ PASS - All subscription CRUD endpoints exist and respond correctly: /create (422 validation), /cancel (404 no subscription), /reactivate (404 no subscription), /webhook (400 validation). Endpoints properly handle authentication and validation."
+      - working: true
+        agent: "testing"
+        comment: "✅ COMPREHENSIVE TESTING COMPLETE - All 6 subscription endpoints tested as requested: 1) GET /status (401/403 without auth, 404 for no subscription), 2) POST /create (401/403 without auth, 422 with invalid data), 3) GET /invite-links (401/403 without auth, 403 without subscription), 4) POST /cancel (404 without subscription), 5) POST /reactivate (404 without subscription), 6) POST /webhook (400 with invalid data, 200 with valid structure). All endpoints respond with appropriate status codes and French error messages. Authentication and error handling working perfectly. 10/10 tests passed."
 
   - task: "Telegram Channels Configuration"
     implemented: true
