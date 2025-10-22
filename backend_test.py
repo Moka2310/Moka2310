@@ -1129,9 +1129,26 @@ class TradalifeTester:
             self.test_login,
             self.test_get_me,
             
-            # Subscription System Tests (High Priority - Current Focus)
+            # COMPREHENSIVE SUBSCRIPTION SYSTEM TESTS (Current Focus)
+            # Test without authentication
+            self.test_subscription_status_without_auth,
+            self.test_subscription_create_without_auth,
+            self.test_subscription_invite_links_without_auth,
+            
+            # Test with authentication but no subscription
             self.test_subscription_status_no_subscription,
             self.test_subscription_invite_links_no_subscription,
+            self.test_subscription_cancel_without_subscription,
+            self.test_subscription_reactivate_without_subscription,
+            
+            # Test subscription creation with invalid data
+            self.test_subscription_create_invalid_data,
+            
+            # Test webhook endpoints
+            self.test_subscription_webhook_invalid_data,
+            self.test_subscription_webhook_valid_structure,
+            
+            # Test that all endpoints exist
             self.test_subscription_endpoints_exist,
             
             # Admin Subscription Tests
