@@ -186,7 +186,7 @@ const SubscriptionForm = () => {
 
           {/* Right Side - Payment Form */}
           <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30">
-            <h2 className="text-2xl font-bold text-white mb-6">{language === 'fr' ? 'Informations de paiement' : 'Payment information'}</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">{t(language, 'subscription.form.paymentInfo')}</h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Telegram Username */}
