@@ -108,7 +108,7 @@ const Admin = () => {
     try {
       await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/admin/testimonials/delete/${testimonialId}`, {
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}` }
       });
       toast({
         title: '✓ Témoignage supprimé',
