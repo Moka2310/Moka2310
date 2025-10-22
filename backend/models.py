@@ -170,4 +170,37 @@ class SubscriptionResponse(BaseModel):
     status: str
     currentPeriodEnd: datetime
     cancelAtPeriodEnd: bool
+
+
+class BotPreorderStatus(str, Enum):
+    PENDING_PAYMENT = "pending_payment"  # En attente de paiement
+    PAID = "paid"  # Payé, en attente de livraison
+    DELIVERED = "delivered"  # Bot livré au client
+    REFUNDED = "refunded"  # Remboursé
+
+class BotPreorder(BaseModel):
+    id: str
+    userId: str
+    userEmail: str
+    price: float = 300.0  # Prix en CAD
+    status: BotPreorderStatus = BotPreorderStatus.PENDING_PAYMENT
+    paymentMethod: str  # "stripe" ou "paypal"
+    stripePaymentIntentId: Optional[str] = None
+    paypalOrderId: Optional[str] = None
+    deliveredAt: Optional[datetime] = None
+    downloadLink: Optional[str] = None  # Lien de téléchargement une fois disponible
+    createdAt: datetime = Field(default_factory=datetime.utcnow)
+    updatedAt: datetime = Field(default_factory=datetime.utcnow)
+
+class BotPreorderCreate(BaseModel):
+    paymentMethod: str  # "stripe" ou "paypal"
+
+class BotPreorderResponse(BaseModel):
+    id: str
+    price: float
+    status: str
+    createdAt: datetime
+    deliveredAt: Optional[datetime] = None
+    downloadLink: Optional[str] = None
+
     pricePerMonth: float = 150.0
