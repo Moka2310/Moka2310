@@ -102,7 +102,7 @@ const SubscriptionForm = () => {
           className="mb-6 text-pink-400 hover:text-pink-300 hover:bg-pink-500/10"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Retour
+          {t(language, 'subscription.form.backButton')}
         </Button>
 
         <div className="grid md:grid-cols-2 gap-8">
