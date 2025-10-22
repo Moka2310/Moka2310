@@ -158,7 +158,7 @@ const SubscriptionForm = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-semibold">{t(language, 'subscription.features.instantNotifications')}</h4>
-                  <p className="text-white/60 text-sm">{language === 'fr' ? 'Ne ratez aucune opportunité' : 'Don\'t miss any opportunity'}</p>
+                  <p className="text-white/60 text-sm">{t(language, 'subscription.form.dontMissOpportunity')}</p>
                 </div>
               </div>
 
