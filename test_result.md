@@ -205,6 +205,9 @@ agent_communication:
       - working: true
         agent: "testing"
         comment: "Minor: Database contains 3 formations instead of expected 5 from INITIAL_FORMATIONS. API endpoints working correctly but data initialization may have been overridden. GET /formations and GET /formations/{id} both functional."
+      - working: true
+        agent: "main"
+        comment: "Formation images verified in MongoDB: Ultra Adhésion (1100 CAD) has https://i.imgur.com/0wGvLuk.jpg, Premium Membership (700 CAD) has https://i.imgur.com/CcllRfh.jpg. Images correctly configured and ready for display on frontend."
 
   - task: "Purchases System"
     implemented: true
