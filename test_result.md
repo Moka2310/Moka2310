@@ -478,3 +478,5 @@ agent_communication:
     message: "SUBSCRIPTION PAGE TRANSLATION COMPLETE - User reported subscription page remained in French when switching to English. Fixed all hardcoded French texts in Subscription.jsx by adding 9 new translation keys and replacing all inline texts/ternaries with proper t() function calls. Formation images verified in database - both Ultra (1100 CAD) and Premium (700 CAD) already have correct Imgur URLs. Page now fully bilingual and ready for testing."
   - agent: "user"
     message: "User reported: 1) Subscription section still in French when switching to English language. 2) Formation photos not changed as requested. Formation images are now verified as correct in database. Subscription page fully translated."
+  - agent: "main"
+    message: "BOUTIQUE BANNER TRANSLATION COMPLETE - User clarified issue was the subscription promotional banner on Boutique page (Nos Formations), not the Subscription page itself. Fixed by adding 12 translation keys (shop.banner.*) to translations.js and replacing all hardcoded texts in banner: 'NOUVEAU/NEW', title, description, features, CTA button, and price details. Banner now fully bilingual."
