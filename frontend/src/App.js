@@ -31,6 +31,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/subscription" element={<Subscription />} />
+              <Route path="/bot-preorder" element={<BotPreorder />} />
               <Route path="/protection-charter" element={<ProtectionCharter />} />
               <Route path="/canal/:canalName" element={<CanalDetails />} />
             </Routes>
