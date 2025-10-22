@@ -77,7 +77,7 @@ const SubscriptionForm = () => {
         }
       }
 
-      alert('🎉 Abonnement activé ! Redirection vers votre Dashboard...');
+      alert(t(language, 'subscription.form.subscriptionSuccess'));
 
       setTimeout(() => {
         navigate('/dashboard');
