@@ -12,11 +12,12 @@ logger = logging.getLogger(__name__)
 # Secret key pour sécuriser l'endpoint
 MIGRATION_SECRET = os.environ.get('MIGRATION_SECRET', 'tradalife_migration_2024')
 
-@router.post("/force-update-images")
+@router.get("/force-update-images")
 async def force_update_images(secret: str):
     """
     Force la mise à jour des images des formations
-    Utiliser avec: POST /api/migrations/force-update-images?secret=tradalife_migration_2024
+    Utiliser avec: GET /api/migrations/force-update-images?secret=tradalife_migration_2024
+    Accessible depuis le navigateur
     """
     if secret != MIGRATION_SECRET:
         raise HTTPException(status_code=403, detail="Invalid secret")
