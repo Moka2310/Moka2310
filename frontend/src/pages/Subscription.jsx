@@ -33,7 +33,7 @@ const SubscriptionForm = () => {
     }
 
     if (!telegramUsername || !telegramUsername.startsWith('@')) {
-      alert('Veuillez entrer un username Telegram valide (commençant par @)');
+      alert(t(language, 'subscription.form.invalidUsername'));
       return;
     }
 
