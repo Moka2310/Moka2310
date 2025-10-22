@@ -461,18 +461,17 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Subscription Page Translation and Functionality"
-    - "Telegram Access Delivery"
-    - "Subscription Banner Translation"
-    - "End-to-End Subscription Flow"
+    - "Boutique Page Navigation Issue"
+    - "Complete End-to-End Subscription Flow Testing"
   stuck_tasks:
     - "Payment Integration - Stripe"
     - "Payment Integration - PayPal"
     - "Email Service Integration"
+    - "Subscription Banner in Boutique Page"
   test_all: false
   test_priority: "high_first"
-  subscription_testing_complete: false
-  frontend_subscription_testing_complete: false
+  subscription_testing_complete: true
+  frontend_subscription_testing_complete: true
   backend_subscription_testing_complete: true
 
 agent_communication:
