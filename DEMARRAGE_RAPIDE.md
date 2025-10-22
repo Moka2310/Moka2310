@@ -164,7 +164,7 @@ db.users.find()       # Voir utilisateurs
 
 Votre application est maintenant configurée !
 
-**Testez sur** : https://edutrading-1.preview.emergentagent.com
+**Testez sur** : https://monthly-trading.preview.emergentagent.com
 
 **Documentation complète** :
 - `/app/GUIDE_DEPLOIEMENT.md` - Guide complet
