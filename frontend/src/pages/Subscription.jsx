@@ -148,7 +148,7 @@ const SubscriptionForm = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-semibold">{t(language, 'subscription.features.telegramChannels')}</h4>
-                  <p className="text-white/60 text-sm">{language === 'fr' ? 'Rejoignez notre communauté exclusive' : 'Join our exclusive community'}</p>
+                  <p className="text-white/60 text-sm">{t(language, 'subscription.form.joinExclusiveCommunity')}</p>
                 </div>
               </div>
 
