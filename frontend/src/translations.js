@@ -711,7 +711,17 @@ export const translations = {
         autoRenewalInfo: 'Automatic renewal every month',
         cancelInfo: 'Cancel anytime',
         immediateAccess: 'Immediate access after payment',
-        terms: 'By subscribing, you agree to our terms of service and privacy policy.'
+        terms: 'By subscribing, you agree to our terms of service and privacy policy.',
+        invalidUsername: 'Please enter a valid Telegram username (starting with @)',
+        subscriptionSuccess: '🎉 Subscription activated! Redirecting to your Dashboard...',
+        error: 'An error occurred',
+        processing: 'Processing...',
+        paymentInfo: 'Payment information',
+        backButton: 'Back',
+        joinExclusiveCommunity: 'Join our exclusive community',
+        dontMissOpportunity: 'Don\'t miss any opportunity',
+        supportAnytime: 'Support available anytime',
+        cancelFromDashboard: 'Cancel anytime from your Dashboard'
       }
     }
   }
