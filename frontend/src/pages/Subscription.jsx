@@ -25,6 +25,12 @@ const SubscriptionForm = () => {
   const [loading, setLoading] = useState(false);
   const [processingPayment, setProcessingPayment] = useState(false);
 
+  // Debug: Log current language
+  useEffect(() => {
+    console.log('🌐 Subscription page - Current language:', language);
+    console.log('🔍 Test translation:', t(language, 'subscription.title'));
+  }, [language]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
