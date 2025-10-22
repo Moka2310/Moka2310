@@ -65,18 +65,42 @@ async def startup_event():
     try:
         from pymongo import MongoClient
         MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
+        logger.info(f"🔗 Connecting to MongoDB for migrations...")
         mongo_client = MongoClient(MONGO_URL)
         db_migrate = mongo_client.tradalife
         
+        # Log formations BEFORE migration
+        formations_before = list(db_migrate.formations.find({}, {"title": 1, "price": 1, "image": 1}))
+        logger.info(f"📋 Formations BEFORE migration: {len(formations_before)}")
+        for f in formations_before:
+            logger.info(f"  - {f.get('title', 'N/A')} ({f.get('price', 'N/A')} CAD): {f.get('image', 'N/A')[:50]}")
+        
         # Migration: Supprimer formation 1799 et mettre à jour images
-        db_migrate.formations.delete_many({"price": 1799.0})
-        db_migrate.formations.update_many({"price": 1100.0}, {"$set": {"image": "https://i.imgur.com/0wGvLuk.jpg"}})
-        db_migrate.formations.update_many({"price": 700.0}, {"$set": {"image": "https://i.imgur.com/CcllRfh.jpg"}})
+        result_delete = db_migrate.formations.delete_many({"price": 1799.0})
+        logger.info(f"🗑️ Deleted formations with price 1799: {result_delete.deleted_count}")
+        
+        result_ultra = db_migrate.formations.update_many(
+            {"price": 1100.0}, 
+            {"$set": {"image": "https://i.imgur.com/0wGvLuk.jpg"}}
+        )
+        logger.info(f"🔄 Updated Ultra formation (1100 CAD): {result_ultra.modified_count} modified")
+        
+        result_premium = db_migrate.formations.update_many(
+            {"price": 700.0}, 
+            {"$set": {"image": "https://i.imgur.com/CcllRfh.jpg"}}
+        )
+        logger.info(f"🔄 Updated Premium formation (700 CAD): {result_premium.modified_count} modified")
+        
+        # Log formations AFTER migration
+        formations_after = list(db_migrate.formations.find({}, {"title": 1, "price": 1, "image": 1}))
+        logger.info(f"📋 Formations AFTER migration: {len(formations_after)}")
+        for f in formations_after:
+            logger.info(f"  - {f.get('title', 'N/A')} ({f.get('price', 'N/A')} CAD): {f.get('image', 'N/A')[:50]}")
         
         mongo_client.close()
         logger.info("✅ Migrations executed successfully")
     except Exception as e:
-        logger.error(f"❌ Migration error: {e}")
+        logger.error(f"❌ Migration error: {e}", exc_info=True)
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
