@@ -257,7 +257,7 @@ const SubscriptionForm = () => {
                 {processingPayment ? (
                   <span className="flex items-center gap-2">
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    {language === 'fr' ? 'Traitement en cours...' : 'Processing...'}
+                    {t(language, 'subscription.form.processing')}
                   </span>
                 ) : (
                   <span className="flex items-center gap-2">
