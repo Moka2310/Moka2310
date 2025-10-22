@@ -84,7 +84,7 @@ const Admin = () => {
     try {
       await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/admin/testimonials/reject/${testimonialId}`, {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}` }
       });
       toast({
         title: '✓ Témoignage rejeté',
