@@ -203,4 +203,42 @@ class BotPreorderResponse(BaseModel):
     deliveredAt: Optional[datetime] = None
     downloadLink: Optional[str] = None
 
+class TradingContestParticipant(BaseModel):
+    id: str
+    firstName: str
+    lastName: str
+    totalTrades: int  # Nombre de trades ouverts
+    winningTrades: int  # Trades gagnants
+    winRate: float = 0.0  # Pourcentage calculé automatiquement
+    date: datetime  # Date du concours
+    rank: int = 0  # Classement calculé automatiquement
+    isActive: bool = True  # Afficher ou masquer
+    createdAt: datetime = Field(default_factory=datetime.utcnow)
+    updatedAt: datetime = Field(default_factory=datetime.utcnow)
+
+class TradingContestCreate(BaseModel):
+    firstName: str
+    lastName: str
+    totalTrades: int
+    winningTrades: int
+    date: datetime
+
+class TradingContestUpdate(BaseModel):
+    firstName: Optional[str] = None
+    lastName: Optional[str] = None
+    totalTrades: Optional[int] = None
+    winningTrades: Optional[int] = None
+    date: Optional[datetime] = None
+    isActive: Optional[bool] = None
+
+class TradingContestResponse(BaseModel):
+    id: str
+    firstName: str
+    lastName: str
+    totalTrades: int
+    winningTrades: int
+    winRate: float
+    date: datetime
+    rank: int
+
     pricePerMonth: float = 150.0
