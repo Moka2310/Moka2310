@@ -294,6 +294,8 @@ const Admin = () => {
         </div>
 
         {/* Tab Content */}
+        {activeTab === 'members' && <MembersTab language={language} />}
+        {activeTab === 'subscriptions' && <SubscriptionsTab language={language} />}
         {activeTab === 'stats' && <StatsTab language={language} />}
         {activeTab === 'contest' && <ContestTab language={language} />}
 
