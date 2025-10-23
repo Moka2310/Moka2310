@@ -78,6 +78,21 @@ export const translations = {
       }
     },
 
+    // Trading Contest Page
+    contest: {
+      title: 'Concours de Trading',
+      subtitle: 'Découvrez le classement des meilleurs traders',
+      noParticipants: 'Aucun participant pour le moment',
+      table: {
+        rank: 'Classement',
+        name: 'Nom et Prénom',
+        totalTrades: 'Trades Ouverts',
+        winningTrades: 'Trades Gagnants',
+        winRate: 'Pourcentage',
+        date: 'Date'
+      }
+    },
+
     // Shop Page
     shop: {
       title: 'Nos Formations',
