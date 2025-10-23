@@ -195,6 +195,43 @@ async def reactivate_subscription(
         if not user or not user.get('subscriptionId'):
             raise HTTPException(status_code=404, detail="Aucun abonnement trouvé")
         
+
+
+@router.get("/admin/all")
+async def get_all_subscriptions_admin(current_user = Depends(get_current_user)):
+    """
+    Récupérer tous les abonnements (ADMIN ONLY)
+    """
+    # Vérifier si l'utilisateur est admin
+    if current_user.get('role') != 'admin':
+        raise HTTPException(status_code=403, detail="Accès non autorisé")
+    
+    db = get_db()
+    
+    try:
+        # Récupérer tous les abonnements
+        subscriptions = list(db.subscriptions.find({}).sort("createdAt", -1))
+        
+        # Formater les données
+        formatted_subs = []
+        for sub in subscriptions:
+            formatted_subs.append({
+                "id": sub.get("id"),
+                "userEmail": sub.get("userEmail"),
+                "telegramUsername": sub.get("telegramUsername"),
+                "paymentMethod": sub.get("paymentMethod", "stripe"),
+                "status": sub.get("status"),
+                "pricePerMonth": sub.get("pricePerMonth", 150.0),
+                "createdAt": sub.get("createdAt"),
+                "cancelAtPeriodEnd": sub.get("cancelAtPeriodEnd", False)
+            })
+        
+        return formatted_subs
+        
+    except Exception as e:
+        print(f"Error fetching subscriptions: {e}")
+        raise HTTPException(status_code=500, detail="Erreur lors de la récupération des abonnements")
+
         # Réactiver l'abonnement dans Stripe
         success = await SubscriptionService.reactivate_subscription(user['subscriptionId'])
         
