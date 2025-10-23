@@ -433,6 +433,7 @@ export const translations = {
     nav: {
       home: 'Home',
       shop: 'Shop',
+      contest: 'Contest',
       channels: 'Our Channels',
       applications: 'Our Apps',
       videos: 'Videos',
