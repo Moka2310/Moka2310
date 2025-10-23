@@ -344,6 +344,18 @@ agent_communication:
         agent: "testing"
         comment: "CRITICAL: PayPal integration failing with 401 Unauthorized and 'invalid_client' error. PayPal client authentication is failing, likely due to invalid client credentials in production environment."
 
+  - task: "Bot Preorders Counter System"
+    implemented: true
+    working: true
+    file: "/app/backend/routes/bot_preorders.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - Bot preorder counter system working perfectly. GET /api/bot-preorders/availability returns correct values: available=9, total=30, sold=21, is_available=true. Authentication properly enforced (403 for unauthenticated requests). Database contains exactly 21 preorders with 'paid' or 'pending_payment' status. Counter logic calculation correct: 30 - 21 = 9 available. All 4 comprehensive tests passed."
+
 frontend:
   - task: "Subscription Banner in Boutique Page"
     implemented: true
