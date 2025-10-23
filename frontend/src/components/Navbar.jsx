@@ -78,7 +78,8 @@ const Navbar = () => {
     { label: t(language, 'nav.channels'), path: '#canaux' },
     { label: t(language, 'nav.applications'), path: '#applications' },
     { label: t(language, 'nav.contact'), path: '#contact' },
-    { label: t(language, 'nav.shop'), path: '/boutique' }
+    { label: t(language, 'nav.shop'), path: '/boutique' },
+    { label: t(language, 'nav.contest'), path: '/contest' }
   ];
 
   const scrollToSection = (hash) => {
