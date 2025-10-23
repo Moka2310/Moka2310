@@ -264,6 +264,20 @@ const Admin = () => {
             KYC & Témoignages
           </Button>
           <Button
+            onClick={() => setActiveTab('members')}
+            className={`${activeTab === 'members' ? 'bg-gradient-to-r from-green-500 to-emerald-600' : 'bg-white/10'}`}
+          >
+            <Users className="w-4 h-4 mr-2" />
+            Membres
+          </Button>
+          <Button
+            onClick={() => setActiveTab('subscriptions')}
+            className={`${activeTab === 'subscriptions' ? 'bg-gradient-to-r from-purple-500 to-pink-600' : 'bg-white/10'}`}
+          >
+            <CreditCard className="w-4 h-4 mr-2" />
+            Abonnements
+          </Button>
+          <Button
             onClick={() => setActiveTab('stats')}
             className={`${activeTab === 'stats' ? 'bg-gradient-to-r from-blue-500 to-purple-600' : 'bg-white/10'}`}
           >
