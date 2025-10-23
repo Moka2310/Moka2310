@@ -57,6 +57,10 @@ async def get_current_admin(current_user: User = Depends(get_current_user)) -> U
         )
     return current_user
 
+# Alias for compatibility
+require_admin = get_current_admin
+
+
 async def save_upload_file(upload_file: UploadFile, user_id: str, doc_type: str) -> tuple[str, str]:
     """Save uploaded file and return (filename, filepath)"""
     
