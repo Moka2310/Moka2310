@@ -180,23 +180,6 @@ async def cancel_subscription(
         print(f"Error canceling subscription: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.post("/reactivate")
-async def reactivate_subscription(
-    current_user = Depends(get_current_user)
-):
-    """
-    Réactive un abonnement qui était prévu pour être annulé
-    """
-    try:
-        db = get_db()
-        user_id = current_user.id
-        user = db.users.find_one({"id": user_id})
-        
-        if not user or not user.get('subscriptionId'):
-            raise HTTPException(status_code=404, detail="Aucun abonnement trouvé")
-        
-
-
 @router.get("/admin/all")
 async def get_all_subscriptions_admin(current_user = Depends(get_current_user)):
     """
