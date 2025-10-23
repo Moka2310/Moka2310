@@ -254,7 +254,37 @@ const Admin = () => {
           </div>
         )}
 
+        {/* Tabs Navigation */}
+        <div className="flex gap-2 mb-6 flex-wrap">
+          <Button
+            onClick={() => setActiveTab('kyc')}
+            className={`${activeTab === 'kyc' ? 'bg-gradient-to-r from-pink-500 to-purple-600' : 'bg-white/10'}`}
+          >
+            <UserCheck className="w-4 h-4 mr-2" />
+            KYC & Témoignages
+          </Button>
+          <Button
+            onClick={() => setActiveTab('stats')}
+            className={`${activeTab === 'stats' ? 'bg-gradient-to-r from-blue-500 to-purple-600' : 'bg-white/10'}`}
+          >
+            <BarChart3 className="w-4 h-4 mr-2" />
+            Statistiques
+          </Button>
+          <Button
+            onClick={() => setActiveTab('contest')}
+            className={`${activeTab === 'contest' ? 'bg-gradient-to-r from-yellow-500 to-orange-600' : 'bg-white/10'}`}
+          >
+            <Trophy className="w-4 h-4 mr-2" />
+            Concours
+          </Button>
+        </div>
+
+        {/* Tab Content */}
+        {activeTab === 'stats' && <StatsTab language={language} />}
+        {activeTab === 'contest' && <ContestTab language={language} />}
+
         {/* KYC Requests */}
+        {activeTab === 'kyc' && (
         <div className="bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-purple-500/30">
           <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">Demandes KYC en attente</h2>
 
