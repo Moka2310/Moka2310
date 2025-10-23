@@ -506,6 +506,21 @@ export const translations = {
       }
     },
 
+    // Trading Contest Page
+    contest: {
+      title: 'Trading Contest',
+      subtitle: 'Discover the ranking of the best traders',
+      noParticipants: 'No participants at the moment',
+      table: {
+        rank: 'Rank',
+        name: 'Name',
+        totalTrades: 'Open Trades',
+        winningTrades: 'Winning Trades',
+        winRate: 'Win Rate',
+        date: 'Date'
+      }
+    },
+
     // Shop Page
     shop: {
       title: 'Our Courses',
