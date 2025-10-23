@@ -28,6 +28,31 @@ const Home = () => {
     message: ''
   });
 
+  const [botAvailability, setBotAvailability] = useState({
+    available: 30,
+    total: 30,
+    sold: 0
+  });
+
+  // Charger la disponibilité du bot
+  useEffect(() => {
+    const loadBotAvailability = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/bot-preorders/availability`);
+        const data = await response.json();
+        setBotAvailability({
+          available: data.available,
+          total: data.total,
+          sold: data.sold
+        });
+      } catch (error) {
+        console.error('Error loading bot availability:', error);
+      }
+    };
+
+    loadBotAvailability();
+  }, []);
+
   // Gérer la précommande du bot
   const handleBotPreorder = () => {
     const token = localStorage.getItem('tradalife_token');
