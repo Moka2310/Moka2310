@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { adminAPI } from '../api/client';
 import { Button } from '../components/ui/button';
 import { Textarea } from '../components/ui/textarea';
 import { toast } from '../hooks/use-toast';
-import { CheckCircle, XCircle, Clock, Users, ShoppingCart, DollarSign, ArrowLeft, Star } from 'lucide-react';
+import { CheckCircle, XCircle, Clock, Users, ShoppingCart, DollarSign, ArrowLeft, Star, BarChart3, Trophy, UserCheck } from 'lucide-react';
+import { StatsTab, ContestTab } from '../components/AdminTabs';
 
 const Admin = () => {
   const { user } = useAuth();
