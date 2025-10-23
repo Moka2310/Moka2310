@@ -166,13 +166,30 @@ const Home = () => {
                       {t(language, 'home.bot.preorderBadge')}
                     </div>
                     
-                    {/* Compteur de disponibilité */}
-                    <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg inline-flex items-center gap-1">
-                      <span className="text-yellow-300 font-bold text-sm">
-                        {botAvailability.available}/{botAvailability.total}
-                      </span>
-                      <span>{t(language, 'home.bot.availability')}</span>
+                    {/* Compteur de disponibilité - MISE EN VALEUR */}
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 blur-md opacity-50 rounded-full"></div>
+                      <div className="relative bg-gradient-to-r from-red-600 to-orange-600 text-white px-4 sm:px-5 py-2 rounded-full shadow-2xl border-2 border-yellow-400 animate-pulse">
+                        <div className="flex items-center gap-2">
+                          <span className="text-yellow-300 font-black text-base sm:text-lg drop-shadow-lg">
+                            {botAvailability.available}
+                          </span>
+                          <span className="text-white font-bold text-xs sm:text-sm">
+                            {t(language, 'home.bot.availability')}
+                          </span>
+                          <span className="text-white/80 font-semibold text-xs sm:text-sm">
+                            / {botAvailability.total}
+                          </span>
+                        </div>
+                      </div>
                     </div>
+                    
+                    {/* Message d'urgence si peu disponible */}
+                    {botAvailability.available <= 10 && botAvailability.available > 0 && (
+                      <div className="text-yellow-300 text-xs font-bold animate-bounce">
+                        ⚡ {t(language, 'home.bot.limitedAvailability')}
+                      </div>
+                    )}
                   </div>
 
                   {/* Icône */}
