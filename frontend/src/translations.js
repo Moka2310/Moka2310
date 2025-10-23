@@ -4,6 +4,7 @@ export const translations = {
     nav: {
       home: 'Accueil',
       shop: 'Boutique',
+      contest: 'Concours',
       channels: 'Nos canaux',
       applications: 'Nos applications',
       videos: 'Vidéos',
