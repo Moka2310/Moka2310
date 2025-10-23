@@ -11,8 +11,11 @@ def migrate_formations():
     
     # Connexion MongoDB (utilise la variable d'environnement)
     MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
+    DB_NAME = os.environ.get('DB_NAME', 'tradalife')
+    print(f"🔗 Connexion à MongoDB: {MONGO_URL}")
+    
     client = MongoClient(MONGO_URL)
-    db = client.tradalife
+    db = client[DB_NAME]
     
     print("🔄 Migration des formations...")
     
