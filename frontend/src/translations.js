@@ -475,6 +475,9 @@ export const translations = {
         preorderBadge: 'PRE-ORDER',
         price: '300$ CAD',
         preorderPrice: 'Pre-order price: 300$ CAD',
+        availability: 'available',
+        limitedAvailability: 'Limited spots',
+        soldOut: 'Sold out',
         features: {
           instantCopy: 'Instant copy',
           customizableLots: 'Customizable lots',
