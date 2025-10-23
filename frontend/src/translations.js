@@ -62,6 +62,9 @@ export const translations = {
         preorderBadge: 'PRÉCOMMANDE',
         price: '300$ CAD',
         preorderPrice: 'Prix de précommande : 300$ CAD',
+        availability: 'disponibles',
+        limitedAvailability: 'Places limitées',
+        soldOut: 'Épuisé',
         features: {
           instantCopy: 'Copie instantanée',
           customizableLots: 'Lots personnalisables',
