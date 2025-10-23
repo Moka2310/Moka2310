@@ -23,6 +23,17 @@ async def create_bot_preorder(
     db = get_db()
     
     try:
+        # Vérifier la disponibilité (limite de 30 précommandes)
+        total_preorders = await db.bot_preorders.count_documents({
+            "status": {"$in": ["pending_payment", "paid"]}
+        })
+        
+        if total_preorders >= 30:
+            raise HTTPException(
+                status_code=400,
+                detail="Toutes les précommandes ont été vendues. Merci de votre intérêt!"
+            )
+        
         # Vérifier si l'utilisateur a déjà une précommande active
         existing_preorder = await db.bot_preorders.find_one({
             "userId": current_user.id,
