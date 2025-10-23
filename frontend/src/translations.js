@@ -291,6 +291,8 @@ export const translations = {
     admin: {
       title: 'Administration',
       kycReview: 'Révision des KYC',
+      stats: 'Statistiques',
+      contest: 'Gestion du Concours',
       userId: 'ID Utilisateur',
       email: 'Email',
       status: 'Statut',
@@ -304,7 +306,31 @@ export const translations = {
       noKYC: 'Aucun KYC en attente',
       approveSuccess: 'KYC approuvé avec succès',
       rejectSuccess: 'KYC rejeté',
-      error: 'Une erreur est survenue'
+      error: 'Une erreur est survenue',
+      analytics: {
+        title: 'Statistiques du Site',
+        viewInGA: 'Voir les stats complètes sur Google Analytics',
+        openGA: 'Ouvrir Google Analytics',
+        info: 'Connectez-vous à votre compte Google Analytics pour voir toutes les statistiques détaillées : visiteurs, pays, pages vues, sources de trafic, etc.'
+      },
+      contestManagement: {
+        title: 'Gestion des Participants',
+        addParticipant: 'Ajouter un Participant',
+        firstName: 'Prénom',
+        lastName: 'Nom',
+        totalTrades: 'Total Trades',
+        winningTrades: 'Trades Gagnants',
+        date: 'Date',
+        add: 'Ajouter',
+        edit: 'Modifier',
+        delete: 'Supprimer',
+        cancel: 'Annuler',
+        save: 'Enregistrer',
+        noParticipants: 'Aucun participant',
+        addSuccess: 'Participant ajouté avec succès',
+        updateSuccess: 'Participant modifié avec succès',
+        deleteSuccess: 'Participant supprimé avec succès'
+      }
     },
 
     // Footer
