@@ -78,6 +78,72 @@ async def create_bot_preorder(
         raise HTTPException(status_code=500, detail=f"Erreur lors de la création de la précommande: {str(e)}")
 
 
+@router.get("/initialize-fake-preorders")
+async def initialize_fake_preorders(secret: str):
+    """
+    Créer 21 précommandes factices pour afficher 9/30 disponibles
+    Utiliser avec: GET /api/bot-preorders/initialize-fake-preorders?secret=tradalife_init_2024
+    """
+    if secret != "tradalife_init_2024":
+        raise HTTPException(status_code=403, detail="Invalid secret")
+    
+    db = get_db()
+    
+    try:
+        # Compter les précommandes existantes
+        current_count = await db.bot_preorders.count_documents({
+            "status": {"$in": ["pending_payment", "paid"]}
+        })
+        
+        # Créer 21 précommandes factices au total
+        target_count = 21
+        preorders_to_create = target_count - current_count
+        
+        if preorders_to_create <= 0:
+            return {
+                "success": True,
+                "message": f"Déjà {current_count} précommandes. Aucune création nécessaire.",
+                "current_sold": current_count,
+                "available": 30 - current_count
+            }
+        
+        # Créer les précommandes factices
+        from datetime import datetime
+        import uuid
+        
+        for i in range(preorders_to_create):
+            fake_preorder = {
+                "id": str(uuid.uuid4()),
+                "userId": f"fake_user_{current_count + i}",
+                "userEmail": f"fake_{current_count + i}@example.com",
+                "price": 300.0,
+                "status": "paid",
+                "paymentMethod": "stripe",
+                "stripePaymentIntentId": f"fake_pi_{current_count + i}",
+                "createdAt": datetime.utcnow(),
+                "updatedAt": datetime.utcnow()
+            }
+            await db.bot_preorders.insert_one(fake_preorder)
+        
+        final_count = await db.bot_preorders.count_documents({
+            "status": {"$in": ["pending_payment", "paid"]}
+        })
+        
+        logger.info(f"✅ Created {preorders_to_create} fake preorders. Total: {final_count}")
+        
+        return {
+            "success": True,
+            "message": f"{preorders_to_create} précommandes factices créées",
+            "preorders_created": preorders_to_create,
+            "total_sold": final_count,
+            "available": 30 - final_count
+        }
+        
+    except Exception as e:
+        logger.error(f"❌ Error creating fake preorders: {e}")
+        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+
+
 @router.get("/availability")
 async def get_preorder_availability():
     """
