@@ -66,6 +66,9 @@ async def startup_event():
     """Run migrations on startup"""
     try:
         from pymongo import MongoClient
+        from datetime import datetime
+        import uuid
+        
         MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
         logger.info(f"🔗 Connecting to MongoDB for migrations...")
         mongo_client = MongoClient(MONGO_URL)
@@ -99,8 +102,41 @@ async def startup_event():
         for f in formations_after:
             logger.info(f"  - {f.get('title', 'N/A')} ({f.get('price', 'N/A')} CAD): {f.get('image', 'N/A')[:50]}")
         
+        # Migration BOT: Initialiser 21 précommandes factices pour afficher 9/30
+        logger.info("🤖 Checking bot preorders...")
+        current_preorder_count = db_migrate.bot_preorders.count_documents({
+            "status": {"$in": ["pending_payment", "paid"]}
+        })
+        logger.info(f"📊 Current bot preorders: {current_preorder_count}")
+        
+        target_preorder_count = 21
+        if current_preorder_count < target_preorder_count:
+            preorders_to_create = target_preorder_count - current_preorder_count
+            logger.info(f"➕ Creating {preorders_to_create} fake bot preorders...")
+            
+            for i in range(preorders_to_create):
+                fake_preorder = {
+                    "id": str(uuid.uuid4()),
+                    "userId": f"fake_user_{current_preorder_count + i}",
+                    "userEmail": f"fake_{current_preorder_count + i}@example.com",
+                    "price": 300.0,
+                    "status": "paid",
+                    "paymentMethod": "stripe",
+                    "stripePaymentIntentId": f"fake_pi_{current_preorder_count + i}",
+                    "createdAt": datetime.utcnow(),
+                    "updatedAt": datetime.utcnow()
+                }
+                db_migrate.bot_preorders.insert_one(fake_preorder)
+            
+            final_count = db_migrate.bot_preorders.count_documents({
+                "status": {"$in": ["pending_payment", "paid"]}
+            })
+            logger.info(f"✅ Bot preorders initialized: {final_count} sold, {30 - final_count} available")
+        else:
+            logger.info(f"✅ Bot preorders already initialized: {current_preorder_count} sold, {30 - current_preorder_count} available")
+        
         mongo_client.close()
-        logger.info("✅ Migrations executed successfully")
+        logger.info("✅ All migrations executed successfully")
     except Exception as e:
         logger.error(f"❌ Migration error: {e}", exc_info=True)
 
