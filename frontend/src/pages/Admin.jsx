@@ -539,6 +539,7 @@ const Admin = () => {
               </div>
             )}
           </div>
+        </> 
         )} {/* Fin du bloc activeTab === 'kyc' */}
       </div>
     </div>
