@@ -4,12 +4,13 @@ Tâche planifiée pour synchroniser le nombre de membres Telegram toutes les heu
 import asyncio
 import httpx
 import logging
+import os
 from datetime import datetime
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-BACKEND_URL = "http://localhost:8001"
+BACKEND_URL = os.environ.get('BACKEND_URL', 'http://localhost:8001')
 SYNC_INTERVAL = 3600  # 1 heure en secondes
 
 async def sync_telegram_members():
