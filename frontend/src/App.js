@@ -33,6 +33,7 @@ function App() {
               <Route path="/admin" element={<Admin />} />
               <Route path="/subscription" element={<Subscription />} />
               <Route path="/bot-preorder" element={<BotPreorder />} />
+              <Route path="/contest" element={<Contest />} />
               <Route path="/protection-charter" element={<ProtectionCharter />} />
               <Route path="/canal/:canalName" element={<CanalDetails />} />
             </Routes>
