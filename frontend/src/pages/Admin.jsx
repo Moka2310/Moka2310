@@ -6,8 +6,8 @@ import { adminAPI } from '../api/client';
 import { Button } from '../components/ui/button';
 import { Textarea } from '../components/ui/textarea';
 import { toast } from '../hooks/use-toast';
-import { CheckCircle, XCircle, Clock, Users, ShoppingCart, DollarSign, ArrowLeft, Star, BarChart3, Trophy, UserCheck } from 'lucide-react';
-import { StatsTab, ContestTab } from '../components/AdminTabs';
+import { CheckCircle, XCircle, Clock, Users, ShoppingCart, DollarSign, ArrowLeft, Star, BarChart3, Trophy, UserCheck, CreditCard } from 'lucide-react';
+import { StatsTab, ContestTab, MembersTab, SubscriptionsTab } from '../components/AdminTabs';
 
 const Admin = () => {
   const { user } = useAuth();
