@@ -24,10 +24,11 @@ async def force_update_images(secret: str):
     
     try:
         MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
+        DB_NAME = os.environ.get('DB_NAME', 'tradalife')
         logger.info(f"🔗 Connecting to MongoDB: {MONGO_URL}")
         
         client = MongoClient(MONGO_URL)
-        db = client.tradalife
+        db = client[DB_NAME]
         
         # État avant
         formations_before = list(db.formations.find({}, {"title": 1, "price": 1, "image": 1, "_id": 0}))
