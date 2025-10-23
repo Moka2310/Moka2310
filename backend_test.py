@@ -1108,6 +1108,91 @@ class TradalifeTester:
         except Exception as e:
             self.log_test("Subscription Webhook (Valid Structure)", False, f"Error: {str(e)}")
             return False
+
+    def test_bot_preorders_availability(self):
+        """Test bot preorders availability endpoint"""
+        try:
+            response = self.session.get(f"{API_URL}/bot-preorders/availability")
+            
+            if response.status_code == 200:
+                data = response.json()
+                required_fields = ["total", "sold", "available", "is_available"]
+                
+                if all(field in data for field in required_fields):
+                    # Check expected values based on test request
+                    expected_total = 30
+                    expected_sold = 21
+                    expected_available = 9
+                    expected_is_available = True
+                    
+                    if (data["total"] == expected_total and 
+                        data["sold"] == expected_sold and 
+                        data["available"] == expected_available and 
+                        data["is_available"] == expected_is_available):
+                        self.log_test("Bot Preorders Availability", True, 
+                                    f"Correct availability: {data['available']}/{data['total']} (sold: {data['sold']})")
+                        return True
+                    else:
+                        self.log_test("Bot Preorders Availability", False, 
+                                    f"Incorrect values - Expected: available=9, total=30, sold=21, is_available=true. Got: {data}")
+                        return False
+                else:
+                    missing_fields = [field for field in required_fields if field not in data]
+                    self.log_test("Bot Preorders Availability", False, f"Missing fields: {missing_fields}", data)
+                    return False
+            else:
+                self.log_test("Bot Preorders Availability", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Bot Preorders Availability", False, f"Error: {str(e)}")
+            return False
+
+    def test_bot_preorders_create_without_auth(self):
+        """Test bot preorder creation without authentication (should return 401)"""
+        try:
+            preorder_data = {
+                "paymentMethod": "stripe"
+            }
+            
+            response = self.session.post(f"{API_URL}/bot-preorders/create", json=preorder_data)
+            
+            if response.status_code == 401:
+                self.log_test("Bot Preorder Create (No Auth)", True, "Correctly returned 401 for unauthenticated request")
+                return True
+            else:
+                self.log_test("Bot Preorder Create (No Auth)", False, f"Expected 401, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Bot Preorder Create (No Auth)", False, f"Error: {str(e)}")
+            return False
+
+    def test_bot_preorders_database_count(self):
+        """Test database count of bot preorders with paid/pending_payment status"""
+        try:
+            # This test will verify the count indirectly through the availability endpoint
+            response = self.session.get(f"{API_URL}/bot-preorders/availability")
+            
+            if response.status_code == 200:
+                data = response.json()
+                sold_count = data.get("sold", 0)
+                
+                # According to test request, should be 21 preorders with status "paid" or "pending_payment"
+                expected_count = 21
+                
+                if sold_count == expected_count:
+                    self.log_test("Bot Preorders Database Count", True, 
+                                f"Database contains {sold_count} preorders with 'paid' or 'pending_payment' status")
+                    return True
+                else:
+                    self.log_test("Bot Preorders Database Count", False, 
+                                f"Expected {expected_count} preorders, found {sold_count}")
+                    return False
+            else:
+                self.log_test("Bot Preorders Database Count", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Bot Preorders Database Count", False, f"Error: {str(e)}")
+            return False
     
     def run_all_tests(self):
         """Run all tests in sequence"""
