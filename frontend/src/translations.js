@@ -746,6 +746,8 @@ export const translations = {
     admin: {
       title: 'Administration',
       kycReview: 'KYC Review',
+      stats: 'Statistics',
+      contest: 'Contest Management',
       userId: 'User ID',
       email: 'Email',
       status: 'Status',
@@ -759,7 +761,31 @@ export const translations = {
       noKYC: 'No pending KYC',
       approveSuccess: 'KYC approved successfully',
       rejectSuccess: 'KYC rejected',
-      error: 'An error occurred'
+      error: 'An error occurred',
+      analytics: {
+        title: 'Site Statistics',
+        viewInGA: 'View complete stats on Google Analytics',
+        openGA: 'Open Google Analytics',
+        info: 'Sign in to your Google Analytics account to see all detailed statistics: visitors, countries, page views, traffic sources, etc.'
+      },
+      contestManagement: {
+        title: 'Participants Management',
+        addParticipant: 'Add Participant',
+        firstName: 'First Name',
+        lastName: 'Last Name',
+        totalTrades: 'Total Trades',
+        winningTrades: 'Winning Trades',
+        date: 'Date',
+        add: 'Add',
+        edit: 'Edit',
+        delete: 'Delete',
+        cancel: 'Cancel',
+        save: 'Save',
+        noParticipants: 'No participants',
+        addSuccess: 'Participant added successfully',
+        updateSuccess: 'Participant updated successfully',
+        deleteSuccess: 'Participant deleted successfully'
+      }
     },
 
     // Footer
