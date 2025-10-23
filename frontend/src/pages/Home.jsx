@@ -29,9 +29,9 @@ const Home = () => {
   });
 
   const [botAvailability, setBotAvailability] = useState({
-    available: 30,
+    available: 9,  // Valeur par défaut changée à 9
     total: 30,
-    sold: 0
+    sold: 21
   });
 
   // Charger la disponibilité du bot
@@ -39,7 +39,12 @@ const Home = () => {
     const loadBotAvailability = async () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/bot-preorders/availability`);
+        if (!response.ok) {
+          console.error('Failed to fetch bot availability:', response.status);
+          return;
+        }
         const data = await response.json();
+        console.log('🤖 Bot availability loaded:', data);
         setBotAvailability({
           available: data.available,
           total: data.total,
@@ -47,6 +52,7 @@ const Home = () => {
         });
       } catch (error) {
         console.error('Error loading bot availability:', error);
+        // Garder les valeurs par défaut (9/30) en cas d'erreur
       }
     };
 
