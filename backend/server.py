@@ -43,6 +43,7 @@ api_router.include_router(subscriptions.router)
 api_router.include_router(migrations.router)
 api_router.include_router(bot_preorders.router)
 api_router.include_router(trading_contest.router)
+api_router.include_router(members.router)
 
 # Include the router in the main app
 app.include_router(api_router)
