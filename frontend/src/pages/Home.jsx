@@ -225,19 +225,34 @@ const Home = () => {
                   {/* Bouton */}
                   <button
                     onClick={handleBotPreorder}
-                    className="bot-download-button group relative w-full hover:scale-105 transition-transform"
+                    disabled={botAvailability.available === 0}
+                    className={`bot-download-button group relative w-full transition-transform ${
+                      botAvailability.available === 0 
+                        ? 'opacity-50 cursor-not-allowed' 
+                        : 'hover:scale-105'
+                    }`}
                   >
                     <div className="bot-button-glow"></div>
                     <div className="relative flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3">
-                      <Download className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-                      <div className="text-center">
-                        <div className="text-xs sm:text-sm font-semibold">
-                          {t(language, 'home.bot.preorderButton')}
-                        </div>
-                        <div className="text-xs opacity-80 hidden sm:block">
-                          {t(language, 'home.bot.price')}
-                        </div>
-                      </div>
+                      {botAvailability.available === 0 ? (
+                        <>
+                          <span className="text-xs sm:text-sm font-semibold">
+                            {t(language, 'home.bot.soldOut')}
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <Download className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                          <div className="text-center">
+                            <div className="text-xs sm:text-sm font-semibold">
+                              {t(language, 'home.bot.preorderButton')}
+                            </div>
+                            <div className="text-xs opacity-80 hidden sm:block">
+                              {t(language, 'home.bot.price')}
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </button>
                 </div>
