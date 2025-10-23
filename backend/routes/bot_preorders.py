@@ -67,6 +67,34 @@ async def create_bot_preorder(
         raise HTTPException(status_code=500, detail=f"Erreur lors de la création de la précommande: {str(e)}")
 
 
+@router.get("/availability")
+async def get_preorder_availability():
+    """
+    Récupérer le nombre de précommandes disponibles (limite: 30)
+    Accessible sans authentification
+    """
+    db = get_db()
+    
+    try:
+        # Compter les précommandes payées ou en attente de paiement
+        total_preorders = await db.bot_preorders.count_documents({
+            "status": {"$in": ["pending_payment", "paid"]}
+        })
+        
+        max_preorders = 30
+        available = max(0, max_preorders - total_preorders)
+        
+        return {
+            "total": max_preorders,
+            "sold": total_preorders,
+            "available": available,
+            "is_available": available > 0
+        }
+    except Exception as e:
+        logger.error(f"❌ Error fetching preorder availability: {e}")
+        raise HTTPException(status_code=500, detail="Erreur lors de la récupération de la disponibilité")
+
+
 @router.get("/my-preorders", response_model=list[BotPreorderResponse])
 async def get_my_preorders(current_user: User = Depends(get_current_user)):
     """
