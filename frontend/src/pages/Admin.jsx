@@ -11,7 +11,9 @@ import { StatsTab, ContestTab } from '../components/AdminTabs';
 
 const Admin = () => {
   const { user } = useAuth();
+  const { language } = useLanguage();
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('kyc'); // kyc, stats, contest
   const [kycRequests, setKycRequests] = useState([]);
   const [pendingTestimonials, setPendingTestimonials] = useState([]);
   const [allTestimonials, setAllTestimonials] = useState([]);
