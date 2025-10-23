@@ -148,6 +148,7 @@ async def initialize_fake_preorders(secret: str):
 async def get_preorder_availability():
     """
     Récupérer le nombre de précommandes disponibles (limite: 30)
+    FORCE: Affiche toujours maximum 9 disponibles pour créer l'urgence
     Accessible sans authentification
     """
     db = get_db()
@@ -159,13 +160,21 @@ async def get_preorder_availability():
         })
         
         max_preorders = 30
-        available = max(0, max_preorders - total_preorders)
+        actual_available = max(0, max_preorders - total_preorders)
+        
+        # FORCER: Maximum 9 disponibles affichés (21 minimum vendus)
+        # Cela crée l'urgence même si la BD n'a pas encore les précommandes factices
+        min_sold = 21
+        displayed_sold = max(min_sold, total_preorders)
+        displayed_available = max_preorders - displayed_sold
+        
+        logger.info(f"📊 Bot availability: actual_sold={total_preorders}, displayed_sold={displayed_sold}, displayed_available={displayed_available}")
         
         return {
             "total": max_preorders,
-            "sold": total_preorders,
-            "available": available,
-            "is_available": available > 0
+            "sold": displayed_sold,
+            "available": displayed_available,
+            "is_available": displayed_available > 0
         }
     except Exception as e:
         logger.error(f"❌ Error fetching preorder availability: {e}")
