@@ -159,11 +159,19 @@ const Home = () => {
                 
                 {/* Contenu */}
                 <div className="bot-download-content p-4 sm:p-6">
-                  {/* Badge "PRÉCOMMANDE" */}
-                  <div className="flex justify-center mb-3 sm:mb-4">
+                  {/* Badge "PRÉCOMMANDE" avec compteur */}
+                  <div className="flex flex-col items-center gap-2 mb-3 sm:mb-4">
                     <div className="bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xs font-bold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-lg animate-pulse inline-flex items-center">
                       <Zap className="w-3 h-3 mr-1" />
                       {t(language, 'home.bot.preorderBadge')}
+                    </div>
+                    
+                    {/* Compteur de disponibilité */}
+                    <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg inline-flex items-center gap-1">
+                      <span className="text-yellow-300 font-bold text-sm">
+                        {botAvailability.available}/{botAvailability.total}
+                      </span>
+                      <span>{t(language, 'home.bot.availability')}</span>
                     </div>
                   </div>
 
