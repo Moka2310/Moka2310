@@ -374,4 +374,271 @@ const ContestTab = ({ language }) => {
   );
 };
 
-export { StatsTab, ContestTab };
+// Onglet Membres
+const MembersTab = ({ language }) => {
+  const [members, setMembers] = useState([]);
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    loadMembers();
+    loadStats();
+  }, []);
+
+  const loadMembers = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/members/all`, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}` }
+      });
+      const data = await response.json();
+      setMembers(data.members);
+    } catch (error) {
+      console.error('Error loading members:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadStats = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/members/stats`, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}` }
+      });
+      const data = await response.json();
+      setStats(data);
+    } catch (error) {
+      console.error('Error loading stats:', error);
+    }
+  };
+
+  const filteredMembers = members.filter(m => 
+    m.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    m.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    m.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleDateString(language === 'fr' ? 'fr-FR' : 'en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Stats Cards */}
+      {stats && (
+        <div className="grid md:grid-cols-4 gap-4">
+          <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl p-4 border border-blue-500/30">
+            <div className="text-blue-400 text-sm mb-1">{language === 'fr' ? 'Total Membres' : 'Total Members'}</div>
+            <div className="text-3xl font-bold text-white">{stats.total_users}</div>
+          </div>
+          <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl p-4 border border-green-500/30">
+            <div className="text-green-400 text-sm mb-1">{language === 'fr' ? 'Utilisateurs' : 'Users'}</div>
+            <div className="text-3xl font-bold text-white">{stats.regular_users}</div>
+          </div>
+          <div className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-xl p-4 border border-yellow-500/30">
+            <div className="text-yellow-400 text-sm mb-1">KYC {language === 'fr' ? 'En attente' : 'Pending'}</div>
+            <div className="text-3xl font-bold text-white">{stats.kyc_stats.pending}</div>
+          </div>
+          <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-xl p-4 border border-purple-500/30">
+            <div className="text-purple-400 text-sm mb-1">Admins</div>
+            <div className="text-3xl font-bold text-white">{stats.admins}</div>
+          </div>
+        </div>
+      )}
+
+      {/* Members List */}
+      <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-3xl p-6 md:p-8 border border-purple-500/30">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-white">
+            {language === 'fr' ? 'Liste des Membres' : 'Members List'}
+          </h2>
+          <div className="text-white/60">
+            {filteredMembers.length} {language === 'fr' ? 'membres' : 'members'}
+          </div>
+        </div>
+
+        {/* Search */}
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder={language === 'fr' ? 'Rechercher par nom ou email...' : 'Search by name or email...'}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full bg-white/10 border border-purple-500/30 rounded-lg px-4 py-2 text-white placeholder-white/50"
+          />
+        </div>
+
+        {loading ? (
+          <div className="text-center text-white/60 py-8">Chargement...</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-purple-500/30">
+                  <th className="text-left text-white/80 py-3 px-4">{language === 'fr' ? 'Nom' : 'Name'}</th>
+                  <th className="text-left text-white/80 py-3 px-4">Email</th>
+                  <th className="text-center text-white/80 py-3 px-4">KYC</th>
+                  <th className="text-center text-white/80 py-3 px-4">{language === 'fr' ? 'Rôle' : 'Role'}</th>
+                  <th className="text-center text-white/80 py-3 px-4">{language === 'fr' ? 'Inscription' : 'Registered'}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredMembers.map((member) => (
+                  <tr key={member.id} className="border-b border-purple-500/10 hover:bg-purple-500/5">
+                    <td className="py-3 px-4 text-white">
+                      {member.firstName} {member.lastName}
+                    </td>
+                    <td className="py-3 px-4 text-white/70 text-sm">{member.email}</td>
+                    <td className="py-3 px-4 text-center">
+                      <span className={`px-2 py-1 rounded-full text-xs ${
+                        member.kycStatus === 'approved' ? 'bg-green-500/20 text-green-400' :
+                        member.kycStatus === 'pending_review' ? 'bg-yellow-500/20 text-yellow-400' :
+                        member.kycStatus === 'rejected' ? 'bg-red-500/20 text-red-400' :
+                        'bg-gray-500/20 text-gray-400'
+                      }`}>
+                        {member.kycStatus === 'approved' ? '✓' : 
+                         member.kycStatus === 'pending_review' ? '⏱' :
+                         member.kycStatus === 'rejected' ? '✗' : '-'}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      <span className={`px-2 py-1 rounded-full text-xs ${
+                        member.role === 'admin' ? 'bg-purple-500/20 text-purple-400' : 'bg-blue-500/20 text-blue-400'
+                      }`}>
+                        {member.role}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 text-center text-white/60 text-sm">
+                      {formatDate(member.createdAt)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Onglet Abonnements
+const SubscriptionsTab = ({ language }) => {
+  const [subscriptions, setSubscriptions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadSubscriptions();
+  }, []);
+
+  const loadSubscriptions = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/subscriptions/admin/all`, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}` }
+      });
+      const data = await response.json();
+      setSubscriptions(data);
+    } catch (error) {
+      console.error('Error loading subscriptions:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleDateString(language === 'fr' ? 'fr-FR' : 'en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const getPaymentMethodBadge = (method) => {
+    if (method === 'stripe') {
+      return <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full text-xs">💳 Stripe</span>;
+    } else if (method === 'paypal') {
+      return <span className="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded-full text-xs">🅿️ PayPal</span>;
+    }
+    return <span className="bg-gray-500/20 text-gray-400 px-2 py-1 rounded-full text-xs">{method}</span>;
+  };
+
+  const getStatusBadge = (status) => {
+    const statusConfig = {
+      active: { color: 'green', text: language === 'fr' ? 'Actif' : 'Active', icon: '✓' },
+      canceled: { color: 'red', text: language === 'fr' ? 'Annulé' : 'Canceled', icon: '✗' },
+      past_due: { color: 'orange', text: language === 'fr' ? 'En retard' : 'Past Due', icon: '⚠' }
+    };
+    const config = statusConfig[status] || { color: 'gray', text: status, icon: '?' };
+    return (
+      <span className={`bg-${config.color}-500/20 text-${config.color}-400 px-2 py-1 rounded-full text-xs`}>
+        {config.icon} {config.text}
+      </span>
+    );
+  };
+
+  return (
+    <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-3xl p-6 md:p-8 border border-purple-500/30">
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold text-white">
+          {language === 'fr' ? 'Abonnements' : 'Subscriptions'}
+        </h2>
+        <div className="text-white/60">
+          {subscriptions.length} {language === 'fr' ? 'abonnements' : 'subscriptions'}
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="text-center text-white/60 py-8">Chargement...</div>
+      ) : subscriptions.length === 0 ? (
+        <div className="text-center text-white/60 py-8">
+          {language === 'fr' ? 'Aucun abonnement' : 'No subscriptions'}
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-purple-500/30">
+                <th className="text-left text-white/80 py-3 px-4">Email</th>
+                <th className="text-center text-white/80 py-3 px-4">{language === 'fr' ? 'Méthode' : 'Method'}</th>
+                <th className="text-center text-white/80 py-3 px-4">{language === 'fr' ? 'Statut' : 'Status'}</th>
+                <th className="text-center text-white/80 py-3 px-4">{language === 'fr' ? 'Prix' : 'Price'}</th>
+                <th className="text-center text-white/80 py-3 px-4">{language === 'fr' ? 'Date' : 'Date'}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {subscriptions.map((sub) => (
+                <tr key={sub.id} className="border-b border-purple-500/10 hover:bg-purple-500/5">
+                  <td className="py-3 px-4 text-white text-sm">{sub.userEmail}</td>
+                  <td className="py-3 px-4 text-center">
+                    {getPaymentMethodBadge(sub.paymentMethod)}
+                  </td>
+                  <td className="py-3 px-4 text-center">
+                    {getStatusBadge(sub.status)}
+                  </td>
+                  <td className="py-3 px-4 text-center text-green-400 font-bold">
+                    {sub.pricePerMonth}$ CAD
+                  </td>
+                  <td className="py-3 px-4 text-center text-white/60 text-sm">
+                    {formatDate(sub.createdAt)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export { StatsTab, ContestTab, MembersTab, SubscriptionsTab };
