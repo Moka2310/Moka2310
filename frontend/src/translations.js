@@ -460,11 +460,14 @@ export const translations = {
   },
 
   en: {
+    ...bonusTranslations.en,
     // Navigation
     nav: {
       home: 'Home',
       shop: 'Shop',
       contest: 'Contest',
+      bonus: 'Bonus',
+      aboutUs: 'About Us',
       channels: 'Our Channels',
       applications: 'Our Apps',
       videos: 'Videos',
