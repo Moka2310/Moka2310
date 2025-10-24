@@ -298,13 +298,10 @@ async def cancel_subscription(
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/admin/all")
-async def get_all_subscriptions_admin(current_user = Depends(get_current_user)):
+async def get_all_subscriptions_admin(current_user = Depends(require_admin)):
     """
     Récupérer tous les abonnements (ADMIN ONLY)
     """
-    # Vérifier si l'utilisateur est admin
-    if current_user.get('role') != 'admin':
-        raise HTTPException(status_code=403, detail="Accès non autorisé")
     
     db = get_db()
     
