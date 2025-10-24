@@ -31,6 +31,7 @@ async def create_subscription(
 ):
     """
     Crée un nouvel abonnement mensuel à 150$/mois pour accéder aux signaux
+    Supporte Stripe et PayPal
     """
     try:
         db = get_db()
@@ -43,59 +44,115 @@ async def create_subscription(
         if existing_user and existing_user.get('subscriptionStatus') == SubscriptionStatus.ACTIVE.value:
             raise HTTPException(status_code=400, detail="Vous avez déjà un abonnement actif")
         
-        # Créer ou récupérer le Price ID
-        price_id = await SubscriptionService.create_or_get_price()
+        # Déterminer la méthode de paiement (Stripe par défaut si non spécifié)
+        payment_method = getattr(subscription_data, 'paymentMethod', 'stripe')
         
-        # Créer le customer Stripe si nécessaire
-        stripe_customer_id = existing_user.get('stripeCustomerId')
-        if not stripe_customer_id:
-            stripe_customer_id = await SubscriptionService.create_customer(user_email, user_name)
-            # Sauvegarder le customer ID
+        if payment_method == "stripe":
+            # ===== STRIPE =====
+            # Créer ou récupérer le Price ID
+            price_id = await SubscriptionService.create_or_get_price()
+            
+            # Créer le customer Stripe si nécessaire
+            stripe_customer_id = existing_user.get('stripeCustomerId')
+            if not stripe_customer_id:
+                stripe_customer_id = await SubscriptionService.create_customer(user_email, user_name)
+                # Sauvegarder le customer ID
+                db.users.update_one(
+                    {"id": user_id},
+                    {"$set": {"stripeCustomerId": stripe_customer_id}}
+                )
+            
+            # Créer l'abonnement
+            subscription_result = await SubscriptionService.create_subscription(
+                customer_id=stripe_customer_id,
+                price_id=price_id,
+                payment_method_id=subscription_data.paymentMethodId
+            )
+            
+            # Créer l'enregistrement de l'abonnement dans la DB
+            subscription_id = str(uuid.uuid4())
+            subscription_doc = {
+                "id": subscription_id,
+                "userId": user_id,
+                "stripeSubscriptionId": subscription_result['subscription_id'],
+                "stripeCustomerId": stripe_customer_id,
+                "status": subscription_result['status'],
+                "priceId": price_id,
+                "paymentMethod": "stripe",
+                "currentPeriodStart": datetime.now(timezone.utc).isoformat(),
+                "currentPeriodEnd": datetime.now(timezone.utc).isoformat(),  # Sera mis à jour par le webhook
+                "cancelAtPeriodEnd": False,
+                "createdAt": datetime.now(timezone.utc).isoformat(),
+                "updatedAt": datetime.now(timezone.utc).isoformat(),
+            }
+            
+            db.subscriptions.insert_one(subscription_doc)
+            
+            # Mettre à jour l'utilisateur avec le username Telegram
             db.users.update_one(
                 {"id": user_id},
-                {"$set": {"stripeCustomerId": stripe_customer_id}}
+                {"$set": {
+                    "telegramUsername": subscription_data.telegramUsername,
+                    "subscriptionId": subscription_result['subscription_id'],
+                    "subscriptionStatus": subscription_result['status'],
+                }}
             )
-        
-        # Créer l'abonnement
-        subscription_result = await SubscriptionService.create_subscription(
-            customer_id=stripe_customer_id,
-            price_id=price_id,
-            payment_method_id=subscription_data.paymentMethodId
-        )
-        
-        # Créer l'enregistrement de l'abonnement dans la DB
-        subscription_id = str(uuid.uuid4())
-        subscription_doc = {
-            "id": subscription_id,
-            "userId": user_id,
-            "stripeSubscriptionId": subscription_result['subscription_id'],
-            "stripeCustomerId": stripe_customer_id,
-            "status": subscription_result['status'],
-            "priceId": price_id,
-            "currentPeriodStart": datetime.now(timezone.utc).isoformat(),
-            "currentPeriodEnd": datetime.now(timezone.utc).isoformat(),  # Sera mis à jour par le webhook
-            "cancelAtPeriodEnd": False,
-            "createdAt": datetime.now(timezone.utc).isoformat(),
-            "updatedAt": datetime.now(timezone.utc).isoformat(),
-        }
-        
-        db.subscriptions.insert_one(subscription_doc)
-        
-        # Mettre à jour l'utilisateur avec le username Telegram
-        db.users.update_one(
-            {"id": user_id},
-            {"$set": {
-                "telegramUsername": subscription_data.telegramUsername,
+            
+            return {
+                "clientSecret": subscription_result['client_secret'],
                 "subscriptionId": subscription_result['subscription_id'],
-                "subscriptionStatus": subscription_result['status'],
-            }}
-        )
+                "status": subscription_result['status'],
+                "paymentMethod": "stripe"
+            }
+            
+        elif payment_method == "paypal":
+            # ===== PAYPAL =====
+            subscription_result = await PayPalSubscriptionService.create_subscription(
+                telegram_username=subscription_data.telegramUsername,
+                user_email=user_email
+            )
+            
+            if subscription_result["success"]:
+                # Créer l'enregistrement de l'abonnement dans la DB (en attente)
+                subscription_id = str(uuid.uuid4())
+                subscription_doc = {
+                    "id": subscription_id,
+                    "userId": user_id,
+                    "paypalAgreementToken": subscription_result['agreement_token'],
+                    "paypalPlanId": subscription_result['plan_id'],
+                    "status": "pending",  # En attente de l'approbation PayPal
+                    "paymentMethod": "paypal",
+                    "currentPeriodStart": datetime.now(timezone.utc).isoformat(),
+                    "currentPeriodEnd": datetime.now(timezone.utc).isoformat(),
+                    "cancelAtPeriodEnd": False,
+                    "createdAt": datetime.now(timezone.utc).isoformat(),
+                    "updatedAt": datetime.now(timezone.utc).isoformat(),
+                }
+                
+                db.subscriptions.insert_one(subscription_doc)
+                
+                # Mettre à jour l'utilisateur avec le username Telegram
+                db.users.update_one(
+                    {"id": user_id},
+                    {"$set": {
+                        "telegramUsername": subscription_data.telegramUsername,
+                        "subscriptionId": subscription_id,
+                        "subscriptionStatus": "pending",
+                    }}
+                )
+                
+                return {
+                    "approvalUrl": subscription_result['approval_url'],
+                    "subscriptionId": subscription_id,
+                    "agreementToken": subscription_result['agreement_token'],
+                    "status": "pending",
+                    "paymentMethod": "paypal"
+                }
+            else:
+                raise HTTPException(status_code=400, detail="Erreur lors de la création de l'abonnement PayPal")
         
-        return {
-            "clientSecret": subscription_result['client_secret'],
-            "subscriptionId": subscription_result['subscription_id'],
-            "status": subscription_result['status']
-        }
+        else:
+            raise HTTPException(status_code=400, detail="Méthode de paiement non supportée")
         
     except HTTPException:
         raise
