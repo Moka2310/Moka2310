@@ -340,6 +340,65 @@ async def confirm_preorder_payment(
         raise HTTPException(status_code=500, detail="Erreur lors de la confirmation du paiement")
 
 
+@router.post("/confirm-paypal-payment/{preorder_id}")
+async def confirm_paypal_preorder_payment(
+    preorder_id: str,
+    payer_id: str,
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Confirmer le paiement PayPal d'une précommande (appelé après approbation PayPal)
+    """
+    db = get_db()
+    
+    try:
+        preorder = await db.bot_preorders.find_one({"id": preorder_id})
+        
+        if not preorder:
+            raise HTTPException(status_code=404, detail="Précommande introuvable")
+        
+        if preorder.get("userId") != current_user.id:
+            raise HTTPException(status_code=403, detail="Accès non autorisé")
+        
+        # Exécuter le paiement PayPal
+        from payment_service import PayPalPayment
+        
+        payment_id = preorder.get("paypalPaymentId")
+        if not payment_id:
+            raise HTTPException(status_code=400, detail="ID de paiement PayPal introuvable")
+        
+        payment_result = await PayPalPayment.execute_payment(payment_id, payer_id)
+        
+        if payment_result["success"]:
+            # Mettre à jour le statut
+            await db.bot_preorders.update_one(
+                {"id": preorder_id},
+                {
+                    "$set": {
+                        "status": BotPreorderStatus.PAID,
+                        "updatedAt": datetime.utcnow()
+                    }
+                }
+            )
+            
+            logger.info(f"✅ Bot preorder {preorder_id} PayPal payment confirmed")
+            
+            # TODO: Envoyer email de confirmation
+            
+            return {
+                "success": True,
+                "message": "Paiement PayPal confirmé ! Vous recevrez le bot par email dès qu'il sera disponible."
+            }
+        else:
+            raise HTTPException(status_code=400, detail=f"Erreur PayPal: {payment_result['error']}")
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"❌ Error confirming PayPal payment: {e}")
+        raise HTTPException(status_code=500, detail="Erreur lors de la confirmation du paiement PayPal")
+
+
 @router.get("/admin/all")
 async def get_all_preorders_admin(current_user: User = Depends(require_admin)):
     """
