@@ -17,8 +17,8 @@ async def get_all_members(current_user: User = Depends(require_admin)):
     db = get_db()
     
     try:
-        # Récupérer tous les utilisateurs
-        users = await db.users.find({}).to_list(10000)
+        # Récupérer tous les utilisateurs (exclure _id MongoDB)
+        users = await db.users.find({}, {"_id": 0}).to_list(10000)
         
         # Formater les données
         members = []
