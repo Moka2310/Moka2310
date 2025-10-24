@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Intégrer un chatbot AI sur la page d'accueil de Tradalife utilisant OpenAI GPT-4o-mini via Emergent LLM Key"
+user_problem_statement: "Test complet des nouvelles fonctionnalités: Onglet Pré-commandes Bot dans admin, Support PayPal complet (bot, abonnements), Système Bonus (annonces carrousel)"
 
 backend:
   - task: "Chat API - Health Check"
