@@ -6,6 +6,7 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import ChatWidget from '../components/ChatWidget';
+import BonusCarousel from '../components/BonusCarousel';
  
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
