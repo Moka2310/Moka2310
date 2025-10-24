@@ -3,7 +3,7 @@ Routes pour les précommandes du bot de copy trading
 """
 from fastapi import APIRouter, HTTPException, Depends
 from models import BotPreorder, BotPreorderCreate, BotPreorderResponse, BotPreorderStatus, User
-from dependencies import get_db, get_current_user
+from dependencies import get_db, get_current_user, require_admin
 from datetime import datetime
 import uuid
 import logging
