@@ -830,4 +830,397 @@ const BotPreordersTab = ({ language }) => {
   );
 };
 
-export { StatsTab, ContestTab, MembersTab, SubscriptionsTab, BotPreordersTab };
+// Onglet Gestion des Annonces Bonus
+const BonusManagementTab = ({ language }) => {
+  const [announcements, setAnnouncements] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [formData, setFormData] = useState({
+    titleFr: '',
+    titleEn: '',
+    descriptionFr: '',
+    descriptionEn: '',
+    imageUrl: '',
+    linkUrl: '',
+    order: 0
+  });
+
+  useEffect(() => {
+    loadAnnouncements();
+  }, []);
+
+  const loadAnnouncements = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/bonus-announcements/admin/all`, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}` }
+      });
+      const data = await response.json();
+      setAnnouncements(data);
+    } catch (error) {
+      console.error('Error loading announcements:', error);
+      toast({
+        title: '❌ Erreur',
+        description: 'Impossible de charger les annonces',
+        variant: 'destructive'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const url = editingId 
+        ? `${BACKEND_URL}/api/bonus-announcements/admin/update/${editingId}`
+        : `${BACKEND_URL}/api/bonus-announcements/admin/create`;
+      
+      const method = editingId ? 'PUT' : 'POST';
+      
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}`
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        toast({
+          title: '✅ Succès',
+          description: editingId ? 'Annonce mise à jour' : 'Annonce créée',
+        });
+        resetForm();
+        loadAnnouncements();
+      } else {
+        throw new Error('Failed to save announcement');
+      }
+    } catch (error) {
+      console.error('Error saving announcement:', error);
+      toast({
+        title: '❌ Erreur',
+        description: 'Impossible de sauvegarder l\'annonce',
+        variant: 'destructive'
+      });
+    }
+  };
+
+  const handleEdit = (announcement) => {
+    setFormData({
+      titleFr: announcement.titleFr,
+      titleEn: announcement.titleEn,
+      descriptionFr: announcement.descriptionFr || '',
+      descriptionEn: announcement.descriptionEn || '',
+      imageUrl: announcement.imageUrl,
+      linkUrl: announcement.linkUrl || '',
+      order: announcement.order
+    });
+    setEditingId(announcement.id);
+    setShowForm(true);
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('Êtes-vous sûr de vouloir supprimer cette annonce?')) return;
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/bonus-announcements/admin/delete/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}` }
+      });
+
+      if (response.ok) {
+        toast({
+          title: '✅ Succès',
+          description: 'Annonce supprimée',
+        });
+        loadAnnouncements();
+      }
+    } catch (error) {
+      console.error('Error deleting announcement:', error);
+      toast({
+        title: '❌ Erreur',
+        description: 'Impossible de supprimer l\'annonce',
+        variant: 'destructive'
+      });
+    }
+  };
+
+  const handleToggle = async (id) => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/bonus-announcements/admin/toggle/${id}`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}` }
+      });
+
+      if (response.ok) {
+        toast({
+          title: '✅ Succès',
+          description: 'Statut mis à jour',
+        });
+        loadAnnouncements();
+      }
+    } catch (error) {
+      console.error('Error toggling announcement:', error);
+      toast({
+        title: '❌ Erreur',
+        description: 'Impossible de changer le statut',
+        variant: 'destructive'
+      });
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      titleFr: '',
+      titleEn: '',
+      descriptionFr: '',
+      descriptionEn: '',
+      imageUrl: '',
+      linkUrl: '',
+      order: 0
+    });
+    setEditingId(null);
+    setShowForm(false);
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header with Add Button */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Gift className="w-8 h-8 text-pink-400" />
+          <h2 className="text-2xl font-bold text-white">
+            {language === 'fr' ? 'Gestion des Annonces Bonus' : 'Bonus Announcements Management'}
+          </h2>
+        </div>
+        {!showForm && (
+          <Button
+            onClick={() => setShowForm(true)}
+            className="bg-gradient-to-r from-pink-500 to-purple-600"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            {language === 'fr' ? 'Nouvelle annonce' : 'New announcement'}
+          </Button>
+        )}
+      </div>
+
+      {/* Form */}
+      {showForm && (
+        <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-3xl p-6 border border-purple-500/30">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-white">
+              {editingId 
+                ? (language === 'fr' ? 'Modifier l\'annonce' : 'Edit announcement')
+                : (language === 'fr' ? 'Nouvelle annonce' : 'New announcement')}
+            </h3>
+            <button onClick={resetForm} className="text-white/60 hover:text-white">
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <label className="text-white/80 text-sm mb-2 block">Titre (FR) *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.titleFr}
+                  onChange={(e) => setFormData({...formData, titleFr: e.target.value})}
+                  className="w-full bg-white/10 border border-purple-500/30 rounded-lg px-4 py-2 text-white"
+                />
+              </div>
+              <div>
+                <label className="text-white/80 text-sm mb-2 block">Title (EN) *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.titleEn}
+                  onChange={(e) => setFormData({...formData, titleEn: e.target.value})}
+                  className="w-full bg-white/10 border border-purple-500/30 rounded-lg px-4 py-2 text-white"
+                />
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <label className="text-white/80 text-sm mb-2 block">Description (FR)</label>
+                <Textarea
+                  value={formData.descriptionFr}
+                  onChange={(e) => setFormData({...formData, descriptionFr: e.target.value})}
+                  className="w-full bg-white/10 border border-purple-500/30 rounded-lg px-4 py-2 text-white min-h-[100px]"
+                />
+              </div>
+              <div>
+                <label className="text-white/80 text-sm mb-2 block">Description (EN)</label>
+                <Textarea
+                  value={formData.descriptionEn}
+                  onChange={(e) => setFormData({...formData, descriptionEn: e.target.value})}
+                  className="w-full bg-white/10 border border-purple-500/30 rounded-lg px-4 py-2 text-white min-h-[100px]"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-white/80 text-sm mb-2 block flex items-center gap-2">
+                <ImageIcon className="w-4 h-4" />
+                URL de l'image *
+              </label>
+              <input
+                type="url"
+                required
+                value={formData.imageUrl}
+                onChange={(e) => setFormData({...formData, imageUrl: e.target.value})}
+                placeholder="https://..."
+                className="w-full bg-white/10 border border-purple-500/30 rounded-lg px-4 py-2 text-white"
+              />
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <label className="text-white/80 text-sm mb-2 block flex items-center gap-2">
+                  <LinkIcon className="w-4 h-4" />
+                  Lien (optionnel)
+                </label>
+                <input
+                  type="url"
+                  value={formData.linkUrl}
+                  onChange={(e) => setFormData({...formData, linkUrl: e.target.value})}
+                  placeholder="https://..."
+                  className="w-full bg-white/10 border border-purple-500/30 rounded-lg px-4 py-2 text-white"
+                />
+              </div>
+              <div>
+                <label className="text-white/80 text-sm mb-2 block">Ordre d'affichage</label>
+                <input
+                  type="number"
+                  value={formData.order}
+                  onChange={(e) => setFormData({...formData, order: parseInt(e.target.value)})}
+                  className="w-full bg-white/10 border border-purple-500/30 rounded-lg px-4 py-2 text-white"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-4 justify-end">
+              <Button
+                type="button"
+                onClick={resetForm}
+                className="bg-white/10"
+              >
+                Annuler
+              </Button>
+              <Button
+                type="submit"
+                className="bg-gradient-to-r from-pink-500 to-purple-600"
+              >
+                <Save className="w-4 h-4 mr-2" />
+                {editingId ? 'Mettre à jour' : 'Créer'}
+              </Button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Announcements List */}
+      <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-3xl p-6 border border-purple-500/30">
+        {loading ? (
+          <div className="text-center text-white/60 py-8">Chargement...</div>
+        ) : announcements.length === 0 ? (
+          <div className="text-center text-white/60 py-8">
+            {language === 'fr' ? 'Aucune annonce' : 'No announcements'}
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {announcements.map((announcement) => (
+              <div
+                key={announcement.id}
+                className="bg-white/5 rounded-2xl p-4 border border-purple-500/20 hover:border-purple-500/40 transition-all"
+              >
+                <div className="flex gap-4">
+                  {/* Image */}
+                  <div className="w-32 h-32 rounded-xl overflow-hidden flex-shrink-0">
+                    <img
+                      src={announcement.imageUrl}
+                      alt={announcement.titleFr}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1">
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <h4 className="text-white font-semibold text-lg">{announcement.titleFr}</h4>
+                        <p className="text-white/60 text-sm">{announcement.titleEn}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                          announcement.isActive 
+                            ? 'bg-green-500/20 text-green-400'
+                            : 'bg-red-500/20 text-red-400'
+                        }`}>
+                          {announcement.isActive ? (language === 'fr' ? 'Actif' : 'Active') : (language === 'fr' ? 'Inactif' : 'Inactive')}
+                        </span>
+                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400">
+                          Ordre: {announcement.order}
+                        </span>
+                      </div>
+                    </div>
+
+                    {announcement.descriptionFr && (
+                      <p className="text-white/70 text-sm mb-3 line-clamp-2">
+                        {announcement.descriptionFr}
+                      </p>
+                    )}
+
+                    {announcement.linkUrl && (
+                      <a
+                        href={announcement.linkUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-pink-400 text-sm flex items-center gap-1 mb-3"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        {announcement.linkUrl}
+                      </a>
+                    )}
+
+                    {/* Actions */}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleToggle(announcement.id)}
+                        className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-lg text-sm hover:bg-blue-500/30 transition-all flex items-center gap-1"
+                      >
+                        {announcement.isActive ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        {announcement.isActive ? (language === 'fr' ? 'Masquer' : 'Hide') : (language === 'fr' ? 'Afficher' : 'Show')}
+                      </button>
+                      <button
+                        onClick={() => handleEdit(announcement)}
+                        className="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-lg text-sm hover:bg-yellow-500/30 transition-all flex items-center gap-1"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                        {language === 'fr' ? 'Modifier' : 'Edit'}
+                      </button>
+                      <button
+                        onClick={() => handleDelete(announcement.id)}
+                        className="px-3 py-1 bg-red-500/20 text-red-400 rounded-lg text-sm hover:bg-red-500/30 transition-all flex items-center gap-1"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        {language === 'fr' ? 'Supprimer' : 'Delete'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export { StatsTab, ContestTab, MembersTab, SubscriptionsTab, BotPreordersTab, BonusManagementTab };
