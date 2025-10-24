@@ -285,6 +285,13 @@ const Admin = () => {
             Pré-commandes Bot
           </Button>
           <Button
+            onClick={() => setActiveTab('bonus')}
+            className={`${activeTab === 'bonus' ? 'bg-gradient-to-r from-yellow-500 to-pink-600' : 'bg-white/10'}`}
+          >
+            <Gift className="w-4 h-4 mr-2" />
+            Bonus
+          </Button>
+          <Button
             onClick={() => setActiveTab('stats')}
             className={`${activeTab === 'stats' ? 'bg-gradient-to-r from-blue-500 to-purple-600' : 'bg-white/10'}`}
           >
@@ -304,6 +311,7 @@ const Admin = () => {
         {activeTab === 'members' && <MembersTab language={language} />}
         {activeTab === 'subscriptions' && <SubscriptionsTab language={language} />}
         {activeTab === 'bot-preorders' && <BotPreordersTab language={language} />}
+        {activeTab === 'bonus' && <BonusManagementTab language={language} />}
         {activeTab === 'stats' && <StatsTab language={language} />}
         {activeTab === 'contest' && <ContestTab language={language} />}
 
