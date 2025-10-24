@@ -224,6 +224,40 @@ class TradingContestCreate(BaseModel):
     winningTrades: int
     date: datetime
 
+
+# ===== BONUS ANNOUNCEMENTS MODELS =====
+class BonusAnnouncement(BaseModel):
+    id: str
+    titleFr: str  # Titre en français
+    titleEn: str  # Titre en anglais
+    descriptionFr: Optional[str] = None  # Description en français
+    descriptionEn: Optional[str] = None  # Description en anglais
+    imageUrl: str  # URL de l'image
+    linkUrl: Optional[str] = None  # Lien optionnel vers une page
+    isActive: bool = True  # Afficher ou masquer
+    order: int = 0  # Ordre d'affichage
+    createdAt: datetime = Field(default_factory=datetime.utcnow)
+    updatedAt: datetime = Field(default_factory=datetime.utcnow)
+
+class BonusAnnouncementCreate(BaseModel):
+    titleFr: str
+    titleEn: str
+    descriptionFr: Optional[str] = None
+    descriptionEn: Optional[str] = None
+    imageUrl: str
+    linkUrl: Optional[str] = None
+    order: Optional[int] = 0
+
+class BonusAnnouncementUpdate(BaseModel):
+    titleFr: Optional[str] = None
+    titleEn: Optional[str] = None
+    descriptionFr: Optional[str] = None
+    descriptionEn: Optional[str] = None
+    imageUrl: Optional[str] = None
+    linkUrl: Optional[str] = None
+    isActive: Optional[bool] = None
+    order: Optional[int] = None
+
 class TradingContestUpdate(BaseModel):
     firstName: Optional[str] = None
     lastName: Optional[str] = None
