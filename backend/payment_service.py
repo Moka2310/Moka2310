@@ -138,3 +138,150 @@ class PayPalPayment:
                 "success": False,
                 "error": str(e)
             }
+    
+    @staticmethod
+    async def create_billing_plan(name: str, description: str, amount: float, currency: str = "CAD"):
+        """Create a PayPal billing plan for subscriptions"""
+        try:
+            PayPalPayment._configure_paypal()
+            
+            billing_plan = paypalrestsdk.BillingPlan({
+                "name": name,
+                "description": description,
+                "type": "INFINITE",
+                "payment_definitions": [{
+                    "name": "Regular Payments",
+                    "type": "REGULAR",
+                    "frequency": "MONTH",
+                    "frequency_interval": "1",
+                    "cycles": "0",
+                    "amount": {
+                        "value": str(amount),
+                        "currency": currency
+                    }
+                }],
+                "merchant_preferences": {
+                    "setup_fee": {
+                        "value": "0",
+                        "currency": currency
+                    },
+                    "return_url": os.environ.get("FRONTEND_URL", "https://tradalife.com") + "/subscription-success",
+                    "cancel_url": os.environ.get("FRONTEND_URL", "https://tradalife.com") + "/subscription-cancel",
+                    "auto_bill_amount": "YES",
+                    "initial_fail_amount_action": "CONTINUE",
+                    "max_fail_attempts": "3"
+                }
+            })
+            
+            if billing_plan.create():
+                # Activate the plan
+                if billing_plan.replace([
+                    {
+                        "op": "replace",
+                        "path": "/",
+                        "value": {
+                            "state": "ACTIVE"
+                        }
+                    }
+                ]):
+                    return {
+                        "success": True,
+                        "plan_id": billing_plan.id
+                    }
+            
+            return {
+                "success": False,
+                "error": billing_plan.error if hasattr(billing_plan, 'error') else "Failed to create plan"
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e)
+            }
+    
+    @staticmethod
+    async def create_billing_agreement(plan_id: str, name: str, description: str, start_date: str):
+        """Create a billing agreement for a subscription"""
+        try:
+            PayPalPayment._configure_paypal()
+            
+            billing_agreement = paypalrestsdk.BillingAgreement({
+                "name": name,
+                "description": description,
+                "start_date": start_date,
+                "plan": {
+                    "id": plan_id
+                },
+                "payer": {
+                    "payment_method": "paypal"
+                }
+            })
+            
+            if billing_agreement.create():
+                # Get approval URL
+                for link in billing_agreement.links:
+                    if link.rel == "approval_url":
+                        return {
+                            "success": True,
+                            "approval_url": link.href,
+                            "agreement_token": billing_agreement.token
+                        }
+            
+            return {
+                "success": False,
+                "error": billing_agreement.error if hasattr(billing_agreement, 'error') else "Failed to create agreement"
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e)
+            }
+    
+    @staticmethod
+    async def execute_billing_agreement(agreement_token: str):
+        """Execute a billing agreement after user approval"""
+        try:
+            PayPalPayment._configure_paypal()
+            
+            billing_agreement = paypalrestsdk.BillingAgreement.execute(agreement_token)
+            
+            if billing_agreement:
+                return {
+                    "success": True,
+                    "agreement_id": billing_agreement.id,
+                    "state": billing_agreement.state
+                }
+            
+            return {
+                "success": False,
+                "error": "Failed to execute agreement"
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e)
+            }
+    
+    @staticmethod
+    async def cancel_billing_agreement(agreement_id: str):
+        """Cancel a PayPal billing agreement"""
+        try:
+            PayPalPayment._configure_paypal()
+            
+            billing_agreement = paypalrestsdk.BillingAgreement.find(agreement_id)
+            
+            if billing_agreement.cancel({"note": "Canceling the agreement"}):
+                return {
+                    "success": True,
+                    "message": "Agreement canceled"
+                }
+            
+            return {
+                "success": False,
+                "error": "Failed to cancel agreement"
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e)
+            }
