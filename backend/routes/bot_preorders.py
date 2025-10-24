@@ -277,3 +277,42 @@ async def confirm_preorder_payment(
     except Exception as e:
         logger.error(f"❌ Error confirming payment: {e}")
         raise HTTPException(status_code=500, detail="Erreur lors de la confirmation du paiement")
+
+
+@router.get("/admin/all")
+async def get_all_preorders_admin(current_user: User = Depends(require_admin)):
+    """
+    Récupérer toutes les précommandes (admin only)
+    """
+    db = get_db()
+    
+    try:
+        # Récupérer toutes les précommandes
+        preorders = await db.bot_preorders.find().to_list(1000)
+        
+        # Exclure les fausses précommandes (celles avec fake_user)
+        real_preorders = [
+            p for p in preorders 
+            if not p.get('userId', '').startswith('fake_user')
+        ]
+        
+        # Calculer les statistiques
+        total_real = len(real_preorders)
+        paid_count = len([p for p in real_preorders if p.get('status') == 'paid'])
+        pending_count = len([p for p in real_preorders if p.get('status') == 'pending_payment'])
+        total_revenue = sum([p.get('price', 0) for p in real_preorders if p.get('status') == 'paid'])
+        
+        logger.info(f"📊 Admin preorders: {total_real} total, {paid_count} paid, {pending_count} pending")
+        
+        return {
+            "preorders": real_preorders,
+            "stats": {
+                "total": total_real,
+                "paid": paid_count,
+                "pending": pending_count,
+                "revenue": total_revenue
+            }
+        }
+    except Exception as e:
+        logger.error(f"❌ Error fetching admin preorders: {e}")
+        raise HTTPException(status_code=500, detail="Erreur lors de la récupération des précommandes")
