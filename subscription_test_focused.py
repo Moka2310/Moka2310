@@ -46,7 +46,7 @@ class SubscriptionTester:
         try:
             credentials = {
                 "email": "admin@tradalife.com",
-                "password": "Admin123!"
+                "password": "admin123"  # Use the working password from test_result.md
             }
             
             response = self.session.post(f"{API_URL}/auth/login", json=credentials)
