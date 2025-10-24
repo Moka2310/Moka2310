@@ -1,5 +1,8 @@
+import { bonusTranslations } from './bonusTranslations';
+
 export const translations = {
   fr: {
+    ...bonusTranslations.fr,
     // Navigation
     nav: {
       home: 'Accueil',
