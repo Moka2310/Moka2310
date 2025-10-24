@@ -172,3 +172,101 @@ class SubscriptionService:
         except stripe.error.SignatureVerificationError as e:
             print(f"Invalid signature: {e}")
             return None
+
+
+class PayPalSubscriptionService:
+    """Service pour gérer les abonnements PayPal"""
+    
+    @staticmethod
+    async def create_or_get_billing_plan() -> str:
+        """Crée ou récupère le Billing Plan PayPal pour l'abonnement à 150$/mois"""
+        try:
+            from payment_service import PayPalPayment
+            
+            # Pour l'instant, créer un nouveau plan à chaque fois
+            # TODO: Stocker le plan_id en DB et le réutiliser
+            plan_result = await PayPalPayment.create_billing_plan(
+                name="Abonnement Signaux TRADALIFE - Mensuel",
+                description="Accès mensuel aux signaux de trading sur tous les canaux Telegram (Forex, Crypto, Indices, Gold, Actions, Commodités)",
+                amount=150.0,
+                currency="CAD"
+            )
+            
+            if plan_result["success"]:
+                print(f"✅ PayPal Billing Plan créé: {plan_result['plan_id']}")
+                return plan_result["plan_id"]
+            else:
+                raise Exception(f"Erreur création plan PayPal: {plan_result['error']}")
+                
+        except Exception as e:
+            print(f"❌ Erreur lors de la création du billing plan PayPal: {e}")
+            raise
+    
+    @staticmethod
+    async def create_subscription(telegram_username: str, user_email: str) -> Dict[str, Any]:
+        """Crée un abonnement PayPal"""
+        try:
+            from payment_service import PayPalPayment
+            
+            # Créer ou récupérer le billing plan
+            plan_id = await PayPalSubscriptionService.create_or_get_billing_plan()
+            
+            # Date de début (dans 5 minutes pour laisser le temps à l'utilisateur d'approuver)
+            start_date = (datetime.now(timezone.utc) + timedelta(minutes=5)).isoformat()
+            
+            # Créer le billing agreement
+            agreement_result = await PayPalPayment.create_billing_agreement(
+                plan_id=plan_id,
+                name=f"Abonnement TRADALIFE - {telegram_username}",
+                description=f"Abonnement mensuel signaux trading pour {user_email}",
+                start_date=start_date
+            )
+            
+            if agreement_result["success"]:
+                return {
+                    "success": True,
+                    "approval_url": agreement_result["approval_url"],
+                    "agreement_token": agreement_result["agreement_token"],
+                    "plan_id": plan_id
+                }
+            else:
+                raise Exception(f"Erreur création agreement PayPal: {agreement_result['error']}")
+                
+        except Exception as e:
+            print(f"❌ Erreur lors de la création de l'abonnement PayPal: {e}")
+            raise
+    
+    @staticmethod
+    async def execute_subscription(agreement_token: str) -> Dict[str, Any]:
+        """Exécute un abonnement PayPal après approbation de l'utilisateur"""
+        try:
+            from payment_service import PayPalPayment
+            
+            execute_result = await PayPalPayment.execute_billing_agreement(agreement_token)
+            
+            if execute_result["success"]:
+                return {
+                    "success": True,
+                    "agreement_id": execute_result["agreement_id"],
+                    "status": execute_result["state"]
+                }
+            else:
+                raise Exception(f"Erreur exécution agreement PayPal: {execute_result['error']}")
+                
+        except Exception as e:
+            print(f"❌ Erreur lors de l'exécution de l'abonnement PayPal: {e}")
+            raise
+    
+    @staticmethod
+    async def cancel_subscription(agreement_id: str) -> bool:
+        """Annule un abonnement PayPal"""
+        try:
+            from payment_service import PayPalPayment
+            
+            cancel_result = await PayPalPayment.cancel_billing_agreement(agreement_id)
+            
+            return cancel_result["success"]
+                
+        except Exception as e:
+            print(f"❌ Erreur lors de l'annulation de l'abonnement PayPal: {e}")
+            return False
