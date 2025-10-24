@@ -49,19 +49,19 @@ const AboutUs = () => {
         {/* Main Content Card */}
         <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-3xl border border-purple-500/30 overflow-hidden mb-12">
           {/* Image Section */}
-          <div className="relative h-96 overflow-hidden">
+          <div className="relative h-[500px] overflow-hidden">
             <img
               src="https://customer-assets.emergentagent.com/job_tradebot-launch/artifacts/bcatt7w6_ChatGPT%20Image%2023%20oct.%202025%2C%2021%20h%2052%20min%2025%20s.png"
-              alt="Calo Mohamed - Fondateur TRADALIFE"
-              className="w-full h-full object-cover object-top"
+              alt="Kalot Mohamad - Fondateur TRADALIFE"
+              className="w-full h-full object-contain bg-gradient-to-b from-[#1E1540] to-[#2B1F5C]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#2B1F5C] via-[#2B1F5C]/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#2B1F5C] via-transparent to-transparent" />
             
             {/* Overlay Info */}
             <div className="absolute bottom-8 left-8 right-8">
               <div className="bg-gradient-to-r from-pink-500 to-purple-600 p-1 rounded-2xl inline-block">
                 <div className="bg-[#1E1540] px-6 py-4 rounded-2xl">
-                  <h2 className="text-2xl font-bold text-white">Calo Mohamed</h2>
+                  <h2 className="text-2xl font-bold text-white">Kalot Mohamad</h2>
                   <p className="text-pink-400">{language === 'fr' ? 'Fondateur de TRADALIFE' : 'Founder of TRADALIFE'}</p>
                 </div>
               </div>
