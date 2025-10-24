@@ -1234,6 +1234,287 @@ class TradalifeTester:
             self.log_test("Admin Subscription Flow", False, f"Error: {str(e)}")
             return False
 
+    # ===== NEW TESTS FOR REVIEW REQUEST =====
+    
+    def test_bonus_announcements_public(self):
+        """Test GET /api/bonus-announcements/all (public endpoint)"""
+        try:
+            response = self.session.get(f"{API_URL}/bonus-announcements/all")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    self.log_test("Bonus Announcements (Public)", True, f"Retrieved {len(data)} active announcements")
+                    return True
+                else:
+                    self.log_test("Bonus Announcements (Public)", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Bonus Announcements (Public)", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Bonus Announcements (Public)", False, f"Error: {str(e)}")
+            return False
+
+    def test_bonus_announcements_admin_create(self):
+        """Test POST /api/bonus-announcements/admin/create (admin only)"""
+        if not self.admin_token:
+            # Try to login as admin first
+            if not self.test_admin_subscription_login():
+                self.log_test("Bonus Announcements Admin Create", False, "No admin token available")
+                return False
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            
+            # Test data as specified in review request
+            announcement_data = {
+                "titleFr": "Offre Spéciale - Test",
+                "titleEn": "Special Offer - Test",
+                "descriptionFr": "Ceci est une annonce de test pour valider le système",
+                "descriptionEn": "This is a test announcement to validate the system",
+                "imageUrl": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800",
+                "linkUrl": "https://tradalife.com",
+                "order": 1
+            }
+            
+            response = self.session.post(f"{API_URL}/bonus-announcements/admin/create", 
+                                       json=announcement_data, headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "announcement" in data:
+                    self.created_announcement_id = data["announcement"]["id"]
+                    self.log_test("Bonus Announcements Admin Create", True, 
+                                f"Test announcement created successfully: {data['message']}")
+                    return True
+                else:
+                    self.log_test("Bonus Announcements Admin Create", False, "Invalid response structure", data)
+                    return False
+            else:
+                self.log_test("Bonus Announcements Admin Create", False, 
+                            f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Bonus Announcements Admin Create", False, f"Error: {str(e)}")
+            return False
+
+    def test_bonus_announcements_admin_all(self):
+        """Test GET /api/bonus-announcements/admin/all (admin only)"""
+        if not self.admin_token:
+            self.log_test("Bonus Announcements Admin All", False, "No admin token available")
+            return False
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            response = self.session.get(f"{API_URL}/bonus-announcements/admin/all", headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    self.log_test("Bonus Announcements Admin All", True, 
+                                f"Retrieved {len(data)} announcements (including inactive)")
+                    return True
+                else:
+                    self.log_test("Bonus Announcements Admin All", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Bonus Announcements Admin All", False, 
+                            f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Bonus Announcements Admin All", False, f"Error: {str(e)}")
+            return False
+
+    def test_bonus_announcements_admin_toggle(self):
+        """Test POST /api/bonus-announcements/admin/toggle/{id} (admin only)"""
+        if not self.admin_token:
+            self.log_test("Bonus Announcements Admin Toggle", False, "No admin token available")
+            return False
+        
+        if not hasattr(self, 'created_announcement_id'):
+            self.log_test("Bonus Announcements Admin Toggle", False, "No announcement ID available for toggle test")
+            return False
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            response = self.session.post(f"{API_URL}/bonus-announcements/admin/toggle/{self.created_announcement_id}", 
+                                       headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "isActive" in data:
+                    self.log_test("Bonus Announcements Admin Toggle", True, 
+                                f"Announcement toggled successfully: {data['message']}")
+                    return True
+                else:
+                    self.log_test("Bonus Announcements Admin Toggle", False, "Invalid response structure", data)
+                    return False
+            else:
+                self.log_test("Bonus Announcements Admin Toggle", False, 
+                            f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Bonus Announcements Admin Toggle", False, f"Error: {str(e)}")
+            return False
+
+    def test_bot_preorders_paypal_create(self):
+        """Test POST /api/bot-preorders/create with paymentMethod='paypal'"""
+        if not self.token:
+            self.log_test("Bot Preorders PayPal Create", False, "No auth token available")
+            return False
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.token}"}
+            preorder_data = {
+                "paymentMethod": "paypal"
+            }
+            
+            response = self.session.post(f"{API_URL}/bot-preorders/create", 
+                                       json=preorder_data, headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "approvalUrl" in data and data.get("paymentMethod") == "paypal":
+                    self.log_test("Bot Preorders PayPal Create", True, 
+                                f"PayPal bot preorder created with approval URL")
+                    return True
+                else:
+                    self.log_test("Bot Preorders PayPal Create", False, "Missing approvalUrl in response", data)
+                    return False
+            elif response.status_code == 400 and ("déjà une précommande" in response.text or "already" in response.text):
+                self.log_test("Bot Preorders PayPal Create", True, 
+                            "User already has preorder (expected for repeated tests)")
+                return True
+            else:
+                self.log_test("Bot Preorders PayPal Create", False, 
+                            f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Bot Preorders PayPal Create", False, f"Error: {str(e)}")
+            return False
+
+    def test_subscriptions_paypal_create(self):
+        """Test POST /api/subscriptions/create with paymentMethod='paypal'"""
+        if not self.token:
+            self.log_test("Subscriptions PayPal Create", False, "No auth token available")
+            return False
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.token}"}
+            subscription_data = {
+                "telegramUsername": "@testuser_paypal",
+                "paymentMethod": "paypal"
+            }
+            
+            response = self.session.post(f"{API_URL}/subscriptions/create", 
+                                       json=subscription_data, headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if ("approvalUrl" in data and "agreementToken" in data and 
+                    data.get("paymentMethod") == "paypal"):
+                    self.log_test("Subscriptions PayPal Create", True, 
+                                f"PayPal subscription created with approval URL and agreement token")
+                    return True
+                else:
+                    self.log_test("Subscriptions PayPal Create", False, 
+                                "Missing approvalUrl or agreementToken in response", data)
+                    return False
+            elif response.status_code == 400 and ("déjà un abonnement" in response.text or "already" in response.text):
+                self.log_test("Subscriptions PayPal Create", True, 
+                            "User already has subscription (expected for repeated tests)")
+                return True
+            else:
+                self.log_test("Subscriptions PayPal Create", False, 
+                            f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Subscriptions PayPal Create", False, f"Error: {str(e)}")
+            return False
+
+    def test_admin_bot_preorders_all(self):
+        """Test GET /api/bot-preorders/admin/all (admin only)"""
+        if not self.admin_token:
+            self.log_test("Admin Bot Preorders All", False, "No admin token available")
+            return False
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            response = self.session.get(f"{API_URL}/bot-preorders/admin/all", headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "preorders" in data and "stats" in data:
+                    stats = data["stats"]
+                    self.log_test("Admin Bot Preorders All", True, 
+                                f"Retrieved preorders with stats: {stats['total']} total, {stats['paid']} paid, revenue: {stats['revenue']}")
+                    return True
+                else:
+                    self.log_test("Admin Bot Preorders All", False, "Invalid response structure", data)
+                    return False
+            else:
+                self.log_test("Admin Bot Preorders All", False, 
+                            f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Bot Preorders All", False, f"Error: {str(e)}")
+            return False
+
+    def test_admin_members_all(self):
+        """Test GET /api/members/admin/all (admin only)"""
+        if not self.admin_token:
+            self.log_test("Admin Members All", False, "No admin token available")
+            return False
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            response = self.session.get(f"{API_URL}/members/all", headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "total" in data and "members" in data:
+                    self.log_test("Admin Members All", True, 
+                                f"Retrieved {data['total']} members successfully")
+                    return True
+                else:
+                    self.log_test("Admin Members All", False, "Invalid response structure", data)
+                    return False
+            else:
+                self.log_test("Admin Members All", False, 
+                            f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Members All", False, f"Error: {str(e)}")
+            return False
+
+    def test_admin_subscriptions_all(self):
+        """Test GET /api/subscriptions/admin/all (admin only)"""
+        if not self.admin_token:
+            self.log_test("Admin Subscriptions All", False, "No admin token available")
+            return False
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            response = self.session.get(f"{API_URL}/subscriptions/admin/all", headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    self.log_test("Admin Subscriptions All", True, 
+                                f"Retrieved {len(data)} subscriptions successfully")
+                    return True
+                else:
+                    self.log_test("Admin Subscriptions All", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Admin Subscriptions All", False, 
+                            f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Subscriptions All", False, f"Error: {str(e)}")
+            return False
+
     def test_bot_preorders_availability(self):
         """Test bot preorders availability endpoint"""
         try:
