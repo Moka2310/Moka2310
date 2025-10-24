@@ -286,6 +286,9 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Bonus Carousel Section */}
+      <BonusCarousel />
+
       {/* Video Banner - Groupe TRADALIFE HD Full avec cadre lumineux */}
       <section className="w-full overflow-hidden bg-black relative py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-3 sm:px-4">
