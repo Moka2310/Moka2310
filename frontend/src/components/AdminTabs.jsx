@@ -13,7 +13,8 @@ import {
   Trash2, 
   Edit2,
   Save,
-  X
+  X,
+  Bot
 } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
