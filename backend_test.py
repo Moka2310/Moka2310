@@ -1349,6 +1349,13 @@ class TradalifeTester:
             # Test webhook endpoints
             self.test_subscription_webhook_invalid_data,
             self.test_subscription_webhook_valid_structure,
+            self.test_subscription_webhook_customer_created,
+            
+            # Test subscription creation with valid data
+            self.test_subscription_create_with_valid_data,
+            
+            # Test complete admin subscription flow
+            self.test_admin_subscription_flow,
             
             # Bot Preorders Tests (Current Focus)
             self.test_bot_preorders_availability,
