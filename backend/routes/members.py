@@ -35,7 +35,17 @@ async def get_all_members(current_user: User = Depends(require_admin)):
             })
         
         # Trier par date d'inscription (plus récent en premier)
-        members_sorted = sorted(members, key=lambda x: x.get("createdAt", ""), reverse=True)
+        # Handle mixed datetime/string types safely
+        def safe_sort_key(member):
+            created_at = member.get("createdAt", "")
+            if isinstance(created_at, str):
+                return created_at
+            elif hasattr(created_at, 'isoformat'):
+                return created_at.isoformat()
+            else:
+                return ""
+        
+        members_sorted = sorted(members, key=safe_sort_key, reverse=True)
         
         logger.info(f"✅ Retrieved {len(members_sorted)} members")
         
