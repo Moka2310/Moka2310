@@ -67,7 +67,7 @@ const SubscriptionForm = () => {
         },
         {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}`
           }
         }
       );
