@@ -19,6 +19,7 @@ async def create_bot_preorder(
     """
     Créer une précommande de bot
     Nécessite que l'utilisateur soit connecté
+    Supporte Stripe et PayPal
     """
     db = get_db()
     
@@ -62,14 +63,74 @@ async def create_bot_preorder(
         
         logger.info(f"✅ Bot preorder created for user {current_user.email}: {preorder.id}")
         
-        # Pour l'instant, on retourne juste l'ID de précommande
-        # Le paiement Stripe sera géré côté frontend
-        return {
-            "preorderId": preorder.id,
-            "price": preorder.price,
-            "status": preorder.status,
-            "message": "Précommande créée avec succès"
-        }
+        # Gérer le paiement selon la méthode choisie
+        if preorder_data.paymentMethod == "stripe":
+            # Import Stripe payment service
+            from payment_service import StripePayment
+            
+            payment_result = await StripePayment.create_payment_intent(
+                amount=300.0,
+                currency="cad",
+                metadata={
+                    "preorder_id": preorder.id,
+                    "user_id": current_user.id,
+                    "type": "bot_preorder"
+                }
+            )
+            
+            if payment_result["success"]:
+                # Update preorder with payment intent ID
+                await db.bot_preorders.update_one(
+                    {"id": preorder.id},
+                    {"$set": {"stripePaymentIntentId": payment_result["payment_intent_id"]}}
+                )
+                
+                return {
+                    "preorderId": preorder.id,
+                    "price": preorder.price,
+                    "status": preorder.status,
+                    "clientSecret": payment_result["client_secret"],
+                    "paymentMethod": "stripe",
+                    "message": "Précommande créée avec succès"
+                }
+            else:
+                # Delete preorder if payment failed
+                await db.bot_preorders.delete_one({"id": preorder.id})
+                raise HTTPException(status_code=400, detail=f"Erreur Stripe: {payment_result['error']}")
+        
+        elif preorder_data.paymentMethod == "paypal":
+            # Import PayPal payment service
+            from payment_service import PayPalPayment
+            
+            payment_result = await PayPalPayment.create_payment(
+                amount=300.0,
+                currency="CAD",
+                description="Pré-commande Bot de Copy Trading MT4 - Tradalife"
+            )
+            
+            if payment_result["success"]:
+                # Update preorder with PayPal payment ID
+                await db.bot_preorders.update_one(
+                    {"id": preorder.id},
+                    {"$set": {"paypalPaymentId": payment_result["payment_id"]}}
+                )
+                
+                return {
+                    "preorderId": preorder.id,
+                    "price": preorder.price,
+                    "status": preorder.status,
+                    "approvalUrl": payment_result["approval_url"],
+                    "paymentMethod": "paypal",
+                    "message": "Précommande créée avec succès"
+                }
+            else:
+                # Delete preorder if payment failed
+                await db.bot_preorders.delete_one({"id": preorder.id})
+                raise HTTPException(status_code=400, detail=f"Erreur PayPal: {payment_result['error']}")
+        
+        else:
+            await db.bot_preorders.delete_one({"id": preorder.id})
+            raise HTTPException(status_code=400, detail="Méthode de paiement non supportée")
         
     except HTTPException:
         raise
