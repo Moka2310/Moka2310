@@ -5,6 +5,8 @@ export const translations = {
       home: 'Accueil',
       shop: 'Boutique',
       contest: 'Concours',
+      bonus: 'Bonus',
+      aboutUs: 'Qui sommes nous?',
       channels: 'Nos canaux',
       applications: 'Nos applications',
       videos: 'Vidéos',
