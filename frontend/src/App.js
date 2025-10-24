@@ -16,6 +16,8 @@ import CanalDetails from "./pages/CanalDetails";
 import Subscription from "./pages/Subscription";
 import BotPreorder from "./pages/BotPreorder";
 import Contest from "./pages/Contest";
+import Bonus from "./pages/Bonus";
+import AboutUs from "./pages/AboutUs";
 
 function App() {
   return (
