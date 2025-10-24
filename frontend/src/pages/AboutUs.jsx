@@ -1,10 +1,25 @@
-import React from 'react';
-import { Users, Award, TrendingUp, Shield, Target, Heart } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Users, Award, TrendingUp, Shield, Target, Heart, ArrowUp } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
 
 const AboutUs = () => {
   const { language } = useLanguage();
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    // Show scroll to top button when scrolling
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Texte biographie
   const biographyFr = {
