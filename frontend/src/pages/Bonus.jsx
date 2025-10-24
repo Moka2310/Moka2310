@@ -119,7 +119,7 @@ const Bonus = () => {
                 </p>
               )}
               
-              {currentAnnouncement.linkUrl && (
+              {currentAnnouncement.linkUrl && currentAnnouncement.linkUrl.trim() && (
                 <a
                   href={currentAnnouncement.linkUrl}
                   target="_blank"
