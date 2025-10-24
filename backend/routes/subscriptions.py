@@ -160,6 +160,66 @@ async def create_subscription(
         print(f"Error creating subscription: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.post("/execute-paypal-subscription")
+async def execute_paypal_subscription(
+    agreement_token: str,
+    current_user = Depends(get_current_user)
+):
+    """
+    Exécute un abonnement PayPal après approbation de l'utilisateur
+    """
+    try:
+        db = get_db()
+        user_id = current_user.id
+        
+        # Trouver l'abonnement en attente avec ce token
+        subscription = db.subscriptions.find_one({
+            "userId": user_id,
+            "paypalAgreementToken": agreement_token,
+            "status": "pending"
+        })
+        
+        if not subscription:
+            raise HTTPException(status_code=404, detail="Abonnement introuvable ou déjà activé")
+        
+        # Exécuter l'agreement PayPal
+        execute_result = await PayPalSubscriptionService.execute_subscription(agreement_token)
+        
+        if execute_result["success"]:
+            # Mettre à jour l'abonnement dans la DB
+            db.subscriptions.update_one(
+                {"id": subscription['id']},
+                {"$set": {
+                    "paypalAgreementId": execute_result['agreement_id'],
+                    "status": SubscriptionStatus.ACTIVE.value,
+                    "updatedAt": datetime.now(timezone.utc).isoformat()
+                }}
+            )
+            
+            # Mettre à jour le statut de l'utilisateur
+            db.users.update_one(
+                {"id": user_id},
+                {"$set": {
+                    "subscriptionStatus": SubscriptionStatus.ACTIVE.value,
+                    "subscriptionId": subscription['id']
+                }}
+            )
+            
+            return {
+                "success": True,
+                "message": "Abonnement PayPal activé avec succès!",
+                "subscriptionId": subscription['id'],
+                "agreementId": execute_result['agreement_id']
+            }
+        else:
+            raise HTTPException(status_code=400, detail="Erreur lors de l'activation de l'abonnement PayPal")
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error executing PayPal subscription: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.get("/status", response_model=SubscriptionResponse)
 async def get_subscription_status(
     current_user = Depends(get_current_user)
