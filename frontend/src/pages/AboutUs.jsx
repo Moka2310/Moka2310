@@ -8,7 +8,7 @@ const AboutUs = () => {
 
   // Texte biographie
   const biographyFr = {
-    intro: "Je m'appelle Calo Mohamed, Canadien d'origine libanaise, passionné par le monde de la finance et du trading. Mon parcours n'a pourtant pas commencé dans cet univers. Pendant plusieurs années, j'ai exercé dans des domaines très éloignés des marchés financiers.",
+    intro: "Je m'appelle Kalot Mohamad, Canadien d'origine libanaise, passionné par le monde de la finance et du trading. Mon parcours n'a pourtant pas commencé dans cet univers. Pendant plusieurs années, j'ai exercé dans des domaines très éloignés des marchés financiers.",
     discovery: "Mais il y a environ huit ans, au moment où le monde découvrait les NFT et l'essor fulgurant de la crypto-monnaie, j'ai eu un véritable déclic. Fasciné par cette révolution numérique et économique, j'ai décidé de m'y plonger à fond. J'ai d'abord fait mes armes dans le secteur des cryptos et des NFT, en observant les cycles, les innovations et les comportements du marché.",
     evolution: "Cette expérience m'a permis de développer une compréhension fine des dynamiques financières modernes. Très vite, j'ai souhaité aller plus loin et me tourner vers le trading professionnel, en étudiant de manière approfondie l'analyse technique, la gestion du risque et les stratégies multi-actifs.",
     tradalife: "C'est ainsi qu'est née TRADALIFE, une communauté de traders que j'ai fondée il y a maintenant trois ans. Depuis sa création, TRADALIFE affiche un taux de réussite hebdomadaire d'environ 75%, fruit d'une approche structurée, disciplinée et axée sur la performance collective.",
@@ -19,7 +19,7 @@ const AboutUs = () => {
   };
 
   const biographyEn = {
-    intro: "My name is Calo Mohamed, a Canadian of Lebanese origin, passionate about the world of finance and trading. However, my journey didn't start in this field. For several years, I worked in areas far removed from financial markets.",
+    intro: "My name is Kalot Mohamad, a Canadian of Lebanese origin, passionate about the world of finance and trading. However, my journey didn't start in this field. For several years, I worked in areas far removed from financial markets.",
     discovery: "But about eight years ago, when the world was discovering NFTs and the meteoric rise of cryptocurrency, I had a real awakening. Fascinated by this digital and economic revolution, I decided to dive in headfirst. I first cut my teeth in the crypto and NFT sector, observing cycles, innovations and market behaviors.",
     evolution: "This experience allowed me to develop a fine understanding of modern financial dynamics. Very quickly, I wanted to go further and turn to professional trading, studying technical analysis, risk management and multi-asset strategies in depth.",
     tradalife: "This is how TRADALIFE was born, a community of traders that I founded three years ago. Since its creation, TRADALIFE has achieved a weekly success rate of around 75%, the result of a structured, disciplined approach focused on collective performance.",
