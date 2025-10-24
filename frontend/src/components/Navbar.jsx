@@ -75,8 +75,10 @@ const Navbar = () => {
 
   const menuItems = [
     { label: t(language, 'nav.home'), path: '/' },
+    { label: t(language, 'nav.bonus'), path: '/bonus' },
     { label: t(language, 'nav.channels'), path: '#canaux' },
     { label: t(language, 'nav.applications'), path: '#applications' },
+    { label: t(language, 'nav.aboutUs'), path: '/about-us' },
     { label: t(language, 'nav.contact'), path: '#contact' },
     { label: t(language, 'nav.shop'), path: '/boutique' },
     { label: t(language, 'nav.contest'), path: '/contest' }
