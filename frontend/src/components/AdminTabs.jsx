@@ -14,7 +14,12 @@ import {
   Edit2,
   Save,
   X,
-  Bot
+  Bot,
+  Gift,
+  Image as ImageIcon,
+  Link as LinkIcon,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
