@@ -1686,7 +1686,23 @@ class TradalifeTester:
             self.test_admin_stats,
             
             # Error Handling
-            self.test_error_handling
+            self.test_error_handling,
+            
+            # ===== NEW FEATURES TESTS (Review Request Priority) =====
+            # Bonus Announcements System (PRIORITY 1)
+            self.test_bonus_announcements_public,
+            self.test_bonus_announcements_admin_create,
+            self.test_bonus_announcements_admin_all,
+            self.test_bonus_announcements_admin_toggle,
+            
+            # PayPal Integration Tests (PRIORITY 2)
+            self.test_bot_preorders_paypal_create,
+            self.test_subscriptions_paypal_create,
+            
+            # Admin Endpoints Tests (PRIORITY 3)
+            self.test_admin_bot_preorders_all,
+            self.test_admin_members_all,
+            self.test_admin_subscriptions_all
         ]
         
         passed = 0
