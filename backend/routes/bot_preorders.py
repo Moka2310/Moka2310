@@ -407,8 +407,8 @@ async def get_all_preorders_admin(current_user: User = Depends(require_admin)):
     db = get_db()
     
     try:
-        # Récupérer toutes les précommandes
-        preorders = await db.bot_preorders.find().to_list(1000)
+        # Récupérer toutes les précommandes (exclure _id MongoDB)
+        preorders = await db.bot_preorders.find({}, {"_id": 0}).to_list(1000)
         
         # Exclure les fausses précommandes (celles avec fake_user)
         real_preorders = [
