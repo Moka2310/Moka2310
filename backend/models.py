@@ -163,7 +163,8 @@ class Subscription(BaseModel):
 
 class SubscriptionCreate(BaseModel):
     telegramUsername: str
-    paymentMethodId: str  # Stripe Payment Method ID
+    paymentMethodId: Optional[str] = None  # Stripe Payment Method ID (optionnel pour PayPal)
+    paymentMethod: Optional[str] = "stripe"  # "stripe" ou "paypal"
 
 class SubscriptionResponse(BaseModel):
     id: str
