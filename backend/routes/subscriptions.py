@@ -220,6 +220,127 @@ async def execute_paypal_subscription(
         print(f"Error executing PayPal subscription: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.post("/paypal-webhook")
+async def paypal_webhook(request: Request):
+    """
+    Webhook pour recevoir les notifications PayPal
+    """
+    try:
+        db = get_db()
+        
+        # Récupérer le payload
+        payload = await request.json()
+        event_type = payload.get('event_type')
+        resource = payload.get('resource', {})
+        
+        print(f"📥 PayPal Webhook received: {event_type}")
+        
+        # Gérer les événements d'abonnement
+        if event_type == 'BILLING.SUBSCRIPTION.CREATED':
+            # Abonnement créé (en attente d'activation)
+            agreement_id = resource.get('id')
+            print(f"✅ Subscription created: {agreement_id}")
+            
+        elif event_type == 'BILLING.SUBSCRIPTION.ACTIVATED':
+            # Abonnement activé - IMPORTANT
+            agreement_id = resource.get('id')
+            
+            # Trouver l'abonnement dans la DB
+            subscription = await db.subscriptions.find_one({
+                "paypalAgreementId": agreement_id
+            })
+            
+            if subscription:
+                # Mettre à jour le statut
+                await db.subscriptions.update_one(
+                    {"id": subscription['id']},
+                    {"$set": {
+                        "status": SubscriptionStatus.ACTIVE.value,
+                        "updatedAt": datetime.now(timezone.utc).isoformat()
+                    }}
+                )
+                
+                # Mettre à jour l'utilisateur
+                await db.users.update_one(
+                    {"id": subscription['userId']},
+                    {"$set": {"subscriptionStatus": SubscriptionStatus.ACTIVE.value}}
+                )
+                
+                print(f"✅ Subscription activated: {agreement_id}")
+                
+                # TODO: Envoyer email de confirmation
+                # TODO: Ajouter au Telegram
+                
+        elif event_type == 'BILLING.SUBSCRIPTION.CANCELLED':
+            # Abonnement annulé
+            agreement_id = resource.get('id')
+            
+            subscription = await db.subscriptions.find_one({
+                "paypalAgreementId": agreement_id
+            })
+            
+            if subscription:
+                await db.subscriptions.update_one(
+                    {"id": subscription['id']},
+                    {"$set": {
+                        "status": SubscriptionStatus.CANCELED.value,
+                        "updatedAt": datetime.now(timezone.utc).isoformat()
+                    }}
+                )
+                
+                await db.users.update_one(
+                    {"id": subscription['userId']},
+                    {"$set": {"subscriptionStatus": SubscriptionStatus.CANCELED.value}}
+                )
+                
+                print(f"✅ Subscription cancelled: {agreement_id}")
+                
+                # TODO: Retirer du Telegram
+                
+        elif event_type == 'BILLING.SUBSCRIPTION.SUSPENDED':
+            # Abonnement suspendu
+            agreement_id = resource.get('id')
+            
+            subscription = await db.subscriptions.find_one({
+                "paypalAgreementId": agreement_id
+            })
+            
+            if subscription:
+                await db.subscriptions.update_one(
+                    {"id": subscription['id']},
+                    {"$set": {
+                        "status": SubscriptionStatus.PAST_DUE.value,
+                        "updatedAt": datetime.now(timezone.utc).isoformat()
+                    }}
+                )
+                
+                print(f"⚠️ Subscription suspended: {agreement_id}")
+                
+        elif event_type == 'BILLING.SUBSCRIPTION.PAYMENT.FAILED':
+            # Paiement échoué
+            agreement_id = resource.get('id')
+            print(f"❌ Payment failed for subscription: {agreement_id}")
+            
+            # TODO: Envoyer notification à l'utilisateur
+            
+        elif event_type == 'PAYMENT.SALE.COMPLETED':
+            # Paiement complété (pour les formations et bot)
+            sale_id = resource.get('id')
+            print(f"✅ Payment completed: {sale_id}")
+            
+        elif event_type == 'PAYMENT.SALE.REFUNDED':
+            # Remboursement
+            sale_id = resource.get('id')
+            print(f"💰 Payment refunded: {sale_id}")
+        
+        return {"status": "success", "event": event_type}
+        
+    except Exception as e:
+        print(f"❌ Error processing PayPal webhook: {e}")
+        # Retourner 200 quand même pour ne pas que PayPal réessaie indéfiniment
+        return {"status": "error", "message": str(e)}
+
+
 @router.get("/status", response_model=SubscriptionResponse)
 async def get_subscription_status(
     current_user = Depends(get_current_user)
