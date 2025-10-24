@@ -477,9 +477,7 @@ metadata:
 test_plan:
   current_focus:
     - "Boutique Page Navigation Issue"
-    - "Complete End-to-End Subscription Flow Testing"
   stuck_tasks:
-    - "Payment Integration - Stripe"
     - "Payment Integration - PayPal"
     - "Email Service Integration"
     - "Subscription Banner in Boutique Page"
@@ -488,6 +486,7 @@ test_plan:
   subscription_testing_complete: true
   frontend_subscription_testing_complete: true
   backend_subscription_testing_complete: true
+  stripe_subscription_post_bugfix_testing_complete: true
 
 agent_communication:
   - agent: "testing"
