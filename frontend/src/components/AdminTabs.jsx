@@ -642,4 +642,187 @@ const SubscriptionsTab = ({ language }) => {
   );
 };
 
-export { StatsTab, ContestTab, MembersTab, SubscriptionsTab };
+// Onglet Pré-commandes Bot
+const BotPreordersTab = ({ language }) => {
+  const [preorders, setPreorders] = useState([]);
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    loadPreorders();
+  }, []);
+
+  const loadPreorders = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/bot-preorders/admin/all`, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}` }
+      });
+      const data = await response.json();
+      setPreorders(data.preorders);
+      setStats(data.stats);
+    } catch (error) {
+      console.error('Error loading preorders:', error);
+      toast({
+        title: '❌ Erreur',
+        description: 'Impossible de charger les pré-commandes',
+        variant: 'destructive'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredPreorders = preorders.filter(p => 
+    p.userEmail.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleDateString(language === 'fr' ? 'fr-FR' : 'en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const getStatusBadge = (status) => {
+    const statusConfig = {
+      paid: { color: 'green', text: language === 'fr' ? 'Payé' : 'Paid', icon: '✓' },
+      pending_payment: { color: 'yellow', text: language === 'fr' ? 'En attente' : 'Pending', icon: '⏱' },
+      delivered: { color: 'blue', text: language === 'fr' ? 'Livré' : 'Delivered', icon: '📦' },
+      canceled: { color: 'red', text: language === 'fr' ? 'Annulé' : 'Canceled', icon: '✗' }
+    };
+    const config = statusConfig[status] || { color: 'gray', text: status, icon: '?' };
+    return (
+      <span className={`bg-${config.color}-500/20 text-${config.color}-400 px-2 py-1 rounded-full text-xs font-medium`}>
+        {config.icon} {config.text}
+      </span>
+    );
+  };
+
+  const getPaymentMethodBadge = (method) => {
+    if (method === 'stripe') {
+      return <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full text-xs">💳 Stripe</span>;
+    } else if (method === 'paypal') {
+      return <span className="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded-full text-xs">🅿️ PayPal</span>;
+    }
+    return <span className="bg-gray-500/20 text-gray-400 px-2 py-1 rounded-full text-xs">{method}</span>;
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Stats Cards */}
+      {stats && (
+        <div className="grid md:grid-cols-4 gap-4">
+          <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-xl p-4 border border-purple-500/30">
+            <div className="text-purple-400 text-sm mb-1">
+              {language === 'fr' ? 'Total Pré-commandes' : 'Total Preorders'}
+            </div>
+            <div className="text-3xl font-bold text-white">{stats.total}</div>
+          </div>
+          <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl p-4 border border-green-500/30">
+            <div className="text-green-400 text-sm mb-1">
+              {language === 'fr' ? 'Payées' : 'Paid'}
+            </div>
+            <div className="text-3xl font-bold text-white">{stats.paid}</div>
+          </div>
+          <div className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-xl p-4 border border-yellow-500/30">
+            <div className="text-yellow-400 text-sm mb-1">
+              {language === 'fr' ? 'En attente' : 'Pending'}
+            </div>
+            <div className="text-3xl font-bold text-white">{stats.pending}</div>
+          </div>
+          <div className="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-xl p-4 border border-blue-500/30">
+            <div className="text-blue-400 text-sm mb-1">
+              {language === 'fr' ? 'Revenu Total' : 'Total Revenue'}
+            </div>
+            <div className="text-3xl font-bold text-white">{stats.revenue.toFixed(2)}$ CAD</div>
+          </div>
+        </div>
+      )}
+
+      {/* Preorders List */}
+      <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-3xl p-6 md:p-8 border border-purple-500/30">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <Bot className="w-8 h-8 text-pink-400" />
+            <h2 className="text-2xl font-bold text-white">
+              {language === 'fr' ? 'Pré-commandes Bot' : 'Bot Preorders'}
+            </h2>
+          </div>
+          <div className="text-white/60">
+            {filteredPreorders.length} {language === 'fr' ? 'pré-commandes' : 'preorders'}
+          </div>
+        </div>
+
+        {/* Search */}
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder={language === 'fr' ? 'Rechercher par email...' : 'Search by email...'}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full bg-white/10 border border-purple-500/30 rounded-lg px-4 py-2 text-white placeholder-white/50"
+          />
+        </div>
+
+        {loading ? (
+          <div className="text-center text-white/60 py-8">
+            {language === 'fr' ? 'Chargement...' : 'Loading...'}
+          </div>
+        ) : filteredPreorders.length === 0 ? (
+          <div className="text-center text-white/60 py-8">
+            {language === 'fr' ? 'Aucune pré-commande' : 'No preorders'}
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-purple-500/30">
+                  <th className="text-left text-white/80 py-3 px-4">Email</th>
+                  <th className="text-center text-white/80 py-3 px-4">
+                    {language === 'fr' ? 'Méthode' : 'Method'}
+                  </th>
+                  <th className="text-center text-white/80 py-3 px-4">
+                    {language === 'fr' ? 'Statut' : 'Status'}
+                  </th>
+                  <th className="text-center text-white/80 py-3 px-4">
+                    {language === 'fr' ? 'Prix' : 'Price'}
+                  </th>
+                  <th className="text-center text-white/80 py-3 px-4">
+                    {language === 'fr' ? 'Date' : 'Date'}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredPreorders.map((preorder) => (
+                  <tr key={preorder.id} className="border-b border-purple-500/10 hover:bg-purple-500/5">
+                    <td className="py-3 px-4 text-white text-sm">{preorder.userEmail}</td>
+                    <td className="py-3 px-4 text-center">
+                      {getPaymentMethodBadge(preorder.paymentMethod)}
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      {getStatusBadge(preorder.status)}
+                    </td>
+                    <td className="py-3 px-4 text-center text-green-400 font-bold">
+                      {preorder.price}$ CAD
+                    </td>
+                    <td className="py-3 px-4 text-center text-white/60 text-sm">
+                      {formatDate(preorder.createdAt)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export { StatsTab, ContestTab, MembersTab, SubscriptionsTab, BotPreordersTab };
