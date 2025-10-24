@@ -362,6 +362,78 @@ agent_communication:
         agent: "testing"
         comment: "✅ PASS - Bot preorder counter system working perfectly. GET /api/bot-preorders/availability returns correct values: available=9, total=30, sold=21, is_available=true. Authentication properly enforced (403 for unauthenticated requests). Database contains exactly 21 preorders with 'paid' or 'pending_payment' status. Counter logic calculation correct: 30 - 21 = 9 available. All 4 comprehensive tests passed."
 
+  - task: "Bonus Announcements System"
+    implemented: true
+    working: true
+    file: "/app/backend/routes/bonus_announcements.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - Bonus announcements system fully functional. All 4 endpoints tested successfully: 1) GET /api/bonus-announcements/all (public) returns active announcements, 2) POST /api/bonus-announcements/admin/create creates test announcement with proper admin authentication, 3) GET /api/bonus-announcements/admin/all retrieves all announcements for admin, 4) POST /api/bonus-announcements/admin/toggle/{id} successfully toggles announcement status. Admin authentication working correctly with credentials yafoy2310@gmail.com."
+
+  - task: "PayPal Bot Preorders Integration"
+    implemented: true
+    working: true
+    file: "/app/backend/routes/bot_preorders.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - PayPal bot preorders integration working correctly. POST /api/bot-preorders/create with paymentMethod='paypal' returns approvalUrl as expected. Endpoint properly handles user authentication and returns appropriate PayPal payment flow data."
+
+  - task: "PayPal Subscriptions Integration"
+    implemented: true
+    working: false
+    file: "/app/backend/routes/subscriptions.py"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL - PayPal subscriptions integration failing with 'NOT_AUTHORIZED' error. POST /api/subscriptions/create with paymentMethod='paypal' returns 500 error: 'Authorization failed due to insufficient permissions'. PayPal credentials in production environment appear to have insufficient permissions for billing plan creation."
+
+  - task: "Admin Bot Preorders Management"
+    implemented: true
+    working: true
+    file: "/app/backend/routes/bot_preorders.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - Admin bot preorders endpoint working correctly. GET /api/bot-preorders/admin/all returns preorders data with statistics (total, paid, pending, revenue). Fixed MongoDB ObjectId serialization issue. Admin authentication working properly."
+
+  - task: "Admin Members Management"
+    implemented: true
+    working: true
+    file: "/app/backend/routes/members.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - Admin members endpoint working correctly. GET /api/members/all returns 8 total members with proper formatting. Fixed MongoDB ObjectId serialization and datetime sorting issues. Admin authentication working properly."
+
+  - task: "Admin Subscriptions Management"
+    implemented: true
+    working: true
+    file: "/app/backend/routes/subscriptions.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - Admin subscriptions endpoint working correctly. GET /api/subscriptions/admin/all returns subscription data properly. Fixed admin authentication issue by using require_admin dependency instead of manual role checking. Admin authentication working properly."
+
 frontend:
   - task: "Subscription Banner in Boutique Page"
     implemented: true
