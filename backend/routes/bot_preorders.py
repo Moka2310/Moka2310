@@ -103,7 +103,7 @@ async def create_bot_preorder(
             from payment_service import PayPalPayment
             
             payment_result = await PayPalPayment.create_payment(
-                amount=300.0,
+                amount=2.0,
                 currency="CAD",
                 description="Pré-commande Bot de Copy Trading MT4 - Tradalife"
             )
