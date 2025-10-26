@@ -5,7 +5,8 @@ import asyncio
 import httpx
 import os
 
-TELEGRAM_BOT_TOKEN = "8406540414:AAG-IlyhG5eL0BjSkvaJhZ2qCrngRETCHpc"
+# Configuration - UTILISER VARIABLES D'ENVIRONNEMENT
+TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '')
 
 async def get_updates():
     """Récupère les derniers messages/événements du bot"""
