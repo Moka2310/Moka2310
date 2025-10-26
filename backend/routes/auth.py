@@ -17,7 +17,7 @@ async def register(user_data: UserCreate):
     if existing_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     
-    # Create new user
+    # Créer nouvel utilisateur
     user = User(
         id=str(uuid.uuid4()),
         email=user_data.email,
@@ -26,6 +26,35 @@ async def register(user_data: UserCreate):
     )
     
     await db.users.insert_one(user.dict())
+    
+    # Gérer le parrainage si un code est fourni
+    if user_data.referralCode:
+        # Vérifier si le code existe
+        referrer = await db.users.find_one({"referralCode": user_data.referralCode})
+        if referrer:
+            # Enregistrer le code dans le profil du filleul
+            await db.users.update_one(
+                {"id": user.id},
+                {"$set": {"referredBy": user_data.referralCode}}
+            )
+            
+            # Créer l'entrée de parrainage
+            from models import Referral, ReferralStatus
+            referral = Referral(
+                id=str(uuid.uuid4()),
+                referrerId=referrer['id'],
+                referrerEmail=referrer['email'],
+                referrerName=f"{referrer.get('firstName', '')} {referrer.get('lastName', '')}".strip() or referrer['email'],
+                referralCode=user_data.referralCode,
+                referredUserId=user.id,
+                referredUserEmail=user.email,
+                status=ReferralStatus.PENDING,
+                createdAt=datetime.utcnow(),
+                updatedAt=datetime.utcnow()
+            )
+            
+            await db.referrals.insert_one(referral.dict())
+            print(f"✅ Referral created: {referrer['email']} -> {user.email}")
     
     # Send welcome email
     await email_service.send_welcome_email(user.email)
