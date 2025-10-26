@@ -1237,6 +1237,46 @@ class TradalifeTester:
 
     # ===== NEW TESTS FOR REVIEW REQUEST =====
     
+    def test_review_request_user_login(self):
+        """Test user login with credentials from review request"""
+        try:
+            # Use credentials specified in review request
+            credentials = {
+                "email": "testuser@test.com",
+                "password": "Test123!"
+            }
+            
+            response = self.session.post(f"{API_URL}/auth/login", json=credentials)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "user" in data and "token" in data:
+                    self.token = data["token"]
+                    self.user_data = data["user"]
+                    self.log_test("Review Request User Login", True, f"Login successful with review request credentials: {data['user']['email']}")
+                    return True
+                else:
+                    self.log_test("Review Request User Login", False, "Missing user or token in response", data)
+                    return False
+            elif response.status_code == 401:
+                # Try to register the user first
+                register_response = self.session.post(f"{API_URL}/auth/register", json=credentials)
+                if register_response.status_code == 200:
+                    register_data = register_response.json()
+                    self.token = register_data["token"]
+                    self.user_data = register_data["user"]
+                    self.log_test("Review Request User Login", True, f"User registered and logged in: {register_data['user']['email']}")
+                    return True
+                else:
+                    self.log_test("Review Request User Login", False, f"Login failed (401) and registration failed: {register_response.status_code}", register_response.text)
+                    return False
+            else:
+                self.log_test("Review Request User Login", False, f"Status code: {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Review Request User Login", False, f"Error: {str(e)}")
+            return False
+
     def test_paypal_bot_preorder_creation(self):
         """Test PayPal bot preorder creation as specified in review request"""
         if not self.token:
