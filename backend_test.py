@@ -1344,14 +1344,34 @@ class TradalifeTester:
 
     def test_bot_preorder_paypal_pricing(self):
         """Test Bot Preorder - PayPal (simulation) - Verify PayPal amount is 2.0 CAD"""
-        if not self.token:
-            self.log_test("Bot Preorder PayPal Pricing", False, "No auth token available")
-            return False
-            
         try:
-            headers = {"Authorization": f"Bearer {self.token}"}
+            # Create a new user specifically for this test to avoid existing preorder conflicts
+            import uuid
+            test_email = f"paypal_test_{str(uuid.uuid4())[:8]}@test.com"
+            test_password = "Test123!"
             
-            # Test data as specified in review request
+            # Register new user
+            register_data = {
+                "email": test_email,
+                "password": test_password
+            }
+            
+            register_response = self.session.post(f"{API_URL}/auth/register", json=register_data)
+            if register_response.status_code != 200:
+                self.log_test("Bot Preorder PayPal Pricing", False, f"Failed to register test user: {register_response.status_code}")
+                return False
+            
+            # Login with new user
+            login_response = self.session.post(f"{API_URL}/auth/login", json=register_data)
+            if login_response.status_code != 200:
+                self.log_test("Bot Preorder PayPal Pricing", False, f"Failed to login test user: {login_response.status_code}")
+                return False
+            
+            login_data = login_response.json()
+            test_token = login_data["token"]
+            headers = {"Authorization": f"Bearer {test_token}"}
+            
+            # Test bot preorder creation
             preorder_data = {
                 "paymentMethod": "paypal"
             }
@@ -1381,11 +1401,6 @@ class TradalifeTester:
                     self.log_test("Bot Preorder PayPal Pricing", False, 
                                 f"❌ INCORRECT PRICE: Expected 2.0 CAD, got {price}", data)
                     return False
-                    
-            elif response.status_code == 400 and ("déjà une précommande" in response.text or "already" in response.text):
-                self.log_test("Bot Preorder PayPal Pricing", True, 
-                            "User already has active preorder (expected for repeated tests) - pricing cannot be verified due to existing preorder")
-                return True
             else:
                 # Log the exact error for debugging
                 error_text = response.text
