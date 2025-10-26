@@ -188,7 +188,7 @@ class PayPalSubscriptionService:
             plan_result = await PayPalPayment.create_billing_plan(
                 name="Abonnement Signaux TRADALIFE - Mensuel",
                 description="Accès mensuel aux signaux de trading sur tous les canaux Telegram (Forex, Crypto, Indices, Gold, Actions, Commodités)",
-                amount=150.0,
+                amount=2.0,
                 currency="CAD"
             )
             
