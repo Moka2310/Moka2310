@@ -16,6 +16,9 @@ const Boutique = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+    
     const loadFormations = async () => {
       try {
         const response = await formationsAPI.getAll();
