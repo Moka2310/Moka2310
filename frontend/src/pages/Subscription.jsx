@@ -38,6 +38,14 @@ const SubscriptionForm = () => {
       return;
     }
 
+    // Vérifier que l'utilisateur est connecté
+    const token = localStorage.getItem('tradalife_token');
+    if (!token) {
+      alert(t(language, 'subscription.form.mustLogin'));
+      navigate('/login');
+      return;
+    }
+
     if (!telegramUsername || !telegramUsername.startsWith('@')) {
       alert(t(language, 'subscription.form.invalidUsername'));
       return;
@@ -63,11 +71,13 @@ const SubscriptionForm = () => {
         `${API}/subscriptions/create`,
         {
           telegramUsername: telegramUsername,
-          paymentMethodId: paymentMethod.id
+          paymentMethodId: paymentMethod.id,
+          paymentMethod: 'stripe'
         },
         {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}`
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
           }
         }
       );
@@ -91,6 +101,15 @@ const SubscriptionForm = () => {
 
     } catch (error) {
       console.error('Subscription error:', error);
+      
+      // Si erreur d'authentification, rediriger vers login
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        alert(t(language, 'subscription.form.sessionExpired'));
+        localStorage.removeItem('tradalife_token');
+        navigate('/login');
+        return;
+      }
+      
       alert(error.response?.data?.detail || error.message || t(language, 'subscription.form.error'));
     } finally {
       setLoading(false);
