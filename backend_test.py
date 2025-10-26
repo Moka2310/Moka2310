@@ -1237,6 +1237,51 @@ class TradalifeTester:
 
     # ===== NEW TESTS FOR REVIEW REQUEST =====
     
+    def test_paypal_bot_preorder_creation(self):
+        """Test PayPal bot preorder creation as specified in review request"""
+        if not self.token:
+            self.log_test("PayPal Bot Preorder Creation", False, "No auth token available")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.token}"}
+            
+            # Test data as specified in review request
+            preorder_data = {
+                "paymentMethod": "paypal"
+            }
+            
+            response = self.session.post(f"{API_URL}/bot-preorders/create", 
+                                       json=preorder_data, headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                # Check for required fields as specified in review request
+                required_fields = ["approvalUrl", "preorderId"]
+                missing_fields = [field for field in required_fields if field not in data]
+                
+                if not missing_fields:
+                    self.log_test("PayPal Bot Preorder Creation", True, 
+                                f"✅ PayPal bot preorder created successfully. PreorderID: {data['preorderId']}, ApprovalURL present: {bool(data['approvalUrl'])}")
+                    return True
+                else:
+                    self.log_test("PayPal Bot Preorder Creation", False, 
+                                f"Missing required fields: {missing_fields}", data)
+                    return False
+            elif response.status_code == 400 and "déjà une précommande" in response.text:
+                self.log_test("PayPal Bot Preorder Creation", True, 
+                            "User already has active preorder (expected for repeated tests)")
+                return True
+            else:
+                # Log the exact error for debugging as requested
+                error_text = response.text
+                self.log_test("PayPal Bot Preorder Creation", False, 
+                            f"❌ PAYPAL ERROR - Status: {response.status_code}, Error: {error_text}")
+                return False
+        except Exception as e:
+            self.log_test("PayPal Bot Preorder Creation", False, f"Error: {str(e)}")
+            return False
+
     def test_bonus_announcements_public(self):
         """Test GET /api/bonus-announcements/all (public endpoint)"""
         try:
