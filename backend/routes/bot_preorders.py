@@ -7,9 +7,13 @@ from dependencies import get_db, get_current_user, require_admin
 from datetime import datetime
 import uuid
 import logging
+import os
 
 router = APIRouter(prefix="/bot-preorders", tags=["Bot Preorders"])
 logger = logging.getLogger(__name__)
+
+# Bot initialization secret from environment
+BOT_INIT_SECRET = os.environ.get('BOT_INIT_SECRET', 'default-init-secret-change-in-production')
 
 @router.post("/create", response_model=dict)
 async def create_bot_preorder(
