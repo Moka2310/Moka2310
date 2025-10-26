@@ -66,7 +66,7 @@ async def add_default_testimonials(
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     # Clé secrète pour sécuriser
-    if request.secret_key != "tradalife-admin-promote-2025":
+    if request.secret_key != ADMIN_SECRET_KEY:
         raise HTTPException(status_code=403, detail="Invalid secret key")
     
     # Témoignages à ajouter
