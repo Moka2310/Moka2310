@@ -12,7 +12,11 @@ import { toast } from '../hooks/use-toast';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || 'pk_live_51SGsdR0kb9a0ErqL0Ul6Fyd03yLqWwT1jKamQwdnImNQc0XGtHrop19FaVmb0vQdQstUQifpG6lTaZNrtq2GlwLT007HPABALk');
+// Stripe key from environment variable only - NO hardcoded fallback
+if (!process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY) {
+  console.error('REACT_APP_STRIPE_PUBLISHABLE_KEY is not defined in environment variables');
+}
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || '');
 
 const BotPreorderForm = () => {
   const navigate = useNavigate();
