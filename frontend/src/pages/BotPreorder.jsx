@@ -398,7 +398,7 @@ const BotPreorderForm = () => {
                 ) : (
                   <span className="flex items-center gap-2">
                     <Check className="w-5 h-5" />
-                    {language === 'fr' ? 'Précommander - 300$ CAD' : 'Pre-order - 300$ CAD'}
+                    {language === 'fr' ? 'Précommander - 2$ CAD' : 'Pre-order - 2$ CAD'}
                   </span>
                 )}
               </Button>
