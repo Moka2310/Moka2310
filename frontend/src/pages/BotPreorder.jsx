@@ -103,27 +103,43 @@ const BotPreorderForm = () => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
-      const { preorderId } = response.data;
+        const { preorderId } = response.data;
 
-      // Créer un payment intent (simulation - devrait être géré côté backend)
-      // Pour l'instant, on confirme juste la précommande
-      await axios.post(
-        `${API}/bot-preorders/confirm-payment/${preorderId}`,
-        { payment_intent_id: paymentMethod.id },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+        // Créer un payment intent (simulation - devrait être géré côté backend)
+        // Pour l'instant, on confirme juste la précommande
+        await axios.post(
+          `${API}/bot-preorders/confirm-payment/${preorderId}`,
+          { payment_intent_id: paymentMethod.id },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
 
-      toast({
-        title: language === 'fr' ? '🎉 Précommande réussie!' : '🎉 Pre-order successful!',
-        description: language === 'fr' 
-          ? 'Vous recevrez le bot par email dès sa sortie!' 
-          : 'You will receive the bot by email upon release!',
-        duration: 5000
-      });
+        toast({
+          title: language === 'fr' ? '🎉 Précommande réussie!' : '🎉 Pre-order successful!',
+          description: language === 'fr' 
+            ? 'Vous recevrez le bot par email dès sa sortie!' 
+            : 'You will receive the bot by email upon release!',
+          duration: 5000
+        });
 
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 2000);
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 2000);
+        
+      } else if (paymentMethod === 'paypal') {
+        // PayPal payment
+        const response = await axios.post(
+          `${API}/bot-preorders/create`,
+          { paymentMethod: 'paypal' },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        // Rediriger vers PayPal
+        if (response.data.approvalUrl) {
+          window.location.href = response.data.approvalUrl;
+        } else {
+          throw new Error('PayPal approval URL not received');
+        }
+      }
 
     } catch (error) {
       console.error('Preorder error:', error);
