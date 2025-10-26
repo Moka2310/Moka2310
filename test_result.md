@@ -147,6 +147,18 @@ backend:
         agent: "main"
         comment: "Successfully integrated emergentintegrations library with OpenAI gpt-4o-mini. Manual tests confirmed bilingual support (FR/EN) and proper API responses."
 
+  - task: "Pricing Verification - 2$ CAD Implementation"
+    implemented: true
+    working: true
+    file: "/app/backend/routes/formations.py, /app/backend/routes/bot_preorders.py, /app/backend/subscription_service.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ COMPREHENSIVE PRICING VERIFICATION COMPLETE - All 6/6 tests passed perfectly! 1) Formation API: All formations correctly priced at 2$ CAD (Ultra Adhésion: 2.0 CAD, Premium Membership: 2.0 CAD). 2) Bot Preorder Stripe: price=2.0 CAD with Stripe amount 200 cents (2*100), clientSecret and preorderId working. 3) Bot Preorder PayPal: price=2.0 CAD with PayPal integration working, approvalUrl and preorderId present. 4) Subscription Service: SUBSCRIPTION_PRICE_AMOUNT=200 cents (2$ CAD), CURRENCY=cad correctly configured. Backend logs confirm successful Stripe API calls (Response[200]: OK) and PayPal API calls (Response[200]: OK, Response[201]: Created). The user's concern about old pricing is RESOLVED - all payment integrations are using the correct 2$ CAD pricing."
+
 frontend:
   - task: "ChatWidget Component"
     implemented: true
