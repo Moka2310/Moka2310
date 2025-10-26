@@ -23,8 +23,12 @@ const BotPreorderForm = () => {
   const [loading, setLoading] = useState(false);
   const [processingPayment, setProcessingPayment] = useState(false);
   const [existingPreorder, setExistingPreorder] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState('stripe'); // 'stripe' ou 'paypal'
 
   useEffect(() => {
+    // Scroll to top
+    window.scrollTo(0, 0);
+    
     // Vérifier si l'utilisateur a déjà précommandé
     const checkExistingPreorder = async () => {
       try {
