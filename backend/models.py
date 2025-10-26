@@ -60,6 +60,7 @@ class User(BaseModel):
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
+    referralCode: Optional[str] = None  # Code de parrainage optionnel
 
 class UserLogin(BaseModel):
     email: EmailStr
