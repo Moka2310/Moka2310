@@ -108,13 +108,15 @@ const SubscriptionForm = () => {
       
       // Si erreur d'authentification, rediriger vers login
       if (error.response?.status === 401 || error.response?.status === 403) {
-        alert(t(language, 'subscription.form.sessionExpired'));
+        alert(language === 'fr'
+          ? 'Votre session a expiré. Veuillez vous reconnecter.'
+          : 'Your session has expired. Please log in again.');
         localStorage.removeItem('tradalife_token');
         navigate('/login');
         return;
       }
       
-      alert(error.response?.data?.detail || error.message || t(language, 'subscription.form.error'));
+      alert(error.response?.data?.detail || error.message || (language === 'fr' ? 'Une erreur est survenue' : 'An error occurred'));
     } finally {
       setLoading(false);
       setProcessingPayment(false);
