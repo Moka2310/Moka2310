@@ -175,7 +175,7 @@ async def force_update_testimonials(
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     """Force la mise à jour des témoignages avec les traductions"""
-    if request.secret_key != "tradalife-admin-promote-2025":
+    if request.secret_key != ADMIN_SECRET_KEY:
         raise HTTPException(status_code=403, detail="Invalid secret key")
     
     updated_count = 0
