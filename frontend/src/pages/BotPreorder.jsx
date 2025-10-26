@@ -61,7 +61,7 @@ const BotPreorderForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!stripe || !elements) {
+    if (paymentMethod === 'stripe' && (!stripe || !elements)) {
       return;
     }
 
@@ -84,23 +84,24 @@ const BotPreorderForm = () => {
         return;
       }
 
-      // Créer un payment method
-      const cardElement = elements.getElement(CardElement);
-      const { error, paymentMethod } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: cardElement,
-      });
+      if (paymentMethod === 'stripe') {
+        // Créer un payment method
+        const cardElement = elements.getElement(CardElement);
+        const { error, paymentMethod } = await stripe.createPaymentMethod({
+          type: 'card',
+          card: cardElement,
+        });
 
-      if (error) {
-        throw new Error(error.message);
-      }
+        if (error) {
+          throw new Error(error.message);
+        }
 
-      // Créer la précommande
-      const response = await axios.post(
-        `${API}/bot-preorders/create`,
-        { paymentMethod: 'stripe' },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+        // Créer la précommande
+        const response = await axios.post(
+          `${API}/bot-preorders/create`,
+          { paymentMethod: 'stripe' },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
 
       const { preorderId } = response.data;
 
