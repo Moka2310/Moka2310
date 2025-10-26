@@ -279,33 +279,93 @@ const BotPreorderForm = () => {
             </h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Card Element */}
+              {/* Payment Method Selection */}
               <div>
-                <label className="block text-white/80 mb-2 text-sm font-medium">
-                  {language === 'fr' ? 'Carte de crédit' : 'Credit card'} *
+                <label className="block text-white/80 mb-3 text-sm font-medium">
+                  {language === 'fr' ? 'Méthode de paiement' : 'Payment method'} *
                 </label>
-                <div className="bg-white/10 border border-purple-500/30 rounded-lg p-4">
-                  <CardElement
-                    options={{
-                      style: {
-                        base: {
-                          fontSize: '16px',
-                          color: '#ffffff',
-                          '::placeholder': {
-                            color: '#ffffff80',
+                <div className="grid grid-cols-2 gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('stripe')}
+                    className={`p-4 rounded-lg border-2 transition-all ${
+                      paymentMethod === 'stripe'
+                        ? 'border-pink-500 bg-pink-500/20'
+                        : 'border-purple-500/30 bg-white/5 hover:border-purple-500/50'
+                    }`}
+                  >
+                    <div className="text-center">
+                      <div className="text-2xl mb-2">💳</div>
+                      <div className="text-white font-semibold">Stripe</div>
+                      <div className="text-white/60 text-xs">
+                        {language === 'fr' ? 'Carte bancaire' : 'Credit card'}
+                      </div>
+                    </div>
+                  </button>
+                  
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('paypal')}
+                    className={`p-4 rounded-lg border-2 transition-all ${
+                      paymentMethod === 'paypal'
+                        ? 'border-pink-500 bg-pink-500/20'
+                        : 'border-purple-500/30 bg-white/5 hover:border-purple-500/50'
+                    }`}
+                  >
+                    <div className="text-center">
+                      <div className="text-2xl mb-2">🅿️</div>
+                      <div className="text-white font-semibold">PayPal</div>
+                      <div className="text-white/60 text-xs">
+                        {language === 'fr' ? 'Compte PayPal' : 'PayPal account'}
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              {/* Card Element - Only for Stripe */}
+              {paymentMethod === 'stripe' && (
+                <div>
+                  <label className="block text-white/80 mb-2 text-sm font-medium">
+                    {language === 'fr' ? 'Carte de crédit' : 'Credit card'} *
+                  </label>
+                  <div className="bg-white/10 border border-purple-500/30 rounded-lg p-4">
+                    <CardElement
+                      options={{
+                        style: {
+                          base: {
+                            fontSize: '16px',
+                            color: '#ffffff',
+                            '::placeholder': {
+                              color: '#ffffff80',
+                            },
+                          },
+                          invalid: {
+                            color: '#ef4444',
                           },
                         },
-                        invalid: {
-                          color: '#ef4444',
-                        },
-                      },
-                    }}
-                  />
+                      }}
+                    />
+                  </div>
+                  <p className="text-white/50 text-xs mt-1">
+                    {language === 'fr' ? 'Paiements sécurisés par Stripe' : 'Secured payments by Stripe'}
+                  </p>
                 </div>
-                <p className="text-white/50 text-xs mt-1">
-                  {language === 'fr' ? 'Paiements sécurisés par Stripe' : 'Secured payments by Stripe'}
-                </p>
-              </div>
+              )}
+              
+              {/* PayPal Info */}
+              {paymentMethod === 'paypal' && (
+                <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                  <p className="text-blue-300 text-sm">
+                    <strong>🅿️ PayPal:</strong>
+                  </p>
+                  <p className="text-white/70 text-sm mt-2">
+                    {language === 'fr' 
+                      ? 'Vous serez redirigé vers PayPal pour compléter le paiement en toute sécurité.'
+                      : 'You will be redirected to PayPal to complete the payment securely.'}
+                  </p>
+                </div>
+              )}
 
               {/* Info Box */}
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
