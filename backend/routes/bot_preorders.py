@@ -149,7 +149,7 @@ async def initialize_fake_preorders(secret: str):
     Créer 21 précommandes factices pour afficher 9/30 disponibles
     Utiliser avec: GET /api/bot-preorders/initialize-fake-preorders?secret=tradalife_init_2024
     """
-    if secret != "tradalife_init_2024":
+    if secret != BOT_INIT_SECRET:
         raise HTTPException(status_code=403, detail="Invalid secret")
     
     db = get_db()
