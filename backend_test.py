@@ -2066,14 +2066,15 @@ def run_review_request_tests():
 
 def main():
     """Main test runner"""
-    # Check if we should run review request tests or full tests
+    # Check if we should run specific tests
     import sys
-    if len(sys.argv) > 1 and sys.argv[1] == "review":
-        passed, failed, results = run_review_request_tests()
-        if failed > 0:
-            sys.exit(1)
-        else:
-            sys.exit(0)
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "pricing":
+            success = run_pricing_verification_tests()
+            sys.exit(0 if success else 1)
+        elif sys.argv[1] == "review":
+            passed, failed, results = run_review_request_tests()
+            sys.exit(0 if failed == 0 else 1)
     
     # Original full test suite
     tester = TradalifeTester()
