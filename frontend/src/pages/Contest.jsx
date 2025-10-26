@@ -11,6 +11,9 @@ const Contest = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+    
     loadParticipants();
   }, []);
 
