@@ -13,6 +13,9 @@ const Bonus = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+    
     loadAnnouncements();
     
     // Show scroll to top button when scrolling
