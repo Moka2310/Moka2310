@@ -258,6 +258,33 @@ class BonusAnnouncementUpdate(BaseModel):
     isActive: Optional[bool] = None
     order: Optional[int] = None
 
+
+# ===== REFERRAL SYSTEM MODELS =====
+class ReferralStatus(str, Enum):
+    PENDING = "pending"  # Inscrit mais pas encore d'achat
+    COMPLETED = "completed"  # Premier achat effectué
+    REWARDED = "rewarded"  # Récompense versée
+
+class Referral(BaseModel):
+    id: str
+    referrerId: str  # ID du parrain
+    referrerEmail: str  # Email du parrain
+    referrerName: str  # Nom du parrain pour affichage
+    referralCode: str  # Code unique (nom-utilisateur)
+    referredUserId: Optional[str] = None  # ID du filleul (rempli après inscription)
+    referredUserEmail: Optional[str] = None  # Email du filleul
+    status: ReferralStatus = ReferralStatus.PENDING
+    purchaseType: Optional[str] = None  # Type d'achat: "formation", "bot", "subscription"
+    purchaseAmount: Optional[float] = None  # Montant de l'achat
+    rewardAmount: float = 200.0  # Montant de la récompense (200$ CAD)
+    adminNotified: bool = False  # Notification admin envoyée
+    createdAt: datetime = Field(default_factory=datetime.utcnow)
+    completedAt: Optional[datetime] = None  # Date du premier achat
+    updatedAt: datetime = Field(default_factory=datetime.utcnow)
+
+class ReferralCreate(BaseModel):
+    referralCode: str  # Code du parrain
+
 class TradingContestUpdate(BaseModel):
     firstName: Optional[str] = None
     lastName: Optional[str] = None
