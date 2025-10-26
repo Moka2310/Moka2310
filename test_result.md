@@ -180,11 +180,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "ChatWidget Component"
-  stuck_tasks:
-    - "ChatWidget Component"
+    - "Pricing Verification - 2$ CAD Implementation"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
+  pricing_verification_complete: true
 
 agent_communication:
   - agent: "main"
