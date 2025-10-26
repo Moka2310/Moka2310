@@ -1977,6 +1977,50 @@ class TradalifeTester:
             print(f"⚠️  {total - passed} tests failed. Check the details above.")
             return False
 
+def run_pricing_verification_tests():
+    """Run pricing verification tests as requested in review"""
+    print("🎯 PRICING VERIFICATION: Testing 2$ CAD Implementation")
+    print(f"🔗 Testing API at: {API_URL}")
+    print("=" * 80)
+    
+    tester = TradalifeTester()
+    
+    # Run specific pricing tests
+    tests = [
+        ("API Health Check", tester.test_health_check),
+        ("User Login/Register (testuser@test.com)", tester.test_review_request_user_login),
+        ("Formation Pricing Verification", tester.test_formations_pricing_verification),
+        ("Bot Preorder Stripe Pricing", tester.test_bot_preorder_stripe_pricing),
+        ("Bot Preorder PayPal Pricing", tester.test_bot_preorder_paypal_pricing),
+        ("Subscription Pricing Verification", tester.test_subscription_pricing_verification),
+    ]
+    
+    passed = 0
+    failed = 0
+    
+    for test_name, test_func in tests:
+        print(f"\n🧪 Running: {test_name}")
+        try:
+            if test_func():
+                print(f"✅ {test_name}: PASSED")
+                passed += 1
+            else:
+                print(f"❌ {test_name}: FAILED")
+                failed += 1
+        except Exception as e:
+            print(f"💥 {test_name}: ERROR - {str(e)}")
+            failed += 1
+    
+    print("\n" + "=" * 80)
+    print(f"📊 PRICING VERIFICATION RESULTS: {passed}/{len(tests)} tests passed")
+    
+    if passed == len(tests):
+        print("🎉 All pricing verification tests passed! 2$ CAD pricing correctly implemented.")
+        return True
+    else:
+        print(f"⚠️  {failed} tests failed. Check pricing implementation.")
+        return False
+
 def run_review_request_tests():
     """Run specific tests for the review request: PayPal bot preorders"""
     print("🎯 REVIEW REQUEST: Testing PayPal Bot Preorders")
