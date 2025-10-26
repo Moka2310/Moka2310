@@ -8,8 +8,12 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from dependencies import get_db
 from datetime import datetime, timezone
 import uuid
+import os
 
 router = APIRouter()
+
+# Secret key from environment
+ADMIN_SECRET_KEY = os.environ.get('ADMIN_SECRET_KEY', 'default-secret-change-in-production')
 
 class PromoteRequest(BaseModel):
     email: str
