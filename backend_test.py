@@ -1275,14 +1275,34 @@ class TradalifeTester:
 
     def test_bot_preorder_stripe_pricing(self):
         """Test Bot Preorder - Stripe (simulation) - Verify price is 2 and Stripe amount is 200 cents"""
-        if not self.token:
-            self.log_test("Bot Preorder Stripe Pricing", False, "No auth token available")
-            return False
-            
         try:
-            headers = {"Authorization": f"Bearer {self.token}"}
+            # Create a new user specifically for this test to avoid existing preorder conflicts
+            import uuid
+            test_email = f"stripe_test_{str(uuid.uuid4())[:8]}@test.com"
+            test_password = "Test123!"
             
-            # Test data as specified in review request
+            # Register new user
+            register_data = {
+                "email": test_email,
+                "password": test_password
+            }
+            
+            register_response = self.session.post(f"{API_URL}/auth/register", json=register_data)
+            if register_response.status_code != 200:
+                self.log_test("Bot Preorder Stripe Pricing", False, f"Failed to register test user: {register_response.status_code}")
+                return False
+            
+            # Login with new user
+            login_response = self.session.post(f"{API_URL}/auth/login", json=register_data)
+            if login_response.status_code != 200:
+                self.log_test("Bot Preorder Stripe Pricing", False, f"Failed to login test user: {login_response.status_code}")
+                return False
+            
+            login_data = login_response.json()
+            test_token = login_data["token"]
+            headers = {"Authorization": f"Bearer {test_token}"}
+            
+            # Test bot preorder creation
             preorder_data = {
                 "paymentMethod": "stripe"
             }
@@ -1296,18 +1316,22 @@ class TradalifeTester:
                 # Check price field
                 price = data.get('price')
                 if price == 2.0:
-                    self.log_test("Bot Preorder Stripe Pricing", True, 
-                                f"✅ STRIPE BOT PREORDER PRICING CORRECT: price={price} CAD, Stripe amount should be 200 cents (2 * 100). Response includes clientSecret for payment processing.")
-                    return True
+                    # Check for Stripe-specific fields
+                    required_fields = ["clientSecret", "preorderId"]
+                    missing_fields = [field for field in required_fields if field not in data]
+                    
+                    if not missing_fields:
+                        self.log_test("Bot Preorder Stripe Pricing", True, 
+                                    f"✅ STRIPE BOT PREORDER PRICING CORRECT: price={price} CAD (Stripe amount: 200 cents). Stripe integration working with clientSecret and preorderId.")
+                        return True
+                    else:
+                        self.log_test("Bot Preorder Stripe Pricing", False, 
+                                    f"Price correct ({price} CAD) but missing Stripe fields: {missing_fields}", data)
+                        return False
                 else:
                     self.log_test("Bot Preorder Stripe Pricing", False, 
                                 f"❌ INCORRECT PRICE: Expected 2.0 CAD, got {price}", data)
                     return False
-                    
-            elif response.status_code == 400 and ("déjà une précommande" in response.text or "already" in response.text):
-                self.log_test("Bot Preorder Stripe Pricing", True, 
-                            "User already has active preorder (expected for repeated tests) - pricing cannot be verified due to existing preorder")
-                return True
             else:
                 # Log the exact error for debugging
                 error_text = response.text
