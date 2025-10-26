@@ -1808,8 +1808,61 @@ class TradalifeTester:
             print(f"⚠️  {total - passed} tests failed. Check the details above.")
             return False
 
+def run_review_request_tests():
+    """Run specific tests for the review request: PayPal bot preorders"""
+    print("🎯 REVIEW REQUEST: Testing PayPal Bot Preorders")
+    print(f"🔗 Testing API at: {API_URL}")
+    print("=" * 80)
+    
+    tester = TradalifeTester()
+    
+    # Run specific tests for review request
+    tests = [
+        ("API Health Check", tester.test_health_check),
+        ("User Login/Register (testuser@test.com)", tester.test_review_request_user_login),
+        ("PayPal Bot Preorder Creation", tester.test_paypal_bot_preorder_creation),
+    ]
+    
+    passed = 0
+    failed = 0
+    
+    for test_name, test_func in tests:
+        print(f"\n🧪 Running: {test_name}")
+        try:
+            if test_func():
+                passed += 1
+            else:
+                failed += 1
+        except Exception as e:
+            print(f"❌ CRITICAL ERROR in {test_name}: {e}")
+            failed += 1
+    
+    print("\n" + "=" * 80)
+    print(f"📊 REVIEW REQUEST TEST SUMMARY: {passed} passed, {failed} failed")
+    
+    # Check for PayPal errors specifically
+    paypal_errors = [result for result in tester.test_results 
+                    if "PayPal" in result["test"] and not result["success"]]
+    
+    if paypal_errors:
+        print("\n🚨 PAYPAL ERRORS DETECTED:")
+        for error in paypal_errors:
+            print(f"   - {error['test']}: {error['details']}")
+    
+    return passed, failed, tester.test_results
+
 def main():
     """Main test runner"""
+    # Check if we should run review request tests or full tests
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "review":
+        passed, failed, results = run_review_request_tests()
+        if failed > 0:
+            sys.exit(1)
+        else:
+            sys.exit(0)
+    
+    # Original full test suite
     tester = TradalifeTester()
     success = tester.run_all_tests()
     
