@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test complet des nouvelles fonctionnalités: Onglet Pré-commandes Bot dans admin, Support PayPal complet (bot, abonnements), Système Bonus (annonces carrousel)"
+user_problem_statement: "Tester les paiements avec le nouveau prix de 2$ CAD - Tous les prix ont été changés à 2$ CAD dans la base de données et le code backend. L'utilisateur rapporte que les prix s'affichent correctement mais PayPal et Stripe utilisent toujours les anciens prix."
 
 backend:
   - task: "Chat API - Health Check"
