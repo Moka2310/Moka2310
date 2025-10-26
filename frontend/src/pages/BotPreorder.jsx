@@ -377,7 +377,7 @@ const BotPreorderForm = () => {
                   <strong>ℹ️ {language === 'fr' ? 'Informations importantes' : 'Important information'}:</strong>
                 </p>
                 <ul className="text-white/70 text-sm mt-2 space-y-1 list-disc list-inside">
-                  <li>{language === 'fr' ? 'Paiement unique de 300$ CAD' : 'One-time payment of 300$ CAD'}</li>
+                  <li>{language === 'fr' ? 'Paiement unique de 2$ CAD' : 'One-time payment of 2$ CAD'}</li>
                   <li>{language === 'fr' ? 'Livraison par email dès la sortie' : 'Delivery by email upon release'}</li>
                   <li>{language === 'fr' ? 'Accès à vie au bot' : 'Lifetime access to the bot'}</li>
                   <li>{language === 'fr' ? 'Support technique inclus' : 'Technical support included'}</li>
