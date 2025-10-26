@@ -8,6 +8,9 @@ const AboutUs = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+    
     // Show scroll to top button when scrolling
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 300);
