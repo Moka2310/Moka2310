@@ -41,13 +41,17 @@ const SubscriptionForm = () => {
     // Vérifier que l'utilisateur est connecté
     const token = localStorage.getItem('tradalife_token');
     if (!token) {
-      alert(t(language, 'subscription.form.mustLogin'));
+      alert(language === 'fr' 
+        ? 'Vous devez être connecté pour vous abonner' 
+        : 'You must be logged in to subscribe');
       navigate('/login');
       return;
     }
 
     if (!telegramUsername || !telegramUsername.startsWith('@')) {
-      alert(t(language, 'subscription.form.invalidUsername'));
+      alert(language === 'fr'
+        ? 'Le nom d\'utilisateur Telegram doit commencer par @'
+        : 'Telegram username must start with @');
       return;
     }
 
