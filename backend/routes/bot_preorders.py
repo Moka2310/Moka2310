@@ -73,7 +73,7 @@ async def create_bot_preorder(
             from payment_service import StripePayment
             
             payment_result = await StripePayment.create_payment_intent(
-                amount=2.0,
+                amount=300.0,
                 currency="cad",
                 metadata={
                     "preorder_id": preorder.id,
