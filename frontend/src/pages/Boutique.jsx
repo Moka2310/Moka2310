@@ -194,6 +194,24 @@ const Boutique = () => {
           </div>
         </div>
 
+        {/* Bannière En Construction */}
+        <div className="mb-8 bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 border-2 border-yellow-500/50 rounded-3xl p-6">
+          <div className="flex items-center justify-center gap-4">
+            <span className="text-4xl">🚧</span>
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-white mb-2">
+                {language === 'fr' ? 'Achats temporairement suspendus' : 'Purchases temporarily suspended'}
+              </h3>
+              <p className="text-white/80">
+                {language === 'fr' 
+                  ? 'Nous finalisons les systèmes de paiement. Les achats seront bientôt disponibles!'
+                  : 'We are finalizing the payment systems. Purchases will be available soon!'}
+              </p>
+            </div>
+            <span className="text-4xl">🚧</span>
+          </div>
+        </div>
+
         {/* Formations Grid */}
         {formations.length === 0 ? (
           <div className="text-center py-16">
@@ -211,7 +229,7 @@ const Boutique = () => {
             {formations.map((formation) => (
             <div
               key={formation.id}
-              className="group bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl overflow-hidden border border-purple-500/30 hover:border-pink-500/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-pink-500/20"
+              className="group bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl overflow-hidden border border-purple-500/30 hover:border-pink-500/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-pink-500/20 opacity-60 cursor-not-allowed"
             >
               {/* Image */}
               <div className="relative h-56 overflow-hidden">
