@@ -224,17 +224,6 @@ const Navbar = () => {
               <span className="text-sm font-medium">{language === 'fr' ? '🇨🇦 English' : '🇫🇷 Français'}</span>
             </button>
             
-            {/* Install App Button Mobile */}
-            {showInstallButton && (
-              <Button
-                onClick={handleInstallClick}
-                className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white flex items-center justify-center space-x-2"
-              >
-                <span className="font-bold">App</span>
-                <span>{language === 'fr' ? 'Installer l\'application' : 'Install app'}</span>
-              </Button>
-            )}
-            
             {user ? (
               <div className="flex flex-col gap-3">
                 <Button
@@ -261,23 +250,15 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              <>
-                <Button
-                  onClick={() => {
-                    navigate('/login');
-                    setMobileMenuOpen(false);
-                  }}
-                  className="w-full bg-transparent border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white"
-                >
-                  {t(language, 'nav.login')}
-                </Button>
-                <Button
-                  onClick={() => window.open('https://t.me/TRADALIFE', '_blank')}
-                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white"
-                >
-                  TELEGRAM
-                </Button>
-              </>
+              <Button
+                onClick={() => {
+                  navigate('/login');
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full bg-transparent border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white"
+              >
+                {t(language, 'nav.login')}
+              </Button>
             )}
           </div>
         </div>
