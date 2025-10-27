@@ -121,7 +121,7 @@ export const translations = {
         feature2: 'Signaux en temps réel',
         feature3: 'Annulation à tout moment',
         subscribeNow: 'S\'abonner maintenant',
-        price: '2$ CAD',
+        price: '150$ CAD',
         perMonthShort: 'par mois',
         unlimitedAccess: 'Accès illimité',
         allChannels: 'Tous les canaux',
