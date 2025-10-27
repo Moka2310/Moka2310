@@ -139,10 +139,12 @@ const Home = () => {
               <p className="text-white/80 text-base sm:text-lg mb-6 sm:mb-8">
                 {language === 'fr' 
                   ? `Rejoignez notre communauté de plus de ${telegramMembers.toLocaleString('fr-FR')} traders et accédez à des signaux exclusifs sur Crypto, Forex, Gold, Indices et plus encore.`
-                  : `Join our community of over ${telegramMembers.toLocaleString('en-US')} traders and access exclusive signals on Crypto, Forex, Gold, Indices and more.`
+                  : `Join our community of over ${telegramMembers.toLocaleString('en-US')} traders and access exclusive signals on Crypto, Crypto, Forex, Gold, Indices and more.`
                 }
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
+              
+              {/* Boutons CTA principaux */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start mb-4">
                 <Button
                   onClick={() => navigate('/boutique')}
                   className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg rounded-full w-full sm:w-auto"
@@ -151,9 +153,31 @@ const Home = () => {
                 </Button>
                 <Button
                   onClick={() => window.open('https://t.me/TRADALIFE', '_blank')}
-                  className="bg-transparent border-2 border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg rounded-full transition-all w-full sm:w-auto"
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg rounded-full w-full sm:w-auto flex items-center justify-center gap-2"
                 >
-                  {language === 'fr' ? 'Rejoindre Telegram' : 'Join Telegram'}
+                  <span>TELEGRAM</span>
+                </Button>
+              </div>
+              
+              {/* Bouton Installer l'App */}
+              <div className="flex justify-center md:justify-start">
+                <Button
+                  onClick={() => {
+                    // Logique d'installation PWA
+                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                    const instructions = isIOS 
+                      ? (language === 'fr' 
+                          ? "Sur iPhone/iPad : Appuyez sur le bouton Partager puis 'Sur l'écran d'accueil'"
+                          : "On iPhone/iPad: Tap the Share button then 'Add to Home Screen'")
+                      : (language === 'fr'
+                          ? "Pour installer : Menu Chrome (3 points) → 'Installer l'application'"
+                          : "To install: Chrome Menu (3 dots) → 'Install app'");
+                    alert(instructions);
+                  }}
+                  className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-6 py-3 rounded-full flex items-center gap-2 text-sm font-bold shadow-lg"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>{language === 'fr' ? '📱 Installer l\'application' : '📱 Install app'}</span>
                 </Button>
               </div>
             </div>
