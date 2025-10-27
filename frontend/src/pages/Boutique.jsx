@@ -268,20 +268,13 @@ const Boutique = () => {
                   </div>
                 </div>
 
-                {/* Buy Button */}
+                {/* Buy Button - DISABLED */}
                 <Button
-                  onClick={() => handlePurchase(formation)}
-                  className={`w-full py-6 rounded-full font-semibold text-lg group ${
-                    user?.kycStatus === 'approved' || user?.kycStatus === 'pending'
-                      ? 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white'
-                      : 'bg-yellow-500/20 border-2 border-yellow-500 text-yellow-300 hover:bg-yellow-500/30'
-                  }`}
+                  disabled
+                  className="w-full py-6 rounded-full font-semibold text-lg bg-gray-500/20 border-2 border-gray-500 text-gray-400 cursor-not-allowed"
                 >
-                  <ShoppingCart className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                  {user?.kycStatus === 'approved' || user?.kycStatus === 'pending'
-                    ? t(language, 'shop.buy')
-                    : (language === 'fr' ? 'Documents KYC requis' : 'KYC documents required')
-                  }
+                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  {language === 'fr' ? '🚧 Bientôt disponible' : '🚧 Coming soon'}
                 </Button>
                 
                 {/* KYC Warning */}
