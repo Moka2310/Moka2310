@@ -366,11 +366,11 @@ export const translations = {
     subscription: {
       title: 'Abonnement Signaux',
       subtitle: 'Accédez aux signaux de trading professionnels en temps réel',
-      price: '2$ CAD',
+      price: '150$ CAD',
       perMonth: 'par mois',
       autoRenewal: 'Renouvellement automatique',
       subscribe: 'S\'abonner maintenant',
-      subscribeButton: 'S\'abonner - 2$ CAD/mois',
+      subscribeButton: 'S\'abonner - 150$ CAD/mois',
       features: {
         title: 'Ce que vous obtenez :',
         realTimeSignals: 'Signaux en temps réel',
