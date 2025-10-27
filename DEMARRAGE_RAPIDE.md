@@ -164,7 +164,7 @@ db.users.find()       # Voir utilisateurs
 
 Votre application est maintenant configurée !
 
-**Testez sur** : https://tradebot-launch.preview.emergentagent.com
+**Testez sur** : https://payflow-fix-7.preview.emergentagent.com
 
 **Documentation complète** :
 - `/app/GUIDE_DEPLOIEMENT.md` - Guide complet

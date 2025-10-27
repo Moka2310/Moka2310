@@ -20,7 +20,7 @@ def get_backend_url():
                     return line.split('=', 1)[1].strip()
     except FileNotFoundError:
         pass
-    return "https://tradebot-launch.preview.emergentagent.com"
+    return "https://payflow-fix-7.preview.emergentagent.com"
 
 BASE_URL = get_backend_url()
 API_URL = f"{BASE_URL}/api"

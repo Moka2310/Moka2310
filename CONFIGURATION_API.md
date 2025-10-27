@@ -95,7 +95,7 @@ GMAIL_APP_PASSWORD=xxxx xxxx xxxx xxxx  # Le mot de passe de 16 caractères
 
 ### Test Stripe
 ```bash
-curl -X POST https://tradebot-launch.preview.emergentagent.com/api/purchases/create \
+curl -X POST https://payflow-fix-7.preview.emergentagent.com/api/purchases/create \
   -H "Authorization: Bearer VOTRE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"formationId":"1","paymentMethod":"stripe"}'
@@ -103,7 +103,7 @@ curl -X POST https://tradebot-launch.preview.emergentagent.com/api/purchases/cre
 
 ### Test PayPal
 ```bash
-curl -X POST https://tradebot-launch.preview.emergentagent.com/api/purchases/create \
+curl -X POST https://payflow-fix-7.preview.emergentagent.com/api/purchases/create \
   -H "Authorization: Bearer VOTRE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"formationId":"1","paymentMethod":"paypal"}'
