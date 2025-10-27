@@ -39,6 +39,8 @@ function App() {
               <Route path="/contest" element={<Contest />} />
               <Route path="/bonus" element={<Bonus />} />
               <Route path="/about-us" element={<AboutUs />} />
+              <Route path="/parrainage" element={<Referral />} />
+              <Route path="/referral" element={<Referral />} />
               <Route path="/protection-charter" element={<ProtectionCharter />} />
               <Route path="/canal/:canalName" element={<CanalDetails />} />
             </Routes>
