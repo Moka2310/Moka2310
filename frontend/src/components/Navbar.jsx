@@ -129,9 +129,13 @@ const Navbar = () => {
             <div className="logo-glow-background"></div>
             
             <img 
-              src="https://i.imgur.com/FrA3lov.gif" 
+              src="/tradalife_logo.gif" 
               alt="Tradalife Logo" 
               className="h-24 w-auto relative z-10"
+              onError={(e) => {
+                // Fallback to Imgur if local fails
+                e.target.src = "https://i.imgur.com/FrA3lov.gif";
+              }}
             />
           </div>
 
