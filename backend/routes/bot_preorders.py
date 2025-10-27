@@ -56,7 +56,7 @@ async def create_bot_preorder(
             id=str(uuid.uuid4()),
             userId=current_user.id,
             userEmail=current_user.email,
-            price=2.0,  # Prix en CAD
+            price=300.0,  # Prix en CAD
             status=BotPreorderStatus.PENDING_PAYMENT,
             paymentMethod=preorder_data.paymentMethod,
             createdAt=datetime.utcnow(),
