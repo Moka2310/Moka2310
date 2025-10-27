@@ -19,6 +19,7 @@ import Contest from "./pages/Contest";
 import Bonus from "./pages/Bonus";
 import AboutUs from "./pages/AboutUs";
 import Referral from "./pages/Referral";
+import UnderConstruction from "./components/UnderConstruction";
 
 function App() {
   return (
@@ -31,11 +32,13 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/boutique" element={<Boutique />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/checkout" element={<Checkout />} />
+              {/* Pages de paiement temporairement en construction */}
+              <Route path="/checkout" element={<UnderConstruction />} />
+              <Route path="/subscription" element={<UnderConstruction />} />
+              <Route path="/bot-preorder" element={<UnderConstruction />} />
+              {/* Fin pages en construction */}
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<Admin />} />
-              <Route path="/subscription" element={<Subscription />} />
-              <Route path="/bot-preorder" element={<BotPreorder />} />
               <Route path="/contest" element={<Contest />} />
               <Route path="/bonus" element={<Bonus />} />
               <Route path="/about-us" element={<AboutUs />} />
