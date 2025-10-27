@@ -22,10 +22,17 @@ const Boutique = () => {
     const loadFormations = async () => {
       try {
         const response = await formationsAPI.getAll();
+        console.log('📊 Formations API response:', response.data);
+        console.log('📊 Total formations received:', response.data.length);
+        
         // Filtrer les formations visibles (seulement celles à 2$ CAD)
         const filteredFormations = response.data.filter(
           f => f.price === 2 || f.price === 2.0
         );
+        
+        console.log('✅ Filtered formations (price = 2$):', filteredFormations.length);
+        console.log('✅ Filtered formations data:', filteredFormations);
+        
         setFormations(filteredFormations);
       } catch (error) {
         console.error('Failed to load formations:', error);
