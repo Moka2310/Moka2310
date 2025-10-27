@@ -18,6 +18,7 @@ import BotPreorder from "./pages/BotPreorder";
 import Contest from "./pages/Contest";
 import Bonus from "./pages/Bonus";
 import AboutUs from "./pages/AboutUs";
+import Referral from "./pages/Referral";
 
 function App() {
   return (
