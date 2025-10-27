@@ -86,17 +86,40 @@ const SubscriptionForm = () => {
         }
       );
 
-      // L'abonnement est créé avec succès
-      if (response.data && response.data.subscriptionId) {
+      const { clientSecret, subscriptionId, status } = response.data;
+
+      // Si le status est incomplete, il faut confirmer le paiement (3D Secure)
+      if (status === 'incomplete' && clientSecret) {
+        const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(
+          clientSecret
+        );
+
+        if (confirmError) {
+          throw new Error(confirmError.message);
+        }
+
+        // Paiement confirmé avec succès
+        if (paymentIntent.status === 'succeeded') {
+          alert(language === 'fr' 
+            ? '✅ Abonnement activé avec succès! Vous allez recevoir vos liens Telegram.'
+            : '✅ Subscription activated successfully! You will receive your Telegram links.');
+          
+          setTimeout(() => {
+            navigate('/dashboard');
+          }, 2000);
+        }
+      } 
+      // Si le status est déjà active ou trialing
+      else if (status === 'active' || status === 'trialing') {
         alert(language === 'fr' 
-          ? 'Abonnement créé avec succès! Vous allez recevoir vos liens Telegram par email.'
-          : 'Subscription created successfully! You will receive your Telegram links by email.');
+          ? '✅ Abonnement créé avec succès! Vous allez recevoir vos liens Telegram.'
+          : '✅ Subscription created successfully! You will receive your Telegram links.');
 
         setTimeout(() => {
           navigate('/dashboard');
         }, 2000);
       } else {
-        throw new Error('Subscription creation failed');
+        throw new Error(`Subscription status: ${status}`);
       }
 
     } catch (error) {
