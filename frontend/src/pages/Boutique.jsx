@@ -25,15 +25,9 @@ const Boutique = () => {
         console.log('📊 Formations API response:', response.data);
         console.log('📊 Total formations received:', response.data.length);
         
-        // Filtrer les formations visibles (seulement celles à 2$ CAD)
-        const filteredFormations = response.data.filter(
-          f => f.price === 2 || f.price === 2.0
-        );
-        
-        console.log('✅ Filtered formations (price = 2$):', filteredFormations.length);
-        console.log('✅ Filtered formations data:', filteredFormations);
-        
-        setFormations(filteredFormations);
+        // TEMPORAIRE: Afficher toutes les formations sans filtre
+        setFormations(response.data);
+        console.log('✅ Formations set:', response.data);
       } catch (error) {
         console.error('Failed to load formations:', error);
         toast({
