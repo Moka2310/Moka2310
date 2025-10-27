@@ -123,7 +123,7 @@ const Navbar = () => {
               navigate('/');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="flex items-center cursor-pointer relative logo-glow-wrapper shrink-0"
+            className="flex items-center cursor-pointer relative logo-glow-wrapper shrink-0 mr-8"
           >
             {/* Lueur derrière le logo */}
             <div className="logo-glow-background"></div>
