@@ -157,10 +157,10 @@ const Boutique = () => {
                 </li>
               </ul>
               <Button
-                onClick={() => navigate('/subscription')}
-                className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-6 text-lg font-bold"
+                disabled
+                className="bg-gray-500/20 border-2 border-gray-500 text-gray-400 px-8 py-6 text-lg font-bold cursor-not-allowed"
               >
-                {t(language, 'shop.banner.subscribeNow')}
+                🚧 {language === 'fr' ? 'Bientôt disponible' : 'Coming soon'}
               </Button>
             </div>
 
