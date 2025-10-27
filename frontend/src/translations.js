@@ -579,7 +579,7 @@ export const translations = {
         feature2: 'Real-time signals',
         feature3: 'Cancel anytime',
         subscribeNow: 'Subscribe now',
-        price: '2$ CAD',
+        price: '150$ CAD',
         perMonthShort: 'per month',
         unlimitedAccess: 'Unlimited access',
         allChannels: 'All channels',
