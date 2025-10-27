@@ -88,16 +88,18 @@ const SubscriptionForm = () => {
 
       const { clientSecret, subscriptionId, status } = response.data;
 
-      // Confirmer le paiement
-      if (status === 'incomplete') {
-        const { error: confirmError } = await stripe.confirmCardPayment(clientSecret);
+      // Confirmer le paiement de l'abonnement
+      if (clientSecret && status === 'incomplete') {
+        const { error: confirmError, setupIntent } = await stripe.confirmCardSetup(clientSecret);
         
         if (confirmError) {
           throw new Error(confirmError.message);
         }
       }
 
-      alert(t(language, 'subscription.form.subscriptionSuccess'));
+      alert(language === 'fr' 
+        ? 'Abonnement créé avec succès! Vous allez recevoir vos liens d\'accès par email.'
+        : 'Subscription created successfully! You will receive your access links by email.');
 
       setTimeout(() => {
         navigate('/dashboard');
