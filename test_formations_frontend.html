@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Formations API</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #1E1540; color: white; }
+        .formation { background: #2B1F5C; padding: 15px; margin: 10px 0; border-radius: 10px; }
+        .price { color: #ff66cc; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Formations API</h1>
+    <div id="status">Chargement...</div>
+    <div id="formations"></div>
+    
+    <script>
+        const BACKEND_URL = 'https://payflow-fix-7.preview.emergentagent.com';
+        
+        fetch(`${BACKEND_URL}/api/formations`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status').innerHTML = `✅ API fonctionne! ${data.length} formations trouvées`;
+                
+                const html = data.map(f => `
+                    <div class="formation">
+                        <h2>${f.title}</h2>
+                        <p class="price">Prix: ${f.price} CAD</p>
+                        <p>${f.description}</p>
+                        <img src="${f.image}" style="max-width: 200px;" />
+                    </div>
+                `).join('');
+                
+                document.getElementById('formations').innerHTML = html;
+                
+                console.log('Formations:', data);
+            })
+            .catch(error => {
+                document.getElementById('status').innerHTML = `❌ Erreur: ${error.message}`;
+                console.error('Error:', error);
+            });
+    </script>
+</body>
+</html>
