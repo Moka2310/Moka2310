@@ -140,7 +140,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-4 lg:space-x-6 flex-wrap justify-end">
+          <div className="hidden lg:flex items-center space-x-6 flex-1 justify-end">
             {menuItems.map((item) => (
               <button
                 key={item.path}
