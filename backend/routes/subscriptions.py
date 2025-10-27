@@ -220,9 +220,38 @@ async def paypal_webhook(request: Request):
         elif event_type == 'BILLING.SUBSCRIPTION.CANCELLED':
             # Abonnement annulé
             agreement_id = resource.get('id')
+            # Trouver l'abonnement dans la DB avec paypalSubscriptionId
+            subscription = await db.subscriptions.find_one({
+                "paypalSubscriptionId": subscription_id
+            })
+            
+            if subscription:
+                # Mettre à jour le statut
+                await db.subscriptions.update_one(
+                    {"id": subscription['id']},
+                    {"$set": {
+                        "status": SubscriptionStatus.ACTIVE.value,
+                        "updatedAt": datetime.now(timezone.utc).isoformat()
+                    }}
+                )
+                
+                # Mettre à jour l'utilisateur
+                await db.users.update_one(
+                    {"id": subscription['userId']},
+                    {"$set": {"subscriptionStatus": SubscriptionStatus.ACTIVE.value}}
+                )
+                
+                print(f"✅ Subscription activated: {subscription_id}")
+                
+                # TODO: Envoyer email de confirmation
+                # TODO: Ajouter au Telegram
+                
+        elif event_type == 'BILLING.SUBSCRIPTION.CANCELLED':
+            # Abonnement annulé
+            subscription_id = resource.get('id')
             
             subscription = await db.subscriptions.find_one({
-                "paypalAgreementId": agreement_id
+                "paypalSubscriptionId": subscription_id
             })
             
             if subscription:
@@ -239,16 +268,16 @@ async def paypal_webhook(request: Request):
                     {"$set": {"subscriptionStatus": SubscriptionStatus.CANCELED.value}}
                 )
                 
-                print(f"✅ Subscription cancelled: {agreement_id}")
+                print(f"✅ Subscription cancelled: {subscription_id}")
                 
                 # TODO: Retirer du Telegram
                 
         elif event_type == 'BILLING.SUBSCRIPTION.SUSPENDED':
             # Abonnement suspendu
-            agreement_id = resource.get('id')
+            subscription_id = resource.get('id')
             
             subscription = await db.subscriptions.find_one({
-                "paypalAgreementId": agreement_id
+                "paypalSubscriptionId": subscription_id
             })
             
             if subscription:
@@ -260,12 +289,12 @@ async def paypal_webhook(request: Request):
                     }}
                 )
                 
-                print(f"⚠️ Subscription suspended: {agreement_id}")
+                print(f"⚠️ Subscription suspended: {subscription_id}")
                 
         elif event_type == 'BILLING.SUBSCRIPTION.PAYMENT.FAILED':
             # Paiement échoué
-            agreement_id = resource.get('id')
-            print(f"❌ Payment failed for subscription: {agreement_id}")
+            subscription_id = resource.get('id')
+            print(f"❌ Payment failed for subscription: {subscription_id}")
             
             # TODO: Envoyer notification à l'utilisateur
             
