@@ -201,8 +201,20 @@ const Boutique = () => {
         </div>
 
         {/* Formations Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {formations.map((formation) => (
+        {formations.length === 0 ? (
+          <div className="text-center py-16">
+            <div className="text-white text-2xl mb-4">
+              {language === 'fr' ? 'Aucune formation disponible' : 'No formations available'}
+            </div>
+            <div className="text-white/60">
+              {language === 'fr' 
+                ? 'Les formations seront bientôt disponibles.' 
+                : 'Formations will be available soon.'}
+            </div>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {formations.map((formation) => (
             <div
               key={formation.id}
               className="group bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl overflow-hidden border border-purple-500/30 hover:border-pink-500/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-pink-500/20"
