@@ -264,25 +264,30 @@ class PayPalSubscriptionService:
             raise
     
     @staticmethod
-    async def execute_subscription(agreement_token: str) -> Dict[str, Any]:
-        """Exécute un abonnement PayPal après approbation de l'utilisateur"""
+    async def get_subscription(subscription_id: str) -> Dict[str, Any]:
+        """Récupère les détails d'un abonnement PayPal"""
         try:
-            from payment_service import PayPalPayment
+            from paypal_rest_service import paypal_rest_service
             
-            execute_result = await PayPalPayment.execute_billing_agreement(agreement_token)
+            result = await paypal_rest_service.get_subscription(subscription_id)
             
-            if execute_result["success"]:
+            if result.get("success"):
                 return {
                     "success": True,
-                    "agreement_id": execute_result["agreement_id"],
-                    "status": execute_result["state"]
+                    "subscription": result.get("data")
                 }
             else:
-                raise Exception(f"Erreur exécution agreement PayPal: {execute_result['error']}")
+                return {
+                    "success": False,
+                    "error": result.get("error")
+                }
                 
         except Exception as e:
-            print(f"❌ Erreur lors de l'exécution de l'abonnement PayPal: {e}")
-            raise
+            print(f"❌ Erreur lors de la récupération de l'abonnement PayPal: {e}")
+            return {
+                "success": False,
+                "error": str(e)
+            }
     
     @staticmethod
     async def cancel_subscription(agreement_id: str) -> bool:
