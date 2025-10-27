@@ -203,7 +203,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#1E1540] border-t border-purple-800/30">
+        <div className="lg:hidden bg-[#1E1540] border-t border-purple-800/30">
           <div className="px-4 py-4 space-y-3">
             {menuItems.map((item) => (
               <button
