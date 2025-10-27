@@ -161,34 +161,7 @@ const Navbar = () => {
               <span className="text-sm font-medium">{language === 'fr' ? '🇨🇦 EN' : '🇫🇷 FR'}</span>
             </button>
 
-            {/* Install App Button */}
-            {showInstallButton && (
-              <button
-                onClick={handleInstallClick}
-                className="flex items-center space-x-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-4 py-2 rounded-full transition-all transform hover:scale-105"
-                title={language === 'fr' ? 'Installer l\'application' : 'Install app'}
-              >
-                <span className="text-sm font-bold">App</span>
-                <span className="text-sm font-medium hidden lg:inline">
-                  {language === 'fr' ? 'Installer' : 'Install'}
-                </span>
-              </button>
-            )}
-
-            {/* Cart Icon with Badge */}
-            <button
-              onClick={() => navigate(user ? '/dashboard' : '/login')}
-              className="text-white/90 hover:text-pink-400 transition-colors relative"
-            >
-              <ShoppingCart className="w-5 h-5" />
-              {isOnCheckout && (
-                <span className="absolute -top-2 -right-2 w-5 h-5 bg-pink-500 text-white text-xs font-bold rounded-full flex items-center justify-center animate-pulse">
-                  1
-                </span>
-              )}
-            </button>
-
-            {/* Telegram Button or User Button */}
+            {/* User Section */}
             {user ? (
               <div className="flex items-center gap-3">
                 <Button
@@ -209,20 +182,12 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              <>
-                <Button
-                  onClick={() => navigate('/login')}
-                  className="bg-transparent border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white px-6 py-2 rounded-full transition-all"
-                >
-                  {t(language, 'nav.login')}
-                </Button>
-                <Button
-                  onClick={() => window.open('https://t.me/TRADALIFE', '_blank')}
-                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 rounded-full"
-                >
-                  TELEGRAM
-                </Button>
-              </>
+              <Button
+                onClick={() => navigate('/login')}
+                className="bg-transparent border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white px-6 py-2 rounded-full transition-all"
+              >
+                {t(language, 'nav.login')}
+              </Button>
             )}
           </div>
 
