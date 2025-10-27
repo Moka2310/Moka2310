@@ -5,8 +5,8 @@ from typing import Optional, Dict, Any
 
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
 
-# Prix de l'abonnement mensuel : 2$ CAD
-SUBSCRIPTION_PRICE_AMOUNT = 200  # en cents (2.00 CAD)
+# Prix de l'abonnement mensuel : 150$ CAD
+SUBSCRIPTION_PRICE_AMOUNT = 15000  # en cents (150.00 CAD)
 SUBSCRIPTION_PRICE_CURRENCY = "cad"
 
 class SubscriptionService:
