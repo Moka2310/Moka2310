@@ -131,7 +131,7 @@ const Navbar = () => {
             <img 
               src="/tradalife_logo.gif" 
               alt="Tradalife Logo" 
-              className="h-16 w-auto relative z-10"
+              className="h-20 w-auto relative z-10"
               onError={(e) => {
                 // Fallback to Imgur if local fails
                 e.target.src = "https://i.imgur.com/FrA3lov.gif";
