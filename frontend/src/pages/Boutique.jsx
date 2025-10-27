@@ -284,7 +284,8 @@ const Boutique = () => {
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        )}
 
         {/* Benefits Section */}
         <div className="mt-20 bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-3xl p-8 md:p-12 border border-purple-500/30">
