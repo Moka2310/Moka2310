@@ -158,6 +158,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "✅ COMPREHENSIVE PRICING VERIFICATION COMPLETE - All 6/6 tests passed perfectly! 1) Formation API: All formations correctly priced at 2$ CAD (Ultra Adhésion: 2.0 CAD, Premium Membership: 2.0 CAD). 2) Bot Preorder Stripe: price=2.0 CAD with Stripe amount 200 cents (2*100), clientSecret and preorderId working. 3) Bot Preorder PayPal: price=2.0 CAD with PayPal integration working, approvalUrl and preorderId present. 4) Subscription Service: SUBSCRIPTION_PRICE_AMOUNT=200 cents (2$ CAD), CURRENCY=cad correctly configured. Backend logs confirm successful Stripe API calls (Response[200]: OK) and PayPal API calls (Response[200]: OK, Response[201]: Created). The user's concern about old pricing is RESOLVED - all payment integrations are using the correct 2$ CAD pricing."
+      - working: true
+        agent: "main"
+        comment: "✅ COMPLETE PRICE UPDATE TO 2$ CAD - Updated ALL prices in database and code: 1) Formations: 2/2 formations updated to 2$ CAD. 2) Bot Preorders (fake): 21/21 fake preorders updated from 300$ to 2$ CAD. 3) Bot Preorders (real): 4 test preorders updated to 2$ CAD. 4) Code fixes: bot_preorders.py ligne 184 (fake preorder creation) fixed to use 2.0 instead of 300.0. 5) Stripe subscription: SUBSCRIPTION_PRICE_AMOUNT=200 cents (2$ CAD). 6) PayPal subscription: amount=2.0 CAD. Backend restarted successfully. Verification script confirms all prices are now at 2$ CAD across the entire platform (formations, bot, subscriptions). User can now test all payment flows with 2$ CAD pricing."
 
 frontend:
   - task: "ChatWidget Component"
