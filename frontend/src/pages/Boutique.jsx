@@ -277,15 +277,12 @@ const Boutique = () => {
                   {language === 'fr' ? '🚧 Bientôt disponible' : '🚧 Coming soon'}
                 </Button>
                 
-                {/* KYC Warning */}
-                {user && user.kycStatus !== 'approved' && user.kycStatus !== 'pending' && (
-                  <p className="text-yellow-400 text-xs mt-2 text-center">
-                    {language === 'fr' 
-                      ? '⚠️ Soumettez vos documents KYC dans le Dashboard'
-                      : '⚠️ Submit your KYC documents in Dashboard'
-                    }
-                  </p>
-                )}
+                {/* Construction Message */}
+                <p className="text-yellow-400 text-xs mt-2 text-center">
+                  {language === 'fr' 
+                    ? '🚧 Système de paiement en finalisation'
+                    : '🚧 Payment system being finalized'}
+                </p>
               </div>
             </div>
           ))}
