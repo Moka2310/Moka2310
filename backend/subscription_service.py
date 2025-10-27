@@ -175,62 +175,89 @@ class SubscriptionService:
 
 
 class PayPalSubscriptionService:
-    """Service pour gérer les abonnements PayPal"""
+    """Service pour gérer les abonnements PayPal avec la nouvelle API REST"""
+    
+    # Store created plan IDs to reuse them
+    _cached_product_id = None
+    _cached_plan_id = None
     
     @staticmethod
-    async def create_or_get_billing_plan() -> str:
-        """Crée ou récupère le Billing Plan PayPal pour l'abonnement à 150$/mois"""
+    async def create_or_get_product_and_plan() -> tuple[str, str]:
+        """Crée ou récupère le Product et Plan PayPal pour l'abonnement à 2$/mois"""
         try:
-            from payment_service import PayPalPayment
+            from paypal_rest_service import paypal_rest_service
             
-            # Pour l'instant, créer un nouveau plan à chaque fois
-            # TODO: Stocker le plan_id en DB et le réutiliser
-            plan_result = await PayPalPayment.create_billing_plan(
-                name="Abonnement Signaux TRADALIFE - Mensuel",
-                description="Accès mensuel aux signaux de trading sur tous les canaux Telegram (Forex, Crypto, Indices, Gold, Actions, Commodités)",
+            # Check if we have cached IDs (in-memory cache for now)
+            if PayPalSubscriptionService._cached_product_id and PayPalSubscriptionService._cached_plan_id:
+                print(f"✅ Using cached Product ID: {PayPalSubscriptionService._cached_product_id}")
+                print(f"✅ Using cached Plan ID: {PayPalSubscriptionService._cached_plan_id}")
+                return PayPalSubscriptionService._cached_product_id, PayPalSubscriptionService._cached_plan_id
+            
+            # Create product first
+            product_result = await paypal_rest_service.create_product(
+                name="TRADALIFE - Signaux de Trading VIP",
+                description="Accès mensuel aux signaux de trading sur 6 canaux Telegram VIP (Forex, Crypto, Indices, Gold, Actions, Commodités)"
+            )
+            
+            if not product_result.get("success"):
+                raise Exception(f"Erreur création produit PayPal: {product_result.get('error')}")
+            
+            product_id = product_result['data']['id']
+            print(f"✅ PayPal Product créé: {product_id}")
+            
+            # Create billing plan
+            plan_result = await paypal_rest_service.create_billing_plan(
+                product_id=product_id,
+                name="Abonnement Signaux TRADALIFE - Mensuel (2$ CAD)",
+                description="Abonnement mensuel à 2$ CAD pour accès aux signaux de trading",
                 amount=2.0,
                 currency="CAD"
             )
             
-            if plan_result["success"]:
-                print(f"✅ PayPal Billing Plan créé: {plan_result['plan_id']}")
-                return plan_result["plan_id"]
-            else:
-                raise Exception(f"Erreur création plan PayPal: {plan_result['error']}")
+            if not plan_result.get("success"):
+                raise Exception(f"Erreur création plan PayPal: {plan_result.get('error')}")
+            
+            plan_id = plan_result['data']['id']
+            print(f"✅ PayPal Plan créé: {plan_id}")
+            
+            # Cache the IDs
+            PayPalSubscriptionService._cached_product_id = product_id
+            PayPalSubscriptionService._cached_plan_id = plan_id
+            
+            return product_id, plan_id
                 
         except Exception as e:
-            print(f"❌ Erreur lors de la création du billing plan PayPal: {e}")
+            print(f"❌ Erreur lors de la création du produit/plan PayPal: {e}")
             raise
     
     @staticmethod
     async def create_subscription(telegram_username: str, user_email: str) -> Dict[str, Any]:
-        """Crée un abonnement PayPal"""
+        """Crée un abonnement PayPal avec la nouvelle API REST"""
         try:
-            from payment_service import PayPalPayment
+            from paypal_rest_service import paypal_rest_service
             
-            # Créer ou récupérer le billing plan
-            plan_id = await PayPalSubscriptionService.create_or_get_billing_plan()
+            # Get or create product and plan
+            product_id, plan_id = await PayPalSubscriptionService.create_or_get_product_and_plan()
             
-            # Date de début (dans 5 minutes pour laisser le temps à l'utilisateur d'approuver)
-            start_date = (datetime.now(timezone.utc) + timedelta(minutes=5)).isoformat()
+            # Get frontend URL for return/cancel URLs
+            frontend_url = os.environ.get("FRONTEND_URL", "https://tradalife.com")
             
-            # Créer le billing agreement
-            agreement_result = await PayPalPayment.create_billing_agreement(
+            # Create subscription
+            subscription_result = await paypal_rest_service.create_subscription(
                 plan_id=plan_id,
-                name=f"Abonnement TRADALIFE - {telegram_username}",
-                description=f"Abonnement mensuel signaux trading pour {user_email}",
-                start_date=start_date
+                return_url=f"{frontend_url}/subscription-success",
+                cancel_url=f"{frontend_url}/subscription-cancel"
             )
             
-            if agreement_result["success"]:
+            if subscription_result.get("success"):
                 return {
                     "success": True,
-                    "approval_url": agreement_result["approval_url"],
-                    "agreement_token": agreement_result["agreement_token"],
+                    "approval_url": subscription_result["approval_url"],
+                    "subscription_id": subscription_result["subscription_id"],
                     "plan_id": plan_id
                 }
             else:
-                raise Exception(f"Erreur création agreement PayPal: {agreement_result['error']}")
+                raise Exception(f"Erreur création subscription PayPal: {subscription_result.get('error')}")
                 
         except Exception as e:
             print(f"❌ Erreur lors de la création de l'abonnement PayPal: {e}")
