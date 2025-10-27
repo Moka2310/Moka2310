@@ -181,7 +181,7 @@ async def initialize_fake_preorders(secret: str):
                 "id": str(uuid.uuid4()),
                 "userId": f"fake_user_{current_count + i}",
                 "userEmail": f"fake_{current_count + i}@example.com",
-                "price": 300.0,
+                "price": 2.0,  # Prix mis à jour à 2$ CAD
                 "status": "paid",
                 "paymentMethod": "stripe",
                 "stripePaymentIntentId": f"fake_pi_{current_count + i}",
