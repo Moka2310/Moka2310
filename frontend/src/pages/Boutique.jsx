@@ -24,7 +24,7 @@ const Boutique = () => {
         const response = await formationsAPI.getAll();
         // Filtrer les formations visibles (seulement celles à 2$ CAD)
         const filteredFormations = response.data.filter(
-          f => f.price === 2
+          f => f.price === 2 || f.price === 2.0
         );
         setFormations(filteredFormations);
       } catch (error) {
