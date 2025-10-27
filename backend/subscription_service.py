@@ -208,9 +208,9 @@ class PayPalSubscriptionService:
             # Create billing plan
             plan_result = await paypal_rest_service.create_billing_plan(
                 product_id=product_id,
-                name="Abonnement Signaux TRADALIFE - Mensuel (2$ CAD)",
-                description="Abonnement mensuel à 2$ CAD pour accès aux signaux de trading",
-                amount=2.0,
+                name="Abonnement Signaux TRADALIFE - Mensuel (150$ CAD)",
+                description="Abonnement mensuel à 150$ CAD pour accès aux signaux de trading",
+                amount=150.0,
                 currency="CAD"
             )
             
