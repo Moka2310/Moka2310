@@ -106,7 +106,7 @@ async def create_subscription(
             }
             
         elif payment_method == "paypal":
-            # ===== PAYPAL =====
+            # ===== PAYPAL (Nouvelle API REST) =====
             subscription_result = await PayPalSubscriptionService.create_subscription(
                 telegram_username=subscription_data.telegramUsername,
                 user_email=user_email
@@ -118,7 +118,7 @@ async def create_subscription(
                 subscription_doc = {
                     "id": subscription_id,
                     "userId": user_id,
-                    "paypalAgreementToken": subscription_result['agreement_token'],
+                    "paypalSubscriptionId": subscription_result['subscription_id'],
                     "paypalPlanId": subscription_result['plan_id'],
                     "status": "pending",  # En attente de l'approbation PayPal
                     "paymentMethod": "paypal",
@@ -136,15 +136,15 @@ async def create_subscription(
                     {"id": user_id},
                     {"$set": {
                         "telegramUsername": subscription_data.telegramUsername,
-                        "subscriptionId": subscription_id,
+                        "subscriptionId": subscription_result['subscription_id'],
+                        "paypalSubscriptionId": subscription_result['subscription_id'],
                         "subscriptionStatus": "pending",
                     }}
                 )
                 
                 return {
                     "approvalUrl": subscription_result['approval_url'],
-                    "subscriptionId": subscription_id,
-                    "agreementToken": subscription_result['agreement_token'],
+                    "subscriptionId": subscription_result['subscription_id'],
                     "status": "pending",
                     "paymentMethod": "paypal"
                 }
