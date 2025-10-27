@@ -824,11 +824,11 @@ export const translations = {
     subscription: {
       title: 'Signals Subscription',
       subtitle: 'Access professional trading signals in real-time',
-      price: '2$ CAD',
+      price: '150$ CAD',
       perMonth: 'per month',
       autoRenewal: 'Automatic renewal',
       subscribe: 'Subscribe now',
-      subscribeButton: 'Subscribe - 2$ CAD/month',
+      subscribeButton: 'Subscribe - 150$ CAD/month',
       features: {
         title: 'What you get:',
         realTimeSignals: 'Real-time signals',
