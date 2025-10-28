@@ -2,11 +2,10 @@
 Script pour réinitialiser le mot de passe d'un utilisateur
 """
 import asyncio
+import os
 from motor.motor_asyncio import AsyncIOMotorClient
 from passlib.context import CryptContext
 import sys
-
-MONGO_URL = "mongodb://localhost:27017"
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 async def reset_password(email: str, new_password: str):
