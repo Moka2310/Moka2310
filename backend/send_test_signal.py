@@ -5,6 +5,7 @@ Pour tester l'affichage sans attendre un vrai signal Telegram
 from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import datetime, timezone
 import asyncio
+import os
 
 MONGO_URL = "mongodb://localhost:27017"
 
