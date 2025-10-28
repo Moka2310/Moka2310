@@ -47,6 +47,7 @@ api_router.include_router(members.router)
 api_router.include_router(bonus_announcements.router)
 api_router.include_router(referrals.router)
 api_router.include_router(tradabot.router)
+api_router.include_router(tradabot_download.router)
 
 # Include the router in the main app
 app.include_router(api_router)
