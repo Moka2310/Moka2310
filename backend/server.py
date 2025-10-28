@@ -7,7 +7,7 @@ import logging
 from pathlib import Path
 
 # Import routes
-from routes import auth, formations, purchases, kyc, admin, testimonials, chat, temp_admin, telegram, subscriptions, migrations, bot_preorders, trading_contest, members, bonus_announcements, referrals
+from routes import auth, formations, purchases, kyc, admin, testimonials, chat, temp_admin, telegram, subscriptions, migrations, bot_preorders, trading_contest, members, bonus_announcements, referrals, tradabot
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
