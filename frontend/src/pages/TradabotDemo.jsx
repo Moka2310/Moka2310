@@ -523,8 +523,8 @@ const TradabotDemo = () => {
               </div>
 
               <div className="bg-white/5 rounded-2xl p-6">
-              <h3 className="text-white text-xl font-bold mb-6">📡 Signaux Reçus (Temps Réel)</h3>
-              <div className="space-y-4 max-h-96 overflow-y-auto">
+                <h3 className="text-white text-xl font-bold mb-6">📡 Signaux Reçus (Temps Réel)</h3>
+                <div className="space-y-4 max-h-96 overflow-y-auto">
                 {signals.length === 0 ? (
                   <p className="text-white/40 text-center py-8">En attente de signaux des canaux Telegram...</p>
                 ) : (
