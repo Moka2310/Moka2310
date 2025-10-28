@@ -5,38 +5,10 @@ const TradabotDownloadTab = () => {
   const [downloading, setDownloading] = useState(false);
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-  const handleDownload = async () => {
-    try {
-      setDownloading(true);
-      
-      const token = localStorage.getItem('tradalife_token');
-      const response = await fetch(`${BACKEND_URL}/api/tradabot/download-package`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Erreur lors du téléchargement');
-      }
-
-      // Créer un blob et télécharger
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'TRADABOT_Package.zip';
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-
-    } catch (error) {
-      console.error('Erreur:', error);
-      alert('Erreur lors du téléchargement. Veuillez réessayer.');
-    } finally {
-      setDownloading(false);
-    }
+  const handleDownload = () => {
+    // Téléchargement direct du fichier statique
+    const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    window.location.href = `${BACKEND_URL}/TRADABOT_Package.zip`;
   };
 
   return (
