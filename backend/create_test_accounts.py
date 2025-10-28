@@ -15,7 +15,7 @@ async def create_test_accounts():
     
     mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
     client = AsyncIOMotorClient(mongo_url)
-    db = client['tradalife']
+    db = client[os.environ.get('DB_NAME', 'tradalife')]
     
     print("🔧 Création des comptes de test TRADABOT...\n")
     
