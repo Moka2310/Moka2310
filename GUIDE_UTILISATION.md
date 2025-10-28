@@ -163,16 +163,16 @@ Créer `/admin` avec :
 ### Backend
 ```bash
 # Tester les endpoints
-curl https://payflow-fix-7.preview.emergentagent.com/api/formations
+curl https://autotrader-hub-12.preview.emergentagent.com/api/formations
 
 # Créer un utilisateur
-curl -X POST https://payflow-fix-7.preview.emergentagent.com/api/auth/register \
+curl -X POST https://autotrader-hub-12.preview.emergentagent.com/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"email":"test@test.com","password":"Test123!"}'
 ```
 
 ### Frontend
-1. Ouvrir : https://payflow-fix-7.preview.emergentagent.com
+1. Ouvrir : https://autotrader-hub-12.preview.emergentagent.com
 2. Tester l'inscription
 3. Acheter une formation
 4. Soumettre le KYC

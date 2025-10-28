@@ -191,7 +191,7 @@ exit
 ## 💡 CONSEIL FINAL
 
 **Testez toujours** après une modification :
-1. Aller sur https://payflow-fix-7.preview.emergentagent.com/boutique
+1. Aller sur https://autotrader-hub-12.preview.emergentagent.com/boutique
 2. Rafraîchir la page (F5)
 3. Vérifier que tout s'affiche correctement
 

@@ -13,7 +13,7 @@ DATA_DIR.mkdir(exist_ok=True)
 LOGS_DIR.mkdir(exist_ok=True)
 
 # API Configuration
-API_BASE_URL = os.getenv('API_BASE_URL', 'https://payflow-fix-7.preview.emergentagent.com')
+API_BASE_URL = os.getenv('API_BASE_URL', 'https://autotrader-hub-12.preview.emergentagent.com')
 API_TRADABOT_ACCESS = f"{API_BASE_URL}/api/tradabot/access"
 API_TRADABOT_CONFIG = f"{API_BASE_URL}/api/tradabot/config"
 API_TRADABOT_STATUS = f"{API_BASE_URL}/api/tradabot/status"
