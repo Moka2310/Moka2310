@@ -7,13 +7,12 @@ from datetime import datetime, timezone
 import asyncio
 import os
 
-MONGO_URL = "mongodb://localhost:27017"
-
 async def send_test_signal():
     """Envoie un signal de test dans la base de données"""
     
-    client = AsyncIOMotorClient(MONGO_URL)
-    db = client['tradalife']
+    mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
+    client = AsyncIOMotorClient(mongo_url)
+    db = client[os.environ.get('DB_NAME', 'tradalife')]
     
     # Signal de test avec émojis (comme dans Telegram)
     test_signal = {
