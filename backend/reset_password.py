@@ -11,8 +11,9 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 async def reset_password(email: str, new_password: str):
     """Réinitialise le mot de passe d'un utilisateur"""
     
-    client = AsyncIOMotorClient(MONGO_URL)
-    db = client['tradalife']
+    mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
+    client = AsyncIOMotorClient(mongo_url)
+    db = client[os.environ.get('DB_NAME', 'tradalife')]
     
     # Trouver l'utilisateur
     user = await db.users.find_one({"email": email})
