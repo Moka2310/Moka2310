@@ -675,7 +675,21 @@ class TradaBotApp(QMainWindow):
         """Connexion à MT4"""
         login = self.mt4_login.text().strip()
         password = self.mt4_password.text().strip()
-        server = self.mt4_server.text().strip()
+        
+        # Récupérer le serveur
+        server_value = self.mt4_server_combo.currentData()
+        if server_value == "custom":
+            server = self.mt4_server_manual.text().strip()
+        elif server_value == "" or not server_value:
+            # Vérifier si c'est un séparateur
+            current_text = self.mt4_server_combo.currentText()
+            if "━━" in current_text or current_text.startswith("--"):
+                QMessageBox.warning(self, "Erreur", "Veuillez sélectionner un serveur valide")
+                return
+            # Sinon c'est peut-être tapé manuellement
+            server = self.mt4_server_combo.currentText().strip()
+        else:
+            server = server_value
         
         if not login or not password or not server:
             QMessageBox.warning(self, "Erreur", "Veuillez remplir tous les champs MT4")
@@ -684,12 +698,12 @@ class TradaBotApp(QMainWindow):
         try:
             login_num = int(login)
             if self.mt4_manager.connect(login_num, password, server):
-                QMessageBox.information(self, "Succès", "✅ Connecté à MT4")
-                self.log(f"✅ MT4 connecté: {login}")
-                self.mt4_connect_btn.setText("🔗 CONNECTÉ")
-                self.mt4_connect_btn.setEnabled(False)
+                QMessageBox.information(self, "Succès", f"✅ Connecté à MT4\nServeur: {server}")
+                self.log(f"✅ MT4 connecté: {login} @ {server}")
+                self.mt4_connect_btn.setText("✅ CONNECTÉ")
+                self.mt4_connect_btn.setStyleSheet("background-color: #10b981;")
             else:
-                QMessageBox.critical(self, "Erreur", "Échec connexion MT4")
+                QMessageBox.critical(self, "Erreur", f"❌ Échec connexion MT4\nServeur: {server}\n\nVérifiez:\n- Login correct\n- Mot de passe correct\n- Nom du serveur exact\n- MT4/MT5 installé")
         except ValueError:
             QMessageBox.warning(self, "Erreur", "Login MT4 doit être un nombre")
     
