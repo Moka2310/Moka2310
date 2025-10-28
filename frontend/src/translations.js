@@ -63,7 +63,7 @@ export const translations = {
         button: 'Voir les Formations'
       },
       bot: {
-        title: 'Bot de Copie Trading MT4',
+        title: 'TRADABOT - Bot de Copie Trading MT4',
         subtitle: 'Copiez automatiquement nos signaux sur votre compte MetaTrader 4',
         preorderBadge: 'PRÉCOMMANDE',
         price: '300$ CAD',
