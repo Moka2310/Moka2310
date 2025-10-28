@@ -376,6 +376,20 @@ const TradabotDemo = () => {
                 <h3 className="text-white text-xl font-bold mb-6">
                   🎯 Connexion MT4/MT5 {mt4Connected && <span className="text-green-400 text-sm ml-2">✅ Connecté</span>}
                 </h3>
+                
+                {/* Aide pour trouver les infos */}
+                <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4 mb-6">
+                  <p className="text-white/90 text-sm mb-2">
+                    <strong>💡 Comment trouver tes informations MT4?</strong>
+                  </p>
+                  <ol className="text-white/70 text-sm space-y-1 ml-4">
+                    <li>1️⃣ Ouvre MetaTrader 4 ou 5</li>
+                    <li>2️⃣ Menu → <strong>Outils → Options → Serveur</strong></li>
+                    <li>3️⃣ Tu verras ton <strong>Login</strong> et le nom du <strong>Serveur</strong></li>
+                    <li>4️⃣ Sélectionne le serveur dans la liste ci-dessous</li>
+                  </ol>
+                </div>
+                
                 <div className="space-y-4">
                   <div>
                     <label className="text-white/70 text-sm mb-2 block">Login (numéro de compte)</label>
