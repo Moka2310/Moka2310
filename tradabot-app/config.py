@@ -18,14 +18,14 @@ API_TRADABOT_ACCESS = f"{API_BASE_URL}/api/tradabot/access"
 API_TRADABOT_CONFIG = f"{API_BASE_URL}/api/tradabot/config"
 API_TRADABOT_STATUS = f"{API_BASE_URL}/api/tradabot/status"
 
-# Telegram Channels (from backend)
+# Telegram Channels (from backend .env)
 TELEGRAM_CHANNELS = {
-    'forex': -1002216770694,
-    'crypto': -1002323630520,
-    'gold': -1002217240489,
-    'indices': -1002227166903,
-    'actions': -1002325870046,
-    'commodites': -1002438830694
+    'forex': -1002425540174,
+    'crypto': -1002279973041,
+    'gold': -1002355600472,
+    'indices': -1002339785500,
+    'actions': -1002376632406,
+    'commodites': -1002368060694
 }
 
 # Trading Configuration
