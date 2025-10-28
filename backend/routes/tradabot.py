@@ -289,7 +289,34 @@ async def admin_grant_bot_access(
 async def get_bot_status(current_user=Depends(get_current_user)):
     """Récupère le status du bot (actif, inactif, etc.)"""
     try:
-
+        db = get_db()
+        user_id = current_user.id
+        
+        # Vérifier l'accès
+        access_check = await check_bot_access(current_user)
+        if not access_check.get('hasAccess'):
+            raise HTTPException(status_code=403, detail="Accès refusé")
+        
+        config = await db.tradabot_configs.find_one({"userId": user_id})
+        
+        if not config:
+            return {
+                "status": BotStatus.INACTIVE.value,
+                "isConnected": False,
+                "message": "Configuration non trouvée"
+            }
+        
+        return {
+            "status": config.get('botStatus', BotStatus.INACTIVE.value),
+            "isConnected": config.get('isConnected', False),
+            "lastConnectionCheck": config.get('lastConnectionCheck')
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error getting bot status: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/admin/users")
 async def list_users_with_access(current_admin=Depends(get_current_admin)):
