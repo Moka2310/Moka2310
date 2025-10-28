@@ -521,7 +521,7 @@ export const translations = {
         button: 'View Courses'
       },
       bot: {
-        title: 'MT4 Copy Trading Bot',
+        title: 'TRADABOT - MT4 Copy Trading Bot',
         subtitle: 'Automatically copy our signals to your MetaTrader 4 account',
         preorderBadge: 'PRE-ORDER',
         price: '300$ CAD',
