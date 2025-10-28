@@ -134,24 +134,83 @@ const TradabotDemo = () => {
     setLogs(prev => [...prev, `[${time}] ${message}`]);
   };
 
-  const startBot = () => {
-    setBotRunning(true);
-    addLog('🚀 Bot démarré - Mode Démo');
-    addLog('📡 Surveillance des canaux actifs...');
-    
-    // Simuler des signaux après quelques secondes
-    setTimeout(() => {
-      addDemoSignal('BUY', 'EURUSD', 1.0850, 1.0820, 1.0900);
-    }, 3000);
-    
-    setTimeout(() => {
-      addDemoSignal('SELL', 'XAUUSD', 2050.00, 2060.00, 2035.00);
-    }, 7000);
+  const startBot = async () => {
+    if (!mt4Connected) {
+      alert('⚠️ Connectez d\'abord votre compte MT4/MT5!');
+      setActiveTab('config');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/tradabot/bot/start`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setBotRunning(true);
+        addLog('🚀 Bot démarré - Surveillance RÉELLE des canaux Telegram');
+        addLog('📡 En attente des signaux...');
+      } else {
+        const error = await response.json();
+        addLog('❌ Erreur démarrage: ' + error.detail);
+        alert('Erreur: ' + error.detail);
+      }
+    } catch (error) {
+      addLog('❌ Erreur: ' + error.message);
+      alert('Erreur: ' + error.message);
+    }
   };
 
-  const stopBot = () => {
-    setBotRunning(false);
-    addLog('⏹️ Bot arrêté');
+  const stopBot = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/tradabot/bot/stop`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        setBotRunning(false);
+        addLog('⏹️ Bot arrêté');
+      }
+    } catch (error) {
+      addLog('❌ Erreur: ' + error.message);
+    }
+  };
+
+  const connectMT4 = async () => {
+    if (!mt4Config.login || !mt4Config.server) {
+      alert('Veuillez remplir tous les champs');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/tradabot/mt4/connect`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(mt4Config)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setMt4Connected(true);
+        addLog('✅ Configuration MT4 sauvegardée');
+        alert(data.message + '\n\n' + (data.note || ''));
+      } else {
+        const error = await response.json();
+        alert('Erreur: ' + error.detail);
+      }
+    } catch (error) {
+      alert('Erreur: ' + error.message);
+    }
   };
 
   const addDemoSignal = (type, symbol, entry, sl, tp) => {
