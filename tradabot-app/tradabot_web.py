@@ -745,7 +745,7 @@ if __name__ == '__main__':
     print("  🔐 Connexion avec votre compte tradalife.com")
     print("  ⚠️  Mode démo - Trades simulés")
     print("")
-    print("  🌐 URL: http://localhost:5000")
+    print("  🌐 URL: http://localhost:5555")
     print("")
     print("  Canaux Telegram configurés:")
     for name, channel_id in TELEGRAM_CHANNELS.items():
