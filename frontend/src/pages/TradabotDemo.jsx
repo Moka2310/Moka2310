@@ -44,6 +44,25 @@ const TradabotDemo = () => {
     }
   }, [user, navigate]);
 
+  const loadLiveSignals = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/tradabot/signals/live?limit=20`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.signals && data.signals.length > 0) {
+          // Mettre à jour seulement s'il y a de nouveaux signaux
+          setSignals(data.signals);
+        }
+      }
+    } catch (error) {
+      // Erreur silencieuse pour ne pas spammer les logs
+    }
+  };
+
   const checkAccess = async () => {
     try {
       const response = await fetch(`${BACKEND_URL}/api/tradabot/access`, {
