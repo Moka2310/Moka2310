@@ -27,3 +27,6 @@ pandas==2.1.4
 
 # JSON
 orjson==3.9.10
+
+# Build tool (pour créer l'exécutable Windows)
+pyinstaller==6.3.0
