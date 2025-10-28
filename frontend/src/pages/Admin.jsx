@@ -305,6 +305,13 @@ const Admin = () => {
             <Trophy className="w-4 h-4 mr-2" />
             Concours
           </Button>
+          <Button
+            onClick={() => setActiveTab('tradabot')}
+            className={`${activeTab === 'tradabot' ? 'bg-gradient-to-r from-green-500 to-emerald-600' : 'bg-white/10'}`}
+          >
+            <Bot className="w-4 h-4 mr-2" />
+            TRADABOT
+          </Button>
         </div>
 
         {/* Tab Content */}
@@ -314,6 +321,7 @@ const Admin = () => {
         {activeTab === 'bonus' && <BonusManagementTab language={language} />}
         {activeTab === 'stats' && <StatsTab language={language} />}
         {activeTab === 'contest' && <ContestTab language={language} />}
+        {activeTab === 'tradabot' && <TradabotAccessTab language={language} />}
 
         {/* KYC Requests */}
         {activeTab === 'kyc' && (
