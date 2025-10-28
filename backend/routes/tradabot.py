@@ -17,25 +17,25 @@ router = APIRouter(prefix="/tradabot", tags=["tradabot"])
 async def check_bot_access(current_user=Depends(get_current_user)):
     """
     Vérifie si l'utilisateur a accès au bot TRADABOT
-    Accès si: EST ADMIN OU a payé le bot OU admin lui a donné accès
+    Accès si: email est yafoy2310@gmail.com OU a payé le bot OU admin lui a donné accès
     """
     try:
         db = get_db()
         user_id = current_user.id
-        user_role = current_user.role
+        user_email = current_user.email
         
-        # Si l'utilisateur est admin, accès automatique
-        if user_role == "admin":
-            # Créer/Mettre à jour la config avec accès admin
+        # Si l'utilisateur est le super admin (yafoy2310@gmail.com), accès automatique
+        if user_email == "yafoy2310@gmail.com":
+            # Créer/Mettre à jour la config avec accès super admin
             config = await db.tradabot_configs.find_one({"userId": user_id})
             
             if not config:
                 config = {
                     "id": str(uuid.uuid4()),
                     "userId": user_id,
-                    "userEmail": current_user.email,
+                    "userEmail": user_email,
                     "hasAccess": True,
-                    "accessGrantedBy": "admin_auto",
+                    "accessGrantedBy": "super_admin",
                     "accessGrantedAt": datetime.now(timezone.utc).isoformat(),
                     "botStatus": BotStatus.INACTIVE.value,
                     "isConnected": False,
@@ -60,16 +60,16 @@ async def check_bot_access(current_user=Depends(get_current_user)):
                     {"userId": user_id},
                     {"$set": {
                         "hasAccess": True,
-                        "accessGrantedBy": "admin_auto",
+                        "accessGrantedBy": "super_admin",
                         "accessGrantedAt": datetime.now(timezone.utc).isoformat()
                     }}
                 )
             
             return {
                 "hasAccess": True,
-                "accessGrantedBy": "admin_auto",
+                "accessGrantedBy": "super_admin",
                 "accessGrantedAt": datetime.now(timezone.utc).isoformat(),
-                "isAdmin": True
+                "isSuperAdmin": True
             }
         
         # Vérifier si configuration existe
@@ -80,7 +80,7 @@ async def check_bot_access(current_user=Depends(get_current_user)):
                 "hasAccess": True,
                 "accessGrantedBy": config.get('accessGrantedBy'),
                 "accessGrantedAt": config.get('accessGrantedAt'),
-                "isAdmin": False
+                "isSuperAdmin": False
             }
         
         # Vérifier si l'utilisateur a payé le bot
@@ -95,7 +95,7 @@ async def check_bot_access(current_user=Depends(get_current_user)):
                 config = {
                     "id": str(uuid.uuid4()),
                     "userId": user_id,
-                    "userEmail": current_user.email,
+                    "userEmail": user_email,
                     "hasAccess": True,
                     "accessGrantedBy": "payment",
                     "accessGrantedAt": datetime.now(timezone.utc).isoformat(),
@@ -131,10 +131,10 @@ async def check_bot_access(current_user=Depends(get_current_user)):
                 "hasAccess": True,
                 "accessGrantedBy": "payment",
                 "accessGrantedAt": datetime.now(timezone.utc).isoformat(),
-                "isAdmin": False
+                "isSuperAdmin": False
             }
         
-        return {"hasAccess": False, "isAdmin": False}
+        return {"hasAccess": False, "isSuperAdmin": False}
         
     except Exception as e:
         print(f"Error checking bot access: {e}")
