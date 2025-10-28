@@ -30,6 +30,15 @@ const TradabotDemo = () => {
     lotGold: 0.01
   });
 
+  const [mt4Config, setMt4Config] = useState({
+    login: '',
+    password: '',
+    server: '',
+    platform: 'MT4'
+  });
+
+  const [mt4Connected, setMt4Connected] = useState(false);
+
   useEffect(() => {
     if (!user) {
       navigate('/login');
