@@ -487,24 +487,30 @@ const TradabotDemo = () => {
           {/* Signaux */}
           {activeTab === 'signals' && (
             <div className="bg-white/5 rounded-2xl p-6">
-              <h3 className="text-white text-xl font-bold mb-6">📡 Signaux Reçus</h3>
+              <h3 className="text-white text-xl font-bold mb-6">📡 Signaux Reçus (Temps Réel)</h3>
               <div className="space-y-4 max-h-96 overflow-y-auto">
                 {signals.length === 0 ? (
-                  <p className="text-white/40 text-center py-8">Aucun signal reçu</p>
+                  <p className="text-white/40 text-center py-8">En attente de signaux des canaux Telegram...</p>
                 ) : (
-                  signals.map(signal => (
+                  signals.map((signal, index) => (
                     <div
-                      key={signal.id}
+                      key={signal.id || index}
                       className={`p-4 rounded-xl border-l-4 ${
                         signal.type === 'BUY' ? 'bg-green-500/10 border-green-500' : 'bg-red-500/10 border-red-500'
                       }`}
                     >
                       <div className="flex justify-between items-start mb-2">
                         <span className="text-white font-bold">{signal.type} {signal.symbol}</span>
-                        <span className="text-white/60 text-sm">{signal.time}</span>
+                        <div className="text-right">
+                          <div className="text-white/60 text-sm">{new Date(signal.timestamp || signal.createdAt).toLocaleTimeString()}</div>
+                          <div className="text-white/40 text-xs">{signal.channel}</div>
+                        </div>
                       </div>
                       <div className="text-white/80 text-sm">
-                        Entry: {signal.entry} | SL: {signal.sl} | TP: {signal.tp}
+                        {signal.entryPrice && `Entry: ${signal.entryPrice} | `}
+                        {signal.stopLoss && `SL: ${signal.stopLoss} | `}
+                        {signal.takeProfit1 && `TP: ${signal.takeProfit1}`}
+                        {signal.breakeven && <span className="ml-2 text-yellow-400">⚡ BREAKEVEN</span>}
                       </div>
                     </div>
                   ))
