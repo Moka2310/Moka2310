@@ -551,6 +551,7 @@ const TradabotDemo = () => {
                     </div>
                   ))
                 )}
+                </div>
               </div>
             </div>
           )}
