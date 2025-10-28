@@ -25,9 +25,10 @@ const BonusCarousel = () => {
   }, [announcements.length]);
 
   const loadAnnouncements = async () => {
-    try {
+    try:
       const response = await fetch(`${BACKEND_URL}/api/bonus-announcements/all`);
       const data = await response.json();
+      console.log('📢 Bonus announcements loaded:', data);
       setAnnouncements(data.slice(0, 3)); // Limite à 3 pour la page d'accueil
     } catch (error) {
       console.error('Error loading announcements:', error);
