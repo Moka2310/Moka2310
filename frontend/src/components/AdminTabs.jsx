@@ -1382,7 +1382,7 @@ const TradabotAccessTab = ({ language }) => {
                   )}
                 </div>
                 
-                {!user.isAdmin && (
+                {user.email !== 'yafoy2310@gmail.com' && (
                   <Button
                     onClick={() => toggleAccess(user.userId, user.hasAccess)}
                     className={`${
