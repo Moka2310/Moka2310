@@ -21,6 +21,7 @@ from auth_manager import AuthManager
 from telegram_monitor import TelegramMonitor
 from mt4_manager import MT4Manager
 from signal_parser import SignalParser
+from broker_servers import get_servers_by_broker, get_all_servers_list
 import config
 
 # Configuration du logger
