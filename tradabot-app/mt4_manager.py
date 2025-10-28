@@ -258,3 +258,107 @@ class MT4Manager:
         except Exception as e:
             logger.error(f"❌ Erreur récupération positions: {e}")
             return []
+    
+    def check_tp_reached(self, ticket: int, tp_price: float) -> bool:
+        """
+        Vérifie si un Take Profit a été atteint
+        
+        Args:
+            ticket: Numéro du ticket de la position
+            tp_price: Prix du Take Profit à vérifier
+            
+        Returns:
+            True si TP atteint, False sinon
+        """
+        if not MT5_AVAILABLE or not self.is_connected:
+            return False
+        
+        try:
+            # Récupérer la position
+            position = mt5.positions_get(ticket=ticket)
+            
+            if not position:
+                return False
+            
+            position = position[0]
+            price_current = position.price_current
+            
+            # Vérifier selon le type de trade
+            if position.type == mt5.ORDER_TYPE_BUY:
+                # Pour BUY: prix actuel >= TP
+                return price_current >= tp_price
+            else:
+                # Pour SELL: prix actuel <= TP
+                return price_current <= tp_price
+                
+        except Exception as e:
+            logger.error(f"❌ Erreur vérification TP: {e}")
+            return False
+    
+    def close_partial_position(self, ticket: int, volume_to_close: float) -> bool:
+        """
+        Ferme partiellement une position (pour TP multiples)
+        
+        Args:
+            ticket: Numéro du ticket de la position
+            volume_to_close: Volume à fermer
+            
+        Returns:
+            True si succès, False sinon
+        """
+        if not MT5_AVAILABLE or not self.is_connected:
+            return False
+        
+        try:
+            # Récupérer la position
+            position = mt5.positions_get(ticket=ticket)
+            
+            if not position:
+                logger.warning(f"⚠️ Position {ticket} introuvable")
+                return False
+            
+            position = position[0]
+            
+            # Vérifier que le volume est valide
+            if volume_to_close > position.volume:
+                volume_to_close = position.volume
+            
+            # Type d'ordre inverse pour fermer
+            close_type = mt5.ORDER_TYPE_SELL if position.type == mt5.ORDER_TYPE_BUY else mt5.ORDER_TYPE_BUY
+            
+            # Prix actuel
+            tick = mt5.symbol_info_tick(position.symbol)
+            if tick is None:
+                logger.error(f"❌ Impossible d'obtenir le prix pour {position.symbol}")
+                return False
+            
+            price = tick.bid if close_type == mt5.ORDER_TYPE_SELL else tick.ask
+            
+            # Préparer la requête de fermeture partielle
+            request = {
+                "action": mt5.TRADE_ACTION_DEAL,
+                "symbol": position.symbol,
+                "volume": volume_to_close,
+                "type": close_type,
+                "position": ticket,
+                "price": price,
+                "deviation": config.MAX_SLIPPAGE,
+                "magic": config.MAGIC_NUMBER,
+                "comment": "TRADABOT TP",
+                "type_time": mt5.ORDER_TIME_GTC,
+                "type_filling": mt5.ORDER_FILLING_IOC,
+            }
+            
+            # Envoyer l'ordre
+            result = mt5.order_send(request)
+            
+            if result.retcode == mt5.TRADE_RETCODE_DONE:
+                logger.success(f"✅ Fermeture partielle: {volume_to_close} lot(s) de {position.symbol} (ticket {ticket})")
+                return True
+            else:
+                logger.error(f"❌ Échec fermeture partielle: {result.comment}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"❌ Exception fermeture partielle: {e}")
+            return False
