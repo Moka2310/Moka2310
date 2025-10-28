@@ -164,7 +164,7 @@ db.users.find()       # Voir utilisateurs
 
 Votre application est maintenant configurée !
 
-**Testez sur** : https://autotrader-hub-12.preview.emergentagent.com
+**Testez sur** : https://mt4-dropdown.preview.emergentagent.com
 
 **Documentation complète** :
 - `/app/GUIDE_DEPLOIEMENT.md` - Guide complet

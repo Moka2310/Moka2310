@@ -180,7 +180,7 @@ Upload → Partager → Copier lien téléchargement direct
 - Récupéré depuis backend
 
 ### API Backend:
-- URL: https://autotrader-hub-12.preview.emergentagent.com
+- URL: https://mt4-dropdown.preview.emergentagent.com
 - Endpoints: /api/auth/login, /api/tradabot/*
 
 ### Fonctionnalités:

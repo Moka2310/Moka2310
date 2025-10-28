@@ -407,5 +407,5 @@ R: Oui, aucun problème !
 
 Si vous avez besoin d'aide :
 1. Vérifier les logs : `tail -f /var/log/supervisor/backend.err.log`
-2. Tester l'API : `curl https://autotrader-hub-12.preview.emergentagent.com/api/formations`
+2. Tester l'API : `curl https://mt4-dropdown.preview.emergentagent.com/api/formations`
 3. Vérifier MongoDB : `mongosh` puis `use tradalife` puis `db.formations.find()`

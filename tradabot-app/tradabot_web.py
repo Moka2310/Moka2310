@@ -15,7 +15,7 @@ app.secret_key = secrets.token_hex(32)
 CORS(app)
 
 # Configuration
-API_BASE_URL = "https://autotrader-hub-12.preview.emergentagent.com"
+API_BASE_URL = "https://mt4-dropdown.preview.emergentagent.com"
 TELEGRAM_CHANNELS = {
     'forex': -1002425540174,
     'crypto': -1002279973041,

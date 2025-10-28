@@ -73,7 +73,7 @@
 
 ### Stripe
 
-**URL du webhook:** `https://autotrader-hub-12.preview.emergentagent.com/api/subscriptions/webhook`
+**URL du webhook:** `https://mt4-dropdown.preview.emergentagent.com/api/subscriptions/webhook`
 
 **Événements à configurer dans Stripe Dashboard:**
 1. `customer.subscription.created`
@@ -89,7 +89,7 @@
 
 ### PayPal
 
-**URL du webhook:** `https://autotrader-hub-12.preview.emergentagent.com/api/subscriptions/paypal-webhook`
+**URL du webhook:** `https://mt4-dropdown.preview.emergentagent.com/api/subscriptions/paypal-webhook`
 
 **Événements à configurer dans PayPal Dashboard:**
 1. `BILLING.SUBSCRIPTION.CREATED`
@@ -135,7 +135,7 @@
 
 1. **Aller sur:** https://dashboard.stripe.com/webhooks
 2. **Cliquer sur:** "Add endpoint"
-3. **Endpoint URL:** `https://autotrader-hub-12.preview.emergentagent.com/api/subscriptions/webhook`
+3. **Endpoint URL:** `https://mt4-dropdown.preview.emergentagent.com/api/subscriptions/webhook`
 4. **Événements à sélectionner:**
    - ✅ `customer.subscription.created`
    - ✅ `customer.subscription.updated`
@@ -157,7 +157,7 @@
 1. **Aller sur:** https://developer.paypal.com/developer/applications
 2. **Sélectionner votre app**
 3. **Section Webhooks**
-4. **Webhook URL:** `https://autotrader-hub-12.preview.emergentagent.com/api/subscriptions/paypal-webhook`
+4. **Webhook URL:** `https://mt4-dropdown.preview.emergentagent.com/api/subscriptions/paypal-webhook`
 5. **Event types à sélectionner:**
    - ✅ `BILLING.SUBSCRIPTION.CREATED`
    - ✅ `BILLING.SUBSCRIPTION.ACTIVATED`
@@ -175,7 +175,7 @@
 ### Stripe
 ```bash
 # Tester localement avec Stripe CLI:
-stripe listen --forward-to https://autotrader-hub-12.preview.emergentagent.com/api/subscriptions/webhook
+stripe listen --forward-to https://mt4-dropdown.preview.emergentagent.com/api/subscriptions/webhook
 
 # Trigger un événement test:
 stripe trigger customer.subscription.created
@@ -184,7 +184,7 @@ stripe trigger customer.subscription.created
 ### PayPal
 ```bash
 # Simuler un webhook dans PayPal Sandbox:
-curl -X POST https://autotrader-hub-12.preview.emergentagent.com/api/subscriptions/paypal-webhook \
+curl -X POST https://mt4-dropdown.preview.emergentagent.com/api/subscriptions/paypal-webhook \
   -H "Content-Type: application/json" \
   -d '{
     "event_type": "BILLING.SUBSCRIPTION.ACTIVATED",

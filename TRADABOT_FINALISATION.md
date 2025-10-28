@@ -194,7 +194,7 @@ Bon trading!
 
 ### API Backend
 
-**Base URL:** https://autotrader-hub-12.preview.emergentagent.com
+**Base URL:** https://mt4-dropdown.preview.emergentagent.com
 
 **Endpoints utilisés:**
 - `POST /api/auth/login` - Connexion
