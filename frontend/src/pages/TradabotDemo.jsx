@@ -503,7 +503,26 @@ const TradabotDemo = () => {
 
           {/* Signaux */}
           {activeTab === 'signals' && (
-            <div className="bg-white/5 rounded-2xl p-6">
+            <div className="space-y-6">
+              {/* Info sur le format */}
+              <div className="bg-blue-500/20 border border-blue-500/30 rounded-2xl p-6">
+                <h4 className="text-white font-bold mb-3">📋 Format des Signaux Telegram Détectés</h4>
+                <div className="text-white/80 text-sm space-y-2">
+                  <p><strong>Le bot détecte automatiquement:</strong></p>
+                  <ul className="list-disc list-inside space-y-1 text-white/70">
+                    <li>BUY/SELL (ou ACHAT/VENTE)</li>
+                    <li>Symbole: EURUSD, XAUUSD, BTCUSD, US30, etc.</li>
+                    <li>Prix d'entrée: @ ou ENTRY</li>
+                    <li>Stop Loss: SL</li>
+                    <li>Take Profit: TP, TP1, TP2, TP3</li>
+                    <li>Breakeven: BREAKEVEN ou BE</li>
+                  </ul>
+                  <p className="text-green-400 mt-3">✅ <strong>Les émojis sont automatiquement ignorés!</strong></p>
+                  <p className="text-white/60 text-xs">Exemple: 🔥 BUY EURUSD @ 1.0850 ⚡ TP: 1.0900 🎯 SL: 1.0820</p>
+                </div>
+              </div>
+
+              <div className="bg-white/5 rounded-2xl p-6">
               <h3 className="text-white text-xl font-bold mb-6">📡 Signaux Reçus (Temps Réel)</h3>
               <div className="space-y-4 max-h-96 overflow-y-auto">
                 {signals.length === 0 ? (
