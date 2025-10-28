@@ -25,7 +25,7 @@ const BonusCarousel = () => {
   }, [announcements.length]);
 
   const loadAnnouncements = async () => {
-    try:
+    try {
       const response = await fetch(`${BACKEND_URL}/api/bonus-announcements/all`);
       const data = await response.json();
       console.log('📢 Bonus announcements loaded:', data);
