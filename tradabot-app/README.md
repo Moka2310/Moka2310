@@ -6,22 +6,58 @@ Application desktop Windows pour le trading automatisé basé sur les signaux Te
 
 - ✅ **Authentification** avec compte tradalife.com
 - ✅ **Surveillance automatique** de 6 canaux Telegram VIP
-- ✅ **Parsing intelligent** des signaux de trading
+- ✅ **Parsing intelligent** des signaux de trading (avec support des émojis)
 - ✅ **Exécution automatique** des trades sur MT4/MT5
-- ✅ **Configuration des lots** par catégorie (Forex, Crypto, Gold, etc.)
+- ✅ **Configuration des lots** par catégorie (Forex, Crypto, Gold, Indices, Actions, Commodités)
+- ✅ **Gestion des Take Profits multiples** (TP1, TP2, TP3)
+  - Fermeture automatique de 50% de la position à TP1 si TP2 existe
+  - Conservation du reste de la position jusqu'à TP2
 - ✅ **Breakeven automatique** quand TP1 est atteint
-- ✅ **Interface graphique** intuitive et moderne
+  - Le Stop Loss est automatiquement déplacé au prix d'entrée
+  - Protège contre les pertes après que TP1 soit atteint
+- ✅ **Stop Loss et Take Profit** configurés automatiquement
+- ✅ **Interface graphique** intuitive et moderne (PyQt6)
 - ✅ **Logs complets** de toutes les opérations
 - ✅ **Gestion des positions** en temps réel
+- ✅ **Vérification périodique des accès** pour sécurité
 
 ## 🎯 Canaux Telegram Surveillés
 
-1. **Forex** (-1002425540174)
-2. **Crypto** (-1002279973041)
-3. **Gold** (-1002355600472)
-4. **Indices** (-1002339785500)
-5. **Actions** (-1002376632406)
-6. **Commodités** (-1002368060694)
+1. **Forex** (-1002425540174) - Paires de devises (EURUSD, GBPUSD, etc.)
+2. **Crypto** (-1002279973041) - Crypto-monnaies (BTCUSD, ETHUSD, etc.)
+3. **Gold** (-1002355600472) - Or (XAUUSD)
+4. **Indices** (-1002339785500) - Indices boursiers (US30, NAS100, SPX500, etc.)
+5. **Actions** (-1002376632406) - Actions individuelles (AAPL, TSLA, etc.)
+6. **Commodités** (-1002368060694) - Matières premières (USOIL, UKOIL, etc.)
+
+## 🎲 Logique de Trading Automatique
+
+### Réception du Signal
+1. Le bot surveille les 6 canaux Telegram activés
+2. Quand un signal est posté, il est parsé automatiquement
+3. Le signal doit contenir: Type (BUY/SELL), Symbole, Prix d'entrée, SL, TP
+
+### Exécution du Trade
+1. **Calcul du lot**: Selon la catégorie du symbole (Forex, Crypto, Gold, etc.)
+2. **Placement de l'ordre Market** avec:
+   - Prix d'entrée (prix actuel du marché)
+   - Stop Loss (SL du signal)
+   - Take Profit (TP1 du signal)
+3. **Enregistrement de la position** avec tous les TPs (TP1, TP2, TP3)
+
+### Gestion des Take Profits Multiples
+1. **Si TP2 existe**:
+   - À TP1: Fermeture de 50% de la position
+   - À TP1: Activation du Breakeven sur les 50% restants
+   - À TP2: Fermeture automatique des 50% restants
+2. **Si uniquement TP1**:
+   - À TP1: Fermeture de 100% de la position
+
+### Breakeven Automatique
+- **Déclenchement**: Quand TP1 est atteint
+- **Action**: Le Stop Loss est déplacé au prix d'entrée
+- **Avantage**: Trade sans risque - Minimum garantie: 0$ de perte
+- **Vérification**: Toutes les 10 secondes (configurable)
 
 ## 🔧 Prérequis
 
