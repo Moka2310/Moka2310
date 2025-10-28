@@ -289,6 +289,50 @@ async def admin_grant_bot_access(
 async def get_bot_status(current_user=Depends(get_current_user)):
     """Récupère le status du bot (actif, inactif, etc.)"""
     try:
+
+
+@router.get("/admin/users")
+async def list_users_with_access(current_admin=Depends(get_current_admin)):
+    """Liste tous les utilisateurs avec leur statut d'accès TRADABOT"""
+    try:
+        db = get_db()
+        
+        # Récupérer tous les utilisateurs
+        users = await db.users.find({}).to_list(length=None)
+        
+        # Récupérer toutes les configs TRADABOT
+        configs = await db.tradabot_configs.find({}).to_list(length=None)
+        configs_dict = {c['userId']: c for c in configs}
+        
+        # Récupérer tous les paiements bot
+        bot_preorders = await db.bot_preorders.find({"status": "paid"}).to_list(length=None)
+        paid_users = {p['userId'] for p in bot_preorders}
+        
+        users_list = []
+        for user in users:
+            user_id = user.get('id')
+            config = configs_dict.get(user_id, {})
+            has_paid = user_id in paid_users
+            is_admin = user.get('role') == 'admin'
+            
+            users_list.append({
+                "userId": user_id,
+                "email": user.get('email'),
+                "firstName": user.get('firstName', ''),
+                "lastName": user.get('lastName', ''),
+                "isAdmin": is_admin,
+                "hasPaid": has_paid,
+                "hasAccess": config.get('hasAccess', False) or is_admin or has_paid,
+                "accessGrantedBy": config.get('accessGrantedBy') if config else ('admin_auto' if is_admin else ('payment' if has_paid else None)),
+                "accessGrantedAt": config.get('accessGrantedAt')
+            })
+        
+        return {"users": users_list}
+        
+    except Exception as e:
+        print(f"Error listing users: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
         db = get_db()
         user_id = current_user.id
         
