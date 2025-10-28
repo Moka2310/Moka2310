@@ -416,36 +416,40 @@ const TradabotDemo = () => {
                     <select
                       value={mt4Config.server}
                       onChange={(e) => setMt4Config({...mt4Config, server: e.target.value})}
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white"
+                      className="w-full bg-[#2a2a3e] border border-white/20 rounded-lg px-4 py-2 text-white"
+                      style={{
+                        backgroundColor: '#2a2a3e',
+                        color: 'white'
+                      }}
                     >
-                      <option value="">-- Sélectionner un serveur --</option>
+                      <option value="" style={{backgroundColor: '#2a2a3e', color: 'white'}}>-- Sélectionner un serveur --</option>
                       
-                      <optgroup label="🌟 GlobalPrime (Recommandé)">
-                        <option value="GlobalPrime-Demo">GlobalPrime-Demo (Compte Démo)</option>
-                        <option value="GlobalPrime-Live">GlobalPrime-Live (Compte Réel)</option>
-                        <option value="GlobalPrime-Live2">GlobalPrime-Live2</option>
-                        <option value="GlobalPrime-Live3">GlobalPrime-Live3</option>
-                        <option value="GlobalPrimeForex-Demo">GlobalPrimeForex-Demo</option>
-                        <option value="GlobalPrimeForex-Live">GlobalPrimeForex-Live</option>
+                      <optgroup label="🌟 GlobalPrime (Recommandé)" style={{backgroundColor: '#1a1a2e', color: 'white'}}>
+                        <option value="GlobalPrime-Demo" style={{backgroundColor: '#2a2a3e', color: 'white'}}>GlobalPrime-Demo (Compte Démo)</option>
+                        <option value="GlobalPrime-Live" style={{backgroundColor: '#2a2a3e', color: 'white'}}>GlobalPrime-Live (Compte Réel)</option>
+                        <option value="GlobalPrime-Live2" style={{backgroundColor: '#2a2a3e', color: 'white'}}>GlobalPrime-Live2</option>
+                        <option value="GlobalPrime-Live3" style={{backgroundColor: '#2a2a3e', color: 'white'}}>GlobalPrime-Live3</option>
+                        <option value="GlobalPrimeForex-Demo" style={{backgroundColor: '#2a2a3e', color: 'white'}}>GlobalPrimeForex-Demo</option>
+                        <option value="GlobalPrimeForex-Live" style={{backgroundColor: '#2a2a3e', color: 'white'}}>GlobalPrimeForex-Live</option>
                       </optgroup>
                       
-                      <optgroup label="🏦 Autres Brokers Populaires">
-                        <option value="ICMarkets-Demo">ICMarkets-Demo</option>
-                        <option value="ICMarkets-Live">ICMarkets-Live</option>
-                        <option value="XM-Demo">XM-Demo</option>
-                        <option value="XM-Real">XM-Real</option>
-                        <option value="Pepperstone-Demo">Pepperstone-Demo</option>
-                        <option value="Pepperstone-Live">Pepperstone-Live</option>
-                        <option value="FXTM-Demo">FXTM-Demo</option>
-                        <option value="FXTM-Real">FXTM-Real</option>
-                        <option value="FBS-Demo">FBS-Demo</option>
-                        <option value="FBS-Real">FBS-Real</option>
-                        <option value="Exness-Demo">Exness-Demo</option>
-                        <option value="Exness-Real">Exness-Real</option>
+                      <optgroup label="🏦 Autres Brokers Populaires" style={{backgroundColor: '#1a1a2e', color: 'white'}}>
+                        <option value="ICMarkets-Demo" style={{backgroundColor: '#2a2a3e', color: 'white'}}>ICMarkets-Demo</option>
+                        <option value="ICMarkets-Live" style={{backgroundColor: '#2a2a3e', color: 'white'}}>ICMarkets-Live</option>
+                        <option value="XM-Demo" style={{backgroundColor: '#2a2a3e', color: 'white'}}>XM-Demo</option>
+                        <option value="XM-Real" style={{backgroundColor: '#2a2a3e', color: 'white'}}>XM-Real</option>
+                        <option value="Pepperstone-Demo" style={{backgroundColor: '#2a2a3e', color: 'white'}}>Pepperstone-Demo</option>
+                        <option value="Pepperstone-Live" style={{backgroundColor: '#2a2a3e', color: 'white'}}>Pepperstone-Live</option>
+                        <option value="FXTM-Demo" style={{backgroundColor: '#2a2a3e', color: 'white'}}>FXTM-Demo</option>
+                        <option value="FXTM-Real" style={{backgroundColor: '#2a2a3e', color: 'white'}}>FXTM-Real</option>
+                        <option value="FBS-Demo" style={{backgroundColor: '#2a2a3e', color: 'white'}}>FBS-Demo</option>
+                        <option value="FBS-Real" style={{backgroundColor: '#2a2a3e', color: 'white'}}>FBS-Real</option>
+                        <option value="Exness-Demo" style={{backgroundColor: '#2a2a3e', color: 'white'}}>Exness-Demo</option>
+                        <option value="Exness-Real" style={{backgroundColor: '#2a2a3e', color: 'white'}}>Exness-Real</option>
                       </optgroup>
                       
-                      <optgroup label="✏️ Autre">
-                        <option value="custom">Autre serveur (je vais le taper)</option>
+                      <optgroup label="✏️ Autre" style={{backgroundColor: '#1a1a2e', color: 'white'}}>
+                        <option value="custom" style={{backgroundColor: '#2a2a3e', color: 'white'}}>Autre serveur (je vais le taper)</option>
                       </optgroup>
                     </select>
                     
