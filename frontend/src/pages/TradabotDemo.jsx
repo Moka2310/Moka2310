@@ -185,9 +185,14 @@ const TradabotDemo = () => {
 
   const connectMT4 = async () => {
     if (!mt4Config.login || !mt4Config.server) {
-      alert('Veuillez remplir tous les champs');
+      alert('⚠️ Veuillez remplir le Login et le Serveur');
       return;
     }
+
+    addLog('🔄 Connexion à MT4...');
+    addLog(`   Login: ${mt4Config.login}`);
+    addLog(`   Server: ${mt4Config.server}`);
+    addLog(`   Platform: ${mt4Config.platform}`);
 
     try {
       const response = await fetch(`${BACKEND_URL}/api/tradabot/mt4/connect`, {
@@ -196,20 +201,31 @@ const TradabotDemo = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(mt4Config)
+        body: JSON.stringify({
+          login: parseInt(mt4Config.login),
+          password: mt4Config.password,
+          server: mt4Config.server,
+          platform: mt4Config.platform
+        })
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        const data = await response.json();
         setMt4Connected(true);
-        addLog('✅ Configuration MT4 sauvegardée');
-        alert(data.message + '\n\n' + (data.note || ''));
+        addLog('✅ Configuration MT4 sauvegardée avec succès!');
+        addLog('ℹ️ ' + (data.note || ''));
+        alert('✅ Configuration MT4 sauvegardée!\n\n' + 
+              'Vous pouvez maintenant démarrer le bot.\n\n' +
+              'Note: L\'exécution automatique des trades nécessite\n' +
+              'l\'application desktop Windows avec MT4/MT5 installé.');
       } else {
-        const error = await response.json();
-        alert('Erreur: ' + error.detail);
+        addLog('❌ Erreur: ' + data.detail);
+        alert('❌ Erreur de connexion:\n\n' + data.detail);
       }
     } catch (error) {
-      alert('Erreur: ' + error.message);
+      addLog('❌ Erreur réseau: ' + error.message);
+      alert('❌ Erreur de connexion:\n\n' + error.message + '\n\nVérifiez votre connexion internet.');
     }
   };
 
