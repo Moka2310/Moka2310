@@ -570,6 +570,42 @@ async def stripe_webhook(request: Request, stripe_signature: Optional[str] = Hea
                 
                 print(f"Payment failed for user {user['id']}")
         
+        elif event_type == 'customer.subscription.created':
+            # Nouvel abonnement créé - activer immédiatement
+            subscription_id = data['id']
+            customer_id = data['customer']
+            status = data['status']
+            current_period_end = data['current_period_end']
+            
+            # Trouver l'utilisateur
+            user = db.users.find_one({"stripeCustomerId": customer_id})
+            if user:
+                # Mettre à jour le statut à actif
+                db.users.update_one(
+                    {"id": user['id']},
+                    {"$set": {
+                        "subscriptionStatus": SubscriptionStatus.ACTIVE.value,
+                        "subscriptionId": subscription_id,
+                        "lastPaymentDate": datetime.now(timezone.utc).isoformat(),
+                    }}
+                )
+                
+                # Mettre à jour l'abonnement dans subscriptions
+                db.subscriptions.update_one(
+                    {"stripeSubscriptionId": subscription_id},
+                    {"$set": {
+                        "status": SubscriptionStatus.ACTIVE.value,
+                        "currentPeriodEnd": datetime.fromtimestamp(current_period_end, tz=timezone.utc).isoformat(),
+                        "updatedAt": datetime.now(timezone.utc).isoformat(),
+                    }}
+                )
+                
+                # Envoyer un email de confirmation
+                email_service = EmailService()
+                await email_service.send_subscription_confirmation(user['email'])
+                
+                print(f"✅ New subscription created and activated for user {user['id']}")
+        
         elif event_type == 'customer.subscription.updated':
             # Abonnement mis à jour
             subscription_id = data['id']
