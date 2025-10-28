@@ -301,13 +301,68 @@ class TradaBotApp(QMainWindow):
         mt4_group.setLayout(mt4_layout)
         
         self.mt4_login = QLineEdit()
+        self.mt4_login.setPlaceholderText("Ex: 12345678")
+        
         self.mt4_password = QLineEdit()
         self.mt4_password.setEchoMode(QLineEdit.EchoMode.Password)
-        self.mt4_server = QLineEdit()
+        self.mt4_password.setPlaceholderText("Votre mot de passe MT4")
+        
+        # ComboBox pour les serveurs avec recherche
+        self.mt4_server_combo = QComboBox()
+        self.mt4_server_combo.setEditable(True)  # Permet la recherche
+        self.mt4_server_combo.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
+        
+        # Ajouter tous les serveurs groupés par broker
+        servers_by_broker = get_servers_by_broker()
+        
+        self.mt4_server_combo.addItem("-- Sélectionner un serveur --", "")
+        
+        # Brokers populaires en premier
+        priority_brokers = ["GlobalPrime", "ICMarkets", "XM", "Pepperstone", "Exness"]
+        
+        for broker_key in priority_brokers:
+            if broker_key in servers_by_broker:
+                broker_data = servers_by_broker[broker_key]
+                # Ajouter un séparateur de groupe
+                self.mt4_server_combo.addItem(f"━━ {broker_data['name']} ━━", "")
+                for server in broker_data["servers"]:
+                    self.mt4_server_combo.addItem(f"  {server}", server)
+        
+        # Autres brokers
+        self.mt4_server_combo.addItem("━━ Autres Brokers ━━", "")
+        for broker_key, broker_data in servers_by_broker.items():
+            if broker_key not in priority_brokers:
+                self.mt4_server_combo.addItem(f"━━ {broker_data['name']} ━━", "")
+                for server in broker_data["servers"]:
+                    self.mt4_server_combo.addItem(f"  {server}", server)
+        
+        # Option personnalisée
+        self.mt4_server_combo.addItem("━━ Autre ━━", "")
+        self.mt4_server_combo.addItem("  Saisir manuellement...", "custom")
+        
+        # Input manuel si "custom"
+        self.mt4_server_manual = QLineEdit()
+        self.mt4_server_manual.setPlaceholderText("Tapez le nom exact du serveur")
+        self.mt4_server_manual.setVisible(False)
+        
+        def on_server_changed(index):
+            value = self.mt4_server_combo.itemData(index)
+            if value == "custom":
+                self.mt4_server_manual.setVisible(True)
+            else:
+                self.mt4_server_manual.setVisible(False)
+        
+        self.mt4_server_combo.currentIndexChanged.connect(on_server_changed)
         
         mt4_layout.addRow("Login:", self.mt4_login)
         mt4_layout.addRow("Password:", self.mt4_password)
-        mt4_layout.addRow("Server:", self.mt4_server)
+        mt4_layout.addRow("Server:", self.mt4_server_combo)
+        mt4_layout.addRow("", self.mt4_server_manual)
+        
+        # Info bulle
+        info_label = QLabel("💡 Astuce: Vous pouvez taper pour rechercher votre serveur")
+        info_label.setStyleSheet("color: #888888; font-size: 11px;")
+        mt4_layout.addRow(info_label)
         
         self.mt4_connect_btn = QPushButton("🔗 CONNECTER MT4")
         self.mt4_connect_btn.clicked.connect(self.handle_mt4_connect)
