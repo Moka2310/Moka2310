@@ -1,0 +1,29 @@
+# TRADABOT Desktop Application - Requirements
+
+# Telegram
+python-telegram-bot==20.7
+
+# MT4/MT5 Connection
+MetaTrader5==5.0.45
+
+# GUI
+PyQt6==6.6.1
+PyQt6-Qt6==6.6.1
+
+# HTTP Requests
+requests==2.31.0
+
+# Encryption
+cryptography==41.0.7
+
+# Configuration
+python-dotenv==1.0.0
+
+# Logging
+loguru==0.7.2
+
+# Data handling
+pandas==2.1.4
+
+# JSON
+orjson==3.9.10
