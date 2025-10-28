@@ -309,8 +309,9 @@ const TradabotDemo = () => {
           {/* Dashboard */}
           {activeTab === 'dashboard' && (
             <div className="space-y-6">
-              <div className="bg-orange-500/20 border border-orange-500/30 rounded-2xl p-6">
-                <p className="text-white">⚠️ <strong>MODE DÉMO</strong> - Les trades sont simulés (pas de connexion MT4/MT5 réelle)</p>
+              <div className="bg-blue-500/20 border border-blue-500/30 rounded-2xl p-6">
+                <p className="text-white">ℹ️ <strong>MODE RÉEL</strong> - Connectez votre compte MT4/MT5 démo GlobalPrime dans Configuration</p>
+                <p className="text-white/70 text-sm mt-2">Les signaux Telegram sont reçus en temps réel des 6 canaux VIP</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
