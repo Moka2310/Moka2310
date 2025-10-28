@@ -287,8 +287,199 @@ async def admin_grant_bot_access(
         print(f"Error granting bot access: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+from enum import Enum
+
+class BotStatus(str, Enum):
+    INACTIVE = "inactive"
+    ACTIVE = "active"
+    ERROR = "error"
+
+@router.post("/mt4/connect")
+async def connect_mt4(
+    mt4_data: dict,
+    current_user=Depends(get_current_user)
+):
+    """
+    Connecter MT4/MT5
+    mt4_data: {
+        "login": int,
+        "password": str,
+        "server": str,
+        "platform": "MT4" ou "MT5"
+    }
+    """
+    try:
+        db = get_db()
+        user_id = current_user.id
+        
+        # Vérifier l'accès
+        access_check = await check_bot_access(current_user)
+        if not access_check.get('hasAccess'):
+            raise HTTPException(status_code=403, detail="Accès refusé")
+        
+        # Récupérer ou créer la config
+        config = await db.tradabot_configs.find_one({"userId": user_id})
+        
+        if not config:
+            # Créer une nouvelle config
+            config = {
+                "id": str(uuid.uuid4()),
+                "userId": user_id,
+                "mt4Login": mt4_data.get('login'),
+                "mt4Server": mt4_data.get('server'),
+                "mt4Platform": mt4_data.get('platform', 'MT4'),
+                "mt4Connected": False,  # Sera True quand vraiment connecté
+                "mt4ConnectionTest": True,  # Pour indiquer qu'on a essayé
+                "channelForexEnabled": True,
+                "channelCryptoEnabled": True,
+                "channelGoldEnabled": True,
+                "channelIndicesEnabled": True,
+                "channelActionsEnabled": True,
+                "channelCommoditesEnabled": True,
+                "lotForex": 0.01,
+                "lotCrypto": 0.01,
+                "lotGold": 0.01,
+                "lotIndices": 0.01,
+                "lotActions": 0.01,
+                "lotCommodites": 0.01,
+                "breakevenEnabled": True,
+                "botActive": False,
+                "createdAt": datetime.now(timezone.utc).isoformat(),
+                "updatedAt": datetime.now(timezone.utc).isoformat()
+            }
+            await db.tradabot_configs.insert_one(config)
+        else:
+            # Mettre à jour
+            await db.tradabot_configs.update_one(
+                {"userId": user_id},
+                {"$set": {
+                    "mt4Login": mt4_data.get('login'),
+                    "mt4Server": mt4_data.get('server'),
+                    "mt4Platform": mt4_data.get('platform', 'MT4'),
+                    "mt4ConnectionTest": True,
+                    "updatedAt": datetime.now(timezone.utc).isoformat()
+                }}
+            )
+        
+        return {
+            "success": True,
+            "message": "Configuration MT4 sauvegardée",
+            "note": "La connexion réelle nécessite l'application desktop Windows"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error connecting MT4: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/bot/start")
+async def start_bot(current_user=Depends(get_current_user)):
+    """Démarre le bot de trading"""
+    try:
+        db = get_db()
+        user_id = current_user.id
+        
+        # Vérifier l'accès
+        access_check = await check_bot_access(current_user)
+        if not access_check.get('hasAccess'):
+            raise HTTPException(status_code=403, detail="Accès refusé")
+        
+        # Mettre à jour le statut
+        config = await db.tradabot_configs.find_one({"userId": user_id})
+        
+        if not config:
+            raise HTTPException(status_code=404, detail="Configuration non trouvée. Configurez d'abord le bot.")
+        
+        await db.tradabot_configs.update_one(
+            {"userId": user_id},
+            {"$set": {
+                "botActive": True,
+                "botStatus": BotStatus.ACTIVE.value,
+                "lastStartedAt": datetime.now(timezone.utc).isoformat(),
+                "updatedAt": datetime.now(timezone.utc).isoformat()
+            }}
+        )
+        
+        return {
+            "success": True,
+            "message": "Bot démarré",
+            "status": BotStatus.ACTIVE.value
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error starting bot: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/bot/stop")
+async def stop_bot(current_user=Depends(get_current_user)):
+    """Arrête le bot de trading"""
+    try:
+        db = get_db()
+        user_id = current_user.id
+        
+        # Mettre à jour le statut
+        await db.tradabot_configs.update_one(
+            {"userId": user_id},
+            {"$set": {
+                "botActive": False,
+                "botStatus": BotStatus.INACTIVE.value,
+                "lastStoppedAt": datetime.now(timezone.utc).isoformat(),
+                "updatedAt": datetime.now(timezone.utc).isoformat()
+            }}
+        )
+        
+        return {
+            "success": True,
+            "message": "Bot arrêté",
+            "status": BotStatus.INACTIVE.value
+        }
+        
+    except Exception as e:
+        print(f"Error stopping bot: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/signals/live")
+async def get_live_signals(
+    limit: int = 50,
+    current_user=Depends(get_current_user)
+):
+    """Récupère les derniers signaux en temps réel"""
+    try:
+        db = get_db()
+        
+        # Vérifier l'accès
+        access_check = await check_bot_access(current_user)
+        if not access_check.get('hasAccess'):
+            raise HTTPException(status_code=403, detail="Accès refusé")
+        
+        # Récupérer les signaux récents
+        signals = await db.trade_signals.find().sort("createdAt", -1).limit(limit).to_list(length=limit)
+        
+        # Nettoyer les _id MongoDB
+        for signal in signals:
+            if '_id' in signal:
+                del signal['_id']
+        
+        return {
+            "signals": signals,
+            "count": len(signals)
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error getting signals: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.get("/status")
-async def get_bot_status(current_user=Depends(get_current_user)):
+def get_bot_status(current_user=Depends(get_current_user)):
     """Récupère le status du bot (actif, inactif, etc.)"""
     try:
         db = get_db()
