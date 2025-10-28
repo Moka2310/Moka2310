@@ -1,32 +1,37 @@
-# TRADABOT Desktop Application - Requirements
+# TRADABOT - Requirements Windows
+# Dépendances pour l'application desktop
+
+# Interface graphique
+PyQt6>=6.6.0
+PyQt6-Qt6>=6.6.0
+PyQt6-sip>=13.6.0
+
+# Trading
+MetaTrader5>=5.0.45
 
 # Telegram
-python-telegram-bot==20.7
+python-telegram-bot>=20.7
+python-telegram-bot[all]>=20.7
 
-# MT4/MT5 Connection
-MetaTrader5==5.0.45
+# HTTP et API
+requests>=2.31.0
+httpx>=0.25.2
 
-# GUI
-PyQt6==6.6.1
-PyQt6-Qt6==6.6.1
-
-# HTTP Requests
-requests==2.31.0
-
-# Encryption
-cryptography==41.0.7
-
-# Configuration
-python-dotenv==1.0.0
+# Cryptographie et sécurité
+cryptography>=41.0.7
+passlib>=1.7.4
+bcrypt>=4.1.2
 
 # Logging
-loguru==0.7.2
+loguru>=0.7.2
 
-# Data handling
-pandas==2.1.4
+# Async
+asyncio-compat>=0.1.5
+motor>=3.3.2
 
-# JSON
-orjson==3.9.10
+# Build
+pyinstaller>=6.3.0
 
-# Build tool (pour créer l'exécutable Windows)
-pyinstaller==6.3.0
+# Utilitaires
+python-dotenv>=1.0.0
+pathlib>=1.0.1
