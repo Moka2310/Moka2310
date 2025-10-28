@@ -9,7 +9,7 @@ from models import (
     TradabotAccessGrant,
     BotStatus
 )
-from dependencies import get_current_user, get_db, get_current_admin_user
+from dependencies import get_current_user, get_db, get_current_admin
 
 router = APIRouter(prefix="/tradabot", tags=["tradabot"])
 
