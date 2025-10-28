@@ -163,6 +163,55 @@ const Tradabot = () => {
           </p>
         </div>
 
+        {/* Download Desktop App */}
+        <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-3xl p-8 border border-blue-500/30 mb-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-start gap-4">
+              <Monitor className="w-12 h-12 text-blue-400 flex-shrink-0" />
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  {language === 'fr' ? '🖥️ Application Desktop Windows' : '🖥️ Windows Desktop App'}
+                </h3>
+                <p className="text-white/80 mb-2">
+                  {language === 'fr' 
+                    ? 'Téléchargez l\'application desktop pour utiliser TRADABOT avec MetaTrader 4/5.'
+                    : 'Download the desktop app to use TRADABOT with MetaTrader 4/5.'}
+                </p>
+                <ul className="text-white/70 text-sm space-y-1">
+                  <li>✅ {language === 'fr' ? 'Connexion automatique aux signaux Telegram' : 'Automatic connection to Telegram signals'}</li>
+                  <li>✅ {language === 'fr' ? 'Exécution automatique des trades sur MT4/MT5' : 'Automatic trade execution on MT4/MT5'}</li>
+                  <li>✅ {language === 'fr' ? 'Gestion du breakeven automatique' : 'Automatic breakeven management'}</li>
+                  <li>✅ {language === 'fr' ? 'Interface graphique intuitive' : 'Intuitive graphical interface'}</li>
+                </ul>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3">
+              <a
+                href="https://github.com/tradalife/tradabot/releases/latest/download/TRADABOT.exe"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all duration-300 text-center whitespace-nowrap"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Download className="w-5 h-5" />
+                {language === 'fr' ? 'Télécharger (Windows)' : 'Download (Windows)'}
+              </a>
+              <button
+                onClick={() => navigate('/tradabot-prototype')}
+                className="bg-white/10 hover:bg-white/20 text-white px-6 py-2 rounded-full text-sm border border-white/20 transition-all duration-300"
+              >
+                {language === 'fr' ? '👁️ Voir le Prototype' : '👁️ View Prototype'}
+              </button>
+            </div>
+          </div>
+          
+          {/* Requirements */}
+          <div className="mt-6 pt-6 border-t border-white/10">
+            <p className="text-white/60 text-sm">
+              <strong>{language === 'fr' ? 'Prérequis:' : 'Requirements:'}</strong> Windows 10/11, MetaTrader 4 ou 5 installé
+            </p>
+          </div>
+        </div>
+
         {/* Configuration Form */}
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           {/* MT4 Connection */}
