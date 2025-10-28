@@ -33,26 +33,45 @@ class SignalParser:
     """Parse les signaux de trading depuis les messages Telegram"""
     
     @staticmethod
+    def clean_text(text: str) -> str:
+        """Nettoie le texte des émojis et caractères spéciaux"""
+        # Supprimer tous les émojis et caractères Unicode non-ASCII
+        import unicodedata
+        # Normaliser et garder seulement ASCII + quelques caractères utiles
+        cleaned = ''.join(
+            char for char in text 
+            if ord(char) < 128 or char in ['@', ':', '.', ',']
+        )
+        return cleaned
+    
+    @staticmethod
     def parse_signal(text: str, channel_name: str):
         """Parse un message pour extraire le signal"""
-        text = text.upper()
+        # Nettoyer les émojis d'abord
+        text_clean = SignalParser.clean_text(text)
+        text = text_clean.upper()
+        
+        print(f"   Texte nettoyé: {text[:100]}...")
         
         # Détecter le type (BUY/SELL)
         signal_type = None
-        if 'BUY' in text or 'ACHAT' in text:
+        if 'BUY' in text or 'ACHAT' in text or 'ACHETER' in text:
             signal_type = 'BUY'
-        elif 'SELL' in text or 'VENTE' in text:
+        elif 'SELL' in text or 'VENTE' in text or 'VENDRE' in text:
             signal_type = 'SELL'
         
         if not signal_type:
             return None
         
-        # Extraire le symbole
+        # Extraire le symbole - patterns étendus
         symbol_patterns = [
             r'([A-Z]{6})',  # EURUSD, GBPUSD, etc.
             r'([A-Z]{3}USD)',  # BTCUSD, ETHUSD
             r'(XAU[A-Z]{3})',  # XAUUSD
+            r'(XAG[A-Z]{3})',  # XAGUSD (Silver)
             r'(US[0-9]+)',  # US30, US100
+            r'(NAS[0-9]+)',  # NAS100
+            r'(SPX[0-9]+)',  # SPX500
         ]
         
         symbol = None
@@ -65,39 +84,59 @@ class SignalParser:
         if not symbol:
             return None
         
-        # Extraire les prix
-        entry_price = SignalParser._extract_price(text, ['@', 'ENTRY', 'ENTRÉE'])
-        stop_loss = SignalParser._extract_price(text, ['SL', 'STOP LOSS', 'STOP'])
-        take_profit1 = SignalParser._extract_price(text, ['TP1', 'TP 1', 'TAKE PROFIT 1'])
-        take_profit2 = SignalParser._extract_price(text, ['TP2', 'TP 2', 'TAKE PROFIT 2'])
+        # Extraire les prix avec patterns plus flexibles
+        entry_price = SignalParser._extract_price(text, ['@', 'ENTRY', 'ENTREE', 'PRICE', 'PRIX', 'AT'])
+        stop_loss = SignalParser._extract_price(text, ['SL', 'STOP LOSS', 'STOP', 'STOPLOSS'])
+        take_profit1 = SignalParser._extract_price(text, ['TP1', 'TP 1', 'TAKE PROFIT 1', 'TAKEPROFIT1', 'TARGET 1', 'T1'])
+        take_profit2 = SignalParser._extract_price(text, ['TP2', 'TP 2', 'TAKE PROFIT 2', 'TAKEPROFIT2', 'TARGET 2', 'T2'])
+        take_profit3 = SignalParser._extract_price(text, ['TP3', 'TP 3', 'TAKE PROFIT 3', 'TAKEPROFIT3', 'TARGET 3', 'T3'])
+        
+        # Si pas de TP1 mais TP sans numéro
+        if not take_profit1:
+            take_profit1 = SignalParser._extract_price(text, ['TP', 'TAKE PROFIT', 'TAKEPROFIT', 'TARGET'])
         
         # Détecter breakeven
-        breakeven = 'BREAKEVEN' in text or 'BREAK EVEN' in text or 'BE' in text
+        breakeven = 'BREAKEVEN' in text or 'BREAK EVEN' in text or 'BE' in text or 'B.E' in text
         
-        return {
+        signal_data = {
             'type': signal_type,
             'symbol': symbol,
             'entryPrice': entry_price,
             'stopLoss': stop_loss,
             'takeProfit1': take_profit1,
             'takeProfit2': take_profit2,
+            'takeProfit3': take_profit3,
             'breakeven': breakeven,
             'channel': channel_name,
-            'rawMessage': text,
+            'rawMessage': text[:500],  # Limiter la longueur
             'timestamp': datetime.now(timezone.utc).isoformat()
         }
+        
+        print(f"   Signal extrait: {signal_data}")
+        
+        return signal_data
     
     @staticmethod
     def _extract_price(text: str, keywords: list) -> float:
         """Extrait un prix après un mot-clé"""
         for keyword in keywords:
-            pattern = rf'{keyword}[:\s]*([0-9]+\.?[0-9]*)'
-            match = re.search(pattern, text)
-            if match:
-                try:
-                    return float(match.group(1))
-                except:
-                    continue
+            # Plusieurs patterns pour plus de flexibilité
+            patterns = [
+                rf'{keyword}\s*[:=]?\s*([0-9]+\.?[0-9]*)',  # TP: 1.0850 ou TP1.0850 ou TP = 1.0850
+                rf'{keyword}\s*@\s*([0-9]+\.?[0-9]*)',  # TP @ 1.0850
+                rf'{keyword}\s+([0-9]+\.?[0-9]*)',  # TP 1.0850
+            ]
+            
+            for pattern in patterns:
+                match = re.search(pattern, text)
+                if match:
+                    try:
+                        price = float(match.group(1))
+                        # Validation basique du prix
+                        if price > 0:
+                            return price
+                    except:
+                        continue
         return None
 
 
