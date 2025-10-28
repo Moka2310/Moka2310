@@ -45,6 +45,7 @@ function App() {
               <Route path="/about-us" element={<AboutUs />} />
               <Route path="/parrainage" element={<Referral />} />
               <Route path="/referral" element={<Referral />} />
+              <Route path="/tradabot" element={<Tradabot />} />
               <Route path="/protection-charter" element={<ProtectionCharter />} />
               <Route path="/canal/:canalName" element={<CanalDetails />} />
             </Routes>
