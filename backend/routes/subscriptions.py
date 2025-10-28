@@ -245,10 +245,10 @@ async def paypal_webhook(request: Request):
                 
         elif event_type == 'BILLING.SUBSCRIPTION.SUSPENDED':
             # Abonnement suspendu
-            subscription_id = resource.get('id')
+            agreement_id = resource.get('id')
             
             subscription = await db.subscriptions.find_one({
-                "paypalSubscriptionId": subscription_id
+                "paypalAgreementId": agreement_id
             })
             
             if subscription:
@@ -260,12 +260,12 @@ async def paypal_webhook(request: Request):
                     }}
                 )
                 
-                print(f"⚠️ Subscription suspended: {subscription_id}")
+                print(f"⚠️ Subscription suspended: {agreement_id}")
                 
         elif event_type == 'BILLING.SUBSCRIPTION.PAYMENT.FAILED':
             # Paiement échoué
-            subscription_id = resource.get('id')
-            print(f"❌ Payment failed for subscription: {subscription_id}")
+            agreement_id = resource.get('id')
+            print(f"❌ Payment failed for subscription: {agreement_id}")
             
             # TODO: Envoyer notification à l'utilisateur
             
