@@ -399,13 +399,50 @@ const TradabotDemo = () => {
                   </div>
                   <div>
                     <label className="text-white/70 text-sm mb-2 block">Serveur</label>
-                    <input
-                      type="text"
+                    <select
                       value={mt4Config.server}
                       onChange={(e) => setMt4Config({...mt4Config, server: e.target.value})}
-                      placeholder="GlobalPrime-Demo"
                       className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white"
-                    />
+                    >
+                      <option value="">-- Sélectionner un serveur --</option>
+                      
+                      <optgroup label="🌟 GlobalPrime (Recommandé)">
+                        <option value="GlobalPrime-Demo">GlobalPrime-Demo (Compte Démo)</option>
+                        <option value="GlobalPrime-Live">GlobalPrime-Live (Compte Réel)</option>
+                        <option value="GlobalPrime-Live2">GlobalPrime-Live2</option>
+                        <option value="GlobalPrime-Live3">GlobalPrime-Live3</option>
+                        <option value="GlobalPrimeForex-Demo">GlobalPrimeForex-Demo</option>
+                        <option value="GlobalPrimeForex-Live">GlobalPrimeForex-Live</option>
+                      </optgroup>
+                      
+                      <optgroup label="🏦 Autres Brokers Populaires">
+                        <option value="ICMarkets-Demo">ICMarkets-Demo</option>
+                        <option value="ICMarkets-Live">ICMarkets-Live</option>
+                        <option value="XM-Demo">XM-Demo</option>
+                        <option value="XM-Real">XM-Real</option>
+                        <option value="Pepperstone-Demo">Pepperstone-Demo</option>
+                        <option value="Pepperstone-Live">Pepperstone-Live</option>
+                        <option value="FXTM-Demo">FXTM-Demo</option>
+                        <option value="FXTM-Real">FXTM-Real</option>
+                        <option value="FBS-Demo">FBS-Demo</option>
+                        <option value="FBS-Real">FBS-Real</option>
+                        <option value="Exness-Demo">Exness-Demo</option>
+                        <option value="Exness-Real">Exness-Real</option>
+                      </optgroup>
+                      
+                      <optgroup label="✏️ Autre">
+                        <option value="custom">Autre serveur (je vais le taper)</option>
+                      </optgroup>
+                    </select>
+                    
+                    {mt4Config.server === 'custom' && (
+                      <input
+                        type="text"
+                        placeholder="Nom exact du serveur"
+                        onChange={(e) => setMt4Config({...mt4Config, server: e.target.value, customServer: true})}
+                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white mt-2"
+                      />
+                    )}
                   </div>
                   <div>
                     <label className="text-white/70 text-sm mb-2 block">Plateforme</label>
