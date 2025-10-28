@@ -199,8 +199,25 @@ async def main():
     
     # Démarrer le bot
     print("🚀 Bot démarré! En écoute des signaux...")
-    await app.run_polling(allowed_updates=Update.ALL_TYPES)
+    
+    # Utiliser initialize et start au lieu de run_polling
+    await app.initialize()
+    await app.start()
+    await app.updater.start_polling(allowed_updates=Update.ALL_TYPES)
+    
+    # Garder le service actif
+    try:
+        while True:
+            await asyncio.sleep(1)
+    except (KeyboardInterrupt, SystemExit):
+        print("\n⏹️ Arrêt du bot...")
+    finally:
+        await app.stop()
+        await app.shutdown()
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("\n👋 Service arrêté")
