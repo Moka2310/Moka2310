@@ -85,6 +85,11 @@ async def login(credentials: UserLogin):
     if not user_dict:
         raise HTTPException(status_code=401, detail="Invalid email or password")
     
+    # Transform MongoDB document to match User model
+    if 'userId' in user_dict:
+        user_dict['id'] = user_dict.pop('userId')
+    user_dict.pop('_id', None)  # Remove MongoDB ObjectId
+    
     user = User(**user_dict)
     
     # Verify password
