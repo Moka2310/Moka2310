@@ -354,6 +354,62 @@ const TradabotDemo = () => {
           {/* Configuration */}
           {activeTab === 'config' && (
             <div className="space-y-6">
+              {/* MT4/MT5 Configuration */}
+              <div className="bg-white/5 rounded-2xl p-6">
+                <h3 className="text-white text-xl font-bold mb-6">
+                  🎯 Connexion MT4/MT5 {mt4Connected && <span className="text-green-400 text-sm ml-2">✅ Connecté</span>}
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-white/70 text-sm mb-2 block">Login (numéro de compte)</label>
+                    <input
+                      type="number"
+                      value={mt4Config.login}
+                      onChange={(e) => setMt4Config({...mt4Config, login: e.target.value})}
+                      placeholder="123456"
+                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-white/70 text-sm mb-2 block">Mot de passe</label>
+                    <input
+                      type="password"
+                      value={mt4Config.password}
+                      onChange={(e) => setMt4Config({...mt4Config, password: e.target.value})}
+                      placeholder="••••••••"
+                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-white/70 text-sm mb-2 block">Serveur</label>
+                    <input
+                      type="text"
+                      value={mt4Config.server}
+                      onChange={(e) => setMt4Config({...mt4Config, server: e.target.value})}
+                      placeholder="GlobalPrime-Demo"
+                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-white/70 text-sm mb-2 block">Plateforme</label>
+                    <select
+                      value={mt4Config.platform}
+                      onChange={(e) => setMt4Config({...mt4Config, platform: e.target.value})}
+                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white"
+                    >
+                      <option value="MT4">MetaTrader 4</option>
+                      <option value="MT5">MetaTrader 5</option>
+                    </select>
+                  </div>
+                  <button
+                    onClick={connectMT4}
+                    className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-xl font-bold transition-all"
+                  >
+                    {mt4Connected ? '🔄 Mettre à jour MT4' : '🔗 Connecter MT4'}
+                  </button>
+                </div>
+              </div>
+
               <div className="bg-white/5 rounded-2xl p-6">
                 <h3 className="text-white text-xl font-bold mb-6">📡 Canaux Telegram</h3>
                 <div className="space-y-4">
