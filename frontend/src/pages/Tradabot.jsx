@@ -186,15 +186,19 @@ const Tradabot = () => {
               </div>
             </div>
             <div className="flex flex-col gap-3">
-              <a
-                href="https://github.com/tradalife/tradabot/releases/latest/download/TRADABOT.exe"
-                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all duration-300 text-center whitespace-nowrap"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                disabled
+                className="bg-gray-600 text-white px-6 py-3 rounded-full font-bold flex items-center gap-2 cursor-not-allowed opacity-60"
+                title={language === 'fr' ? 'Build en cours sur Windows' : 'Build in progress on Windows'}
               >
                 <Download className="w-5 h-5" />
-                {language === 'fr' ? 'Télécharger (Windows)' : 'Download (Windows)'}
-              </a>
+                {language === 'fr' ? '🔨 En développement' : '🔨 In Development'}
+              </button>
+              <p className="text-white/60 text-xs text-center">
+                {language === 'fr' 
+                  ? 'Le build Windows sera bientôt disponible'
+                  : 'Windows build coming soon'}
+              </p>
               <button
                 onClick={() => navigate('/tradabot-prototype')}
                 className="bg-white/10 hover:bg-white/20 text-white px-6 py-2 rounded-full text-sm border border-white/20 transition-all duration-300"
