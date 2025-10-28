@@ -20,6 +20,7 @@ import Bonus from "./pages/Bonus";
 import AboutUs from "./pages/AboutUs";
 import Referral from "./pages/Referral";
 import UnderConstruction from "./components/UnderConstruction";
+import Tradabot from "./pages/Tradabot";
 
 function App() {
   return (
