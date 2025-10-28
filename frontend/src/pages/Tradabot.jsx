@@ -210,9 +210,36 @@ const Tradabot = () => {
           
           {/* Requirements */}
           <div className="mt-6 pt-6 border-t border-white/10">
-            <p className="text-white/60 text-sm">
+            <p className="text-white/60 text-sm mb-4">
               <strong>{language === 'fr' ? 'Prérequis:' : 'Requirements:'}</strong> Windows 10/11, MetaTrader 4 ou 5 installé
             </p>
+            <details className="text-white/70 text-sm">
+              <summary className="cursor-pointer hover:text-white/90 mb-2 font-semibold">
+                {language === 'fr' ? '🔨 Instructions de Build (pour Windows)' : '🔨 Build Instructions (for Windows)'}
+              </summary>
+              <div className="bg-black/30 p-4 rounded-lg mt-2 space-y-2">
+                <p className="text-white/80 mb-2">
+                  {language === 'fr' 
+                    ? 'L\'application doit être compilée sur Windows:' 
+                    : 'The application must be built on Windows:'}
+                </p>
+                <code className="block bg-black/50 p-2 rounded text-green-400 text-xs">
+                  cd tradabot-app<br/>
+                  pip install -r requirements.txt<br/>
+                  python build_windows.py
+                </code>
+                <p className="text-white/60 text-xs mt-2">
+                  {language === 'fr' 
+                    ? '📂 L\'exécutable sera dans: dist/TRADABOT.exe' 
+                    : '📂 Executable will be in: dist/TRADABOT.exe'}
+                </p>
+                <p className="text-white/60 text-xs">
+                  {language === 'fr' 
+                    ? '📖 Voir la documentation complète dans /tradabot-app/BUILD_WINDOWS.md' 
+                    : '📖 See full documentation in /tradabot-app/BUILD_WINDOWS.md'}
+                </p>
+              </div>
+            </details>
           </div>
         </div>
 
