@@ -95,20 +95,10 @@ const TradabotDownloadTab = () => {
         </p>
         <button
           onClick={handleDownload}
-          disabled={downloading}
-          className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto"
+          className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center mx-auto"
         >
-          {downloading ? (
-            <>
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
-              Téléchargement en cours...
-            </>
-          ) : (
-            <>
-              <Download className="w-6 h-6 mr-3" />
-              TÉLÉCHARGER LE PACKAGE
-            </>
-          )}
+          <Download className="w-6 h-6 mr-3" />
+          TÉLÉCHARGER LE PACKAGE
         </button>
         <p className="text-white/60 text-sm mt-4">
           Taille: ~5-10 MB | Format: ZIP
