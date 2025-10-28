@@ -8,6 +8,7 @@ import { Textarea } from '../components/ui/textarea';
 import { toast } from '../hooks/use-toast';
 import { CheckCircle, XCircle, Clock, Users, ShoppingCart, DollarSign, ArrowLeft, Star, BarChart3, Trophy, UserCheck, CreditCard, Bot, Gift } from 'lucide-react';
 import { StatsTab, ContestTab, MembersTab, SubscriptionsTab, BotPreordersTab, BonusManagementTab, TradabotAccessTab } from '../components/AdminTabs';
+import TradabotDownloadTab from '../components/TradabotDownloadTab';
 
 const Admin = () => {
   const { user } = useAuth();
