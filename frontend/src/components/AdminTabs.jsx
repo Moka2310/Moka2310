@@ -1406,4 +1406,4 @@ const TradabotAccessTab = ({ language }) => {
 };
 
 
-export { StatsTab, ContestTab, MembersTab, SubscriptionsTab, BotPreordersTab, BonusManagementTab };
+export { StatsTab, ContestTab, MembersTab, SubscriptionsTab, BotPreordersTab, BonusManagementTab, TradabotAccessTab };
