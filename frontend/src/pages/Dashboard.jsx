@@ -398,6 +398,23 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {/* TRADABOT Button */}
+        <div className="mb-8">
+          <button
+            onClick={() => navigate('/tradabot')}
+            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white p-6 rounded-3xl border-2 border-green-400/50 hover:border-green-400 transition-all shadow-lg hover:shadow-green-500/50 flex items-center justify-center gap-4 group"
+          >
+            <Bot className="w-8 h-8 group-hover:scale-110 transition-transform" />
+            <div className="text-left">
+              <div className="text-2xl font-bold">TRADABOT</div>
+              <div className="text-sm text-white/90">
+                {language === 'fr' ? 'Bot de copie trading MT4' : 'MT4 Copy Trading Bot'}
+              </div>
+            </div>
+            <ExternalLink className="w-6 h-6 ml-auto" />
+          </button>
+        </div>
+
         {/* Tabs */}
         <Tabs defaultValue={new URLSearchParams(location.search).get('tab') || 'formations'} className="w-full">
           <TabsList className="bg-[#2B1F5C] border border-purple-500/30 p-1 mb-8 grid grid-cols-2 sm:grid-cols-5 gap-1">
