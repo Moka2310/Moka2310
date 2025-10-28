@@ -160,7 +160,9 @@ async def get_bot_config(current_user=Depends(get_current_user)):
         if not config:
             raise HTTPException(status_code=404, detail="Configuration non trouvée")
         
-        # Ne pas retourner le mot de passe
+        # Ne pas retourner le mot de passe et retirer _id MongoDB
+        if '_id' in config:
+            del config['_id']
         if 'mt4Password' in config:
             config['mt4Password'] = "***" if config['mt4Password'] else None
         
