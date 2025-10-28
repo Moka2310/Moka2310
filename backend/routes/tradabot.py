@@ -479,7 +479,7 @@ async def get_live_signals(
 
 
 @router.get("/status")
-def get_bot_status(current_user=Depends(get_current_user)):
+async def get_bot_status(current_user=Depends(get_current_user)):
     """Récupère le status du bot (actif, inactif, etc.)"""
     try:
         db = get_db()
