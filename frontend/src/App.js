@@ -22,6 +22,7 @@ import Referral from "./pages/Referral";
 import UnderConstruction from "./components/UnderConstruction";
 import Tradabot from "./pages/Tradabot";
 import TradabotDemo from "./pages/TradabotDemo";
+import TradabotPrototype from "./pages/TradabotPrototype";
 
 function App() {
   return (
