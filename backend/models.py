@@ -305,3 +305,96 @@ class TradingContestResponse(BaseModel):
     rank: int
 
     pricePerMonth: float = 150.0
+
+
+# ===== TRADABOT MODELS =====
+
+class BotStatus(str, Enum):
+    ACTIVE = "active"
+    INACTIVE = "inactive"
+    PAUSED = "paused"
+    ERROR = "error"
+
+class TradabotConfig(BaseModel):
+    """Configuration du bot de trading pour un utilisateur"""
+    id: str
+    userId: str
+    userEmail: str
+    
+    # Accès au bot
+    hasAccess: bool = False  # True si payé ou admin a donné accès
+    accessGrantedBy: Optional[str] = None  # "payment" ou "admin"
+    accessGrantedAt: Optional[datetime] = None
+    
+    # Configuration MT4/MT5
+    mt4Login: Optional[str] = None
+    mt4Server: Optional[str] = None
+    mt4Password: Optional[str] = None  # Crypté côté serveur
+    isConnected: bool = False
+    lastConnectionCheck: Optional[datetime] = None
+    
+    # Configuration des lots par catégorie
+    lotForex: float = 0.01
+    lotCrypto: float = 0.01
+    lotGold: float = 0.01
+    lotIndices: float = 0.01
+    lotActions: float = 0.01
+    lotCommodites: float = 0.01
+    
+    # Canaux Telegram à surveiller
+    channelForexEnabled: bool = True
+    channelCryptoEnabled: bool = True
+    channelGoldEnabled: bool = True
+    channelIndicesEnabled: bool = True
+    channelActionsEnabled: bool = True
+    channelCommoditesEnabled: bool = True
+    
+    # Status
+    botStatus: BotStatus = BotStatus.INACTIVE
+    
+    # Metadata
+    createdAt: datetime = Field(default_factory=datetime.utcnow)
+    updatedAt: datetime = Field(default_factory=datetime.utcnow)
+
+class TradabotConfigCreate(BaseModel):
+    """Création/Mise à jour de configuration bot"""
+    mt4Login: Optional[str] = None
+    mt4Server: Optional[str] = None
+    mt4Password: Optional[str] = None
+    
+    lotForex: Optional[float] = None
+    lotCrypto: Optional[float] = None
+    lotGold: Optional[float] = None
+    lotIndices: Optional[float] = None
+    lotActions: Optional[float] = None
+    lotCommodites: Optional[float] = None
+    
+    channelForexEnabled: Optional[bool] = None
+    channelCryptoEnabled: Optional[bool] = None
+    channelGoldEnabled: Optional[bool] = None
+    channelIndicesEnabled: Optional[bool] = None
+    channelActionsEnabled: Optional[bool] = None
+    channelCommoditesEnabled: Optional[bool] = None
+
+class TradabotPosition(BaseModel):
+    """Position ouverte par le bot"""
+    id: str
+    userId: str
+    symbol: str  # ex: XAUUSD
+    type: str  # BUY ou SELL
+    lotSize: float
+    entryPrice: float
+    currentPrice: float
+    stopLoss: Optional[float] = None
+    takeProfit1: Optional[float] = None
+    takeProfit2: Optional[float] = None
+    breakevenActive: bool = False
+    profit: float = 0.0
+    openedAt: datetime
+    closedAt: Optional[datetime] = None
+    status: str = "open"  # open, closed
+    
+class TradabotAccessGrant(BaseModel):
+    """Admin donne accès au bot à un utilisateur"""
+    userId: str
+    grantAccess: bool  # True = donner, False = retirer
