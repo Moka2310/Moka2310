@@ -36,6 +36,11 @@ const TradabotDemo = () => {
     } else {
       addLog('✅ Connecté avec: ' + user.email);
       checkAccess();
+      loadLiveSignals(); // Charger les vrais signaux
+      
+      // Rafraîchir les signaux toutes les 5 secondes
+      const interval = setInterval(loadLiveSignals, 5000);
+      return () => clearInterval(interval);
     }
   }, [user, navigate]);
 
