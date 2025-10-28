@@ -1291,14 +1291,14 @@ const TradabotAccessTab = ({ language }) => {
   );
 
   const getAccessBadge = (user) => {
-    if (user.isAdmin) {
-      return <span className="px-2 py-1 bg-purple-500/20 text-purple-300 rounded-lg text-xs font-bold">ADMIN (Auto)</span>;
+    if (user.email === 'yafoy2310@gmail.com' && user.accessGrantedBy === 'super_admin') {
+      return <span className="px-2 py-1 bg-gradient-to-r from-yellow-500 to-orange-600 text-white rounded-lg text-xs font-bold">⭐ SUPER ADMIN</span>;
     }
     if (user.hasPaid) {
       return <span className="px-2 py-1 bg-green-500/20 text-green-300 rounded-lg text-xs font-bold">Payé</span>;
     }
     if (user.hasAccess && user.accessGrantedBy === 'admin') {
-      return <span className="px-2 py-1 bg-blue-500/20 text-blue-300 rounded-lg text-xs font-bold">Admin</span>;
+      return <span className="px-2 py-1 bg-blue-500/20 text-blue-300 rounded-lg text-xs font-bold">Offert</span>;
     }
     return <span className="px-2 py-1 bg-gray-500/20 text-gray-400 rounded-lg text-xs">Aucun</span>;
   };
