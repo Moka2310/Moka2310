@@ -1223,4 +1223,187 @@ const BonusManagementTab = ({ language }) => {
   );
 };
 
+
+// Onglet TRADABOT Access Management
+const TradabotAccessTab = ({ language }) => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
+
+  const loadUsers = async () => {
+    try {
+      const token = localStorage.getItem('tradalife_token');
+      const response = await fetch(`${BACKEND_URL}/api/tradabot/admin/users`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await response.json();
+      setUsers(data.users || []);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error loading users:', error);
+      setLoading(false);
+    }
+  };
+
+  const toggleAccess = async (userId, currentAccess) => {
+    try {
+      const token = localStorage.getItem('tradalife_token');
+      await fetch(`${BACKEND_URL}/api/tradabot/admin/grant-access`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: userId,
+          grantAccess: !currentAccess
+        })
+      });
+
+      toast({
+        title: language === 'fr' ? 'Succès' : 'Success',
+        description: language === 'fr' 
+          ? `Accès ${!currentAccess ? 'donné' : 'retiré'}!`
+          : `Access ${!currentAccess ? 'granted' : 'revoked'}!`
+      });
+
+      loadUsers();
+    } catch (error) {
+      console.error('Error toggling access:', error);
+      toast({
+        title: language === 'fr' ? 'Erreur' : 'Error',
+        description: language === 'fr' 
+          ? 'Erreur lors de la modification'
+          : 'Error modifying access',
+        variant: 'destructive'
+      });
+    }
+  };
+
+  const filteredUsers = users.filter(user =>
+    user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.lastName?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const getAccessBadge = (user) => {
+    if (user.isAdmin) {
+      return <span className="px-2 py-1 bg-purple-500/20 text-purple-300 rounded-lg text-xs font-bold">ADMIN (Auto)</span>;
+    }
+    if (user.hasPaid) {
+      return <span className="px-2 py-1 bg-green-500/20 text-green-300 rounded-lg text-xs font-bold">Payé</span>;
+    }
+    if (user.hasAccess && user.accessGrantedBy === 'admin') {
+      return <span className="px-2 py-1 bg-blue-500/20 text-blue-300 rounded-lg text-xs font-bold">Admin</span>;
+    }
+    return <span className="px-2 py-1 bg-gray-500/20 text-gray-400 rounded-lg text-xs">Aucun</span>;
+  };
+
+  return (
+    <div className="bg-gradient-to-br from-[#2B1F5C] to-[#1E1540] rounded-3xl p-6 md:p-8 border border-purple-500/30">
+      <div className="flex items-center gap-3 mb-6">
+        <Bot className="w-8 h-8 text-green-400" />
+        <h2 className="text-2xl font-bold text-white">
+          {language === 'fr' ? 'Gestion Accès TRADABOT' : 'TRADABOT Access Management'}
+        </h2>
+      </div>
+
+      {/* Search */}
+      <div className="mb-6">
+        <input
+          type="text"
+          placeholder={language === 'fr' ? 'Rechercher un utilisateur...' : 'Search user...'}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50"
+        />
+      </div>
+
+      {/* Stats */}
+      <div className="grid md:grid-cols-3 gap-4 mb-6">
+        <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
+          <div className="text-green-400 text-2xl font-bold">
+            {users.filter(u => u.hasAccess).length}
+          </div>
+          <div className="text-white/60 text-sm">
+            {language === 'fr' ? 'Accès actifs' : 'Active access'}
+          </div>
+        </div>
+        <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4">
+          <div className="text-blue-400 text-2xl font-bold">
+            {users.filter(u => u.hasPaid).length}
+          </div>
+          <div className="text-white/60 text-sm">
+            {language === 'fr' ? 'Ont payé' : 'Paid users'}
+          </div>
+        </div>
+        <div className="bg-purple-500/10 border border-purple-500/30 rounded-xl p-4">
+          <div className="text-purple-400 text-2xl font-bold">
+            {users.filter(u => u.accessGrantedBy === 'admin' && !u.isAdmin).length}
+          </div>
+          <div className="text-white/60 text-sm">
+            {language === 'fr' ? 'Offerts par admin' : 'Admin granted'}
+          </div>
+        </div>
+      </div>
+
+      {/* Users List */}
+      {loading ? (
+        <div className="text-white text-center py-8">
+          {language === 'fr' ? 'Chargement...' : 'Loading...'}
+        </div>
+      ) : (
+        <div className="space-y-3 max-h-[600px] overflow-y-auto">
+          {filteredUsers.map(user => (
+            <div
+              key={user.userId}
+              className="bg-white/5 rounded-xl p-4 border border-white/10 hover:border-white/20 transition-all"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-white font-bold">
+                      {user.firstName && user.lastName 
+                        ? `${user.firstName} ${user.lastName}`
+                        : user.email}
+                    </h3>
+                    {getAccessBadge(user)}
+                  </div>
+                  <p className="text-white/60 text-sm">{user.email}</p>
+                  {user.accessGrantedAt && (
+                    <p className="text-white/40 text-xs mt-1">
+                      {language === 'fr' ? 'Accès depuis: ' : 'Access since: '}
+                      {new Date(user.accessGrantedAt).toLocaleDateString()}
+                    </p>
+                  )}
+                </div>
+                
+                {!user.isAdmin && (
+                  <Button
+                    onClick={() => toggleAccess(user.userId, user.hasAccess)}
+                    className={`${
+                      user.hasAccess
+                        ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
+                        : 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
+                    } border-none`}
+                  >
+                    {user.hasAccess
+                      ? (language === 'fr' ? 'Retirer' : 'Revoke')
+                      : (language === 'fr' ? 'Donner' : 'Grant')}
+                  </Button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+
 export { StatsTab, ContestTab, MembersTab, SubscriptionsTab, BotPreordersTab, BonusManagementTab };
