@@ -748,13 +748,26 @@ class TradaBotApp(QMainWindow):
             return
         
         for ticket, pos_info in list(self.mt4_manager.positions.items()):
+            # Skip si breakeven déjà actif
             if pos_info['breakeven_active']:
                 continue
             
             # Vérifier si TP1 est atteint
-            if pos_info.get('take_profit1'):
-                # TODO: Implémenter la logique de vérification du prix actuel
-                pass
+            tp1_price = pos_info.get('take_profit1')
+            if tp1_price:
+                if self.mt4_manager.check_tp_reached(ticket, tp1_price):
+                    self.log(f"🎯 TP1 atteint pour {pos_info['symbol']} (ticket {ticket})")
+                    
+                    # Fermer 50% de la position à TP1 si TP2 existe
+                    if pos_info.get('take_profit2'):
+                        half_volume = pos_info['lot_size'] / 2
+                        if self.mt4_manager.close_partial_position(ticket, half_volume):
+                            self.log(f"💰 50% fermé à TP1 pour {pos_info['symbol']}")
+                    
+                    # Activer le breakeven
+                    if self.mt4_manager.move_to_breakeven(ticket):
+                        self.log(f"🔒 Breakeven activé pour {pos_info['symbol']} (ticket {ticket})")
+                        pos_info['breakeven_active'] = True
     
     def refresh_positions(self):
         """Rafraîchit l'affichage des positions"""
