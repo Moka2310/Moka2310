@@ -168,7 +168,7 @@ async def update_bot_config(
 @router.post("/admin/grant-access")
 async def admin_grant_bot_access(
     grant_data: TradabotAccessGrant,
-    current_admin=Depends(get_current_admin_user)
+    current_admin=Depends(get_current_admin)
 ):
     """Admin donne ou retire l'accès au bot à un utilisateur"""
     try:
