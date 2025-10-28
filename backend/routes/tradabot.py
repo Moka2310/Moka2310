@@ -17,11 +17,60 @@ router = APIRouter(prefix="/tradabot", tags=["tradabot"])
 async def check_bot_access(current_user=Depends(get_current_user)):
     """
     Vérifie si l'utilisateur a accès au bot TRADABOT
-    Accès si: a payé le bot OU admin lui a donné accès
+    Accès si: EST ADMIN OU a payé le bot OU admin lui a donné accès
     """
     try:
         db = get_db()
         user_id = current_user.id
+        user_role = current_user.role
+        
+        # Si l'utilisateur est admin, accès automatique
+        if user_role == "admin":
+            # Créer/Mettre à jour la config avec accès admin
+            config = await db.tradabot_configs.find_one({"userId": user_id})
+            
+            if not config:
+                config = {
+                    "id": str(uuid.uuid4()),
+                    "userId": user_id,
+                    "userEmail": current_user.email,
+                    "hasAccess": True,
+                    "accessGrantedBy": "admin_auto",
+                    "accessGrantedAt": datetime.now(timezone.utc).isoformat(),
+                    "botStatus": BotStatus.INACTIVE.value,
+                    "isConnected": False,
+                    "lotForex": 0.01,
+                    "lotCrypto": 0.01,
+                    "lotGold": 0.01,
+                    "lotIndices": 0.01,
+                    "lotActions": 0.01,
+                    "lotCommodites": 0.01,
+                    "channelForexEnabled": True,
+                    "channelCryptoEnabled": True,
+                    "channelGoldEnabled": True,
+                    "channelIndicesEnabled": True,
+                    "channelActionsEnabled": True,
+                    "channelCommoditesEnabled": True,
+                    "createdAt": datetime.now(timezone.utc).isoformat(),
+                    "updatedAt": datetime.now(timezone.utc).isoformat()
+                }
+                await db.tradabot_configs.insert_one(config)
+            else:
+                await db.tradabot_configs.update_one(
+                    {"userId": user_id},
+                    {"$set": {
+                        "hasAccess": True,
+                        "accessGrantedBy": "admin_auto",
+                        "accessGrantedAt": datetime.now(timezone.utc).isoformat()
+                    }}
+                )
+            
+            return {
+                "hasAccess": True,
+                "accessGrantedBy": "admin_auto",
+                "accessGrantedAt": datetime.now(timezone.utc).isoformat(),
+                "isAdmin": True
+            }
         
         # Vérifier si configuration existe
         config = await db.tradabot_configs.find_one({"userId": user_id})
@@ -30,7 +79,8 @@ async def check_bot_access(current_user=Depends(get_current_user)):
             return {
                 "hasAccess": True,
                 "accessGrantedBy": config.get('accessGrantedBy'),
-                "accessGrantedAt": config.get('accessGrantedAt')
+                "accessGrantedAt": config.get('accessGrantedAt'),
+                "isAdmin": False
             }
         
         # Vérifier si l'utilisateur a payé le bot
@@ -80,10 +130,11 @@ async def check_bot_access(current_user=Depends(get_current_user)):
             return {
                 "hasAccess": True,
                 "accessGrantedBy": "payment",
-                "accessGrantedAt": datetime.now(timezone.utc).isoformat()
+                "accessGrantedAt": datetime.now(timezone.utc).isoformat(),
+                "isAdmin": False
             }
         
-        return {"hasAccess": False}
+        return {"hasAccess": False, "isAdmin": False}
         
     except Exception as e:
         print(f"Error checking bot access: {e}")
