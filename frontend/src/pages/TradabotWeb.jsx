@@ -133,6 +133,33 @@ const TradabotWeb = () => {
     }
   };
 
+  const downloadConnector = async () => {
+    try {
+      const token = localStorage.getItem('tradalife_token');
+      const response = await fetch(`${BACKEND_URL}/api/tradabot-web/download-connector`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'TRADABOT_CONNECTOR.zip';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        alert('✅ Téléchargement démarré!');
+      } else {
+        alert('❌ Erreur lors du téléchargement');
+      }
+    } catch (error) {
+      console.error('Erreur téléchargement:', error);
+      alert('❌ Erreur réseau');
+    }
+  };
+
   const toggleBot = async () => {
     try {
       const token = localStorage.getItem('tradalife_token');
