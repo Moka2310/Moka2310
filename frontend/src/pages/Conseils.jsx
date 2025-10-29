@@ -226,9 +226,7 @@ const Conseils = () => {
                   {t(language, 'conseils.tips.warning.title')}
                 </h3>
                 <p className="text-purple-200">
-                  Le trading comporte des risques. Même avec des signaux de qualité, des pertes sont possibles. 
-                  N'investissez que de l'argent que vous pouvez vous permettre de perdre. Les performances passées 
-                  ne garantissent pas les résultats futurs.
+                  {t(language, 'conseils.tips.warning.description')}
                 </p>
               </div>
             </div>
