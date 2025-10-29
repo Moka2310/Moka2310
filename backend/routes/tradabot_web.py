@@ -5,6 +5,7 @@ IMPORTANT: Accès uniquement pour les utilisateurs ayant payé le bot (300$ CAD)
 """
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from typing import Dict, List, Optional
 from datetime import datetime
@@ -13,6 +14,7 @@ from models import User, BotPreorderStatus
 import os
 
 router = APIRouter(prefix="/api/tradabot-web", tags=["tradabot-web"])
+security = HTTPBearer(auto_error=False)
 
 # Fonction pour vérifier si l'utilisateur a accès au bot
 async def check_bot_access(current_user: User = Depends(get_current_user)):
