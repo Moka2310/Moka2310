@@ -420,21 +420,21 @@ const TradabotWeb = () => {
             <div>
               <h2 className="text-2xl font-bold mb-4">📡 Signaux Reçus</h2>
               {signals.length === 0 ? (
-                <p className="text-white/60 text-center py-8">Aucun signal reçu pour le moment</p>
+                <p className="text-purple-300 text-center py-8">Aucun signal reçu pour le moment</p>
               ) : (
                 <div className="space-y-3">
                   {signals.map((signal, index) => (
-                    <div key={index} className="bg-white/5 rounded-xl p-4 border border-white/10">
+                    <div key={index} className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-xl p-4 border border-purple-500/30 hover:border-purple-400/50 transition">
                       <div className="flex items-start justify-between">
                         <div>
                           <p className="font-bold text-lg">
                             {signal.type === 'BUY' ? '🟢' : '🔴'} {signal.type} {signal.symbol}
                           </p>
-                          <p className="text-white/60 text-sm">
+                          <p className="text-purple-300 text-sm">
                             Entry: {signal.entry} | SL: {signal.sl} | TP: {signal.tp1}
                           </p>
                         </div>
-                        <span className="text-white/60 text-sm">{signal.timestamp}</span>
+                        <span className="text-purple-400 text-sm">{signal.timestamp}</span>
                       </div>
                     </div>
                   ))}
@@ -448,17 +448,17 @@ const TradabotWeb = () => {
             <div>
               <h2 className="text-2xl font-bold mb-4">💰 Historique des Trades</h2>
               {trades.length === 0 ? (
-                <p className="text-white/60 text-center py-8">Aucun trade pour le moment</p>
+                <p className="text-purple-300 text-center py-8">Aucun trade pour le moment</p>
               ) : (
                 <div className="space-y-3">
                   {trades.map((trade, index) => (
-                    <div key={index} className="bg-white/5 rounded-xl p-4 border border-white/10">
+                    <div key={index} className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-xl p-4 border border-purple-500/30 hover:border-purple-400/50 transition">
                       <div className="flex items-start justify-between">
                         <div>
                           <p className="font-bold text-lg">
                             {trade.type === 'BUY' ? '🟢' : '🔴'} {trade.type} {trade.symbol}
                           </p>
-                          <p className="text-white/60 text-sm">
+                          <p className="text-purple-300 text-sm">
                             Lot: {trade.lot} | Entry: {trade.entry} | Status: {trade.status}
                           </p>
                         </div>
