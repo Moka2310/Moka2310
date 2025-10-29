@@ -300,8 +300,47 @@ async def log_trade(trade_data: dict, current_user: User = Depends(check_bot_acc
 
 # Télécharger le connecteur
 @router.get("/download-connector")
-async def download_connector(token: str = None, current_user: User = Depends(check_bot_access)):
+async def download_connector(token: Optional[str] = None, credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)):
     """Télécharge le package du connecteur TRADABOT"""
+    from auth_utils import decode_token
+    
+    # Essayer d'abord avec le token dans l'URL, sinon avec le header
+    auth_token = token if token else (credentials.credentials if credentials else None)
+    
+    if not auth_token:
+        raise HTTPException(status_code=401, detail="Token d'authentification requis")
+    
+    # Décoder le token
+    payload = decode_token(auth_token)
+    if payload is None:
+        raise HTTPException(status_code=401, detail="Token invalide")
+    
+    user_id = payload.get("sub")
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Token invalide")
+    
+    # Vérifier l'utilisateur
+    db = get_db()
+    user_dict = await db.users.find_one({"id": user_id})
+    if not user_dict:
+        raise HTTPException(status_code=401, detail="Utilisateur introuvable")
+    
+    user = User(**user_dict)
+    
+    # Vérifier l'accès au bot
+    if user.role.value != "admin":
+        preorder = await db.bot_preorders.find_one({
+            "userId": user.id,
+            "status": {"$in": [BotPreorderStatus.PAID.value, BotPreorderStatus.DELIVERED.value]}
+        })
+        
+        if not preorder:
+            raise HTTPException(
+                status_code=403, 
+                detail="Vous devez acheter le TRADABOT pour télécharger le connecteur."
+            )
+    
+    # Vérifier que le fichier existe
     connector_path = "/app/tradabot-connector/TRADABOT_CONNECTOR_BUILD.zip"
     
     if not os.path.exists(connector_path):
