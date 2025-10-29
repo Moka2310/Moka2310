@@ -273,7 +273,7 @@ async def get_pending_signals(current_user: User = Depends(check_bot_access)):
 
 # Log trade
 @router.post("/log-trade")
-async def log_trade(trade_data: dict, current_user: User = Depends(get_current_user)):
+async def log_trade(trade_data: dict, current_user: User = Depends(check_bot_access)):
     """Enregistre un trade exécuté"""
     db = get_db()
     
