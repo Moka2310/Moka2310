@@ -235,7 +235,7 @@ const Conseils = () => {
           {/* FAQ */}
           {activeTab === 'faq' && (
             <div>
-              <h2 className="text-3xl font-bold mb-6">❓ Questions Fréquentes</h2>
+              <h2 className="text-3xl font-bold mb-6">{t(language, 'conseils.faq.title')}</h2>
               
               <div className="space-y-4">
                 {faq.map((item, index) => (
