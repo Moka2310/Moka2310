@@ -457,7 +457,7 @@ const TradabotWeb = () => {
                     <label className="block text-purple-300 text-sm mb-2">Login MT4</label>
                     <input
                       type="text"
-                      value={config.mt4Login}
+                      value={config?.mt4Login || ''}
                       onChange={(e) => setConfig({...config, mt4Login: e.target.value})}
                       placeholder="Ex: 12345678"
                       className="w-full bg-purple-900/20 border border-purple-500/30 rounded-lg px-4 py-2 text-white placeholder-purple-400/50 focus:border-purple-400 focus:outline-none"
@@ -467,7 +467,7 @@ const TradabotWeb = () => {
                     <label className="block text-purple-300 text-sm mb-2">Password MT4</label>
                     <input
                       type="password"
-                      value={config.mt4Password}
+                      value={config?.mt4Password || ''}
                       onChange={(e) => setConfig({...config, mt4Password: e.target.value})}
                       placeholder="Votre mot de passe MT4"
                       className="w-full bg-purple-900/20 border border-purple-500/30 rounded-lg px-4 py-2 text-white placeholder-purple-400/50 focus:border-purple-400 focus:outline-none"
