@@ -313,13 +313,6 @@ const Admin = () => {
             <Bot className="w-4 h-4 mr-2" />
             TRADABOT Accès
           </Button>
-          <Button
-            onClick={() => setActiveTab('tradabot-download')}
-            className={`${activeTab === 'tradabot-download' ? 'bg-gradient-to-r from-blue-500 to-cyan-600' : 'bg-white/10'}`}
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Télécharger TRADABOT
-          </Button>
         </div>
 
         {/* Tab Content */}
@@ -330,7 +323,6 @@ const Admin = () => {
         {activeTab === 'stats' && <StatsTab language={language} />}
         {activeTab === 'contest' && <ContestTab language={language} />}
         {activeTab === 'tradabot' && <TradabotAccessTab language={language} />}
-        {activeTab === 'tradabot-download' && <TradabotDownloadTab />}
 
         {/* KYC Requests */}
         {activeTab === 'kyc' && (
