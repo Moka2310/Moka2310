@@ -31,28 +31,28 @@ Accès:    TRADABOT uniquement
 ## 🌐 URLs de Test
 
 ### Frontend Principal
-🔗 https://auto-trader-70.preview.emergentagent.com
+🔗 https://metaconnect-1.preview.emergentagent.com
 
 ### Pages Spécifiques
-- 🔐 **Login**: https://auto-trader-70.preview.emergentagent.com/login
-- 🤖 **TradaBot Demo (Web)**: https://auto-trader-70.preview.emergentagent.com/tradabot-demo
-- ⚙️ **TradaBot Config**: https://auto-trader-70.preview.emergentagent.com/tradabot
-- 📊 **Dashboard**: https://auto-trader-70.preview.emergentagent.com/dashboard
-- 👨‍💼 **Admin Panel**: https://auto-trader-70.preview.emergentagent.com/admin (admin uniquement)
+- 🔐 **Login**: https://metaconnect-1.preview.emergentagent.com/login
+- 🤖 **TradaBot Demo (Web)**: https://metaconnect-1.preview.emergentagent.com/tradabot-demo
+- ⚙️ **TradaBot Config**: https://metaconnect-1.preview.emergentagent.com/tradabot
+- 📊 **Dashboard**: https://metaconnect-1.preview.emergentagent.com/dashboard
+- 👨‍💼 **Admin Panel**: https://metaconnect-1.preview.emergentagent.com/admin (admin uniquement)
 
 ---
 
 ## 🧪 Scénarios de Test
 
 ### ✅ Test 1: Connexion et Accès
-1. Aller sur https://auto-trader-70.preview.emergentagent.com/login
+1. Aller sur https://metaconnect-1.preview.emergentagent.com/login
 2. Se connecter avec **test@test.com** / **Test2024!**
 3. Vérifier que vous êtes redirigé vers le Dashboard
 4. Cliquer sur le bouton **"TRADABOT - MODE DÉMO"**
 
 ### ✅ Test 2: TradaBot Demo Web
 1. Se connecter avec n'importe quel compte ci-dessus
-2. Naviguer vers https://auto-trader-70.preview.emergentagent.com/tradabot-demo
+2. Naviguer vers https://metaconnect-1.preview.emergentagent.com/tradabot-demo
 3. **Tester le dropdown MT4**:
    - Cliquer sur l'onglet "Configuration"
    - Descendre à la section "Connexion MT4/MT5"
@@ -84,7 +84,7 @@ Accès:    TRADABOT uniquement
 
 ### ✅ Test 5: Admin Panel (compte yafoy2310@gmail.com uniquement)
 1. Se connecter avec **yafoy2310@gmail.com** / **Admin2024!**
-2. Aller sur https://auto-trader-70.preview.emergentagent.com/admin
+2. Aller sur https://metaconnect-1.preview.emergentagent.com/admin
 3. Naviguer dans les onglets:
    - Utilisateurs
    - Bot Pre-orders

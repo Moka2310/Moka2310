@@ -414,7 +414,7 @@ href="https://github.com/tradalife/tradabot/releases/latest/download/TRADABOT.ex
 
 **Support Technique:**
 - Website: https://tradalife.com
-- Backend: https://auto-trader-70.preview.emergentagent.com
+- Backend: https://metaconnect-1.preview.emergentagent.com
 
 ---
 

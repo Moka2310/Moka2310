@@ -194,7 +194,7 @@ Bon trading!
 
 ### API Backend
 
-**Base URL:** https://auto-trader-70.preview.emergentagent.com
+**Base URL:** https://metaconnect-1.preview.emergentagent.com
 
 **Endpoints utilisés:**
 - `POST /api/auth/login` - Connexion

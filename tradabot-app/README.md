@@ -239,7 +239,7 @@ tradabot-app/
 
 - **Website**: https://tradalife.com
 - **Email Admin**: yafoy2310@gmail.com
-- **Backend API**: https://auto-trader-70.preview.emergentagent.com
+- **Backend API**: https://metaconnect-1.preview.emergentagent.com
 
 ## 📝 Changelog
 

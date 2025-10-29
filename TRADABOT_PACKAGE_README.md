@@ -180,7 +180,7 @@ Upload → Partager → Copier lien téléchargement direct
 - Récupéré depuis backend
 
 ### API Backend:
-- URL: https://auto-trader-70.preview.emergentagent.com
+- URL: https://metaconnect-1.preview.emergentagent.com
 - Endpoints: /api/auth/login, /api/tradabot/*
 
 ### Fonctionnalités:
