@@ -107,7 +107,7 @@ async def save_config(config: TradabotConfig, current_user: User = Depends(check
 
 # Signaux
 @router.get("/signals")
-async def get_signals(limit: int = 20, current_user: User = Depends(get_current_user)):
+async def get_signals(limit: int = 20, current_user: User = Depends(check_bot_access)):
     """Récupère les derniers signaux Telegram"""
     db = get_db()
     
