@@ -227,7 +227,7 @@ async def connector_heartbeat(heartbeat: dict, current_user: User = Depends(chec
 
 # Signaux en attente pour le connecteur
 @router.get("/pending-signals")
-async def get_pending_signals(current_user: User = Depends(get_current_user)):
+async def get_pending_signals(current_user: User = Depends(check_bot_access)):
     """Retourne les signaux non encore tradés pour cet utilisateur"""
     db = get_db()
     
