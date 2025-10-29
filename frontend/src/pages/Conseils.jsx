@@ -195,10 +195,9 @@ const Conseils = () => {
               </div>
 
               <div className="mt-8 bg-blue-500/10 border border-blue-500/30 rounded-xl p-6">
-                <h3 className="text-xl font-bold text-blue-300 mb-3">📝 Note Technique</h3>
+                <h3 className="text-xl font-bold text-blue-300 mb-3">{t(language, 'conseils.installation.note.title')}</h3>
                 <p className="text-purple-200">
-                  Le connecteur doit rester en exécution pendant les heures de trading. Nous recommandons d'utiliser 
-                  un VPS Windows si vous ne pouvez pas garder votre ordinateur allumé 24/7.
+                  {t(language, 'conseils.installation.note.description')}
                 </p>
               </div>
             </div>
