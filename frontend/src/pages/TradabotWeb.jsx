@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Activity, Settings, TrendingUp, List, AlertCircle, CheckCircle, Play, Square } from 'lucide-react';
+import { Activity, Settings, TrendingUp, List, AlertCircle, CheckCircle, Play, Square, Lock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const TradabotWeb = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -29,25 +30,70 @@ const TradabotWeb = () => {
   const [signals, setSignals] = useState([]);
   const [trades, setTrades] = useState([]);
   const [connectorStatus, setConnectorStatus] = useState('disconnected'); // disconnected, connected
-
+  const [hasAccess, setHasAccess] = useState(true); // true par défaut, false si pas d'accès
+  const [mt4Servers, setMt4Servers] = useState([]);
+  
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+  const navigate = useNavigate();
 
   // Charger la configuration au démarrage
   useEffect(() => {
-    loadConfig();
-    loadSignals();
-    loadTrades();
-    checkConnectorStatus();
-    
-    // Rafraîchir toutes les 10 secondes
-    const interval = setInterval(() => {
-      loadSignals();
-      loadTrades();
-      checkConnectorStatus();
-    }, 10000);
-    
-    return () => clearInterval(interval);
+    checkAccess();
   }, []);
+  
+  const checkAccess = async () => {
+    try {
+      const token = localStorage.getItem('tradalife_token');
+      const response = await fetch(`${BACKEND_URL}/api/tradabot-web/config`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      if (response.status === 403) {
+        // Pas d'accès
+        setHasAccess(false);
+        return;
+      }
+      
+      if (response.ok) {
+        setHasAccess(true);
+        const data = await response.json();
+        setConfig(data);
+        
+        // Charger les autres données
+        loadSignals();
+        loadTrades();
+        checkConnectorStatus();
+        loadMt4Servers();
+        
+        // Rafraîchir toutes les 10 secondes
+        const interval = setInterval(() => {
+          loadSignals();
+          loadTrades();
+          checkConnectorStatus();
+        }, 10000);
+        
+        return () => clearInterval(interval);
+      }
+    } catch (error) {
+      console.error('Erreur vérification accès:', error);
+      setHasAccess(false);
+    }
+  };
+  
+  const loadMt4Servers = async () => {
+    try {
+      const token = localStorage.getItem('tradalife_token');
+      const response = await fetch(`${BACKEND_URL}/api/tradabot-web/mt4-servers`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setMt4Servers(data.servers);
+      }
+    } catch (error) {
+      console.error('Erreur chargement serveurs:', error);
+    }
+  };
 
   const loadConfig = async () => {
     try {
