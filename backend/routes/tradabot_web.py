@@ -51,7 +51,7 @@ class BotToggle(BaseModel):
 
 # Configuration
 @router.get("/config")
-async def get_config(current_user: User = Depends(get_current_user)):
+async def get_config(current_user: User = Depends(check_bot_access)):
     """Récupère la configuration TRADABOT de l'utilisateur"""
     db = get_db()
     
