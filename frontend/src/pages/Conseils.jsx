@@ -223,7 +223,7 @@ const Conseils = () => {
               <div className="mt-8 bg-red-500/10 border border-red-500/30 rounded-xl p-6">
                 <h3 className="text-xl font-bold text-red-300 mb-3 flex items-center gap-2">
                   <AlertCircle className="w-6 h-6" />
-                  Avertissement
+                  {t(language, 'conseils.tips.warning.title')}
                 </h3>
                 <p className="text-purple-200">
                   Le trading comporte des risques. Même avec des signaux de qualité, des pertes sont possibles. 
