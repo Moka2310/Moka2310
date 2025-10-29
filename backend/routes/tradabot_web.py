@@ -155,7 +155,7 @@ async def get_trades(limit: int = 20, current_user: User = Depends(check_bot_acc
 
 # Status du connecteur
 @router.get("/connector-status")
-async def get_connector_status(current_user: User = Depends(get_current_user)):
+async def get_connector_status(current_user: User = Depends(check_bot_access)):
     """Vérifie si le connecteur est en ligne"""
     db = get_db()
     
