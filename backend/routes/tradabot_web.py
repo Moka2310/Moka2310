@@ -300,7 +300,7 @@ async def log_trade(trade_data: dict, current_user: User = Depends(check_bot_acc
 
 # Télécharger le connecteur
 @router.get("/download-connector")
-async def download_connector(token: str = None, current_user: User = Depends(get_current_user)):
+async def download_connector(token: str = None, current_user: User = Depends(check_bot_access)):
     """Télécharge le package du connecteur TRADABOT"""
     connector_path = "/app/tradabot-connector/TRADABOT_CONNECTOR_BUILD.zip"
     
