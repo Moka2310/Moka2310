@@ -1,6 +1,7 @@
 """
 Backend API pour TRADABOT Web
 Routes séparées pour éviter les conflits avec le reste du site
+IMPORTANT: Accès uniquement pour les utilisateurs ayant payé le bot (300$ CAD)
 """
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse
@@ -8,10 +9,33 @@ from pydantic import BaseModel
 from typing import Dict, List, Optional
 from datetime import datetime
 from dependencies import get_current_user, get_db
-from models import User
+from models import User, BotPreorderStatus
 import os
 
 router = APIRouter(prefix="/api/tradabot-web", tags=["tradabot-web"])
+
+# Fonction pour vérifier si l'utilisateur a accès au bot
+async def check_bot_access(current_user: User = Depends(get_current_user)):
+    """Vérifie si l'utilisateur a payé le bot ou est admin"""
+    db = get_db()
+    
+    # Admin a toujours accès
+    if current_user.role.value == "admin":
+        return current_user
+    
+    # Vérifier si l'utilisateur a une précommande payée
+    preorder = await db.bot_preorders.find_one({
+        "userId": current_user.id,
+        "status": {"$in": [BotPreorderStatus.PAID.value, BotPreorderStatus.DELIVERED.value]}
+    })
+    
+    if not preorder:
+        raise HTTPException(
+            status_code=403, 
+            detail="Vous devez acheter le TRADABOT pour y accéder. Prix: 300$ CAD."
+        )
+    
+    return current_user
 
 # Models
 class TradabotConfig(BaseModel):
