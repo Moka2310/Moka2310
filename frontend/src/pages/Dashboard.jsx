@@ -66,6 +66,7 @@ const Dashboard = () => {
   const [myTestimonial, setMyTestimonial] = useState(null);
   const [testimonialLoading, setTestimonialLoading] = useState(false);
   const [hiddenFormations, setHiddenFormations] = useState([]);
+  const [hasBotAccess, setHasBotAccess] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -74,6 +75,20 @@ const Dashboard = () => {
         const purchasesResponse = await purchasesAPI.getMyPurchases();
         const userPurchases = purchasesResponse.data;
         setPurchases(userPurchases);
+
+        // Vérifier si l'utilisateur a acheté le bot
+        const checkBotAccess = async () => {
+          try {
+            const token = localStorage.getItem('tradalife_token');
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/tradabot-web/config`, {
+              headers: { 'Authorization': `Bearer ${token}` }
+            });
+            setHasBotAccess(response.status === 200);
+          } catch (error) {
+            setHasBotAccess(false);
+          }
+        };
+        checkBotAccess();
 
         // Load formations for purchased items
         const formationsResponse = await formationsAPI.getAll();
