@@ -136,27 +136,23 @@ const TradabotWeb = () => {
   const downloadConnector = async () => {
     try {
       const token = localStorage.getItem('tradalife_token');
-      const response = await fetch(`${BACKEND_URL}/api/tradabot-web/download-connector`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
       
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'TRADABOT_CONNECTOR.zip';
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-        alert('✅ Téléchargement démarré!');
-      } else {
-        alert('❌ Erreur lors du téléchargement');
-      }
+      // Créer un lien direct avec le token dans l'URL
+      const url = `${BACKEND_URL}/api/tradabot-web/download-connector?token=${token}`;
+      
+      // Créer un élément <a> invisible et cliquer dessus
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'TRADABOT_CONNECTOR.zip';
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      alert('✅ Téléchargement démarré!');
     } catch (error) {
       console.error('Erreur téléchargement:', error);
-      alert('❌ Erreur réseau');
+      alert('❌ Erreur lors du téléchargement');
     }
   };
 
