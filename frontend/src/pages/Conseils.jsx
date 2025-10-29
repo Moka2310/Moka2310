@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { BookOpen, DollarSign, Download, TrendingUp, AlertCircle, CheckCircle2, Shield } from 'lucide-react';
+import { conseilsTranslations } from '../conseilsTranslations';
+
+const t = (lang, key) => {
+  const keys = key.split('.');
+  let value = conseilsTranslations[lang];
+  for (const k of keys) {
+    value = value?.[k];
+  }
+  return value || key;
+};
 
 const Conseils = () => {
   const { language } = useLanguage();
