@@ -89,7 +89,7 @@ async def get_config(current_user: User = Depends(check_bot_access)):
     return config
 
 @router.post("/config")
-async def save_config(config: TradabotConfig, current_user: User = Depends(get_current_user)):
+async def save_config(config: TradabotConfig, current_user: User = Depends(check_bot_access)):
     """Sauvegarde la configuration TRADABOT"""
     db = get_db()
     
