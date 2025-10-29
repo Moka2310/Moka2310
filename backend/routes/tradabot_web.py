@@ -316,3 +316,50 @@ async def download_connector(token: str = None, current_user: User = Depends(che
             "Access-Control-Allow-Origin": "*"
         }
     )
+
+# Liste des serveurs MT4/MT5
+@router.get("/mt4-servers")
+async def get_mt4_servers(current_user: User = Depends(check_bot_access)):
+    """Retourne la liste des serveurs MT4/MT5 selon le rôle de l'utilisateur"""
+    
+    # Liste complète des serveurs (incluant démo et live)
+    all_servers = [
+        # Serveurs DÉMO (uniquement pour admin)
+        "ICMarkets-Demo", "ICMarkets-Demo02", "ICMarkets-Demo03",
+        "XM-Demo", "XM-Demo 2", "XM-Demo 3",
+        "FXCM-USDDemo01", "FXCM-Demo",
+        "Exness-Demo", "Exness-MT4Demo",
+        
+        # Serveurs LIVE (pour tous)
+        "ICMarkets-Live", "ICMarkets-Live02", "ICMarkets-Live03",
+        "XM-Real", "XM-Real 2", "XM-Real 3", "XM-Real 4",
+        "FXCM-USDReal01", "FXCM-Real",
+        "Exness-Real", "Exness-MT4Real", "Exness-MT4Real2",
+        "Global-Prime", "Global-Prime-Live",
+        "Pepperstone-Demo", "Pepperstone-Live", "Pepperstone-Live02",
+        "FTMO-Demo", "FTMO-Live",
+        "FBS-Real", "FBS-Real-2", "FBS-Real-MT4",
+        "Tickmill-Live", "Tickmill-Live02",
+        "HotForex-Real", "HotForex-Live",
+        "OctaFX-Real", "OctaFX-Live",
+        "RoboForex-Pro", "RoboForex-ProCent",
+        "Admiral-Live", "Admiral-Real",
+        "IG-Live", "IG-Real",
+        "Plus500-Live",
+        "eToro-Real",
+        "AvaTrade-Live", "AvaTrade-Real",
+        "OANDA-Live", "OANDA-fxTrade",
+        "Forex.com-Live", "Forex.com-Real",
+        "InteractiveBrokers-Live", "InteractiveBrokers-Pro",
+        "Saxo-Live", "SaxoBank-Live",
+        "CMC-Live", "CMCMarkets-Live"
+    ]
+    
+    # Si admin, retourner tous les serveurs
+    if current_user.role.value == "admin":
+        return {"servers": all_servers}
+    
+    # Si client, retourner uniquement les serveurs LIVE (pas de "demo" dans le nom)
+    live_servers = [s for s in all_servers if "demo" not in s.lower()]
+    
+    return {"servers": live_servers}
