@@ -9,7 +9,7 @@ from models import User
 import logging
 
 logger = logging.getLogger(__name__)
-router = APIRouter(prefix="/api/conseils", tags=["conseils"])
+router = APIRouter(prefix="/conseils", tags=["conseils"])
 
 class CapitalManagement(BaseModel):
     capital: str
