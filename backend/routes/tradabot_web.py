@@ -130,7 +130,7 @@ async def get_signals(limit: int = 20, current_user: User = Depends(check_bot_ac
 
 # Trades
 @router.get("/trades")
-async def get_trades(limit: int = 20, current_user: User = Depends(get_current_user)):
+async def get_trades(limit: int = 20, current_user: User = Depends(check_bot_access)):
     """Récupère l'historique des trades"""
     db = get_db()
     
