@@ -314,48 +314,48 @@ const TradabotWeb = () => {
               <h2 className="text-2xl font-bold mb-4">Configuration</h2>
               
               {/* MT4 Config */}
-              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+              <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30">
                 <h3 className="text-xl font-bold mb-4">🎯 Configuration MT4/MT5</h3>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-white/70 text-sm mb-2">Login MT4</label>
+                    <label className="block text-purple-300 text-sm mb-2">Login MT4</label>
                     <input
                       type="text"
                       value={config.mt4Login}
                       onChange={(e) => setConfig({...config, mt4Login: e.target.value})}
                       placeholder="Ex: 12345678"
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white"
+                      className="w-full bg-purple-900/20 border border-purple-500/30 rounded-lg px-4 py-2 text-white placeholder-purple-400/50 focus:border-purple-400 focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-white/70 text-sm mb-2">Password MT4</label>
+                    <label className="block text-purple-300 text-sm mb-2">Password MT4</label>
                     <input
                       type="password"
                       value={config.mt4Password}
                       onChange={(e) => setConfig({...config, mt4Password: e.target.value})}
                       placeholder="Votre mot de passe MT4"
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white"
+                      className="w-full bg-purple-900/20 border border-purple-500/30 rounded-lg px-4 py-2 text-white placeholder-purple-400/50 focus:border-purple-400 focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-white/70 text-sm mb-2">Serveur</label>
+                    <label className="block text-purple-300 text-sm mb-2">Serveur</label>
                     <input
                       type="text"
                       value={config.mt4Server}
                       onChange={(e) => setConfig({...config, mt4Server: e.target.value})}
                       placeholder="Ex: XM.COM-Real"
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white"
+                      className="w-full bg-purple-900/20 border border-purple-500/30 rounded-lg px-4 py-2 text-white placeholder-purple-400/50 focus:border-purple-400 focus:outline-none"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Canaux */}
-              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+              <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30">
                 <h3 className="text-xl font-bold mb-4">📡 Canaux Telegram</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {Object.keys(config.channels).map(channel => (
-                    <label key={channel} className="flex items-center space-x-3 cursor-pointer">
+                    <label key={channel} className="flex items-center space-x-3 cursor-pointer hover:bg-purple-500/10 p-2 rounded-lg transition">
                       <input
                         type="checkbox"
                         checked={config.channels[channel]}
@@ -363,21 +363,21 @@ const TradabotWeb = () => {
                           ...config,
                           channels: {...config.channels, [channel]: e.target.checked}
                         })}
-                        className="w-5 h-5"
+                        className="w-5 h-5 text-purple-500 bg-purple-900/20 border-purple-500/30 rounded focus:ring-purple-500"
                       />
-                      <span className="capitalize">{channel}</span>
+                      <span className="capitalize text-purple-200">{channel}</span>
                     </label>
                   ))}
                 </div>
               </div>
 
               {/* Lots */}
-              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+              <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30">
                 <h3 className="text-xl font-bold mb-4">💰 Configuration des Lots</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {Object.keys(config.lots).map(category => (
                     <div key={category}>
-                      <label className="block text-white/70 text-sm mb-2 capitalize">{category}</label>
+                      <label className="block text-purple-300 text-sm mb-2 capitalize">{category}</label>
                       <input
                         type="number"
                         step="0.01"
@@ -386,7 +386,7 @@ const TradabotWeb = () => {
                           ...config,
                           lots: {...config.lots, [category]: parseFloat(e.target.value)}
                         })}
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white"
+                        className="w-full bg-purple-900/20 border border-purple-500/30 rounded-lg px-4 py-2 text-white focus:border-purple-400 focus:outline-none"
                       />
                     </div>
                   ))}
@@ -394,13 +394,13 @@ const TradabotWeb = () => {
               </div>
 
               {/* Breakeven */}
-              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+              <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30">
                 <label className="flex items-center space-x-3 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={config.breakevenEnabled}
                     onChange={(e) => setConfig({...config, breakevenEnabled: e.target.checked})}
-                    className="w-5 h-5"
+                    className="w-5 h-5 text-purple-500 bg-purple-900/20 border-purple-500/30 rounded focus:ring-purple-500"
                   />
                   <span className="text-lg">🔒 Activer le Breakeven automatique</span>
                 </label>
@@ -408,7 +408,7 @@ const TradabotWeb = () => {
 
               <button
                 onClick={saveConfig}
-                className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 py-3 rounded-xl font-bold transition"
+                className="w-full bg-gradient-to-r from-pink-500 via-purple-500 to-violet-600 hover:from-pink-600 hover:via-purple-600 hover:to-violet-700 py-3 rounded-xl font-bold transition shadow-lg"
               >
                 💾 Sauvegarder la Configuration
               </button>
