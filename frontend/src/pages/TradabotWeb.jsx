@@ -474,14 +474,22 @@ const TradabotWeb = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-purple-300 text-sm mb-2">Serveur</label>
-                    <input
-                      type="text"
+                    <label className="block text-purple-300 text-sm mb-2">
+                      Serveur {mt4Servers.length > 0 && mt4Servers[0].includes('Demo') ? '(Admin: DEMO autorisé)' : '(Compte RÉEL uniquement)'}
+                    </label>
+                    <select
                       value={config.mt4Server}
                       onChange={(e) => setConfig({...config, mt4Server: e.target.value})}
-                      placeholder="Ex: XM.COM-Real"
                       className="w-full bg-purple-900/20 border border-purple-500/30 rounded-lg px-4 py-2 text-white placeholder-purple-400/50 focus:border-purple-400 focus:outline-none"
-                    />
+                    >
+                      <option value="">Sélectionnez un serveur</option>
+                      {mt4Servers.map(server => (
+                        <option key={server} value={server}>{server}</option>
+                      ))}
+                    </select>
+                    {mt4Servers.length === 0 && (
+                      <p className="text-xs text-purple-400 mt-2">Chargement des serveurs...</p>
+                    )}
                   </div>
                 </div>
               </div>
