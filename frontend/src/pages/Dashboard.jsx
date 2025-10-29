@@ -413,22 +413,65 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* TRADABOT Button */}
-        <div className="mb-8">
-          <button
-            onClick={() => navigate('/tradabot-web')}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white p-6 rounded-3xl border-2 border-blue-400/50 hover:border-blue-400 transition-all shadow-lg hover:shadow-blue-500/50 flex items-center justify-center gap-4 group"
-          >
-            <Bot className="w-8 h-8 group-hover:scale-110 transition-transform" />
-            <div className="text-left">
-              <div className="text-2xl font-bold">🤖 TRADABOT WEB</div>
-              <div className="text-sm text-white/90">
-                {language === 'fr' ? '🚀 Trading automatique - Copie des signaux VIP' : '🚀 Auto Trading - Copy VIP signals'}
+        {/* TRADABOT Button - Only if user has access */}
+        {hasBotAccess && (
+          <div className="mb-8">
+            <button
+              onClick={() => navigate('/tradabot-web')}
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white p-6 rounded-3xl border-2 border-blue-400/50 hover:border-blue-400 transition-all shadow-lg hover:shadow-blue-500/50 flex items-center justify-center gap-4 group"
+            >
+              <Bot className="w-8 h-8 group-hover:scale-110 transition-transform" />
+              <div className="text-left">
+                <div className="text-2xl font-bold">🤖 TRADABOT WEB</div>
+                <div className="text-sm text-white/90">
+                  {language === 'fr' ? '🚀 Trading automatique - Copie des signaux VIP' : '🚀 Auto Trading - Copy VIP signals'}
+                </div>
               </div>
+              <ExternalLink className="w-6 h-6 ml-auto" />
+            </button>
+          </div>
+        )}
+
+        {/* Message pour acheter le bot si pas d'accès */}
+        {!hasBotAccess && (
+          <div className="mb-8">
+            <div className="w-full bg-gradient-to-r from-gray-600/30 to-gray-700/30 border-2 border-gray-500/50 p-6 rounded-3xl">
+              <div className="flex items-center gap-4 mb-4">
+                <Bot className="w-8 h-8 text-gray-400" />
+                <div>
+                  <div className="text-xl font-bold text-white">🔒 TRADABOT WEB</div>
+                  <div className="text-sm text-gray-300">
+                    {language === 'fr' ? 'Trading automatique - Copie des signaux VIP' : 'Auto Trading - Copy VIP signals'}
+                  </div>
+                </div>
+              </div>
+              <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 mb-4">
+                <p className="text-yellow-300 text-sm font-semibold mb-2">
+                  {language === 'fr' ? '⚠️ Accès réservé aux abonnés TRADABOT' : '⚠️ Access reserved for TRADABOT subscribers'}
+                </p>
+                <p className="text-white/80 text-sm">
+                  {language === 'fr' 
+                    ? 'Pour utiliser le bot de trading automatique, vous devez d\'abord acheter TRADABOT pour 300$ CAD (paiement unique).' 
+                    : 'To use the automatic trading bot, you must first purchase TRADABOT for 300$ CAD (one-time payment).'}
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  navigate('/');
+                  setTimeout(() => {
+                    const botSection = document.getElementById('bot-preorder-section');
+                    if (botSection) {
+                      botSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }, 100);
+                }}
+                className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-6 py-3 rounded-xl font-bold transition"
+              >
+                {language === 'fr' ? '🛒 Acheter TRADABOT (300$ CAD)' : '🛒 Buy TRADABOT (300$ CAD)'}
+              </button>
             </div>
-            <ExternalLink className="w-6 h-6 ml-auto" />
-          </button>
-        </div>
+          </div>
+        )}
 
         {/* Tabs */}
         <Tabs defaultValue={new URLSearchParams(location.search).get('tab') || 'subscription'} className="w-full">
