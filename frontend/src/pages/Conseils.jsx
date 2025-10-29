@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { BookOpen, DollarSign, Download, TrendingUp, AlertCircle, CheckCircle2, Shield } from 'lucide-react';
 
