@@ -156,12 +156,12 @@ const TradabotWeb = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0118] via-[#1a0a2e] to-[#16213e] text-white p-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0118] via-[#16001e] to-[#1a0a2e] text-white p-6">
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-pink-400 via-purple-500 to-violet-600 bg-clip-text text-transparent">
             🤖 TRADABOT
           </h1>
           <p className="text-white/60">Trading automatique - Signaux Telegram → MT4</p>
@@ -169,10 +169,10 @@ const TradabotWeb = () => {
 
         {/* Status Bar */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
+          <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 backdrop-blur-sm rounded-2xl p-4 border border-purple-500/30">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/60 text-sm">Connecteur</p>
+                <p className="text-purple-300 text-sm">Connecteur</p>
                 <p className="text-xl font-bold">
                   {connectorStatus === 'connected' ? '🟢 Connecté' : '🔴 Déconnecté'}
                 </p>
@@ -181,10 +181,10 @@ const TradabotWeb = () => {
             </div>
           </div>
 
-          <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
+          <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 backdrop-blur-sm rounded-2xl p-4 border border-purple-500/30">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/60 text-sm">Bot Status</p>
+                <p className="text-purple-300 text-sm">Bot Status</p>
                 <p className="text-xl font-bold">
                   {botStatus === 'running' ? '✅ Actif' : '⏸️ Arrêté'}
                 </p>
@@ -193,30 +193,30 @@ const TradabotWeb = () => {
             </div>
           </div>
 
-          <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
+          <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 backdrop-blur-sm rounded-2xl p-4 border border-purple-500/30">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/60 text-sm">Signaux (24h)</p>
+                <p className="text-purple-300 text-sm">Signaux (24h)</p>
                 <p className="text-xl font-bold">{signals.length}</p>
               </div>
-              <List className="w-8 h-8 text-blue-400" />
+              <List className="w-8 h-8 text-pink-400" />
             </div>
           </div>
         </div>
 
         {/* Alert si connecteur non connecté */}
         {connectorStatus === 'disconnected' && (
-          <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-2xl p-4 mb-6">
+          <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/30 rounded-2xl p-4 mb-6 backdrop-blur-sm">
             <div className="flex items-start">
               <AlertCircle className="w-6 h-6 text-yellow-400 mr-3 flex-shrink-0 mt-0.5" />
-              <div>
+              <div className="flex-1">
                 <p className="font-bold text-yellow-400 mb-2">Connecteur non détecté</p>
                 <p className="text-white/80 text-sm mb-3">
                   Pour utiliser TRADABOT, vous devez installer le petit connecteur MT4 (2 MB).
                 </p>
                 <a 
                   href={`${BACKEND_URL}/api/tradabot-web/download-connector`}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-lg font-bold text-sm inline-block transition"
+                  className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-4 py-2 rounded-lg font-bold text-sm inline-block transition shadow-lg"
                 >
                   📥 Télécharger le Connecteur
                 </a>
@@ -238,8 +238,8 @@ const TradabotWeb = () => {
               onClick={() => setActiveTab(tab.id)}
               className={`px-4 py-2 rounded-lg font-semibold whitespace-nowrap transition ${
                 activeTab === tab.id
-                  ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white'
-                  : 'bg-white/5 text-white/60 hover:bg-white/10'
+                  ? 'bg-gradient-to-r from-pink-500 via-purple-500 to-violet-600 text-white shadow-lg'
+                  : 'bg-purple-900/20 text-purple-300 hover:bg-purple-900/40 border border-purple-500/20'
               }`}
             >
               {tab.label}
@@ -248,7 +248,7 @@ const TradabotWeb = () => {
         </div>
 
         {/* Tab Content */}
-        <div className="bg-white/5 rounded-3xl p-6 border border-white/10 min-h-[500px]">
+        <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 backdrop-blur-sm rounded-3xl p-6 border border-purple-500/30 min-h-[500px]">
           
           {/* Dashboard Tab */}
           {activeTab === 'dashboard' && (
