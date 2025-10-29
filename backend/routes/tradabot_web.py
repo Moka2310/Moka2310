@@ -276,7 +276,7 @@ async def log_trade(trade_data: dict, current_user: User = Depends(get_current_u
 
 # Télécharger le connecteur
 @router.get("/download-connector")
-async def download_connector(current_user: User = Depends(get_current_user)):
+async def download_connector(token: str = None, current_user: User = Depends(get_current_user)):
     """Télécharge le package du connecteur TRADABOT"""
     connector_path = "/app/tradabot-connector/TRADABOT_CONNECTOR_BUILD.zip"
     
@@ -286,5 +286,9 @@ async def download_connector(current_user: User = Depends(get_current_user)):
     return FileResponse(
         path=connector_path,
         media_type="application/zip",
-        filename="TRADABOT_CONNECTOR.zip"
+        filename="TRADABOT_CONNECTOR.zip",
+        headers={
+            "Content-Disposition": "attachment; filename=TRADABOT_CONNECTOR.zip",
+            "Access-Control-Allow-Origin": "*"
+        }
     )
