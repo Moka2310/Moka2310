@@ -416,16 +416,8 @@ const Dashboard = () => {
         </div>
 
         {/* Tabs */}
-        <Tabs defaultValue={new URLSearchParams(location.search).get('tab') || 'formations'} className="w-full">
-          <TabsList className="bg-[#2B1F5C] border border-purple-500/30 p-1 mb-8 grid grid-cols-2 sm:grid-cols-5 gap-1">
-            <TabsTrigger 
-              value="formations"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white text-xs sm:text-sm"
-            >
-              <Video className="w-4 h-4 mr-1 sm:mr-2" />
-              <span className="hidden sm:inline">{t(language, 'dashboard.myFormations')}</span>
-              <span className="sm:hidden">Formations</span>
-            </TabsTrigger>
+        <Tabs defaultValue={new URLSearchParams(location.search).get('tab') || 'subscription'} className="w-full">
+          <TabsList className="bg-[#2B1F5C] border border-purple-500/30 p-1 mb-8 grid grid-cols-2 sm:grid-cols-4 gap-1">
             <TabsTrigger 
               value="subscription"
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-purple-600 data-[state=active]:text-white text-xs sm:text-sm"
