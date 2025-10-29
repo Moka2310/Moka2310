@@ -79,8 +79,8 @@ const Navbar = () => {
     { label: t(language, 'nav.channels'), path: '#canaux' },
     { label: t(language, 'nav.applications'), path: '#applications' },
     { label: t(language, 'nav.aboutUs'), path: '/about-us' },
-    { label: language === 'fr' ? 'Conseils' : 'Tips', path: '/conseils' },
-    { label: language === 'fr' ? 'Parrainage' : 'Referral', path: '/parrainage' },
+    { label: t(language, 'nav.conseils'), path: '/conseils' },
+    { label: t(language, 'nav.parrainage'), path: '/parrainage' },
     { label: t(language, 'nav.contact'), path: '#contact' },
     { label: t(language, 'nav.shop'), path: '/boutique' },
     { label: t(language, 'nav.contest'), path: '/contest' }
