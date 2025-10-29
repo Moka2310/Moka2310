@@ -498,11 +498,11 @@ const TradabotWeb = () => {
               <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30">
                 <h3 className="text-xl font-bold mb-4">📡 Canaux Telegram</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {Object.keys(config.channels).map(channel => (
+                  {config?.channels && Object.keys(config.channels).map(channel => (
                     <label key={channel} className="flex items-center space-x-3 cursor-pointer hover:bg-purple-500/10 p-2 rounded-lg transition">
                       <input
                         type="checkbox"
-                        checked={config.channels[channel]}
+                        checked={config.channels[channel] || false}
                         onChange={(e) => setConfig({
                           ...config,
                           channels: {...config.channels, [channel]: e.target.checked}
@@ -519,16 +519,16 @@ const TradabotWeb = () => {
               <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30">
                 <h3 className="text-xl font-bold mb-4">💰 Configuration des Lots</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {Object.keys(config.lots).map(category => (
+                  {config?.lots && Object.keys(config.lots).map(category => (
                     <div key={category}>
                       <label className="block text-purple-300 text-sm mb-2 capitalize">{category}</label>
                       <input
                         type="number"
                         step="0.01"
-                        value={config.lots[category]}
+                        value={config.lots[category] || 0.01}
                         onChange={(e) => setConfig({
                           ...config,
-                          lots: {...config.lots, [category]: parseFloat(e.target.value)}
+                          lots: {...config.lots, [category]: parseFloat(e.target.value) || 0.01}
                         })}
                         className="w-full bg-purple-900/20 border border-purple-500/30 rounded-lg px-4 py-2 text-white focus:border-purple-400 focus:outline-none"
                       />
@@ -542,7 +542,7 @@ const TradabotWeb = () => {
                 <label className="flex items-center space-x-3 cursor-pointer">
                   <input
                     type="checkbox"
-                    checked={config.breakevenEnabled}
+                    checked={config?.breakevenEnabled || false}
                     onChange={(e) => setConfig({...config, breakevenEnabled: e.target.checked})}
                     className="w-5 h-5 text-purple-500 bg-purple-900/20 border-purple-500/30 rounded focus:ring-purple-500"
                   />
