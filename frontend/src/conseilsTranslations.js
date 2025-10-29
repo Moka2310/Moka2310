@@ -76,7 +76,7 @@ export const conseilsTranslations = {
           crypto: 'Crypto',
           gold: 'Gold',
           indices: 'Indices',
-          actions: 'Stocks',
+          actions: 'Commodities',
           risk: 'Risk Level'
         },
         important: {
