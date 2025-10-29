@@ -93,7 +93,7 @@ curl -X POST "BACKEND_URL/api/auth/login" \
 ✅ **SUCCÈS**
 
 ### Test 3: Connexion via Interface Web ✅
-- Navigué vers https://mt4-dropdown.preview.emergentagent.com/login
+- Navigué vers https://auto-trader-70.preview.emergentagent.com/login
 - Rempli: test@test.com / Test2024!
 - Cliqué "Se connecter"
 - **Résultat**: 
@@ -128,7 +128,7 @@ curl -X POST "BACKEND_URL/api/auth/login" \
 ## 🧪 COMMENT TESTER MAINTENANT
 
 ### Étape 1: Se Connecter
-1. Aller sur: **https://mt4-dropdown.preview.emergentagent.com/login**
+1. Aller sur: **https://auto-trader-70.preview.emergentagent.com/login**
 2. Utiliser:
    ```
    Email:    test@test.com
@@ -139,7 +139,7 @@ curl -X POST "BACKEND_URL/api/auth/login" \
 
 ### Étape 2: Accéder au TradaBot Demo
 1. Cliquer sur le bouton vert **"TRADABOT - MODE DÉMO"**
-2. OU aller directement sur: **https://mt4-dropdown.preview.emergentagent.com/tradabot-demo**
+2. OU aller directement sur: **https://auto-trader-70.preview.emergentagent.com/tradabot-demo**
 
 ### Étape 3: Vérifier le Dropdown MT4
 1. Cliquer sur l'onglet **"Configuration"**

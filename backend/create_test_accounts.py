@@ -106,10 +106,10 @@ async def create_test_accounts():
         print()
     
     print("\n🌐 URLs de test:")
-    print("   - Frontend: https://mt4-dropdown.preview.emergentagent.com")
-    print("   - Login: https://mt4-dropdown.preview.emergentagent.com/login")
-    print("   - TradaBot Demo: https://mt4-dropdown.preview.emergentagent.com/tradabot-demo")
-    print("   - TradaBot Config: https://mt4-dropdown.preview.emergentagent.com/tradabot")
+    print("   - Frontend: https://auto-trader-70.preview.emergentagent.com")
+    print("   - Login: https://auto-trader-70.preview.emergentagent.com/login")
+    print("   - TradaBot Demo: https://auto-trader-70.preview.emergentagent.com/tradabot-demo")
+    print("   - TradaBot Config: https://auto-trader-70.preview.emergentagent.com/tradabot")
     print()
     
     client.close()

@@ -39,7 +39,7 @@ async def reset_password(email: str, new_password: str):
         print(f"\n  Email: {email}")
         print(f"  Nouveau mot de passe: {new_password}")
         print(f"\n  Tu peux maintenant te connecter sur:")
-        print(f"  https://mt4-dropdown.preview.emergentagent.com/login")
+        print(f"  https://auto-trader-70.preview.emergentagent.com/login")
         print("\n" + "=" * 60)
     else:
         print(f"❌ Erreur lors de la mise à jour")
