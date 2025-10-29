@@ -55,10 +55,10 @@ const Conseils = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
-            📚 Conseils & Guide TRADABOT
+            {t(language, 'conseils.title')}
           </h1>
           <p className="text-xl text-purple-200">
-            Tout ce que vous devez savoir pour utiliser TRADABOT efficacement
+            {t(language, 'conseils.subtitle')}
           </p>
         </div>
 
@@ -72,7 +72,7 @@ const Conseils = () => {
                 : 'bg-white/10 text-purple-200 hover:bg-white/20'
             }`}
           >
-            💰 Gestion du Capital
+            {t(language, 'conseils.tabs.capital')}
           </button>
           <button
             onClick={() => setActiveTab('installation')}
@@ -82,7 +82,7 @@ const Conseils = () => {
                 : 'bg-white/10 text-purple-200 hover:bg-white/20'
             }`}
           >
-            🔧 Installation
+            {t(language, 'conseils.tabs.installation')}
           </button>
           <button
             onClick={() => setActiveTab('conseils')}
@@ -92,7 +92,7 @@ const Conseils = () => {
                 : 'bg-white/10 text-purple-200 hover:bg-white/20'
             }`}
           >
-            💡 Conseils de Trading
+            {t(language, 'conseils.tabs.tips')}
           </button>
           <button
             onClick={() => setActiveTab('faq')}
@@ -102,7 +102,7 @@ const Conseils = () => {
                 : 'bg-white/10 text-purple-200 hover:bg-white/20'
             }`}
           >
-            ❓ FAQ
+            {t(language, 'conseils.tabs.faq')}
           </button>
         </div>
 
