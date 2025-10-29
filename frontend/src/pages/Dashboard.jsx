@@ -398,8 +398,8 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* TRADABOT Buttons */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        {/* TRADABOT Button */}
+        <div className="mb-8">
           <button
             onClick={() => navigate('/tradabot-web')}
             className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white p-6 rounded-3xl border-2 border-blue-400/50 hover:border-blue-400 transition-all shadow-lg hover:shadow-blue-500/50 flex items-center justify-center gap-4 group"
@@ -408,21 +408,7 @@ const Dashboard = () => {
             <div className="text-left">
               <div className="text-2xl font-bold">🤖 TRADABOT WEB</div>
               <div className="text-sm text-white/90">
-                {language === 'fr' ? '🚀 Trading automatique (Production)' : '🚀 Auto Trading (Production)'}
-              </div>
-            </div>
-            <ExternalLink className="w-6 h-6 ml-auto" />
-          </button>
-          
-          <button
-            onClick={() => navigate('/tradabot-demo')}
-            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white p-6 rounded-3xl border-2 border-green-400/50 hover:border-green-400 transition-all shadow-lg hover:shadow-green-500/50 flex items-center justify-center gap-4 group"
-          >
-            <Bot className="w-8 h-8 group-hover:scale-110 transition-transform" />
-            <div className="text-left">
-              <div className="text-2xl font-bold">TRADABOT - MODE DÉMO</div>
-              <div className="text-sm text-white/90">
-                {language === 'fr' ? '🎮 Tester maintenant (simulation)' : '🎮 Test Now (simulation)'}
+                {language === 'fr' ? '🚀 Trading automatique - Copie des signaux VIP' : '🚀 Auto Trading - Copy VIP signals'}
               </div>
             </div>
             <ExternalLink className="w-6 h-6 ml-auto" />
