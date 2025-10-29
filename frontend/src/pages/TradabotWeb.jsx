@@ -241,12 +241,12 @@ const TradabotWeb = () => {
                 <p className="text-white/80 text-sm mb-3">
                   Pour utiliser TRADABOT, vous devez installer le petit connecteur MT4 (2 MB).
                 </p>
-                <a 
-                  href={`${BACKEND_URL}/api/tradabot-web/download-connector`}
-                  className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-4 py-2 rounded-lg font-bold text-sm inline-block transition shadow-lg"
+                <button 
+                  onClick={downloadConnector}
+                  className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-4 py-2 rounded-lg font-bold text-sm transition shadow-lg"
                 >
                   📥 Télécharger le Connecteur
-                </a>
+                </button>
               </div>
             </div>
           </div>
