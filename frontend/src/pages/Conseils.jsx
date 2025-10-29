@@ -206,10 +206,7 @@ const Conseils = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 {tradingTips.map((tip, index) => (
                   <div key={index} className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20 hover:border-purple-400/50 transition">
-                    <div className="flex items-start gap-3 mb-3">
-                      {tip.icon}
-                      <h3 className="text-lg font-bold text-white">{tip.titre}</h3>
-                    </div>
+                    <h3 className="text-lg font-bold text-white mb-3">{tip.titre}</h3>
                     <p className="text-purple-200 text-sm">{tip.description}</p>
                   </div>
                 ))}
