@@ -211,7 +211,12 @@ export const translations = {
 
 • Assistance personnalisée directe
 • Réponses rapides
-• Conseils pratiques`
+• Conseils pratiques
+
+⏰ ACCÈS VIP TELEGRAM :
+
+• 1 mois d'accès inclus aux canaux VIP Telegram
+• Après 1 mois, abonnement requis pour continuer l'accès aux signaux`
       }
     },
 
