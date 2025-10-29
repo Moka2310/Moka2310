@@ -19,6 +19,7 @@ import Contest from "./pages/Contest";
 import Bonus from "./pages/Bonus";
 import AboutUs from "./pages/AboutUs";
 import Referral from "./pages/Referral";
+import Conseils from "./pages/Conseils";
 import UnderConstruction from "./components/UnderConstruction";
 import Tradabot from "./pages/Tradabot";
 import TradabotWeb from "./pages/TradabotWeb";
