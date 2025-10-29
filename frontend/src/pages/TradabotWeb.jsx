@@ -256,15 +256,15 @@ const TradabotWeb = () => {
               <h2 className="text-2xl font-bold mb-4">Tableau de bord</h2>
               
               {/* Contrôle du bot */}
-              <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+              <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30">
                 <h3 className="text-xl font-bold mb-4">Contrôle du Bot</h3>
                 <button
                   onClick={toggleBot}
                   disabled={connectorStatus === 'disconnected'}
-                  className={`w-full py-4 rounded-xl font-bold text-lg transition flex items-center justify-center ${
+                  className={`w-full py-4 rounded-xl font-bold text-lg transition flex items-center justify-center shadow-lg ${
                     botStatus === 'running'
-                      ? 'bg-red-500 hover:bg-red-600'
-                      : 'bg-green-500 hover:bg-green-600 disabled:bg-gray-600 disabled:cursor-not-allowed'
+                      ? 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700'
+                      : 'bg-gradient-to-r from-pink-500 via-purple-500 to-violet-600 hover:from-pink-600 hover:via-purple-600 hover:to-violet-700 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed'
                   }`}
                 >
                   {botStatus === 'running' ? (
@@ -288,21 +288,21 @@ const TradabotWeb = () => {
 
               {/* Stats rapides */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-white/5 rounded-xl p-4 border border-white/10 text-center">
-                  <p className="text-white/60 text-sm mb-1">Signaux reçus</p>
+                <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 backdrop-blur-sm rounded-xl p-4 border border-blue-500/30 text-center">
+                  <p className="text-blue-300 text-sm mb-1">Signaux reçus</p>
                   <p className="text-3xl font-bold text-blue-400">{signals.length}</p>
                 </div>
-                <div className="bg-white/5 rounded-xl p-4 border border-white/10 text-center">
-                  <p className="text-white/60 text-sm mb-1">Trades ouverts</p>
+                <div className="bg-gradient-to-br from-green-900/20 to-emerald-900/20 backdrop-blur-sm rounded-xl p-4 border border-green-500/30 text-center">
+                  <p className="text-green-300 text-sm mb-1">Trades ouverts</p>
                   <p className="text-3xl font-bold text-green-400">{trades.filter(t => t.status === 'open').length}</p>
                 </div>
-                <div className="bg-white/5 rounded-xl p-4 border border-white/10 text-center">
-                  <p className="text-white/60 text-sm mb-1">Trades fermés</p>
-                  <p className="text-3xl font-bold text-gray-400">{trades.filter(t => t.status === 'closed').length}</p>
+                <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 backdrop-blur-sm rounded-xl p-4 border border-purple-500/30 text-center">
+                  <p className="text-purple-300 text-sm mb-1">Trades fermés</p>
+                  <p className="text-3xl font-bold text-purple-400">{trades.filter(t => t.status === 'closed').length}</p>
                 </div>
-                <div className="bg-white/5 rounded-xl p-4 border border-white/10 text-center">
-                  <p className="text-white/60 text-sm mb-1">Profit total</p>
-                  <p className="text-3xl font-bold text-emerald-400">$0.00</p>
+                <div className="bg-gradient-to-br from-pink-900/20 to-rose-900/20 backdrop-blur-sm rounded-xl p-4 border border-pink-500/30 text-center">
+                  <p className="text-pink-300 text-sm mb-1">Profit total</p>
+                  <p className="text-3xl font-bold text-pink-400">$0.00</p>
                 </div>
               </div>
             </div>
