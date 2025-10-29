@@ -649,7 +649,12 @@ export const translations = {
 
 • Direct personalized assistance
 • Quick answers to your questions
-• Practical advice for progress`
+• Practical advice for progress
+
+⏰ VIP TELEGRAM ACCESS:
+
+• 1 month of VIP Telegram channel access included
+• After 1 month, subscription required to continue signal access`
       },
       'Tradalife Premium Membership': {
         title: 'Tradalife Premium Membership',
