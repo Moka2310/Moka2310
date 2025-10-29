@@ -175,7 +175,7 @@ const Conseils = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
                 <BookOpen className="w-8 h-8 text-blue-400" />
-                Guide d'Installation Pas à Pas
+                {t(language, 'conseils.installation.title')}
               </h2>
               
               <div className="space-y-6">
