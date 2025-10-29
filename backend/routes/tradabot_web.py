@@ -193,7 +193,7 @@ async def get_connector_status(current_user: User = Depends(check_bot_access)):
 
 # Toggle bot
 @router.post("/toggle-bot")
-async def toggle_bot(toggle: BotToggle, current_user: User = Depends(get_current_user)):
+async def toggle_bot(toggle: BotToggle, current_user: User = Depends(check_bot_access)):
     """Démarre ou arrête le bot"""
     db = get_db()
     
