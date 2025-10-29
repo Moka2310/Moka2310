@@ -179,7 +179,12 @@ export const translations = {
 
 • Assistance personnalisée directe
 • Réponses rapides à vos questions
-• Conseils pratiques pour progresser`
+• Conseils pratiques pour progresser
+
+⏰ ACCÈS VIP TELEGRAM :
+
+• 1 mois d'accès inclus aux canaux VIP Telegram
+• Après 1 mois, abonnement requis pour continuer l'accès aux signaux`
       },
       'Tradalife Premium Membership': {
         title: 'Adhésion Premium Tradalife',
