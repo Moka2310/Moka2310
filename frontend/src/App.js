@@ -21,6 +21,7 @@ import AboutUs from "./pages/AboutUs";
 import Referral from "./pages/Referral";
 import UnderConstruction from "./components/UnderConstruction";
 import Tradabot from "./pages/Tradabot";
+import TradabotWeb from "./pages/TradabotWeb";
 import TradabotDemo from "./pages/TradabotDemo";
 import TradabotPrototype from "./pages/TradabotPrototype";
 
