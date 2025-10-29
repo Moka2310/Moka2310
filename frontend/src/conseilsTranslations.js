@@ -19,7 +19,7 @@ export const conseilsTranslations = {
           crypto: 'Crypto',
           gold: 'Gold',
           indices: 'Indices',
-          actions: 'Actions',
+          actions: 'Commodités',
           risk: 'Niveau de Risque'
         },
         important: {
