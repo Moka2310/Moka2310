@@ -50,6 +50,7 @@ api_router.include_router(tradabot.router)
 api_router.include_router(tradabot_download.router)
 api_router.include_router(download_public.router)
 api_router.include_router(tradabot_web.router)
+api_router.include_router(conseils.router)
 
 # Include the router in the main app
 app.include_router(api_router)
