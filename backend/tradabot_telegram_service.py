@@ -179,7 +179,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             signal['status'] = 'pending'
             signal['createdAt'] = datetime.now(timezone.utc).isoformat()
             
-            await db.trade_signals.insert_one(signal)
+            await db.telegram_signals.insert_one(signal)
             print(f"✅ Signal sauvegardé dans la DB")
             
             # Notifier les utilisateurs actifs (via webhook ou websocket)
