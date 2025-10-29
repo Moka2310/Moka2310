@@ -17,7 +17,9 @@ export const translations = {
       login: 'Connexion',
       dashboard: 'Tableau de bord',
       admin: 'Admin',
-      logout: 'Déconnexion'
+      logout: 'Déconnexion',
+      conseils: 'Conseils',
+      parrainage: 'Parrainage'
     },
 
     // Home Page
