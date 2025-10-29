@@ -114,12 +114,12 @@ const Conseils = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
                 <DollarSign className="w-8 h-8 text-green-400" />
-                Tableau de Gestion des Lots
+                {t(language, 'conseils.capital.title')}
               </h2>
               <p className="text-purple-200 mb-8">
-                Ajustez vos lots selon votre capital pour respecter une gestion de risque optimale.
+                {t(language, 'conseils.capital.subtitle')}
                 <span className="block mt-2 text-yellow-300 font-semibold">
-                  ⚠️ Ces valeurs sont des recommandations. Adaptez selon votre tolérance au risque.
+                  {t(language, 'conseils.capital.warning')}
                 </span>
               </p>
 
@@ -127,13 +127,13 @@ const Conseils = () => {
                 <table className="w-full">
                   <thead>
                     <tr className="bg-purple-900/50">
-                      <th className="px-4 py-3 text-left">Capital</th>
-                      <th className="px-4 py-3 text-center">Forex</th>
-                      <th className="px-4 py-3 text-center">Crypto</th>
-                      <th className="px-4 py-3 text-center">Gold</th>
-                      <th className="px-4 py-3 text-center">Indices</th>
-                      <th className="px-4 py-3 text-center">Actions</th>
-                      <th className="px-4 py-3 text-right">Niveau de Risque</th>
+                      <th className="px-4 py-3 text-left">{t(language, 'conseils.capital.table.capital')}</th>
+                      <th className="px-4 py-3 text-center">{t(language, 'conseils.capital.table.forex')}</th>
+                      <th className="px-4 py-3 text-center">{t(language, 'conseils.capital.table.crypto')}</th>
+                      <th className="px-4 py-3 text-center">{t(language, 'conseils.capital.table.gold')}</th>
+                      <th className="px-4 py-3 text-center">{t(language, 'conseils.capital.table.indices')}</th>
+                      <th className="px-4 py-3 text-center">{t(language, 'conseils.capital.table.actions')}</th>
+                      <th className="px-4 py-3 text-right">{t(language, 'conseils.capital.table.risk')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -159,13 +159,12 @@ const Conseils = () => {
               <div className="mt-8 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6">
                 <h3 className="text-xl font-bold text-yellow-300 mb-3 flex items-center gap-2">
                   <AlertCircle className="w-6 h-6" />
-                  Important
+                  {t(language, 'conseils.capital.important.title')}
                 </h3>
                 <ul className="space-y-2 text-purple-200">
-                  <li>• Commencez toujours par le niveau de risque le plus faible</li>
-                  <li>• Augmentez progressivement les lots après 2-3 semaines de résultats positifs</li>
-                  <li>• Ne risquez JAMAIS plus de 5% de votre capital total sur une journée</li>
-                  <li>• Gardez toujours une marge de sécurité d'au moins 30% disponible</li>
+                  {t(language, 'conseils.capital.important.points').map((point, i) => (
+                    <li key={i}>• {point}</li>
+                  ))}
                 </ul>
               </div>
             </div>
