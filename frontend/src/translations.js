@@ -477,7 +477,9 @@ export const translations = {
       login: 'Login',
       dashboard: 'Dashboard',
       admin: 'Admin',
-      logout: 'Logout'
+      logout: 'Logout',
+      conseils: 'Tips',
+      parrainage: 'Referral'
     },
 
     // Home Page
