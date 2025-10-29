@@ -208,7 +208,7 @@ const Conseils = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
                 <TrendingUp className="w-8 h-8 text-green-400" />
-                Conseils de Trading Essentiels
+                {t(language, 'conseils.tips.title')}
               </h2>
               
               <div className="grid md:grid-cols-2 gap-6">
