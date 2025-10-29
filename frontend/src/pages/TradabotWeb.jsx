@@ -195,7 +195,10 @@ const TradabotWeb = () => {
       link.click();
       document.body.removeChild(link);
       
-      alert('✅ Téléchargement démarré!');
+      // Meilleur feedback
+      setTimeout(() => {
+        alert('✅ Téléchargement démarré!\n\n📁 Le fichier TRADABOT_CONNECTOR.zip se trouve dans votre dossier "Téléchargements".');
+      }, 500);
     } catch (error) {
       console.error('Erreur téléchargement:', error);
       alert('❌ Erreur lors du téléchargement');
@@ -223,6 +226,70 @@ const TradabotWeb = () => {
       console.error('Erreur toggle bot:', error);
     }
   };
+
+  // Afficher l'écran d'accès refusé si l'utilisateur n'a pas payé
+  if (!hasAccess) {
+    return (
+      <div className="min-h-screen bg-[#1E1540] flex items-center justify-center px-4">
+        <div className="max-w-2xl w-full bg-gradient-to-b from-[#2B1F5C] to-[#1E1540] rounded-3xl p-8 border border-purple-500/30 text-center">
+          <Lock className="w-20 h-20 text-pink-400 mx-auto mb-6" />
+          <h1 className="text-3xl font-bold text-white mb-4">
+            🔒 Accès Réservé aux Membres TRADABOT
+          </h1>
+          <p className="text-white/70 text-lg mb-6">
+            Pour utiliser TRADABOT et copier automatiquement nos signaux VIP sur votre compte MT4, 
+            vous devez d'abord acheter le bot.
+          </p>
+          
+          <div className="bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30 rounded-2xl p-6 mb-8">
+            <div className="text-5xl font-bold text-white mb-2">300$ CAD</div>
+            <div className="text-pink-400 font-semibold">Paiement unique - Accès à vie</div>
+          </div>
+          
+          <div className="text-left mb-8 space-y-3">
+            <div className="flex items-center gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+              <span className="text-white/80">Copie automatique des signaux sur MT4</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+              <span className="text-white/80">Gestion du risque personnalisable</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+              <span className="text-white/80">Support 24/7</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+              <span className="text-white/80">Mises à jour gratuites à vie</span>
+            </div>
+          </div>
+          
+          <button
+            onClick={() => {
+              navigate('/');
+              setTimeout(() => {
+                const botSection = document.getElementById('bot-preorder-section');
+                if (botSection) {
+                  botSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }, 100);
+            }}
+            className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-4 rounded-full font-bold text-lg transition shadow-lg"
+          >
+            🛒 Commander TRADABOT Maintenant
+          </button>
+          
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="mt-4 text-white/60 hover:text-white underline"
+          >
+            ← Retour au tableau de bord
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0118] via-[#16001e] to-[#1a0a2e] text-white p-6">
