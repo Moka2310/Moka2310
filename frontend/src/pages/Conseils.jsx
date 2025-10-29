@@ -178,10 +178,7 @@ const Conseils = () => {
                       </div>
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="text-purple-400">{step.icon}</div>
-                        <h3 className="text-xl font-bold text-white">{step.titre}</h3>
-                      </div>
+                      <h3 className="text-xl font-bold text-white mb-2">{step.titre}</h3>
                       <p className="text-purple-200">{step.description}</p>
                     </div>
                   </div>
