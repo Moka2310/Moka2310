@@ -182,20 +182,94 @@ async def toggle_bot(toggle: BotToggle, current_user: User = Depends(get_current
     
     return {"success": True, "status": toggle.status}
 
-# Télécharger le connecteur
-@router.get("/download-connector")
-async def download_connector():
-    """Télécharge le connecteur MT4 léger"""
-    connector_path = "/app/tradabot-connector/TradabotConnector.exe"
+# Heartbeat du connecteur
+@router.post("/connector-heartbeat")
+async def connector_heartbeat(heartbeat: dict, current_user: User = Depends(get_current_user)):
+    """Enregistre le heartbeat du connecteur"""
+    db = get_db()
     
-    if not os.path.exists(connector_path):
-        raise HTTPException(status_code=404, detail="Connecteur non disponible")
-    
-    return FileResponse(
-        path=connector_path,
-        media_type='application/octet-stream',
-        filename='TradabotConnector.exe',
-        headers={
-            "Content-Disposition": "attachment; filename=TradabotConnector.exe"
-        }
+    await db.tradabot_connectors.update_one(
+        {"userId": current_user.id},
+        {"$set": {
+            "userId": current_user.id,
+            "lastSeen": heartbeat.get("lastSeen"),
+            "botStatus": heartbeat.get("botStatus", "stopped"),
+            "mt4Connected": heartbeat.get("mt4Connected", False)
+        }},
+        upsert=True
     )
+    
+    return {"success": True}
+
+# Signaux en attente pour le connecteur
+@router.get("/pending-signals")
+async def get_pending_signals(current_user: User = Depends(get_current_user)):
+    """Retourne les signaux non encore tradés pour cet utilisateur"""
+    db = get_db()
+    
+    # Récupérer la config pour voir quels canaux sont activés
+    config = await db.tradabot_configs.find_one({"userId": current_user.id})
+    
+    if not config or config.get("botStatus") != "running":
+        return []
+    
+    # Récupérer les signaux récents (dernière heure)
+    from datetime import datetime, timedelta
+    one_hour_ago = (datetime.utcnow() - timedelta(hours=1)).isoformat()
+    
+    signals = await db.telegram_signals.find({
+        "timestamp": {"$gte": one_hour_ago}
+    }).sort("timestamp", -1).limit(10).to_list(length=10)
+    
+    # Filtrer par canaux activés et signaux pas encore tradés
+    pending = []
+    for signal in signals:
+        # Vérifier si le canal est activé
+        channel = signal.get("channel", "").lower()
+        if config.get("channels", {}).get(channel, False):
+            # Vérifier si pas déjà tradé
+            existing_trade = await db.tradabot_trades.find_one({
+                "userId": current_user.id,
+                "signalId": str(signal.get("_id"))
+            })
+            
+            if not existing_trade:
+                pending.append({
+                    "id": str(signal.get("_id")),
+                    "type": signal.get("type"),
+                    "symbol": signal.get("symbol"),
+                    "entry": signal.get("entry"),
+                    "sl": signal.get("sl"),
+                    "tp1": signal.get("tp1"),
+                    "tp2": signal.get("tp2", ""),
+                    "channel": signal.get("channel")
+                })
+    
+    return pending
+
+# Log trade
+@router.post("/log-trade")
+async def log_trade(trade_data: dict, current_user: User = Depends(get_current_user)):
+    """Enregistre un trade exécuté"""
+    db = get_db()
+    
+    signal = trade_data.get("signal", {})
+    
+    trade_record = {
+        "userId": current_user.id,
+        "signalId": signal.get("id"),
+        "type": signal.get("type"),
+        "symbol": signal.get("symbol"),
+        "lot": 0.01,  # Sera récupéré de la config
+        "entry": float(signal.get("entry", 0)),
+        "sl": float(signal.get("sl", 0)),
+        "tp": float(signal.get("tp1", 0)),
+        "ticket": trade_data.get("ticket"),
+        "status": trade_data.get("status"),
+        "profit": 0,
+        "timestamp": trade_data.get("timestamp")
+    }
+    
+    await db.tradabot_trades.insert_one(trade_record)
+    
+    return {"success": True}
