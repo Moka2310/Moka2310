@@ -247,9 +247,9 @@ const Conseils = () => {
               </div>
 
               <div className="mt-8 bg-purple-500/10 border border-purple-500/30 rounded-xl p-6 text-center">
-                <h3 className="text-xl font-bold text-purple-200 mb-3">Besoin d'aide ?</h3>
+                <h3 className="text-xl font-bold text-purple-200 mb-3">{t(language, 'conseils.faq.needHelp.title')}</h3>
                 <p className="text-purple-300 mb-4">
-                  Rejoignez notre canal Telegram de support pour obtenir de l'aide en temps réel
+                  {t(language, 'conseils.faq.needHelp.description')}
                 </p>
                 <button className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-3 rounded-full font-bold transition">
                   💬 Rejoindre le Support
