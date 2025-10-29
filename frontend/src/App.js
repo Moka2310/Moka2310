@@ -49,6 +49,7 @@ function App() {
               <Route path="/about-us" element={<AboutUs />} />
               <Route path="/parrainage" element={<Referral />} />
               <Route path="/referral" element={<Referral />} />
+              <Route path="/conseils" element={<Conseils />} />
               <Route path="/tradabot" element={<Tradabot />} />
               <Route path="/tradabot-web" element={<TradabotWeb />} />
               <Route path="/tradabot-demo" element={<TradabotDemo />} />
