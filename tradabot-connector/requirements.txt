@@ -2,7 +2,7 @@
 # Python 3.9+
 
 # MetaTrader 5 integration
-MetaTrader5==5.0.45
+MetaTrader5>=5.0.0
 
 # HTTP requests
 requests==2.31.0
