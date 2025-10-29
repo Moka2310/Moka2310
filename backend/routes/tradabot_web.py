@@ -208,7 +208,7 @@ async def toggle_bot(toggle: BotToggle, current_user: User = Depends(check_bot_a
 
 # Heartbeat du connecteur
 @router.post("/connector-heartbeat")
-async def connector_heartbeat(heartbeat: dict, current_user: User = Depends(get_current_user)):
+async def connector_heartbeat(heartbeat: dict, current_user: User = Depends(check_bot_access)):
     """Enregistre le heartbeat du connecteur"""
     db = get_db()
     
