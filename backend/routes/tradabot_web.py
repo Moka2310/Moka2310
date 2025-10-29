@@ -13,7 +13,7 @@ from dependencies import get_current_user, get_db
 from models import User, BotPreorderStatus
 import os
 
-router = APIRouter(prefix="/api/tradabot-web", tags=["tradabot-web"])
+router = APIRouter(prefix="/tradabot-web", tags=["tradabot-web"])
 security = HTTPBearer(auto_error=False)
 
 # Fonction pour vérifier si l'utilisateur a accès au bot
