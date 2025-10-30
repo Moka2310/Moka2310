@@ -358,6 +358,56 @@ async def download_connector(token: Optional[str] = None, credentials: Optional[
         }
     )
 
+# Télécharger le fichier de configuration personnalisé
+@router.get("/download-config")
+async def download_config(current_user: User = Depends(check_bot_access)):
+    """Génère et télécharge le fichier de configuration personnalisé"""
+    from auth_utils import create_access_token
+    from fastapi.responses import Response
+    import json
+    
+    db = get_db()
+    
+    # Récupérer la configuration de l'utilisateur
+    config = await db.tradabot_configs.find_one({"userId": current_user.id})
+    
+    if not config:
+        raise HTTPException(
+            status_code=404,
+            detail="Configuration non trouvée. Veuillez d'abord configurer vos paramètres."
+        )
+    
+    # Générer un token d'authentification pour le connecteur
+    auth_token = create_access_token(data={"sub": current_user.id})
+    
+    # Créer le fichier de configuration JSON
+    config_data = {
+        "authToken": auth_token,
+        "backendUrl": os.environ.get('BACKEND_URL', 'https://edushop-portal.emergent.host'),
+        "userId": current_user.id,
+        "userEmail": current_user.email,
+        "mt4Login": config.get('mt4Login', ''),
+        "mt4Password": config.get('mt4Password', ''),
+        "mt4Server": config.get('mt4Server', ''),
+        "channels": config.get('channels', {}),
+        "lots": config.get('lots', {}),
+        "breakevenEnabled": config.get('breakevenEnabled', True),
+        "generatedAt": datetime.utcnow().isoformat()
+    }
+    
+    # Convertir en JSON
+    config_json = json.dumps(config_data, indent=2, ensure_ascii=False)
+    
+    # Retourner comme fichier téléchargeable
+    return Response(
+        content=config_json,
+        media_type="application/json",
+        headers={
+            "Content-Disposition": "attachment; filename=tradabot_config.json",
+            "Content-Type": "application/json; charset=utf-8"
+        }
+    )
+
 # Liste des serveurs MT4/MT5
 @router.get("/mt4-servers")
 async def get_mt4_servers(current_user: User = Depends(check_bot_access)):
