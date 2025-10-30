@@ -589,6 +589,26 @@ const TradabotWeb = () => {
               >
                 💾 Sauvegarder la Configuration
               </button>
+              
+              {/* Bouton pour télécharger la configuration */}
+              <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-2xl p-6 backdrop-blur-sm">
+                <h3 className="text-lg font-bold mb-2 flex items-center">
+                  <AlertCircle className="w-5 h-5 mr-2 text-blue-400" />
+                  Étape Suivante
+                </h3>
+                <p className="text-white/80 text-sm mb-4">
+                  Après avoir sauvegardé votre configuration, téléchargez le fichier personnalisé pour le connecteur.
+                </p>
+                <button
+                  onClick={downloadConfig}
+                  className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 py-3 rounded-xl font-bold transition shadow-lg"
+                >
+                  📥 Télécharger tradabot_config.json
+                </button>
+                <p className="text-white/60 text-xs mt-3 text-center">
+                  Placez ce fichier dans le dossier du connecteur
+                </p>
+              </div>
             </div>
           )}
 
