@@ -433,3 +433,38 @@ async def get_all_preorders_admin(current_user: User = Depends(require_admin)):
     except Exception as e:
         logger.error(f"❌ Error fetching admin preorders: {e}")
         raise HTTPException(status_code=500, detail="Erreur lors de la récupération des précommandes")
+
+
+@router.delete("/admin/delete/{preorder_id}")
+async def delete_preorder_admin(preorder_id: str, current_user: User = Depends(require_admin)):
+    """
+    Supprimer une précommande (admin only)
+    """
+    db = get_db()
+    
+    try:
+        # Vérifier que la précommande existe
+        preorder = await db.bot_preorders.find_one({"id": preorder_id})
+        
+        if not preorder:
+            raise HTTPException(status_code=404, detail="Précommande introuvable")
+        
+        # Supprimer la précommande
+        result = await db.bot_preorders.delete_one({"id": preorder_id})
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=500, detail="Échec de la suppression")
+        
+        logger.info(f"✅ Preorder {preorder_id} deleted by admin {current_user.email}")
+        
+        return {
+            "success": True,
+            "message": f"Précommande supprimée avec succès"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"❌ Error deleting preorder: {e}")
+        raise HTTPException(status_code=500, detail="Erreur lors de la suppression")
+
