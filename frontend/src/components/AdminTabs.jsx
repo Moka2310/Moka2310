@@ -701,6 +701,7 @@ const BotPreordersTab = ({ language }) => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
     loadPreorders();
@@ -723,6 +724,48 @@ const BotPreordersTab = ({ language }) => {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const deletePreorder = async (preorderId, userEmail) => {
+    if (!window.confirm(
+      language === 'fr' 
+        ? `Êtes-vous sûr de vouloir supprimer la précommande de ${userEmail} ?`
+        : `Are you sure you want to delete the preorder from ${userEmail}?`
+    )) {
+      return;
+    }
+
+    setDeletingId(preorderId);
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/bot-preorders/admin/delete/${preorderId}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}` }
+      });
+
+      if (response.ok) {
+        toast({
+          title: '✅ Succès',
+          description: language === 'fr' ? 'Précommande supprimée' : 'Preorder deleted'
+        });
+        loadPreorders();
+      } else {
+        const error = await response.json();
+        toast({
+          title: '❌ Erreur',
+          description: error.detail,
+          variant: 'destructive'
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting preorder:', error);
+      toast({
+        title: '❌ Erreur',
+        description: language === 'fr' ? 'Erreur lors de la suppression' : 'Error deleting preorder',
+        variant: 'destructive'
+      });
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -849,6 +892,7 @@ const BotPreordersTab = ({ language }) => {
                   <th className="text-center text-white/80 py-3 px-4">
                     {language === 'fr' ? 'Date' : 'Date'}
                   </th>
+                  <th className="text-center text-white/80 py-3 px-4">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -866,6 +910,16 @@ const BotPreordersTab = ({ language }) => {
                     </td>
                     <td className="py-3 px-4 text-center text-white/60 text-sm">
                       {formatDate(preorder.createdAt)}
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      <button
+                        onClick={() => deletePreorder(preorder.id, preorder.userEmail)}
+                        disabled={deletingId === preorder.id}
+                        className="px-3 py-1 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm transition disabled:opacity-50"
+                        title={language === 'fr' ? 'Supprimer' : 'Delete'}
+                      >
+                        {deletingId === preorder.id ? '...' : <Trash2 className="w-4 h-4 inline" />}
+                      </button>
                     </td>
                   </tr>
                 ))}
