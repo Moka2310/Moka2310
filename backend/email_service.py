@@ -651,5 +651,141 @@ class EmailService:
         
         return await self.send_email(to_email, subject, html_content)
 
+
+    
+    async def send_password_reset_email(self, to_email: str, reset_link: str, user_name: str = ""):
+        """Send password reset email"""
+        subject = "🔐 Réinitialisation de votre mot de passe - TRADALIFE"
+        
+        display_name = user_name if user_name else to_email.split('@')[0]
+        
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{
+                    font-family: 'Arial', sans-serif;
+                    background-color: #f4f4f7;
+                    margin: 0;
+                    padding: 0;
+                }}
+                .container {{
+                    max-width: 600px;
+                    margin: 20px auto;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    border-radius: 15px;
+                    overflow: hidden;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                }}
+                .header {{
+                    background: rgba(255,255,255,0.1);
+                    padding: 30px 20px;
+                    text-align: center;
+                }}
+                .header h1 {{
+                    color: white;
+                    margin: 0;
+                    font-size: 28px;
+                    font-weight: bold;
+                }}
+                .content {{
+                    background: white;
+                    padding: 40px 30px;
+                }}
+                .content h2 {{
+                    color: #333;
+                    margin-top: 0;
+                }}
+                .content p {{
+                    color: #555;
+                    line-height: 1.8;
+                    font-size: 16px;
+                }}
+                .reset-button {{
+                    display: inline-block;
+                    margin: 30px 0;
+                    padding: 15px 40px;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white !important;
+                    text-decoration: none;
+                    border-radius: 50px;
+                    font-weight: bold;
+                    font-size: 16px;
+                    text-align: center;
+                    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+                }}
+                .reset-button:hover {{
+                    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+                }}
+                .warning-box {{
+                    background: #fff3cd;
+                    border-left: 4px solid #ffc107;
+                    padding: 15px;
+                    margin: 20px 0;
+                    border-radius: 5px;
+                }}
+                .warning-box p {{
+                    margin: 0;
+                    color: #856404;
+                }}
+                .footer {{
+                    background: #f8f9fa;
+                    padding: 20px;
+                    text-align: center;
+                    color: #6c757d;
+                    font-size: 14px;
+                }}
+                .footer a {{
+                    color: #667eea;
+                    text-decoration: none;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>🔐 RÉINITIALISATION DE MOT DE PASSE</h1>
+                </div>
+                <div class="content">
+                    <h2>Bonjour {display_name},</h2>
+                    
+                    <p>Vous avez demandé à réinitialiser votre mot de passe pour votre compte TRADALIFE.</p>
+                    
+                    <p>Cliquez sur le bouton ci-dessous pour créer un nouveau mot de passe:</p>
+                    
+                    <center>
+                        <a href="{reset_link}" class="reset-button">
+                            Réinitialiser mon mot de passe
+                        </a>
+                    </center>
+                    
+                    <div class="warning-box">
+                        <p><strong>⚠️ Important:</strong></p>
+                        <p>• Ce lien est valable pendant <strong>1 heure</strong></p>
+                        <p>• Si vous n'avez pas demandé cette réinitialisation, ignorez cet email</p>
+                        <p>• Votre mot de passe actuel reste valide jusqu'à ce que vous en créiez un nouveau</p>
+                    </div>
+                    
+                    <p style="font-size: 14px; color: #6c757d; margin-top: 30px;">
+                        Si le bouton ne fonctionne pas, copiez et collez ce lien dans votre navigateur:<br>
+                        <a href="{reset_link}" style="color: #667eea; word-break: break-all;">{reset_link}</a>
+                    </p>
+                    
+                    <p style="margin-top: 30px;">Pour toute question, contactez-nous sur notre support Telegram.</p>
+                    
+                    <p>Cordialement,<br><strong>L'équipe TRADALIFE</strong></p>
+                </div>
+                <div class="footer">
+                    <p>© 2025 TRADALIFE - Tous droits réservés</p>
+                    <p><a href="https://tradalife.com">tradalife.com</a></p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        return await self.send_email(to_email, subject, html_content)
+
 # Create singleton instance
 email_service = EmailService()
