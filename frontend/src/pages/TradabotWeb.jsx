@@ -205,6 +205,39 @@ const TradabotWeb = () => {
     }
   };
 
+  const downloadConfig = async () => {
+    try {
+      const token = localStorage.getItem('tradalife_token');
+      
+      const response = await fetch(`${BACKEND_URL}/api/tradabot-web/download-config`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Erreur lors du téléchargement');
+      }
+      
+      // Récupérer le contenu JSON
+      const configData = await response.json();
+      
+      // Créer un Blob et le télécharger
+      const blob = new Blob([JSON.stringify(configData, null, 2)], { type: 'application/json' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'tradabot_config.json';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      alert('✅ Configuration téléchargée!\n\n📝 Placez le fichier "tradabot_config.json" dans le dossier du connecteur.');
+    } catch (error) {
+      console.error('Erreur téléchargement config:', error);
+      alert('❌ Erreur: Veuillez d\'abord sauvegarder votre configuration.');
+    }
+  };
+
   const toggleBot = async () => {
     try {
       const token = localStorage.getItem('tradalife_token');
