@@ -8,6 +8,8 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Boutique from "./pages/Boutique";
 import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import Checkout from "./pages/Checkout";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
