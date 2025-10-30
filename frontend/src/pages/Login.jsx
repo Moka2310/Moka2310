@@ -98,6 +98,16 @@ const Login = () => {
                 className="bg-white/10 border-purple-500/30 text-white placeholder:text-white/50 focus:border-pink-500"
                 placeholder="••••••••"
               />
+              {isLogin && (
+                <div className="text-right mt-2">
+                  <Link 
+                    to="/forgot-password" 
+                    className="text-sm text-pink-400 hover:text-pink-300 transition-colors"
+                  >
+                    {language === 'fr' ? 'Mot de passe oublié?' : 'Forgot password?'}
+                  </Link>
+                </div>
+              )}
             </div>
 
             {!isLogin && (
