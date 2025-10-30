@@ -175,3 +175,132 @@ async def delete_account(current_user: User = Depends(get_current_user)):
             status_code=500,
             detail=f"Failed to delete account: {str(e)}"
         )
+
+
+# Modèles pour la réinitialisation du mot de passe
+from pydantic import BaseModel, EmailStr
+
+class PasswordResetRequest(BaseModel):
+    email: EmailStr
+
+class PasswordReset(BaseModel):
+    token: str
+    newPassword: str
+
+@router.post("/forgot-password")
+async def forgot_password(request: PasswordResetRequest):
+    """
+    Demander la réinitialisation du mot de passe
+    Envoie un email avec un lien de réinitialisation
+    """
+    db = get_db()
+    
+    try:
+        # Vérifier si l'utilisateur existe
+        user = await db.users.find_one({"email": request.email})
+        
+        # Pour la sécurité, on retourne toujours succès même si l'email n'existe pas
+        # (évite l'énumération des comptes)
+        if not user:
+            return {
+                "success": True,
+                "message": "Si cet email existe, un lien de réinitialisation a été envoyé"
+            }
+        
+        # Générer un token de réinitialisation
+        reset_token = str(uuid.uuid4())
+        reset_expiry = datetime.utcnow()
+        
+        # Sauvegarder le token dans la base de données
+        await db.password_resets.insert_one({
+            "token": reset_token,
+            "userId": user["id"],
+            "email": user["email"],
+            "createdAt": reset_expiry.isoformat(),
+            "used": False
+        })
+        
+        # Créer le lien de réinitialisation
+        frontend_url = "https://edushop-portal.emergent.host"  # URL de production
+        reset_link = f"{frontend_url}/reset-password?token={reset_token}"
+        
+        # Envoyer l'email
+        await email_service.send_password_reset_email(
+            user["email"],
+            reset_link,
+            user.get("firstName", "")
+        )
+        
+        return {
+            "success": True,
+            "message": "Si cet email existe, un lien de réinitialisation a été envoyé"
+        }
+        
+    except Exception as e:
+        # Ne pas révéler les détails de l'erreur pour la sécurité
+        return {
+            "success": True,
+            "message": "Si cet email existe, un lien de réinitialisation a été envoyé"
+        }
+
+@router.post("/reset-password")
+async def reset_password(reset_data: PasswordReset):
+    """
+    Réinitialiser le mot de passe avec le token
+    """
+    db = get_db()
+    
+    try:
+        # Vérifier le token
+        reset_record = await db.password_resets.find_one({
+            "token": reset_data.token,
+            "used": False
+        })
+        
+        if not reset_record:
+            raise HTTPException(
+                status_code=400,
+                detail="Token invalide ou expiré"
+            )
+        
+        # Vérifier si le token a moins de 1 heure
+        from datetime import timedelta
+        created_at = datetime.fromisoformat(reset_record["createdAt"])
+        if datetime.utcnow() - created_at > timedelta(hours=1):
+            raise HTTPException(
+                status_code=400,
+                detail="Le lien de réinitialisation a expiré. Veuillez en demander un nouveau."
+            )
+        
+        # Mettre à jour le mot de passe
+        new_password_hash = get_password_hash(reset_data.newPassword)
+        
+        result = await db.users.update_one(
+            {"id": reset_record["userId"]},
+            {"$set": {"passwordHash": new_password_hash}}
+        )
+        
+        if result.modified_count == 0:
+            raise HTTPException(
+                status_code=500,
+                detail="Erreur lors de la mise à jour du mot de passe"
+            )
+        
+        # Marquer le token comme utilisé
+        await db.password_resets.update_one(
+            {"token": reset_data.token},
+            {"$set": {"used": True, "usedAt": datetime.utcnow().isoformat()}}
+        )
+        
+        return {
+            "success": True,
+            "message": "Mot de passe réinitialisé avec succès"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Erreur lors de la réinitialisation: {str(e)}"
+        )
