@@ -39,6 +39,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/boutique" element={<Boutique />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               {/* Pages de paiement temporairement en construction */}
               <Route path="/checkout" element={<UnderConstruction />} />
               <Route path="/subscription" element={<UnderConstruction />} />
