@@ -386,6 +386,7 @@ const MembersTab = ({ language }) => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
     loadMembers();
@@ -415,6 +416,38 @@ const MembersTab = ({ language }) => {
       setStats(data);
     } catch (error) {
       console.error('Error loading stats:', error);
+    }
+  };
+
+  const deleteMember = async (memberId, memberEmail) => {
+    if (!window.confirm(
+      language === 'fr' 
+        ? `Êtes-vous sûr de vouloir supprimer ${memberEmail} ?\n\nToutes ses données seront définitivement supprimées.`
+        : `Are you sure you want to delete ${memberEmail}?\n\nAll their data will be permanently deleted.`
+    )) {
+      return;
+    }
+
+    setDeletingId(memberId);
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/members/delete/${memberId}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('tradalife_token')}` }
+      });
+
+      if (response.ok) {
+        alert(language === 'fr' ? '✅ Membre supprimé avec succès' : '✅ Member deleted successfully');
+        loadMembers();
+        loadStats();
+      } else {
+        const error = await response.json();
+        alert(language === 'fr' ? `❌ Erreur: ${error.detail}` : `❌ Error: ${error.detail}`);
+      }
+    } catch (error) {
+      console.error('Error deleting member:', error);
+      alert(language === 'fr' ? '❌ Erreur lors de la suppression' : '❌ Error deleting member');
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -492,6 +525,7 @@ const MembersTab = ({ language }) => {
                   <th className="text-center text-white/80 py-3 px-4">KYC</th>
                   <th className="text-center text-white/80 py-3 px-4">{language === 'fr' ? 'Rôle' : 'Role'}</th>
                   <th className="text-center text-white/80 py-3 px-4">{language === 'fr' ? 'Inscription' : 'Registered'}</th>
+                  <th className="text-center text-white/80 py-3 px-4">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -522,6 +556,20 @@ const MembersTab = ({ language }) => {
                     </td>
                     <td className="py-3 px-4 text-center text-white/60 text-sm">
                       {formatDate(member.createdAt)}
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      {member.role !== 'admin' ? (
+                        <button
+                          onClick={() => deleteMember(member.id, member.email)}
+                          disabled={deletingId === member.id}
+                          className="px-3 py-1 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm transition disabled:opacity-50"
+                          title={language === 'fr' ? 'Supprimer' : 'Delete'}
+                        >
+                          {deletingId === member.id ? '...' : <Trash2 className="w-4 h-4 inline" />}
+                        </button>
+                      ) : (
+                        <span className="text-white/30 text-sm">-</span>
+                      )}
                     </td>
                   </tr>
                 ))}
