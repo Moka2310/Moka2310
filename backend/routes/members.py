@@ -58,6 +58,67 @@ async def get_all_members(current_user: User = Depends(require_admin)):
         logger.error(f"❌ Error fetching members: {e}")
         raise HTTPException(status_code=500, detail="Erreur lors de la récupération des membres")
 
+@router.delete("/delete/{user_id}")
+async def delete_member(user_id: str, current_user: User = Depends(require_admin)):
+    """
+    Supprimer un membre et toutes ses données (ADMIN ONLY)
+    """
+    db = get_db()
+    
+    try:
+        # Vérifier que l'utilisateur existe
+        user = await db.users.find_one({"id": user_id})
+        if not user:
+            raise HTTPException(status_code=404, detail="Utilisateur introuvable")
+        
+        # Empêcher la suppression d'un admin
+        if user.get("role") == "admin":
+            raise HTTPException(status_code=403, detail="Impossible de supprimer un administrateur")
+        
+        # Supprimer toutes les données associées
+        # 1. Documents KYC
+        await db.kyc_documents.delete_many({"userId": user_id})
+        
+        # 2. Achats
+        await db.purchases.delete_many({"userId": user_id})
+        
+        # 3. Témoignages
+        await db.testimonials.delete_many({"userId": user_id})
+        
+        # 4. Précommandes bot
+        await db.bot_preorders.delete_many({"userId": user_id})
+        
+        # 5. Configurations TRADABOT
+        await db.tradabot_configs.delete_many({"userId": user_id})
+        
+        # 6. Trades TRADABOT
+        await db.tradabot_trades.delete_many({"userId": user_id})
+        
+        # 7. Connecteurs TRADABOT
+        await db.tradabot_connectors.delete_many({"userId": user_id})
+        
+        # 8. Parrainages
+        await db.referrals.delete_many({"$or": [{"referrerId": user_id}, {"referredUserId": user_id}]})
+        
+        # 9. Supprimer l'utilisateur
+        result = await db.users.delete_one({"id": user_id})
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=500, detail="Échec de la suppression")
+        
+        logger.info(f"✅ Member {user_id} ({user.get('email')}) deleted by admin {current_user.email}")
+        
+        return {
+            "success": True,
+            "message": f"Membre {user.get('email')} supprimé avec succès"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"❌ Error deleting member: {e}")
+        raise HTTPException(status_code=500, detail="Erreur lors de la suppression")
+
 @router.get("/stats", dependencies=[Depends(require_admin)])
 async def get_members_stats(current_user: User = Depends(require_admin)):
     """
