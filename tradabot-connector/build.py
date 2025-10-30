@@ -1,92 +1,73 @@
 """
-Script pour compiler TRADABOT Connector en .exe Windows
-Utilise PyInstaller
+Script pour créer le package TRADABOT Connector
+Version simplifiée - Pas besoin de compilation
 """
-import PyInstaller.__main__
 import os
-import shutil
 import zipfile
+import shutil
 
-print("🔨 Compilation de TRADABOT Connector...")
+print("📦 Création du package TRADABOT Connector...")
+print()
 
-# Nettoyer les anciens builds
-if os.path.exists('dist'):
-    shutil.rmtree('dist')
-if os.path.exists('build'):
-    shutil.rmtree('build')
-
-# Configuration PyInstaller
-PyInstaller.__main__.run([
-    'connector.py',
-    '--onefile',
-    '--name=TradabotConnector',
-    '--clean',
-    '--noconfirm',
-    '--console',  # Avec console pour voir les logs
-])
-
-print("✅ Compilation terminée!")
+# Nettoyer l'ancien package
+if os.path.exists('TRADABOT_CONNECTOR_SIMPLE.zip'):
+    os.remove('TRADABOT_CONNECTOR_SIMPLE.zip')
+    print("🗑️  Ancien package supprimé")
 
 # Créer le ZIP avec tous les fichiers nécessaires
-print("📦 Création du package...")
-with zipfile.ZipFile('TRADABOT_CONNECTOR_BUILD.zip', 'w') as zipf:
-    # Ajouter l'exécutable
-    if os.path.exists('dist/TradabotConnector.exe'):
-        zipf.write('dist/TradabotConnector.exe', 'TradabotConnector.exe')
+print("📦 Création du nouveau package...")
+with zipfile.ZipFile('TRADABOT_CONNECTOR_SIMPLE.zip', 'w', zipfile.ZIP_DEFLATED) as zipf:
+    # Ajouter les scripts d'installation et de lancement
+    zipf.write('INSTALLATION_SIMPLE.bat', 'TRADABOT/INSTALLATION_SIMPLE.bat')
+    zipf.write('DEMARRER_TRADABOT.bat', 'TRADABOT/DEMARRER_TRADABOT.bat')
     
-    # Ajouter les scripts
-    zipf.write('INSTALLER.bat', 'INSTALLER.bat')
-    zipf.write('LANCER_TRADABOT.bat', 'LANCER_TRADABOT.bat')
-    zipf.write('connector_launcher.py', 'connector_launcher.py')
-    zipf.write('connector.py', 'connector.py')
+    # Ajouter le programme Python
+    zipf.write('tradabot_simple.py', 'TRADABOT/tradabot_simple.py')
     
-    # Ajouter requirements.txt
-    zipf.write('requirements.txt', 'requirements.txt')
+    # Ajouter le README
+    zipf.write('README_SIMPLE.txt', 'TRADABOT/README_SIMPLE.txt')
     
-    # Créer et ajouter un README
-    readme_content = """
-═══════════════════════════════════════════════════════════════════════════
-                    🤖 TRADABOT CONNECTEUR MT4/MT5
-═══════════════════════════════════════════════════════════════════════════
+    # Créer un exemple de config (vide)
+    config_example = """{
+  "_comment": "Téléchargez votre configuration depuis https://tradalife.com/tradabot-web",
+  "authToken": "VOTRE_TOKEN_ICI",
+  "backendUrl": "https://edushop-portal.emergent.host",
+  "mt4Login": "12345678",
+  "mt4Password": "VotreMotDePasse",
+  "mt4Server": "ICMarkets-Live",
+  "channels": {
+    "forex": true,
+    "crypto": true,
+    "gold": true,
+    "indices": true,
+    "commodites": true
+  },
+  "lots": {
+    "forex": 0.01,
+    "crypto": 0.01,
+    "gold": 0.01,
+    "indices": 0.01,
+    "commodites": 0.01
+  },
+  "breakevenEnabled": true
+}"""
+    zipf.writestr('TRADABOT/config_example.json', config_example)
 
-INSTALLATION:
-1. Extrayez tous les fichiers dans un dossier
-2. Double-cliquez sur "INSTALLER.bat"
-3. Suivez les instructions à l'écran
+# Copier aussi dans le dossier courant pour le téléchargement
+shutil.copy('TRADABOT_CONNECTOR_SIMPLE.zip', 'TRADABOT_CONNECTOR_BUILD.zip')
 
-CONFIGURATION:
-1. Allez sur https://tradalife.com/tradabot-web
-2. Configurez vos paramètres MT4/MT5
-3. Téléchargez le fichier "tradabot_config.json"
-4. Placez-le dans le dossier du connecteur
-
-LANCEMENT:
-1. Double-cliquez sur "LANCER_TRADABOT.bat"
-2. Le connecteur se connectera automatiquement à MT4/MT5
-3. Les signaux seront exécutés automatiquement
-
-⚠️  IMPORTANT:
-- Le connecteur doit rester en exécution pendant le trading
-- MetaTrader 4/5 doit être installé sur votre PC
-- Une connexion internet stable est requise
-
-SUPPORT:
-Pour toute question, contactez-nous sur Telegram ou par email.
-
-═══════════════════════════════════════════════════════════════════════════
-"""
-    zipf.writestr('README.txt', readme_content)
-
-print("✅ Package créé: TRADABOT_CONNECTOR_BUILD.zip")
-print("")
+print("✅ Package créé: TRADABOT_CONNECTOR_SIMPLE.zip")
+print("✅ Copié vers: TRADABOT_CONNECTOR_BUILD.zip")
+print()
 print("📦 Contenu du package:")
-print("   - TradabotConnector.exe (exécutable)")
-print("   - INSTALLER.bat (installation des dépendances)")
-print("   - LANCER_TRADABOT.bat (lanceur)")
-print("   - connector_launcher.py (lanceur Python)")
-print("   - connector.py (code source)")
-print("   - requirements.txt (dépendances)")
-print("   - README.txt (instructions)")
-print("")
+print("   - INSTALLATION_SIMPLE.bat (installation automatique)")
+print("   - DEMARRER_TRADABOT.bat (lancement du bot)")
+print("   - tradabot_simple.py (programme principal)")
+print("   - README_SIMPLE.txt (instructions)")
+print("   - config_example.json (exemple de configuration)")
+print()
 print("🎯 Le package est prêt à être distribué!")
+print()
+print("📥 Taille du fichier:", os.path.getsize('TRADABOT_CONNECTOR_BUILD.zip') // 1024, "KB")
+
 
